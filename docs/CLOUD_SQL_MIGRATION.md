@@ -6,8 +6,10 @@ so it cannot bypass FastAPI authorization or financial posting workflows.
 
 ## Prerequisites
 
-- A real Firebase/Google Cloud project with billing enabled; `demo-*` project IDs cannot provision.
-- A PostgreSQL 15 Cloud SQL instance and SQL Connect service in the same `europe-west1` location.
+- The existing `edu-pay-ledger` Firebase project on the no-cost Spark plan, without a billing
+  account. Starting its one-per-project SQL Connect trial requires explicit user approval because
+  the 90-day lifetime begins immediately.
+- The trial PostgreSQL 15 database and SQL Connect service in the same `europe-west1` location.
 - Separate least-privilege migration and runtime identities. The runtime identity must not own the
   schema and must have only the table/sequence privileges required by FastAPI.
 - PostgreSQL 15 client tools (`psql`, `pg_dump`, and `pg_restore`) from the same or newer minor
@@ -61,10 +63,14 @@ the multi-role golden path, and reopen writes only after acceptance. Before targ
 rollback is a configuration reversal. After target writes begin, freeze both systems and reconcile
 the target delta; never allow independent writers.
 
+The Spark SQL Connect trial is temporary: after 90 days it is archived, and it is deleted 90 days
+later if the project is not upgraded. This project will not upgrade. Supabase Free therefore stays
+recoverable as the durable fallback, and a return migration must be rehearsed before archival.
+
 ## Current external blockers
 
-As of 2026-10-25, this workstation has no Google Cloud CLI, PostgreSQL client tools, or reachable
-disposable PostgreSQL target. The configured production alias is `demo-harambeeone-production`,
-not a verified billable project. Therefore no Cloud SQL resource has been provisioned and F3 must
-remain incomplete until the project ID/billing authority and target credentials are supplied and
-the full rehearsal evidence passes.
+As of 2026-10-25, the authenticated Firebase account owns the active `edu-pay-ledger` (`eBursar`)
+project and it has no SQL Connect service. This workstation has no Google Cloud CLI, PostgreSQL
+client tools, or reachable disposable PostgreSQL target. No trial has been started. F3 remains
+incomplete until the user explicitly approves starting the one-time trial, required tools are
+available, and the full rehearsal evidence passes. A billing account must not be linked.

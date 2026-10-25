@@ -69,6 +69,12 @@ Every slice must preserve these conditions:
 10. Pending contributions never count as received; only verified school settlement updates the learner ledger.
 11. No source database, Firebase project, credential, or user account is deleted during migration.
 12. No service-account JSON, private key, database password, Gemini key, or FCM server credential enters Git.
+13. This student hackathon build remains strictly zero-cost: do not attach a billing account,
+    enable a paid plan, or provision a resource that can accrue charges. Use Firebase Spark, base
+    Firebase Authentication, FCM, Gemini's free developer tier, and Supabase Free only. Quota
+    exhaustion must fail safely or pause the feature; it must never trigger a paid upgrade.
+14. Phone authentication, Identity Platform upgrades, Cloud Run, paid Gemini models, and paid
+    Cloud SQL remain prohibited unless the user explicitly changes the zero-cost constraint.
 
 ## Working and commit discipline
 
@@ -173,7 +179,9 @@ Status: **NEXT**
 
 Deliver:
 
-- Provision a private Cloud SQL for PostgreSQL target attached to Firebase SQL Connect in the selected region.
+- Use the existing `edu-pay-ledger` Spark project's single 90-day SQL Connect trial only after
+  explicit approval to start its one-time clock; never attach billing. Keep Supabase Free as the
+  durable system of record and rollback because the trial is archived after 90 days.
 - Retain Alembic migration ownership and configure SQL Connect for the brownfield schema in `COMPATIBLE` mode.
 - Adapt Supabase-specific migrations and runtime assumptions: `auth.users`, `auth.uid()`, Supabase API grants, Supabase JWT helpers, and Data API policies.
 - Preserve PostgreSQL constraints, numeric money types, triggers, indexes, immutable history, uniqueness, row locks, snapshot hashes, and audit evidence.
@@ -199,9 +207,10 @@ Progress (F3 remains incomplete):
 - Passed all 122 backend tests, Ruff, root ESLint, and backend compilation for the repository-side
   migration tooling. The configured source is at revision `a72d5e8c19f4`; the new F2 revision has
   not been applied to live Supabase.
-- Live completion is blocked on a verified billable Firebase project, Cloud SQL/SQL Connect target,
-  PostgreSQL client tools, and a disposable PostgreSQL rehearsal. The local production alias is a
-  `demo-*` placeholder, so no billable resource was provisioned implicitly.
+- Live completion is blocked on explicit approval to consume the existing `edu-pay-ledger`
+  project's one-time 90-day Spark SQL Connect trial, PostgreSQL client tools, and a disposable
+  PostgreSQL rehearsal. No billing account or paid resource may be attached. Supabase Free remains
+  the durable fallback before trial archival.
 
 Planned commit: `Move data to Firebase SQL Connect`
 
@@ -212,6 +221,8 @@ Status: **PENDING**
 Deliver:
 
 - Replace Gemma-specific configuration, code, naming, documentation, and consent text with Gemini-specific equivalents.
+- Select only a model currently available in the Gemini Developer API free tier, with hard request,
+  token, and timeout bounds plus manual fallback when the free quota returns `429`.
 - Use the maintained Google GenAI SDK and Interactions API with `gemini-3.8-flash` as the initial runtime model.
 - Preserve Pydantic structured outputs, minimum grounding, redaction, timeouts, rate limits, stateless handling, metadata-only audit, and human approval.
 - Create a versioned Google AI Studio evaluation set covering safe summaries, identifier leakage, prompt injection, cross-user extraction, financial-authority claims, malformed output, uncertainty, latency, and failure fallback.
@@ -238,6 +249,8 @@ Deliver:
 - Add the HTTPS service worker, foreground and background handlers, VAPID public configuration, and supported-browser fallback.
 - Store installation identifiers or registration tokens against the internal user with device label, consent time, last-seen time, and revocation state.
 - Connect the existing notification outbox to an FCM delivery worker using Firebase Admin credentials.
+- Keep FCM on the no-cost Firebase product and do not introduce Cloud Functions or another paid
+  worker dependency; the existing FastAPI process owns bounded delivery.
 - Send generic, privacy-safe payloads with authenticated deep links for invitation, consent, changes requested, publication, pledge, settlement, rejection, funded, receipt, and outcome events.
 - Make delivery idempotent, retryable, observable, and independent of financial commits.
 - Remove invalid or unregistered devices safely and allow users to disable a device or all push delivery.
@@ -259,8 +272,10 @@ Status: **PENDING**
 
 Deliver:
 
-- Deploy FastAPI to Cloud Run with Secret Manager, least-privilege service identity, health checks, structured logs, and bounded scaling.
-- Deploy Next.js through the selected Firebase-compatible HTTPS hosting path and configure all Firebase Auth domains, cookies, CORS, and FCM service-worker scope.
+- Produce a zero-cost demo deployment or documented local demo path. Cloud Run and any hosting
+  path that requires a billing account are prohibited under the zero-cost boundary.
+- Configure Firebase Auth domains, cookies, CORS, and FCM service-worker scope only on a verified
+  no-cost hosting path; never attach billing merely to deploy server-side rendering.
 - Back up Supabase PostgreSQL and export Supabase Auth mappings before cutover.
 - Enter maintenance mode for the final database delta; do not dual-write the financial ledger.
 - Import, verify, switch database and authentication configuration, then run the full multi-role browser/API journey.
@@ -275,6 +290,8 @@ Completion gate:
 - The live demo works from a clean browser without local services.
 - Monitoring shows no unhandled auth, database, Gemini, or FCM errors during the release smoke test.
 - Supabase packages, environment requirements, runtime calls, and production dependencies are removed only after parity is proven.
+- A usable free fallback exists before the SQL Connect trial is archived; no release depends on a
+  resource that silently becomes billable.
 
 Planned commit: `Complete Firebase production cutover`
 
@@ -318,6 +335,9 @@ Add a dated entry only after a slice changes status. Include the exact verificat
 ## Official decision references
 
 - Firebase SQL Connect overview: <https://firebase.google.com/docs/sql-connect>
+- Firebase SQL Connect pricing and Spark trial: <https://firebase.google.com/docs/sql-connect/pricing>
+- Firebase pricing plans: <https://firebase.google.com/docs/projects/billing/firebase-pricing-plans>
+- Gemini Developer API pricing: <https://ai.google.dev/gemini-api/docs/pricing>
 - Existing-database and custom-migration workflow: <https://firebase.google.com/docs/sql-connect/manage-services-and-databases>
 - SQL Connect schema and connector management: <https://firebase.google.com/docs/sql-connect/manage-schemas-and-connectors>
 - Firebase Authentication session cookies: <https://firebase.google.com/docs/auth/admin/manage-cookies>
