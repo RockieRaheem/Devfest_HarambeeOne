@@ -22,7 +22,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from harambeeone_api.config import get_settings
-from harambeeone_api.database import get_session
+from harambeeone_api.database import get_session, set_database_identity
 from harambeeone_api.models import IdentityProviderAccount, SchoolMembership
 
 Role = Literal["owner", "bursar", "cashier", "auditor"]
@@ -309,7 +309,9 @@ def get_current_user(
         raise _unauthorized("Sign in required")
     token = token.strip()
     try:
-        return _resolve_internal_user(session, _identity_verifier().verify(token))
+        user = _resolve_internal_user(session, _identity_verifier().verify(token))
+        set_database_identity(session, user.id)
+        return user
     except IdentityTokenExpired as error:
         raise _unauthorized("Your session has expired. Please sign in again.") from error
     except IdentityTokenRevoked as error:

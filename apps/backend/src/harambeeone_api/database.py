@@ -2,7 +2,7 @@ from collections.abc import Iterator
 from functools import lru_cache
 
 from google.cloud.sql.connector import Connector, IPTypes
-from sqlalchemy import Engine, create_engine, text
+from sqlalchemy import Engine, create_engine, event, text
 from sqlalchemy.orm import DeclarativeBase, Session
 
 from harambeeone_api.config import get_settings
@@ -62,8 +62,43 @@ def close_database() -> None:
         get_cloud_sql_connector.cache_clear()
 
 
+def _apply_database_context(session: Session, connection) -> None:
+    if connection.dialect.name != "postgresql":
+        return
+    if role := session.info.get("database_server_role"):
+        connection.execute(text(f'SET LOCAL ROLE "{role}"'))
+        return
+    if user_id := session.info.get("database_user_id"):
+        connection.execute(
+            text("select set_config('request.jwt.claim.sub', :subject, true)"),
+            {"subject": str(user_id)},
+        )
+
+
+@event.listens_for(Session, "after_begin")
+def _restore_database_context(session: Session, _transaction, connection) -> None:
+    _apply_database_context(session, connection)
+
+
+def set_database_identity(session: Session, user_id: object) -> None:
+    session.info["database_user_id"] = str(user_id)
+    if session.in_transaction():
+        _apply_database_context(session, session.connection())
+
+
 def get_session() -> Iterator[Session]:
     with Session(get_engine(), expire_on_commit=False) as session:
+        yield session
+
+
+def get_server_session() -> Iterator[Session]:
+    settings = get_settings()
+    info = (
+        {"database_server_role": settings.cloud_sql_server_role}
+        if settings.database_provider == "cloud_sql"
+        else None
+    )
+    with Session(get_engine(), expire_on_commit=False, info=info) as session:
         yield session
 
 

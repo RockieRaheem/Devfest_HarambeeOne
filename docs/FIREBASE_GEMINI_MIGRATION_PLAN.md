@@ -175,7 +175,7 @@ Planned commit: `Migrate authentication to Firebase`
 
 ### Slice F3 - Cloud SQL and Firebase SQL Connect migration
 
-Status: **NEXT**
+Status: **IN PROGRESS**
 
 Deliver:
 
@@ -204,9 +204,8 @@ Progress (F3 remains incomplete):
   data-only transfer tool that refuses revision drift, non-empty targets, exposed database
   passwords, and partial restores. Deterministic evidence compares table sets, row counts,
   canonical SHA-256 hashes, every numeric-column total, and foreign-key integrity.
-- Passed all 122 backend tests, Ruff, root ESLint, and backend compilation for the repository-side
-  migration tooling. The configured source is at revision `a72d5e8c19f4`; the new F2 revision has
-  not been applied to live Supabase.
+- Passed the repository-side migration tooling checks before starting the live rehearsal; later
+  evidence below supersedes the earlier source-revision and test-count snapshot.
 - On 2026-10-25, explicit approval started the `edu-pay-ledger` project's one-time Spark trial.
   Firebase created service `harambeeone`, instance `harambeeone-fdc`, and database `harambeeone`
   in `europe-west1`; billing remained disabled and `dataconnect:sql:diff` reported the empty target
@@ -219,7 +218,13 @@ Progress (F3 remains incomplete):
   rehearsal; writer access remains only for controlled verification.
 - Added a passwordless FastAPI runtime path through the official Cloud SQL Python Connector with
   automatic IAM database authentication; the source URL path remains the rollback default.
-  Repository regression evidence is 125 backend tests plus Ruff.
+  Authenticated sessions now install the stable internal user UUID as transaction-local PostgreSQL
+  context and restore it after commits. Only reviewed public and integration workflows explicitly
+  assume the validated server role, preventing pooled connections from leaking request identity.
+- Added and passed a passwordless live IAM control suite covering owner revocation, writer
+  membership, login-role RLS behavior, required RLS metadata, retry constraints, immutable
+  evidence, financial equations, audit actors, index validity, public grants, and no-context tenant
+  denial. Repository regression evidence is 127 backend tests plus Ruff.
 - Live completion remains blocked on least-privilege runtime IAM/ADC, the full multi-role and
   PostgreSQL-specific Cloud SQL verification suites, protected source/Auth backups, and rollback
   rehearsal. Supabase Free stays authoritative until every gate passes and remains the durable

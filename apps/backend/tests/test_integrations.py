@@ -12,7 +12,7 @@ from sqlalchemy.pool import StaticPool
 
 from harambeeone_api import integrations
 from harambeeone_api.auth import AuthenticatedUser, get_current_user
-from harambeeone_api.database import Base, get_session
+from harambeeone_api.database import Base, get_server_session, get_session
 from harambeeone_api.main import app
 from harambeeone_api.models import (
     AcademicClass,
@@ -127,6 +127,7 @@ def integration_workspace(monkeypatch):
             yield session
 
     app.dependency_overrides[get_session] = session_override
+    app.dependency_overrides[get_server_session] = session_override
     app.dependency_overrides[get_current_user] = lambda: AuthenticatedUser(
         id=owner_id, email="owner@example.com"
     )

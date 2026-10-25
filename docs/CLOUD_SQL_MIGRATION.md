@@ -57,6 +57,24 @@ ledger, and human-approval controls. A connector may be added only for a separat
 non-financial, least-data operation with Firebase authorization tests. `firebase
 dataconnect:sql:diff` must report no unexpected destructive statement before deployment.
 
+FastAPI's Cloud SQL sessions use transaction-local database context so pooled connections do not
+retain one request's identity. Authenticated requests resolve the verified Firebase identity to the
+stable internal UUID and set `request.jwt.claim.sub`; the SQLAlchemy transaction hook restores it
+after any commit starts a new transaction. Public campaign routes and integration clients cannot
+derive an end-user UUID, so only those reviewed server workflows explicitly assume the validated
+Firebase writer role. Neither the role name nor any database credential is accepted from a browser.
+
+After each schema or access change, run the passwordless live control check as the IAM operator:
+
+```text
+pnpm firebase:sql:verify -- --instance PROJECT:REGION:INSTANCE --database DATABASE --user OPERATOR_EMAIL --owner-role FIREBASE_OWNER_ROLE --writer-role FIREBASE_WRITER_ROLE
+```
+
+It checks the Alembic revision, owner revocation, controlled writer membership, login-role RLS
+behavior, required RLS tables, retry constraints, immutable triggers, sealed financial equations,
+audit actors, index validity, public grants, no-context tenant denial, and a rolled-back immutable
+ledger mutation attempt.
+
 ## Cutover and rollback
 
 Rehearsal does not authorize production cutover. For cutover, enable maintenance mode before the
@@ -91,3 +109,5 @@ system of record; no Cloud SQL application writes are open.
 
 After the rehearsal, the operator's temporary schema-owner membership was explicitly revoked and
 verified absent; writer membership remains only for the outstanding controlled verification work.
+The live IAM control suite passed with the unprivileged login unable to read tenant or ledger rows
+without request context, and with immutable ledger enforcement still active under the writer role.

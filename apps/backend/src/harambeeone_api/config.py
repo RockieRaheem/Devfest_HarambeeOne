@@ -1,3 +1,4 @@
+import re
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
@@ -23,6 +24,7 @@ class Settings(BaseSettings):
     cloud_sql_instance: str | None = None
     cloud_sql_database: str | None = None
     cloud_sql_user: str | None = None
+    cloud_sql_server_role: str | None = None
     supabase_url: AnyHttpUrl
     supabase_publishable_key: str = Field(alias="NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY")
     firebase_project_id: str = Field(default="demo-harambeeone", alias="FIREBASE_PROJECT_ID")
@@ -40,11 +42,21 @@ class Settings(BaseSettings):
         if self.database_provider == "url" and not self.database_url:
             raise ValueError("DATABASE_URL is required when DATABASE_PROVIDER=url")
         if self.database_provider == "cloud_sql" and not all(
-            (self.cloud_sql_instance, self.cloud_sql_database, self.cloud_sql_user)
+            (
+                self.cloud_sql_instance,
+                self.cloud_sql_database,
+                self.cloud_sql_user,
+                self.cloud_sql_server_role,
+            )
         ):
             raise ValueError(
-                "CLOUD_SQL_INSTANCE, CLOUD_SQL_DATABASE, and CLOUD_SQL_USER are required"
+                "CLOUD_SQL_INSTANCE, CLOUD_SQL_DATABASE, CLOUD_SQL_USER, and "
+                "CLOUD_SQL_SERVER_ROLE are required"
             )
+        if self.cloud_sql_server_role and not re.fullmatch(
+            r"[A-Za-z_][A-Za-z0-9_]{0,62}", self.cloud_sql_server_role
+        ):
+            raise ValueError("CLOUD_SQL_SERVER_ROLE must be a safe PostgreSQL identifier")
         if self.app_environment == "production" and self.auth_provider != "firebase":
             raise ValueError("Production authentication must use Firebase")
         if self.app_environment == "production" and self.firebase_auth_emulator_host:

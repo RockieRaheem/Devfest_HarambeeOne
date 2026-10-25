@@ -18,7 +18,7 @@ from sqlalchemy.orm import Session, selectinload
 
 from harambeeone_api.auth import SchoolContext, require_permission
 from harambeeone_api.config import get_settings
-from harambeeone_api.database import get_session
+from harambeeone_api.database import get_server_session, get_session
 from harambeeone_api.models import (
     AuditEvent,
     IntegrationClient,
@@ -88,7 +88,7 @@ class IntegrationContext:
 
 def get_integration_context(
     authorization: str | None = Header(default=None),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ) -> IntegrationContext:
     scheme, _, token = (authorization or "").partition(" ")
     if scheme.casefold() != "bearer" or not token.startswith("hbo_live_"):
@@ -781,7 +781,7 @@ def export_learners(
     limit: int = Query(default=100, ge=1, le=500),
     cursor: uuid.UUID | None = Query(default=None),
     correlation_header: str | None = Header(default=None, alias="X-Correlation-ID"),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
     context: IntegrationContext = Depends(require_integration_scope("learners:read")),
 ):
     school = session.scalar(
@@ -874,7 +874,7 @@ def export_learners(
 def export_transfers(
     limit: int = Query(default=100, ge=1, le=500),
     correlation_header: str | None = Header(default=None, alias="X-Correlation-ID"),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
     context: IntegrationContext = Depends(require_integration_scope("transfers:read")),
 ):
     school = session.scalar(
@@ -941,7 +941,7 @@ def export_transfers(
 def import_learners(
     payload: IntegrationImportCreate,
     correlation_header: str | None = Header(default=None, alias="X-Correlation-ID"),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
     context: IntegrationContext = Depends(require_integration_scope("imports:write")),
 ):
     canonical = payload.model_dump(mode="json")

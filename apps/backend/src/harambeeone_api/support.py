@@ -21,7 +21,7 @@ from harambeeone_api.auth import (
     require_permission,
 )
 from harambeeone_api.config import get_settings
-from harambeeone_api.database import get_session
+from harambeeone_api.database import get_server_session, get_session
 from harambeeone_api.models import (
     AuditEvent,
     DonorProfile,
@@ -1274,7 +1274,7 @@ def withdraw_referral_consent(
 
 
 @router.get("/public/campaigns")
-def list_public_campaigns(session: Session = Depends(get_session)):
+def list_public_campaigns(session: Session = Depends(get_server_session)):
     cases = session.scalars(
         select(SupportCase)
         .where(SupportCase.status.in_(("published", "funded", "closed")))
@@ -1291,7 +1291,7 @@ def list_public_campaigns(session: Session = Depends(get_session)):
 
 
 @router.get("/public/campaigns/{public_code}")
-def get_public_campaign(public_code: str, session: Session = Depends(get_session)):
+def get_public_campaign(public_code: str, session: Session = Depends(get_server_session)):
     support_case = _public_campaign(session, public_code)
     before = (support_case.target_amount, support_case.status)
     _refresh_case_target(session, support_case, "system:live-obligation-check")
@@ -1304,7 +1304,7 @@ def get_public_campaign(public_code: str, session: Session = Depends(get_session
 def create_public_pledge(
     public_code: str,
     payload: SupportPledgeCreate,
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     return _pledge_payload(
         _create_pledge(
@@ -1340,7 +1340,7 @@ def create_authenticated_donor_pledge(
 def track_public_pledge(
     public_code: str,
     public_reference: str,
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     support_case = _public_campaign(session, public_code)
     pledge = session.scalar(
@@ -1377,7 +1377,7 @@ def track_public_pledge(
 def get_public_pledge_receipt(
     public_code: str,
     public_reference: str,
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     support_case = _public_campaign(session, public_code)
     pledge = session.scalar(
