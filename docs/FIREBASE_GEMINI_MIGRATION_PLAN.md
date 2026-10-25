@@ -225,8 +225,12 @@ Progress (F3 remains incomplete):
   membership, login-role RLS behavior, required RLS metadata, retry constraints, immutable
   evidence, financial equations, audit actors, index validity, public grants, and no-context tenant
   denial. Repository regression evidence is 127 backend tests plus Ruff.
-- Live completion remains blocked on least-privilege runtime IAM/ADC, the full multi-role and
-  PostgreSQL-specific Cloud SQL verification suites, protected source/Auth backups, and rollback
+- Created the keyless `harambeeone-api` runtime service account with only Cloud SQL Client and
+  Cloud SQL Instance User at project level and zero user-managed keys. PostgreSQL verified writer
+  membership, no owner membership, and no direct runtime-login `BYPASSRLS`; project billing
+  remains disabled. Local user ADC is configured without a repository credential.
+- Live completion remains blocked on direct runtime-identity login, the full multi-role API and
+  remaining PostgreSQL-specific Cloud SQL tests, protected source/Auth backups, and rollback
   rehearsal. Supabase Free stays authoritative until every gate passes and remains the durable
   fallback before trial archival.
 

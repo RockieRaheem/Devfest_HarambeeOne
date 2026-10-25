@@ -69,6 +69,9 @@ async function count(client, sql, values = []) {
 async function main() {
   const options = parseArguments(process.argv.slice(2));
   if (!options.user.includes("@")) throw new Error("User must be an IAM account email");
+  if (options["runtime-user"] && !options["runtime-user"].includes("@")) {
+    throw new Error("Runtime user must be an IAM database username");
+  }
   if (!/^[\w.-]+:[\w-]+:[\w-]+$/.test(options.instance)) throw new Error("Invalid instance name");
   for (const key of ["database", "owner-role", "writer-role"]) {
     if (!/^[A-Za-z_][A-Za-z0-9_]{0,62}$/.test(options[key])) {
@@ -104,6 +107,20 @@ async function main() {
     )).rows[0];
     assert(access.owner === false, "Operator still holds schema-owner membership");
     assert(access.writer === true, "Operator does not hold controlled writer membership");
+
+    if (options["runtime-user"]) {
+      const runtimeAccess = (await client.query(
+        "select pg_has_role($1, $2, 'member') as owner, pg_has_role($1, $3, 'member') as writer",
+        [options["runtime-user"], options["owner-role"], options["writer-role"]],
+      )).rows[0];
+      assert(runtimeAccess.owner === false, "Runtime identity holds schema-owner membership");
+      assert(runtimeAccess.writer === true, "Runtime identity lacks controlled writer membership");
+      const runtimeRole = (await client.query(
+        "select rolbypassrls from pg_roles where rolname = $1",
+        [options["runtime-user"]],
+      )).rows[0];
+      assert(runtimeRole?.rolbypassrls === false, "Runtime login unexpectedly bypasses RLS");
+    }
 
     const role = (await client.query(
       "select rolbypassrls from pg_roles where rolname = $1",
@@ -180,7 +197,7 @@ async function main() {
     console.log(
       "Cloud SQL controls passed: revision, least privilege, RLS metadata, retry constraints, " +
       "no-context tenant denial, immutability, financial equations, audit actors, indexes, " +
-      "and public grants.",
+      "runtime role, and public grants.",
     );
   } finally {
     client?.release();

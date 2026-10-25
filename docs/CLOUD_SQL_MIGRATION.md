@@ -67,7 +67,7 @@ Firebase writer role. Neither the role name nor any database credential is accep
 After each schema or access change, run the passwordless live control check as the IAM operator:
 
 ```text
-pnpm firebase:sql:verify -- --instance PROJECT:REGION:INSTANCE --database DATABASE --user OPERATOR_EMAIL --owner-role FIREBASE_OWNER_ROLE --writer-role FIREBASE_WRITER_ROLE
+pnpm firebase:sql:verify -- --instance PROJECT:REGION:INSTANCE --database DATABASE --user OPERATOR_EMAIL --owner-role FIREBASE_OWNER_ROLE --writer-role FIREBASE_WRITER_ROLE --runtime-user RUNTIME_DATABASE_USER
 ```
 
 It checks the Alembic revision, owner revocation, controlled writer membership, login-role RLS
@@ -102,10 +102,15 @@ rows using ordered row hashes and numeric totals. A post-migration SQL Connect d
 database compatible. FastAPI now has a passwordless Cloud SQL Python Connector path using
 automatic IAM database authentication, while the URL path remains the rollback default.
 
-F3 remains incomplete until a least-privilege runtime identity and local ADC are configured, the
-full multi-role API and PostgreSQL verification suites pass against Cloud SQL, a protected source
-backup and Auth export exist, and rollback is rehearsed. Supabase Free therefore remains the active
-system of record; no Cloud SQL application writes are open.
+The keyless `harambeeone-api@edu-pay-ledger.iam.gserviceaccount.com` runtime identity has only
+Cloud SQL Client and Cloud SQL Instance User at project level, has no user-managed key, and is a
+member of the controlled Firebase writer database role without owner membership or direct
+`BYPASSRLS`. Local user ADC is configured, but direct runtime-identity login still requires either
+an attached workload identity or explicitly approved service-account impersonation.
+
+F3 remains incomplete until the direct runtime login and full multi-role API suites pass against
+Cloud SQL, a protected source backup and Auth export exist, and rollback is rehearsed. Supabase
+Free therefore remains the active system of record; no Cloud SQL application writes are open.
 
 After the rehearsal, the operator's temporary schema-owner membership was explicitly revoked and
 verified absent; writer membership remains only for the outstanding controlled verification work.
