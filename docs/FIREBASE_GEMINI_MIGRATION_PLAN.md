@@ -228,11 +228,12 @@ Progress (F3 remains incomplete):
 - Created the keyless `harambeeone-api` runtime service account with only Cloud SQL Client and
   Cloud SQL Instance User at project level and zero user-managed keys. PostgreSQL verified writer
   membership, no owner membership, and no direct runtime-login `BYPASSRLS`; project billing
-  remains disabled. Local user ADC is configured without a repository credential.
-- Live completion remains blocked on direct runtime-identity login, the full multi-role API and
-  remaining PostgreSQL-specific Cloud SQL tests, protected source/Auth backups, and rollback
-  rehearsal. Supabase Free stays authoritative until every gate passes and remains the durable
-  fallback before trial archival.
+  remains disabled. The operator has Token Creator only on that service account for local testing;
+  impersonated ADC contains no private key and the FastAPI Cloud SQL readiness path passed as the
+  runtime identity. The ignored local environment records the target but retains the URL provider.
+- Live completion remains blocked on the full multi-role API and remaining PostgreSQL-specific
+  Cloud SQL tests, protected source/Auth backups, and rollback rehearsal. Supabase Free stays
+  authoritative until every gate passes and remains the durable fallback before trial archival.
 
 Planned commit: `Move data to Firebase SQL Connect`
 

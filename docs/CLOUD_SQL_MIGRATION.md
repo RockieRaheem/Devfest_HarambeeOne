@@ -105,12 +105,14 @@ automatic IAM database authentication, while the URL path remains the rollback d
 The keyless `harambeeone-api@edu-pay-ledger.iam.gserviceaccount.com` runtime identity has only
 Cloud SQL Client and Cloud SQL Instance User at project level, has no user-managed key, and is a
 member of the controlled Firebase writer database role without owner membership or direct
-`BYPASSRLS`. Local user ADC is configured, but direct runtime-identity login still requires either
-an attached workload identity or explicitly approved service-account impersonation.
+`BYPASSRLS`. Production must attach this identity to its workload. For local verification, the
+operator has Token Creator on this service account only; ADC targets the runtime
+identity through short-lived impersonation, contains no private key, and passed the FastAPI Cloud
+SQL connector readiness check. Revoke the operator binding when local verification is complete.
 
-F3 remains incomplete until the direct runtime login and full multi-role API suites pass against
-Cloud SQL, a protected source backup and Auth export exist, and rollback is rehearsed. Supabase
-Free therefore remains the active system of record; no Cloud SQL application writes are open.
+F3 remains incomplete until the full multi-role API suites pass against Cloud SQL, a protected
+source backup and Auth export exist, and rollback is rehearsed. Supabase Free therefore remains
+the active system of record; no Cloud SQL application writes are open.
 
 After the rehearsal, the operator's temporary schema-owner membership was explicitly revoked and
 verified absent; writer membership remains only for the outstanding controlled verification work.
