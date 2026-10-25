@@ -1,0 +1,2 @@
+# F1 intentionally defines no tables or operations. The reviewed brownfield
+# mapping is introduced in Slice F3 after schema parity and authorization review.

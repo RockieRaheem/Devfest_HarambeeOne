@@ -1,0 +1,22 @@
+{
+  "dataconnect": {
+    "source": "dataconnect"
+  },
+  "emulators": {
+    "auth": {
+      "host": "127.0.0.1",
+      "port": 9099
+    },
+    "dataconnect": {
+      "host": "127.0.0.1",
+      "port": 9399,
+      "dataDir": ".firebase/dataconnect"
+    },
+    "ui": {
+      "enabled": true,
+      "host": "127.0.0.1",
+      "port": 4000
+    },
+    "singleProjectMode": true
+  }
+}

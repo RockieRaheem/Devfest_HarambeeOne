@@ -1,0 +1,13 @@
+specVersion: "v1"
+serviceId: harambeeone
+location: europe-west1
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: harambeeone
+      cloudSql:
+        instanceId: harambeeone-fdc
+      # Alembic remains the migration owner for the existing relational schema.
+      schemaValidation: "COMPATIBLE"
+connectorDirs: []

@@ -443,11 +443,11 @@ Sponsor administration may resume only when all eight slices are marked **COMPLE
 
 ### Active priority override - Firebase and Gemini migration
 
-Status: **PLANNED — SLICE F1 IS NEXT**
+Status: **IN PROGRESS — SLICE F1 COMPLETE; SLICE F2 IS NEXT**
 
 The user explicitly authorized replacement of Supabase Authentication and PostgreSQL hosting with Firebase Authentication and Firebase SQL Connect, replacement of Gemma with a current Gemini model, and addition of Firebase Cloud Messaging. The ordered architecture, cutover, rollback, security, verification, and commit gates are defined in `docs/FIREBASE_GEMINI_MIGRATION_PLAN.md`. That plan is mandatory reading before every change while the override is active.
 
-The migration uses Firebase SQL Connect backed by Cloud SQL for PostgreSQL rather than Firestore so the verified relational ledger, exact-decimal arithmetic, database constraints, atomic workflows, immutable history, and closing evidence remain intact. Slice F1, the Firebase project and local foundation, is the first incomplete implementation priority. No further product expansion may interrupt it without another explicit user priority change.
+The migration uses Firebase SQL Connect backed by Cloud SQL for PostgreSQL rather than Firestore so the verified relational ledger, exact-decimal arithmetic, database constraints, atomic workflows, immutable history, and closing evidence remain intact. Slice F1 established the verified Firebase project, environment, dependency, and emulator foundation without changing a runtime path. Slice F2, Firebase Authentication and the identity bridge, is now the first incomplete implementation priority. No further product expansion may interrupt it without another explicit user priority change.
 
 ## Deferred roadmap
 
@@ -462,6 +462,8 @@ Only after the bursar completion gate:
 ## Progress log
 
 Add a dated entry only when a slice changes status. Include the verification commands or evidence used to justify completion.
+
+- 2026-10-25: Firebase migration Slice F1 completed in `Add Firebase migration foundation`. Auth and SQL Connect emulators passed the committed smoke test; 111 backend tests, Ruff, ESLint, TypeScript, backend compilation, and the optimized Next.js build passed; ignore-rule and secret-pattern checks found no committed credential material. Slice F2 is next.
 
 - 2026-10-24: Started Slice 8 and completed Phase 1. A shared exact-decimal financial calculation now makes learner statements, official receipts, dashboard metrics, and collection-report control totals agree across prior balances, charges, credits, receipts, refunds, reversals, payment corrections, and future carried balances. Ruff, all 97 backend tests, web lint, TypeScript validation, and the optimized 49-route production build passed. Phase 2, the complete bursar report centre, is next.
 - 2026-10-24: Completed Slice 8 Phase 2. Sixteen tenant-scoped bursar reports now cover collections, balances, aging, billing, requirements, adjustments, corrections, reconciliation, unidentified funds, cash-up, deposits, and billing-versus-collection with shared filters, print layouts, and server-generated CSV. Ruff, all 98 backend tests, web lint, TypeScript validation, and the optimized 49-route production build passed. Phase 3, the pre-close control checklist, is next.

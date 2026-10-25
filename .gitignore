@@ -17,3 +17,16 @@ coverage
 *.log
 *.tsbuildinfo
 apps/api/prisma/dev.db
+
+# Firebase local state and credentials (never commit service-account material)
+.firebase/
+.firebaserc.local
+firebase-debug.log*
+firebase-tools.json
+application_default_credentials.json
+*firebase-adminsdk*.json
+*service-account*.json
+*service_account*.json
+*google-application-credentials*.json
+dataconnect-generated/
+dataconnect/.dataconnect/

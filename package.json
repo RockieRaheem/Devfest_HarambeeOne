@@ -6,10 +6,19 @@
     "dev": "pnpm --parallel --filter @harambeeone/web --filter @harambeeone/backend dev",
     "dev:web": "pnpm --filter @harambeeone/web dev",
     "dev:api": "pnpm --filter @harambeeone/backend dev",
-    "build": "pnpm -r build",
-    "lint": "pnpm -r lint",
+    "build": "pnpm --filter @harambeeone/backend --filter @harambeeone/web build",
+    "build:legacy": "pnpm --filter @harambeeone/api build",
+    "lint": "pnpm --filter @harambeeone/backend --filter @harambeeone/web lint",
+    "typecheck": "pnpm --filter @harambeeone/web exec tsc --noEmit",
+    "firebase:env:check": "node scripts/validate-firebase-env.mjs",
+    "firebase:env:check:emulator": "node scripts/validate-firebase-env.mjs --emulator",
+    "firebase:emulators": "firebase emulators:start --project demo-harambeeone --config firebase.json --only auth,dataconnect",
+    "firebase:emulators:verify": "firebase emulators:exec --project demo-harambeeone --config firebase.json --only auth,dataconnect \"node scripts/verify-firebase-emulators.mjs\"",
     "db:revision": "pnpm --filter @harambeeone/backend db:revision",
     "db:migrate": "pnpm --filter @harambeeone/backend db:migrate",
     "db:seed": "pnpm --filter @harambeeone/backend db:seed"
+  },
+  "devDependencies": {
+    "firebase-tools": "15.34.1"
   }
 }
