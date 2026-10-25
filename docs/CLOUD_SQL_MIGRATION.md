@@ -75,6 +75,16 @@ behavior, required RLS tables, retry constraints, immutable triggers, sealed fin
 audit actors, index validity, public grants, no-context tenant denial, and a rolled-back immutable
 ledger mutation attempt.
 
+With keyless runtime ADC active and the Cloud SQL environment selected, also run:
+
+```text
+pnpm firebase:sql:runtime
+```
+
+This verifier creates synthetic owner, bursar, cashier, auditor, guardian, and donor identities in
+one transaction; proves tenant isolation, role writes, unknown-user denial, explicit server-only
+access, duplicate rejection, and then rolls the entire probe back and confirms no rows remain.
+
 ## Cutover and rollback
 
 Rehearsal does not authorize production cutover. For cutover, enable maintenance mode before the
@@ -113,6 +123,9 @@ SQL connector readiness check. Revoke the operator binding when local verificati
 F3 remains incomplete until the full multi-role API suites pass against Cloud SQL, a protected
 source backup and Auth export exist, and rollback is rehearsed. Supabase Free therefore remains
 the active system of record; no Cloud SQL application writes are open.
+
+The keyless runtime database matrix passed for owner, bursar, cashier, auditor, guardian, donor,
+unknown-user, server-only, duplicate, and rollback behavior using synthetic transaction-only data.
 
 After the rehearsal, the operator's temporary schema-owner membership was explicitly revoked and
 verified absent; writer membership remains only for the outstanding controlled verification work.

@@ -231,9 +231,13 @@ Progress (F3 remains incomplete):
   remains disabled. The operator has Token Creator only on that service account for local testing;
   impersonated ADC contains no private key and the FastAPI Cloud SQL readiness path passed as the
   runtime identity. The ignored local environment records the target but retains the URL provider.
-- Live completion remains blocked on the full multi-role API and remaining PostgreSQL-specific
-  Cloud SQL tests, protected source/Auth backups, and rollback rehearsal. Supabase Free stays
-  authoritative until every gate passes and remains the durable fallback before trial archival.
+- Passed a rollback-only live runtime matrix using synthetic owner, bursar, cashier, auditor,
+  guardian, and donor identities. It proved tenant isolation, role-specific school writes,
+  unknown-user denial, explicit server-only access, duplicate rejection, and zero persisted probe
+  rows after rollback.
+- Live completion remains blocked on remaining API-level Cloud SQL tests, protected source/Auth
+  backups, and the configuration rollback rehearsal. Supabase Free stays authoritative until every
+  gate passes and remains the durable fallback before trial archival.
 
 Planned commit: `Move data to Firebase SQL Connect`
 

@@ -19,6 +19,7 @@
     "firebase:sql:data": "node scripts/migrate-cloudsql-data.mjs",
     "firebase:sql:revoke-owner": "node scripts/revoke-cloudsql-owner.mjs",
     "firebase:sql:verify": "node scripts/verify-cloudsql-controls.mjs",
+    "firebase:sql:runtime": "pnpm --filter @harambeeone/backend exec uv run --no-sync python scripts/verify_cloudsql_runtime.py",
     "auth:migrate": "pnpm --filter @harambeeone/backend auth:migrate --",
     "db:revision": "pnpm --filter @harambeeone/backend db:revision",
     "db:migrate": "pnpm --filter @harambeeone/backend db:migrate",
