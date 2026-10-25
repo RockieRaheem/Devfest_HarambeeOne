@@ -242,21 +242,11 @@ Redis and RabbitMQ are present in the local Compose file for planned background 
    | Liveness | <http://localhost:4100/health> |
    | Database readiness | <http://localhost:4100/health/readiness> |
 
-## Supabase authentication
+## Firebase authentication
 
-Email/password authentication works after the public Supabase URL and publishable key are configured.
+Firebase Authentication now owns email/password and Google sign-in. The server exchanges a recently issued Firebase ID token for a Secure, HttpOnly, SameSite session cookie, and both Next.js and FastAPI verify the session. Authorization still comes from database relationships such as `school_memberships` and verified guardian links; it never trusts editable profile fields or custom claims as the sole authority.
 
-To enable Google sign-in:
-
-1. Create a Google OAuth 2.0 web client.
-2. Add `http://localhost:3000` as an authorized JavaScript origin.
-3. Add `https://PROJECT_REF.supabase.co/auth/v1/callback` as the Google redirect URI.
-4. Enable Google in **Supabase Authentication -> Sign In / Providers**.
-5. Set the Supabase site URL to `http://localhost:3000`.
-6. Add `http://localhost:3000/auth/callback` to the allowed redirect URLs.
-7. Add equivalent HTTPS origins and redirects before production deployment.
-
-Authorization is derived from database relationships such as `school_memberships` and verified guardian links. It must never depend on editable Supabase `user_metadata`.
+Use [the Firebase authentication migration guide](docs/FIREBASE_AUTH_MIGRATION.md) for console setup, emulator verification, the protected user-export workflow, password-hash compatibility, rollback boundaries, and production checks. Supabase PostgreSQL remains the active database until the later SQL Connect migration slice.
 
 ## Useful commands
 
@@ -277,6 +267,9 @@ pnpm --filter @harambeeone/backend lint
 # Frontend lint and production build
 pnpm --filter @harambeeone/web lint
 pnpm --filter @harambeeone/web build
+
+# Firebase Auth emulator journey
+pnpm firebase:auth:verify
 
 # Database lifecycle
 pnpm db:revision

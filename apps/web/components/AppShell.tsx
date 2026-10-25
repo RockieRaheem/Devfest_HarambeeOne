@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import { clearPrimarySchool, getPrimarySchool, SchoolLoadError } from '@/lib/school';
 import { AcademicPeriod, clearPeriods, getAcademicPeriods, getSelectedPeriod, selectPeriod } from '@/lib/period';
 import { getDashboardBootstrap } from '@/lib/dashboard';
-import { createClient } from '@/lib/supabase/client';
+import { clearServerSession } from '@/lib/firebase/client';
 
 const navGroups = [
   { label: 'Overview', items: [
@@ -79,16 +79,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         router.replace('/onboarding');
       }
     });
-    const supabase = createClient();
-    const applySession = (session: Awaited<ReturnType<typeof supabase.auth.getSession>>['data']['session']) => {
-      if (session?.user) {
-        setUserName(String(session.user.user_metadata.full_name || session.user.email?.split('@')[0] || 'Bursar'));
-        setUserEmail(session.user.email ?? '');
-      }
-    };
-    void supabase.auth.getSession().then(({ data }) => applySession(data.session));
-    const { data } = supabase.auth.onAuthStateChange((_event, session) => applySession(session));
-    return () => data.subscription.unsubscribe();
+    void fetch('/auth/session', { cache: 'no-store' })
+      .then(response => response.ok ? response.json() : null)
+      .then(profile => {
+        if (!profile) return;
+        const email = typeof profile.email === 'string' ? profile.email : '';
+        setUserName(profile.displayName || email.split('@')[0] || 'Bursar');
+        setUserEmail(email);
+      });
   }, [authRoute, dashboardRoute, periodsRoute, portalRoute, publicRoute, router]);
 
   useEffect(() => {
@@ -106,7 +104,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   async function signOut() {
     clearPrimarySchool();
     clearPeriods();
-    await createClient().auth.signOut();
+    await clearServerSession();
     router.replace('/login');
     router.refresh();
   }

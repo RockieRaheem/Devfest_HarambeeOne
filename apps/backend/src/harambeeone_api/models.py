@@ -558,6 +558,31 @@ class PortalProfile(Base):
     )
 
 
+class IdentityProviderAccount(Base):
+    __tablename__ = "identity_provider_accounts"
+    __table_args__ = (
+        UniqueConstraint(
+            "provider", "provider_subject", name="uq_identity_provider_subject"
+        ),
+        UniqueConstraint(
+            "provider", "internal_user_id", name="uq_identity_provider_internal_user"
+        ),
+        CheckConstraint(
+            "provider in ('firebase','supabase')", name="ck_identity_provider_name"
+        ),
+        Index("ix_identity_provider_email", "provider", "normalized_email"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    provider: Mapped[str] = mapped_column(String(32))
+    provider_subject: Mapped[str] = mapped_column(String(128))
+    internal_user_id: Mapped[uuid.UUID] = mapped_column(index=True)
+    normalized_email: Mapped[str | None] = mapped_column(String(254))
+    email_verified: Mapped[bool] = mapped_column(default=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    migrated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class GuardianInvitation(Base):
     __tablename__ = "guardian_invitations"
     __table_args__ = (

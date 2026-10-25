@@ -8,6 +8,8 @@ const envPath = resolve(repositoryRoot, '.env');
 
 const allowedFromEnvFile = new Set([
   'FIREBASE_PROJECT_ID',
+  'FIREBASE_AUTH_EMULATOR_HOST',
+  'AUTH_PROVIDER',
   'GOOGLE_APPLICATION_CREDENTIALS',
   'NEXT_PUBLIC_FIREBASE_API_KEY',
   'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN',
@@ -16,6 +18,7 @@ const allowedFromEnvFile = new Set([
   'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID',
   'NEXT_PUBLIC_FIREBASE_APP_ID',
   'NEXT_PUBLIC_FIREBASE_VAPID_KEY',
+  'NEXT_PUBLIC_FIREBASE_AUTH_EMULATOR_HOST',
 ]);
 
 function loadRootEnv() {
@@ -47,6 +50,8 @@ loadRootEnv();
 if (emulatorMode) {
   const emulatorDefaults = {
     FIREBASE_PROJECT_ID: 'demo-harambeeone',
+    FIREBASE_AUTH_EMULATOR_HOST: '127.0.0.1:9099',
+    AUTH_PROVIDER: 'firebase',
     NEXT_PUBLIC_FIREBASE_API_KEY: 'demo-api-key',
     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: 'demo-harambeeone.firebaseapp.com',
     NEXT_PUBLIC_FIREBASE_PROJECT_ID: 'demo-harambeeone',
@@ -54,6 +59,7 @@ if (emulatorMode) {
     NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: '000000000000',
     NEXT_PUBLIC_FIREBASE_APP_ID: '1:000000000000:web:0000000000000000000000',
     NEXT_PUBLIC_FIREBASE_VAPID_KEY: 'demo-vapid-public-key',
+    NEXT_PUBLIC_FIREBASE_AUTH_EMULATOR_HOST: 'http://127.0.0.1:9099',
   };
   for (const [name, value] of Object.entries(emulatorDefaults)) process.env[name] ||= value;
 }
@@ -71,6 +77,12 @@ const publicNames = [
 
 const values = Object.fromEntries(publicNames.map((name) => [name, requireValue(name, errors)]));
 const serverProjectId = requireValue('FIREBASE_PROJECT_ID', errors);
+if (process.env.AUTH_PROVIDER?.trim() !== 'firebase') {
+  errors.push('AUTH_PROVIDER must be firebase for the migrated runtime.');
+}
+if (!emulatorMode && (process.env.FIREBASE_AUTH_EMULATOR_HOST || process.env.NEXT_PUBLIC_FIREBASE_AUTH_EMULATOR_HOST)) {
+  errors.push('Firebase Auth emulator hosts must be unset outside emulator mode.');
+}
 
 if (values.NEXT_PUBLIC_FIREBASE_PROJECT_ID && serverProjectId && values.NEXT_PUBLIC_FIREBASE_PROJECT_ID !== serverProjectId) {
   errors.push('Client and server Firebase project IDs must match.');

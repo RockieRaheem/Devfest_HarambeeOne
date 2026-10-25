@@ -7,7 +7,7 @@ import { Bot, LogOut, PanelsTopLeft } from 'lucide-react';
 import { clearClientResponseCache } from '@/lib/api/client';
 import { clearPeriods } from '@/lib/period';
 import { clearPrimarySchool } from '@/lib/school';
-import { createClient } from '@/lib/supabase/client';
+import { clearServerSession } from '@/lib/firebase/client';
 import NotificationCenter from '@/components/NotificationCenter';
 
 export default function PortalShell({
@@ -20,7 +20,7 @@ export default function PortalShell({
   const router = useRouter();
 
   async function signOut() {
-    await createClient().auth.signOut();
+    await clearServerSession();
     clearClientResponseCache();
     clearPeriods();
     clearPrimarySchool();

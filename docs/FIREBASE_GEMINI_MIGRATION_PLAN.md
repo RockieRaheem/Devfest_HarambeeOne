@@ -144,7 +144,7 @@ Planned commit: `Add Firebase migration foundation`
 
 ### Slice F2 - Firebase Authentication and identity bridge
 
-Status: **NEXT**
+Status: **COMPLETE**
 
 Deliver:
 
@@ -169,7 +169,7 @@ Planned commit: `Migrate authentication to Firebase`
 
 ### Slice F3 - Cloud SQL and Firebase SQL Connect migration
 
-Status: **PENDING**
+Status: **NEXT**
 
 Deliver:
 
@@ -300,6 +300,7 @@ Add a dated entry only after a slice changes status. Include the exact verificat
 
 - 2026-10-25: Established the 527-file repository baseline in commit `8c65fab`; secret and large-file audits found no credential file or Git-hosting size problem. All 111 backend tests passed. Frontend lint/build were attempted but could not start because local pnpm dependency links were incomplete, which is now an explicit Slice F1 gate.
 - 2026-10-25: Completed Slice F1 in `Add Firebase migration foundation`. Restored the frozen pnpm graph; pinned Firebase Web 13.1.0, Node Admin 14.5.0, Python Admin 7.7.0, and CLI 15.34.1; started Auth and SQL Connect emulators and passed the reachability smoke test; validated emulator environment defaults; confirmed credential filenames are ignored and a private-key/API-key pattern scan found no matches; passed all 111 backend tests, Ruff, ESLint, TypeScript, backend compilation, and the optimized 51-route Next.js build. Runtime authentication, database, and AI paths remain unchanged.
+- 2026-10-25: Completed Slice F2 in `Migrate authentication to Firebase`. Firebase email/password and Google sign-in now exchange recent verified ID tokens for Secure, HttpOnly, SameSite session cookies; Next.js and FastAPI verify server-side identity and revocation; a provider-neutral UUID bridge preserves historical ownership; and an idempotent Supabase Auth export importer validates bcrypt hashes, Google identities, duplicates, and reset cases without exposing secrets. Removed the obsolete browser Supabase Auth routes while retaining the documented rollback verifier and source service through cutover. Passed all 119 backend tests (including authorization, invitations, membership, tenant, portal, identity, disabled-user, and revocation coverage), Ruff, ESLint, TypeScript, backend compilation, the optimized 50-page Next.js build, and the Firebase Auth emulator journey for verification, recovery, Google, sessions, disabled users, and revocation.
 
 ## Official decision references
 

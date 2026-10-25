@@ -1,8 +1,8 @@
 import type { NextRequest } from 'next/server';
-import { updateSession } from '@/lib/supabase/middleware';
+import { updateFirebaseSession } from '@/lib/firebase/middleware';
 
 export function middleware(request: NextRequest) {
-  return updateSession(request);
+  return updateFirebaseSession(request);
 }
 
 export const config = {

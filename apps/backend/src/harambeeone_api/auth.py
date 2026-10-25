@@ -1,10 +1,14 @@
+import os
 import uuid
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Annotated, Literal, cast
+from typing import Annotated, Literal, Protocol, cast
 
 import jwt
 from fastapi import Depends, Header, HTTPException, status
+from firebase_admin import auth as firebase_auth
+from firebase_admin import exceptions as firebase_exceptions
+from firebase_admin import get_app, initialize_app
 from jwt import PyJWKClient
 from jwt.exceptions import (
     ExpiredSignatureError,
@@ -14,11 +18,12 @@ from jwt.exceptions import (
     PyJWKClientError,
 )
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from harambeeone_api.config import get_settings
 from harambeeone_api.database import get_session
-from harambeeone_api.models import SchoolMembership
+from harambeeone_api.models import IdentityProviderAccount, SchoolMembership
 
 Role = Literal["owner", "bursar", "cashier", "auditor"]
 Permission = Literal[
@@ -113,6 +118,40 @@ ROLE_ALIASES = {"owner_bursar": "owner"}
 class AuthenticatedUser:
     id: uuid.UUID
     email: str | None
+    provider: str = "test"
+    provider_subject: str | None = None
+
+
+@dataclass(frozen=True)
+class ExternalIdentity:
+    provider: Literal["firebase", "supabase"]
+    subject: str
+    email: str | None
+    email_verified: bool
+
+
+class IdentityTokenError(Exception):
+    """A token is invalid and must not establish an application identity."""
+
+
+class IdentityTokenExpired(IdentityTokenError):
+    pass
+
+
+class IdentityTokenRevoked(IdentityTokenError):
+    pass
+
+
+class IdentityUserDisabled(IdentityTokenError):
+    pass
+
+
+class IdentityProviderUnavailable(Exception):
+    pass
+
+
+class IdentityVerifier(Protocol):
+    def verify(self, token: str) -> ExternalIdentity: ...
 
 
 @lru_cache(maxsize=1)
@@ -126,6 +165,94 @@ def _jwks_client() -> PyJWKClient:
     )
 
 
+@lru_cache(maxsize=1)
+def _firebase_app():
+    settings = get_settings()
+    if settings.firebase_auth_emulator_host:
+        os.environ.setdefault(
+            "FIREBASE_AUTH_EMULATOR_HOST", settings.firebase_auth_emulator_host
+        )
+    try:
+        return get_app("harambeeone-auth")
+    except ValueError:
+        return initialize_app(
+            options={"projectId": settings.firebase_project_id},
+            name="harambeeone-auth",
+        )
+
+
+class FirebaseSessionVerifier:
+    def verify(self, token: str) -> ExternalIdentity:
+        try:
+            claims = firebase_auth.verify_session_cookie(
+                token,
+                check_revoked=True,
+                app=_firebase_app(),
+            )
+            subject = claims.get("sub") or claims.get("uid")
+            if not isinstance(subject, str) or not subject:
+                raise IdentityTokenError("Firebase session has no subject")
+            email = claims.get("email")
+            return ExternalIdentity(
+                provider="firebase",
+                subject=subject,
+                email=email if isinstance(email, str) else None,
+                email_verified=claims.get("email_verified") is True,
+            )
+        except firebase_auth.ExpiredSessionCookieError as error:
+            raise IdentityTokenExpired from error
+        except firebase_auth.RevokedSessionCookieError as error:
+            raise IdentityTokenRevoked from error
+        except firebase_auth.UserDisabledError as error:
+            raise IdentityUserDisabled from error
+        except (firebase_auth.CertificateFetchError, firebase_exceptions.UnavailableError) as error:
+            raise IdentityProviderUnavailable from error
+        except IdentityTokenError:
+            raise
+        except (firebase_auth.InvalidSessionCookieError, ValueError, TypeError) as error:
+            raise IdentityTokenError from error
+
+
+class SupabaseAccessTokenVerifier:
+    """Temporary non-production rollback boundary until the final cutover."""
+
+    def verify(self, token: str) -> ExternalIdentity:
+        issuer = f"{str(get_settings().supabase_url).rstrip('/')}/auth/v1"
+        try:
+            signing_key = _jwks_client().get_signing_key_from_jwt(token)
+            claims = jwt.decode(
+                token,
+                signing_key.key,
+                algorithms=["ES256"],
+                audience="authenticated",
+                issuer=issuer,
+                options={"require": ["exp", "iat", "sub", "iss", "aud"]},
+            )
+            subject = str(uuid.UUID(claims["sub"]))
+            email = claims.get("email")
+            return ExternalIdentity(
+                provider="supabase",
+                subject=subject,
+                email=email if isinstance(email, str) else None,
+                email_verified=True,
+            )
+        except ExpiredSignatureError as error:
+            raise IdentityTokenExpired from error
+        except ImmatureSignatureError as error:
+            raise IdentityTokenError from error
+        except PyJWKClientConnectionError as error:
+            raise IdentityProviderUnavailable from error
+        except (InvalidTokenError, PyJWKClientError, KeyError, TypeError, ValueError) as error:
+            raise IdentityTokenError from error
+
+
+@lru_cache(maxsize=1)
+def _identity_verifier() -> IdentityVerifier:
+    if get_settings().auth_provider == "supabase":
+        return SupabaseAccessTokenVerifier()
+    return FirebaseSessionVerifier()
+
+
 def _unauthorized(detail: str) -> HTTPException:
     return HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -134,36 +261,67 @@ def _unauthorized(detail: str) -> HTTPException:
     )
 
 
-def get_current_user(authorization: str | None = Header(default=None)) -> AuthenticatedUser:
+def _resolve_internal_user(session: Session, identity: ExternalIdentity) -> AuthenticatedUser:
+    account = session.scalar(
+        select(IdentityProviderAccount).where(
+            IdentityProviderAccount.provider == identity.provider,
+            IdentityProviderAccount.provider_subject == identity.subject,
+        )
+    )
+    if account is None:
+        internal_user_id = (
+            uuid.UUID(identity.subject) if identity.provider == "supabase" else uuid.uuid4()
+        )
+        account = IdentityProviderAccount(
+            provider=identity.provider,
+            provider_subject=identity.subject,
+            internal_user_id=internal_user_id,
+            normalized_email=identity.email.strip().casefold() if identity.email else None,
+            email_verified=identity.email_verified,
+        )
+        session.add(account)
+        try:
+            session.commit()
+        except IntegrityError:
+            session.rollback()
+            account = session.scalar(
+                select(IdentityProviderAccount).where(
+                    IdentityProviderAccount.provider == identity.provider,
+                    IdentityProviderAccount.provider_subject == identity.subject,
+                )
+            )
+            if account is None:
+                raise
+    return AuthenticatedUser(
+        id=account.internal_user_id,
+        email=identity.email,
+        provider=identity.provider,
+        provider_subject=identity.subject,
+    )
+
+
+def get_current_user(
+    session: Annotated[Session, Depends(get_session)],
+    authorization: str | None = Header(default=None),
+) -> AuthenticatedUser:
     scheme, _, token = (authorization or "").partition(" ")
     if scheme.casefold() != "bearer" or not token.strip():
         raise _unauthorized("Sign in required")
     token = token.strip()
-    issuer = f"{str(get_settings().supabase_url).rstrip('/')}/auth/v1"
-
     try:
-        signing_key = _jwks_client().get_signing_key_from_jwt(token)
-        claims = jwt.decode(
-            token,
-            signing_key.key,
-            algorithms=["ES256"],
-            audience="authenticated",
-            issuer=issuer,
-            options={"require": ["exp", "iat", "sub", "iss", "aud"]},
-        )
-        return AuthenticatedUser(id=uuid.UUID(claims["sub"]), email=claims.get("email"))
-    except ExpiredSignatureError as error:
+        return _resolve_internal_user(session, _identity_verifier().verify(token))
+    except IdentityTokenExpired as error:
         raise _unauthorized("Your session has expired. Please sign in again.") from error
-    except ImmatureSignatureError as error:
-        raise _unauthorized(
-            "Your session is not active yet. Check your device time and try again."
-        ) from error
-    except PyJWKClientConnectionError as error:
+    except IdentityTokenRevoked as error:
+        raise _unauthorized("Your session was revoked. Please sign in again.") from error
+    except IdentityUserDisabled as error:
+        raise _unauthorized("This account is disabled. Contact your administrator.") from error
+    except IdentityProviderUnavailable as error:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Secure sign-in verification is temporarily unavailable. Please try again.",
         ) from error
-    except (InvalidTokenError, PyJWKClientError, KeyError, TypeError, ValueError) as error:
+    except IdentityTokenError as error:
         raise _unauthorized("We could not verify your session. Please sign in again.") from error
 
 

@@ -46,7 +46,7 @@ Create school
 
 | Area | Current position | Gap to close |
 | --- | --- | --- |
-| Authentication | Supabase email/password and Google entry points exist | Operational APIs need consistent membership enforcement |
+| Authentication | Firebase email/password and Google entry points use server-verified session cookies and stable internal identity mappings | Supabase Auth remains recoverable until the final cutover acceptance gate |
 | School structure | School levels, classes, optional streams, and editable names exist | Period-aware controls must govern all downstream records |
 | Learners | Registration, guardians, placement, import, status, and movement exist | Bulk progression and controlled period rollover are missing |
 | Fees | Categories, class plans, and installments exist | Fixed 50/30/balance UI and uncontrolled publishing must be replaced |

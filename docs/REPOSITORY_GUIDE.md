@@ -12,7 +12,7 @@ Browser
   -> Supabase PostgreSQL
 ```
 
-Supabase Auth establishes the user session. FastAPI independently resolves the active school membership and permission for every operational request. PostgreSQL stores financial truth, applies row-level security, and preserves immutable evidence through constraints and triggers.
+Firebase Authentication establishes a server-owned session cookie. FastAPI maps the Firebase subject to a stable internal user UUID, then independently resolves the active school membership and permission for every operational request. Supabase PostgreSQL remains the temporary database host, stores financial truth, applies row-level security, and preserves immutable evidence through constraints and triggers until the SQL Connect cutover slice.
 
 ## Root files
 
@@ -37,7 +37,7 @@ The active Next.js 15 and React 19 application. It contains the bursar workspace
 
 - `app/` contains route segments and page-specific interfaces.
 - `components/` contains shared shells, authentication controls, notifications, and presentation primitives.
-- `lib/` contains session-aware API clients, Supabase clients, school selection, period state, and reusable browser/server utilities.
+- `lib/` contains session-aware API clients, Firebase authentication clients, temporary Supabase compatibility clients, school selection, period state, and reusable browser/server utilities.
 - `middleware.ts` performs lightweight route/session coordination; final authorization remains server-side.
 - `public/` contains browser-served brand assets.
 - `scripts/next-with-root-env.mjs` loads root configuration before invoking Next.js.
@@ -49,7 +49,7 @@ CSS is split by workflow. `globals.css` supplies the shared visual system, while
 The authoritative FastAPI service and PostgreSQL migration project.
 
 - `src/harambeeone_api/main.py` composes the API, health endpoints, middleware, and workflow routers.
-- `auth.py` validates Supabase sessions and derives tenant permissions from database membership.
+- `auth.py` verifies Firebase sessions, resolves stable internal identities, and derives tenant permissions from database membership. A non-production Supabase verifier remains only as a rollback boundary until final cutover.
 - `models.py` defines SQLAlchemy persistence models; Alembic migrations remain the deployed schema history.
 - `financial_reporting.py` owns the canonical exact-decimal learner and school financial equation.
 - Workflow modules such as `billing.py`, `finance.py`, `reconciliation.py`, `periods.py`, and `reports.py` implement bursar operations.

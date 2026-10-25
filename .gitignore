@@ -28,5 +28,8 @@ application_default_credentials.json
 *service-account*.json
 *service_account*.json
 *google-application-credentials*.json
+*auth-export*.json
+*supabase-users*.json
+*firebase-users*.json
 dataconnect-generated/
 dataconnect/.dataconnect/

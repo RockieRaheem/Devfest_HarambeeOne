@@ -1,5 +1,10 @@
 import PasswordRecovery from '@/components/PasswordRecovery';
 
-export default function ResetPasswordPage() {
-  return <PasswordRecovery mode="update"/>;
+export default async function ResetPasswordPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ oobCode?: string }>;
+}) {
+  const params = await searchParams;
+  return <PasswordRecovery mode="update" oobCode={params.oobCode}/>;
 }

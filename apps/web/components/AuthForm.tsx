@@ -3,11 +3,24 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Eye, EyeOff, LoaderCircle, LockKeyhole, Mail } from 'lucide-react';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
+import {
+  createUserWithEmailAndPassword,
+  getRedirectResult,
+  GoogleAuthProvider,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signInWithRedirect,
+  signOut,
+  updateProfile,
+  type User,
+} from 'firebase/auth';
 import { authMessage } from '@/lib/auth-errors';
 import { markSessionRecovered } from '@/lib/api/client';
 import { clearPrimarySchool } from '@/lib/school';
 import { clearPeriods } from '@/lib/period';
+import { establishServerSession, prepareFirebaseAuth } from '@/lib/firebase/client';
 
 type AuthFormProps = {
   mode: 'login' | 'signup';
@@ -38,6 +51,38 @@ export default function AuthForm({ mode, nextPath = '/dashboard', initialError =
   const [notice, setNotice] = useState('');
   const isLogin = mode === 'login';
 
+  async function finishSignIn(user: User) {
+    if (!user.emailVerified) {
+      await sendEmailVerification(user, { url: `${window.location.origin}/login?verified=1` });
+      await signOut(await prepareFirebaseAuth());
+      throw Object.assign(new Error(authMessage('email_not_verified')), {
+        code: 'email_not_verified',
+      });
+    }
+    await establishServerSession(user);
+    markSessionRecovered();
+    clearPrimarySchool();
+    clearPeriods();
+    window.location.replace(nextPath);
+  }
+
+  useEffect(() => {
+    let active = true;
+    prepareFirebaseAuth()
+      .then(auth => getRedirectResult(auth))
+      .then(result => {
+        if (active && result) return finishSignIn(result.user);
+      })
+      .catch(reason => {
+        if (active) setError(authMessage(reason, 'Google sign-in could not be completed.'));
+      })
+      .finally(() => {
+        if (active) setGoogleBusy(false);
+      });
+    return () => { active = false; };
+  // The redirect result is consumed once when the authentication page mounts.
+  }, []);
+
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setBusy(true);
@@ -56,24 +101,17 @@ export default function AuthForm({ mode, nextPath = '/dashboard', initialError =
         const problem = passwordProblem(password);
         if (problem) throw new Error(problem);
       }
-      const response = await fetch('/auth/password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        cache: 'no-store',
-        body: JSON.stringify({ mode, email, password, fullName, nextPath }),
-      });
-      const result = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        const authFailure = { code: result.code, status: response.status };
-        const message = authMessage(authFailure, result.detail || 'Authentication could not be completed.');
-        throw Object.assign(new Error(message), { code: result.code });
-      }
-      if (result.authenticated) {
-        markSessionRecovered();
-        clearPrimarySchool();
-        clearPeriods();
-        window.location.replace(nextPath);
+      const auth = await prepareFirebaseAuth();
+      if (isLogin) {
+        const result = await signInWithEmailAndPassword(auth, email, password);
+        await finishSignIn(result.user);
       } else {
+        const result = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(result.user, { displayName: fullName });
+        await sendEmailVerification(result.user, {
+          url: `${window.location.origin}/login?verified=1`,
+        });
+        await signOut(auth);
         setNotice(`We sent a confirmation link to ${email}. Open it on this device to finish creating your account.`);
       }
     } catch (reason) {
@@ -84,10 +122,25 @@ export default function AuthForm({ mode, nextPath = '/dashboard', initialError =
     }
   }
 
-  function continueWithGoogle() {
+  async function continueWithGoogle() {
     setGoogleBusy(true);
     setError('');
-    window.location.assign(`/auth/google?next=${encodeURIComponent(nextPath)}`);
+    try {
+      const auth = await prepareFirebaseAuth();
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+      const result = await signInWithPopup(auth, provider);
+      await finishSignIn(result.user);
+    } catch (reason) {
+      const code = typeof reason === 'object' && reason && 'code' in reason ? String(reason.code) : '';
+      if (code === 'auth/popup-blocked') {
+        const auth = await prepareFirebaseAuth();
+        await signInWithRedirect(auth, new GoogleAuthProvider());
+        return;
+      }
+      setError(authMessage(reason, 'Google sign-in could not be completed.'));
+      setGoogleBusy(false);
+    }
   }
 
   return <main className="auth-page">
@@ -101,7 +154,7 @@ export default function AuthForm({ mode, nextPath = '/dashboard', initialError =
         <h1>Every learner account, payment and balance in one dependable place.</h1>
         <p>Keep daily collections organised, issue accountable receipts, and understand what the school is owed without adding complexity to the work.</p>
       </div>
-      <footer>Secure access powered by Supabase</footer>
+      <footer>Secure access powered by Firebase Authentication</footer>
     </section>
 
     <section className="auth-panel">
