@@ -1,6 +1,6 @@
 # Repository Working Rules
 
-Before making any code, database, configuration, documentation, or interface change, read `docs/MVP_ROADMAP.md` in full.
+Before making any code, database, configuration, documentation, or interface change, read `docs/MVP_ROADMAP.md` and `docs/FIREBASE_GEMINI_MIGRATION_PLAN.md` in full.
 
 Follow the roadmap in order. Work only on its first incomplete implementation slice unless the user explicitly changes the priority. Complete and verify the current slice against every listed completion gate, update its status and progress evidence, and commit the coherent change with a concise single-line commit message before starting another slice.
 

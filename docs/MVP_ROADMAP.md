@@ -439,6 +439,16 @@ Sponsor administration may resume only when all eight slices are marked **COMPLE
 9. Audit evidence identifies who performed every consequential action.
 10. Cross-school access, unauthorized actions, duplicate submissions, and partial failures are rejected by automated tests.
 
+## Active platform migration
+
+### Active priority override - Firebase and Gemini migration
+
+Status: **PLANNED — SLICE F1 IS NEXT**
+
+The user explicitly authorized replacement of Supabase Authentication and PostgreSQL hosting with Firebase Authentication and Firebase SQL Connect, replacement of Gemma with a current Gemini model, and addition of Firebase Cloud Messaging. The ordered architecture, cutover, rollback, security, verification, and commit gates are defined in `docs/FIREBASE_GEMINI_MIGRATION_PLAN.md`. That plan is mandatory reading before every change while the override is active.
+
+The migration uses Firebase SQL Connect backed by Cloud SQL for PostgreSQL rather than Firestore so the verified relational ledger, exact-decimal arithmetic, database constraints, atomic workflows, immutable history, and closing evidence remain intact. Slice F1, the Firebase project and local foundation, is the first incomplete implementation priority. No further product expansion may interrupt it without another explicit user priority change.
+
 ## Deferred roadmap
 
 Only after the bursar completion gate:

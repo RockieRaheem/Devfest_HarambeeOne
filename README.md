@@ -340,6 +340,7 @@ Do not use sponsor or blockchain work to bypass the bursar completion gate.
 
 - [Developer handoff](docs/DEVELOPER_HANDOFF.md)
 - [Canonical MVP roadmap](docs/MVP_ROADMAP.md)
+- [Firebase and Gemini migration plan](docs/FIREBASE_GEMINI_MIGRATION_PLAN.md)
 - [Repository guide](docs/REPOSITORY_GUIDE.md)
 - [Harambee Support expansion plan](docs/HARAMBEE_SUPPORT_EXPANSION_PLAN.md)
 - [Architecture](docs/ARCHITECTURE.md)
