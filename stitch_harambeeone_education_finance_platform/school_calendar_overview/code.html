@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School Events</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "primary": "#001736",
+                            "tertiary": "#390001",
+                            "on-secondary": "#ffffff",
+                            "on-primary-fixed": "#001b3d",
+                            "surface-card": "#ffffff",
+                            "surface-dim": "#d8dae0",
+                            "status-error": "#ba1a1a",
+                            "surface-container-high": "#e7e8ee",
+                            "on-tertiary-container": "#ff5a4e",
+                            "tertiary-container": "#600004",
+                            "tertiary-fixed-dim": "#ffb4ab",
+                            "error": "#ba1a1a",
+                            "inverse-surface": "#2e3135",
+                            "primary-fixed": "#d6e3ff",
+                            "secondary-fixed-dim": "#80d8a5",
+                            "surface-bright": "#f8f9ff",
+                            "on-error-container": "#93000a",
+                            "on-surface": "#191c20",
+                            "on-primary-container": "#7594ca",
+                            "outline": "#747780",
+                            "on-surface-variant": "#43474f",
+                            "on-secondary-container": "#0a7147",
+                            "surface-container": "#eceef3",
+                            "on-tertiary": "#ffffff",
+                            "secondary": "#006d43",
+                            "on-surface-subtle": "#43474f",
+                            "on-primary-fixed-variant": "#264778",
+                            "secondary-fixed": "#9cf5c0",
+                            "surface": "#f8f9ff",
+                            "inverse-on-surface": "#eff0f6",
+                            "tertiary-fixed": "#ffdad5",
+                            "on-primary": "#ffffff",
+                            "status-warning": "#d97706",
+                            "on-error": "#ffffff",
+                            "on-secondary-fixed-variant": "#005231",
+                            "surface-variant": "#e1e2e8",
+                            "status-success": "#006d43",
+                            "surface-container-lowest": "#ffffff",
+                            "on-tertiary-fixed": "#410002",
+                            "surface-container-low": "#f2f3f9",
+                            "surface-container-highest": "#e1e2e8",
+                            "primary-fixed-dim": "#a9c7ff",
+                            "inverse-primary": "#a9c7ff",
+                            "secondary-container": "#99f2bd",
+                            "primary-container": "#002b5b",
+                            "background": "#f8f9ff",
+                            "on-tertiary-fixed-variant": "#930009",
+                            "on-background": "#191c20",
+                            "outline-variant": "#c4c6d0",
+                            "surface-tint": "#405f91",
+                            "on-secondary-fixed": "#002111",
+                            "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "margin-desktop": "24px",
+                            "stack-sm": "8px",
+                            "margin-mobile": "16px",
+                            "gutter": "16px",
+                            "stack-md": "16px",
+                            "unit": "4px",
+                            "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                            "headline-lg-mobile": ["Public Sans"],
+                            "data-mono": ["Public Sans"],
+                            "body-lg": ["Public Sans"],
+                            "body-md": ["Public Sans"],
+                            "headline-sm": ["Public Sans"],
+                            "headline-lg": ["Public Sans"],
+                            "label-sm": ["Public Sans"],
+                            "headline-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                            "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                            "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                            "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24 pt-14">
+<!-- TopAppBar from JSON -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile h-14 bg-surface dark:bg-surface-container-high border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center overflow-hidden">
+<img class="object-cover w-full h-full" data-alt="A clean, modern portrait of a smiling student in a school uniform, bathed in soft, natural high-key lighting. The background is a very subtle, blurred bright surface, emphasizing the light-mode corporate and institutional trust aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrvSYElE6x6Jp7btXe4S10CDKBa6VaUGPP-DUx2LXF-vcZuTznmHwicKCflDhIuaixX5KXU6hF3LoUgmach2ZModD9tVuU54aQQDJKiHdTcn5aW5q1m_G-AjGrTM9ClWHjRho4OOfNXQH5qCjrKJomyIbP65kxIauRC26D5J3ynUPkPp6DnuRqHWI05bwtkDZ8UEwdYMBZYsWKknNFHfFGubyuqVUC9lnk7Kz86zi7z1ErMPLgBtKLfQ"/>
+</div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed">School Events</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors text-primary dark:text-primary-fixed active:scale-95 duration-150 ease-in-out">
+<span class="material-symbols-outlined" data-icon="swap_horiz">swap_horiz</span>
+</button>
+</header>
+<main class="px-margin-mobile md:px-margin-desktop py-stack-md max-w-[1200px] mx-auto">
+<!-- Student Filter Bar -->
+<div class="flex gap-2 overflow-x-auto pb-2 mb-stack-md hide-scrollbar" style="scrollbar-width: none; -ms-overflow-style: none;">
+<style>
+                .hide-scrollbar::-webkit-scrollbar { display: none; }
+            </style>
+<button class="shrink-0 px-4 py-2 rounded-full bg-primary text-on-primary font-body-md text-body-md flex items-center gap-2">
+                All Students
+            </button>
+<button class="shrink-0 px-4 py-2 rounded-full border border-outline-variant bg-surface text-on-surface font-body-md text-body-md flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-[10px] font-bold">S</div>
+                Sarah
+            </button>
+<button class="shrink-0 px-4 py-2 rounded-full border border-outline-variant bg-surface text-on-surface font-body-md text-body-md flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-[10px] font-bold">J</div>
+                James
+            </button>
+</div>
+<!-- Calendar Component -->
+<div class="bg-surface-card rounded-xl border border-outline-variant p-4 mb-stack-lg">
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-headline-sm text-headline-sm text-primary">October 2023</h2>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-low text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-low text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Days of Week -->
+<div class="grid grid-cols-7 gap-1 mb-2">
+<div class="text-center font-label-sm text-label-sm text-on-surface-variant">S</div>
+<div class="text-center font-label-sm text-label-sm text-on-surface-variant">M</div>
+<div class="text-center font-label-sm text-label-sm text-on-surface-variant">T</div>
+<div class="text-center font-label-sm text-label-sm text-on-surface-variant">W</div>
+<div class="text-center font-label-sm text-label-sm text-on-surface-variant">T</div>
+<div class="text-center font-label-sm text-label-sm text-on-surface-variant">F</div>
+<div class="text-center font-label-sm text-label-sm text-on-surface-variant">S</div>
+</div>
+<!-- Calendar Grid -->
+<div class="grid grid-cols-7 gap-1">
+<!-- Empty days -->
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface-variant opacity-30">24</div></div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface-variant opacity-30">25</div></div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface-variant opacity-30">26</div></div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface-variant opacity-30">27</div></div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface-variant opacity-30">28</div></div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface-variant opacity-30">29</div></div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface-variant opacity-30">30</div></div>
+<!-- Active Days -->
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">1</div></div>
+<div class="aspect-square flex items-center justify-center p-1 relative">
+<div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">2</div>
+<div class="absolute bottom-[2px] w-1 h-1 rounded-full bg-secondary"></div>
+</div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">3</div></div>
+<div class="aspect-square flex items-center justify-center p-1 relative">
+<div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">4</div>
+<div class="absolute bottom-[2px] w-1 h-1 rounded-full bg-status-warning"></div>
+</div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">5</div></div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">6</div></div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">7</div></div>
+<!-- Selected Day -->
+<div class="aspect-square flex items-center justify-center p-1 relative">
+<div class="w-full h-full flex items-center justify-center rounded-full bg-primary text-on-primary font-body-md text-body-md font-bold shadow-[0_2px_8px_rgba(0,23,54,0.3)]">8</div>
+<div class="absolute bottom-[2px] w-1 h-1 rounded-full bg-white"></div>
+</div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">9</div></div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">10</div></div>
+<div class="aspect-square flex items-center justify-center p-1 relative">
+<div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">11</div>
+<div class="absolute bottom-[2px] flex gap-[2px]">
+<div class="w-1 h-1 rounded-full bg-secondary"></div>
+<div class="w-1 h-1 rounded-full bg-primary"></div>
+</div>
+</div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">12</div></div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">13</div></div>
+<div class="aspect-square flex items-center justify-center p-1"><div class="w-full h-full flex items-center justify-center rounded-full font-body-md text-body-md text-on-surface">14</div></div>
+</div>
+</div>
+<!-- Today's Events List -->
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-stack-sm">Events for Oct 8</h3>
+<div class="flex flex-col gap-3">
+<!-- Event Card 1 -->
+<div class="bg-surface-card border border-outline-variant rounded-xl p-4 flex gap-4">
+<div class="w-12 h-12 rounded-lg bg-secondary/10 text-secondary flex flex-col items-center justify-center shrink-0">
+<span class="font-label-sm text-label-sm font-bold uppercase">Oct</span>
+<span class="font-headline-sm text-headline-sm leading-none">8</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-body-lg text-body-lg font-semibold text-on-surface">Science Fair</h4>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded-md">09:00 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">Main Hall • Sarah</p>
+<div class="inline-block px-2 py-1 rounded-md bg-secondary/10 text-secondary font-label-sm text-label-sm">Academic</div>
+</div>
+</div>
+<!-- Event Card 2 -->
+<div class="bg-surface-card border border-outline-variant rounded-xl p-4 flex gap-4">
+<div class="w-12 h-12 rounded-lg bg-primary/10 text-primary flex flex-col items-center justify-center shrink-0">
+<span class="font-label-sm text-label-sm font-bold uppercase">Oct</span>
+<span class="font-headline-sm text-headline-sm leading-none">8</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-1">
+<h4 class="font-body-lg text-body-lg font-semibold text-on-surface">Parent-Teacher Meeting</h4>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2 py-1 rounded-md">02:30 PM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-2">Room 4B • James</p>
+<div class="inline-block px-2 py-1 rounded-md bg-primary/10 text-primary font-label-sm text-label-sm">Administrative</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar from JSON -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface dark:bg-surface-container border-t border-outline-variant dark:border-outline md:hidden rounded-t-xl">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-3 py-1 hover:bg-surface-container-high dark:hover:bg-inverse-surface active:scale-95 duration-100">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-3 py-1 hover:bg-surface-container-high dark:hover:bg-inverse-surface active:scale-95 duration-100">
+<span class="material-symbols-outlined mb-1" data-icon="payments">payments</span>
+<span class="font-label-sm text-label-sm">Fees</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl px-3 py-1 hover:bg-surface-container-high dark:hover:bg-inverse-surface active:scale-95 duration-100">
+<span class="material-symbols-outlined mb-1" data-icon="calendar_month">calendar_month</span>
+<span class="font-label-sm text-label-sm font-bold">Events</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-3 py-1 hover:bg-surface-container-high dark:hover:bg-inverse-surface active:scale-95 duration-100">
+<span class="material-symbols-outlined mb-1" data-icon="notifications">notifications</span>
+<span class="font-label-sm text-label-sm">Notices</span>
+</button>
+</nav>
+</body></html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HarambeeOne Institutional Portal - Bursar's Command &amp; Cashbook</title>
+<!-- Google Fonts: Public Sans & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Public+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary": "#000000",
+            "on-secondary-fixed": "#001551",
+            "surface-dim": "#cbdbf5",
+            "inverse-primary": "#bec6e0",
+            "surface-bright": "#f8f9ff",
+            "background": "#f8f9ff",
+            "primary-fixed-dim": "#bec6e0",
+            "inverse-surface": "#213145",
+            "outline": "#76777d",
+            "surface-container-high": "#dce9ff",
+            "tertiary-fixed-dim": "#68dba9",
+            "on-tertiary-fixed": "#002114",
+            "inverse-on-surface": "#eaf1ff",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "on-error": "#ffffff",
+            "secondary-fixed": "#dce1ff",
+            "tertiary": "#000000",
+            "on-primary-fixed-variant": "#3f465c",
+            "on-secondary-container": "#fffbff",
+            "on-surface-variant": "#45464d",
+            "surface-container-highest": "#d3e4fe",
+            "secondary-fixed-dim": "#b7c4ff",
+            "surface-variant": "#d3e4fe",
+            "on-tertiary-fixed-variant": "#005137",
+            "surface-container-low": "#eff4ff",
+            "surface": "#f8f9ff",
+            "on-surface": "#0b1c30",
+            "on-background": "#0b1c30",
+            "primary-container": "#131b2e",
+            "tertiary-fixed": "#85f8c4",
+            "on-tertiary": "#ffffff",
+            "secondary-container": "#4069f2",
+            "tertiary-container": "#002114",
+            "on-tertiary-container": "#069669",
+            "on-secondary-fixed-variant": "#0039b5",
+            "on-primary-container": "#7c839b",
+            "on-primary-fixed": "#131b2e",
+            "error": "#ba1a1a",
+            "surface-container-lowest": "#ffffff",
+            "secondary": "#1d4ed8",
+            "primary-fixed": "#dae2fd",
+            "surface-container": "#e5eeff",
+            "outline-variant": "#c6c6cd",
+            "on-secondary": "#ffffff",
+            "surface-tint": "#565e74"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xs": "0.25rem",
+            "gutter": "1.5rem",
+            "space-xl": "2.5rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "space-md": "1rem",
+            "gutter-mobile": "1rem",
+            "margin-mobile": "1rem"
+          },
+          "fontFamily": {
+            "headline-sm": ["Public Sans"],
+            "headline-md": ["Public Sans"],
+            "headline-lg": ["Public Sans"],
+            "body-sm": ["Inter"],
+            "display-lg": ["Public Sans"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "tabular-numeric": ["Inter"],
+            "display-sm": ["Public Sans"],
+            "display-sm-mobile": ["Public Sans"],
+            "label-md": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "tabular-numeric": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "display-sm": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "display-sm-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col font-body-md text-body-md selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- ==================== SHARED COMPONENT: TopNavBar ==================== -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm flex justify-between items-center w-full px-gutter h-16 sticky top-0 z-40 transition-colors duration-150">
+<div class="flex items-center gap-6">
+<!-- Brand Anchor from JSON -->
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-primary-container flex items-center justify-center text-on-primary shadow-xs">
+<span class="material-symbols-outlined text-secondary font-semibold" data-icon="account_balance">account_balance</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-md font-headline-md tracking-tight font-bold text-on-surface dark:text-inverse-on-surface leading-none">HarambeeOne Institutional Portal</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant dark:text-inverse-on-surface mt-0.5 tracking-wide">MINISTRY OF EDUCATION &amp; SPORTS • STATUTORY TREASURY</span>
+</div>
+</div>
+<!-- TopNav Search Bar (on_left) -->
+<div class="hidden lg:flex items-center relative pl-4 border-l border-outline-variant">
+<span class="material-symbols-outlined absolute left-7 text-outline" data-icon="search">search</span>
+<input class="w-72 pl-9 pr-3 py-1.5 rounded-lg text-body-sm font-body-sm bg-surface border border-outline-variant text-on-surface placeholder:text-outline focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/10 transition-all" placeholder="Search learner LIN, receipt voucher, or parent phone..." type="text"/>
+</div>
+</div>
+<!-- Navigation Links & Trailing Actions -->
+<div class="flex items-center gap-6">
+<!-- Navigation Links from JSON -->
+<nav class="hidden md:flex items-center gap-5 text-label-md font-label-md">
+<a class="text-secondary dark:text-secondary-fixed font-semibold border-b-2 border-secondary dark:border-secondary-fixed pb-1 active:scale-[0.99] transition-transform duration-100" href="#term-context">Term 1 - 2025</a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-on-surface dark:hover:text-surface-bright pb-1 transition-colors duration-150" href="#audit">Audit Trail</a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-on-surface dark:hover:text-surface-bright pb-1 transition-colors duration-150" href="#reconciliation">Live Reconciliation</a>
+</nav>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-3">
+<button class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-outline-variant bg-surface hover:bg-surface-container-low text-on-surface text-label-md font-label-md transition-colors active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-outline" data-icon="sync_alt">sync_alt</span>
+<span>Term Switcher</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary text-label-md font-label-md transition-all shadow-xs active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+<span>Post Ledger Entry</span>
+</button>
+<!-- Trailing Icon Actions from JSON -->
+<div class="flex items-center gap-1 border-l border-outline-variant pl-3">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors" title="Notifications" type="button">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors" title="Help &amp; Knowledge Base" type="button">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+</div>
+<!-- Executive Avatar -->
+<div class="flex items-center gap-2 pl-2">
+<div class="relative">
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="Official high-resolution executive portrait of the Ugandan Chief Bursar wearing formal business attire with an authoritative yet welcoming expression in a modern, well-lit ministry office setting. Soft natural daylight, pristine sharp clarity, and institutional prestige." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCaYYN9M6loAh3Sz6h0cxfs5kXLljNUSwYBrwdZ_qfiS9lbGH3G-hUEU8mf53H1eIYfctCwPau-4gQXBtjUnIM9nTAuzCdf_VLFZhrDTPe9sNcncce3o0y1o9ZcYgETjAQvvhCQEAyRztwg32SC7MKFFeSfZAR_My9fCx1VLREnzCmmCQwK0sXNkKtuSgE-pes4ZgF86BSj5-JMWR_n9IxdVpXEHj42IultBvCBkZ-55ib0dr4H66Bbg"/>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-tertiary-container border-2 border-surface-container-lowest"></span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- ==================== MAIN WORKSPACE WITH SIDENAV ==================== -->
+<div class="flex flex-1 w-full relative">
+<!-- ==================== SHARED COMPONENT: SideNavBar ==================== -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 flex flex-col justify-between p-space-md z-30 bg-surface dark:bg-inverse-surface border-r border-outline-variant dark:border-outline overflow-y-auto custom-scroll">
+<!-- Top Section -->
+<div class="flex flex-col gap-5">
+<!-- Header Statutory Brand Badge -->
+<div class="flex items-center gap-3 p-2 rounded-xl bg-surface-container-low border border-outline-variant/60">
+<div class="w-9 h-9 rounded-lg bg-surface-container-lowest flex items-center justify-center border border-outline-variant shadow-2xs">
+<span class="material-symbols-outlined text-secondary" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<div class="flex flex-col overflow-hidden">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface truncate">HarambeeOne</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant truncate">Uganda MoES Statutory Portal</span>
+</div>
+</div>
+<!-- Side Navigation Primary Tabs -->
+<nav class="flex flex-col gap-1 text-label-md font-label-md">
+<!-- Active Tab: Bursar Command -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-secondary-container text-on-secondary-container dark:bg-secondary dark:text-on-secondary font-semibold active:scale-[0.98] transition-transform duration-150 shadow-xs" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span>Bursar Command</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-inverse-on-surface hover:bg-surface-container-high dark:hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+<span>Live Reconciliation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-inverse-on-surface hover:bg-surface-container-high dark:hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span>Student Ledgers</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-inverse-on-surface hover:bg-surface-container-high dark:hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="how_to_reg">how_to_reg</span>
+<span>Registrar Admissions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-inverse-on-surface hover:bg-surface-container-high dark:hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="assignment_turned_in">assignment_turned_in</span>
+<span>Statutory DEO Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant dark:text-inverse-on-surface hover:bg-surface-container-high dark:hover:bg-surface-container transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>System Settings</span>
+</a>
+</nav>
+<!-- CTA from JSON -->
+<button class="w-full mt-2 py-2 px-3 rounded-lg border border-secondary/30 bg-surface-container-low hover:bg-surface-container text-secondary text-label-md font-label-md flex items-center justify-center gap-2 active:scale-[0.98] transition-all" type="button">
+<span class="material-symbols-outlined text-secondary" data-icon="add">add</span>
+<span>New Quick Journal Entry</span>
+</button>
+</div>
+<!-- Footer Nav Cluster from JSON -->
+<div class="pt-4 border-t border-outline-variant/60 flex flex-col gap-1 text-label-md font-label-md">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span>Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+<span>Bursar Security</span>
+</a>
+<!-- System Heartbeat Micro-Pill -->
+<div class="mt-3 p-2.5 rounded-lg bg-surface-container-lowest border border-outline-variant/50 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">IFMS Live Gateway</span>
+</div>
+<span class="text-label-sm font-label-sm font-semibold text-secondary">99.98%</span>
+</div>
+</div>
+</aside>
+<!-- ==================== MAIN PAGE CANVAS ==================== -->
+<main class="flex-1 ml-64 p-space-lg lg:p-space-xl min-w-0 max-w-[1536px]">
+<!-- Executive Header & Quick Actions -->
+<section class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-6 border-b border-outline-variant/50">
+<div>
+<div class="flex flex-wrap items-center gap-2.5">
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight font-bold">Bursar's Command &amp; Cashbook</h1>
+<!-- Verified Institutional Registry Badge with live pulse -->
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-label-sm font-label-sm font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 shadow-2xs">
+<span class="relative flex h-1.5 w-1.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-600"></span>
+</span>
+              Verified MoES Registry Sync
+            </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">
+            Term 3, 2024 • Academic Year Closing • Statutory IFMS Integration #KLA-MOES-2024-88A
+          </p>
+</div>
+<!-- Executive Action Group -->
+<div class="flex items-center gap-2.5 flex-wrap">
+<button class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface text-label-md font-label-md hover:bg-surface-container-low hover:border-slate-300 transition-all shadow-xs active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-outline" data-icon="post_add">post_add</span>
+<span>Record Manual Receipt</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface text-label-md font-label-md hover:bg-surface-container-low hover:border-slate-300 transition-all shadow-xs active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-outline" data-icon="ios_share">ios_share</span>
+<span>Export CSV/Excel</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary text-label-md font-label-md transition-all shadow-xs active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-secondary-fixed" data-icon="print">print</span>
+<span class="font-semibold">Generate DEO Form 8B</span>
+</button>
+</div>
+</section>
+<!-- Executive KPI Metric Cards (4 Grid) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mt-6">
+<!-- Metric Card 1: Total Term 3 Collections -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm hover:shadow transition-shadow flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="text-label-sm font-label-sm font-semibold text-outline uppercase tracking-wider">Total Term 3 Collections</span>
+<div class="w-7 h-7 rounded-lg bg-secondary-fixed/50 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="text-display-sm font-display-sm text-on-surface tracking-tight font-bold">UGX 428,650,000</div>
+<div class="flex items-center gap-2 mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<span class="inline-flex items-center text-emerald-700 font-semibold text-label-sm font-label-sm bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+<span class="material-symbols-outlined text-[14px]" data-icon="trending_up">trending_up</span> +14.8%
+              </span>
+<span>82.4% of expected 520M</span>
+</div>
+</div>
+<!-- Progress Track -->
+<div class="mt-4 pt-3 border-t border-outline-variant/40">
+<div class="flex justify-between items-center text-label-sm font-label-sm mb-1 text-on-surface-variant">
+<span>1,142 students cleared</span>
+<span class="font-semibold text-on-surface">82.4%</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 82.4%"></div>
+</div>
+</div>
+</div>
+<!-- Metric Card 2: Cleared Bank Deposits -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm hover:shadow transition-shadow flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="text-label-sm font-label-sm font-semibold text-outline uppercase tracking-wider">Cleared Bank Deposits</span>
+<div class="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-700">
+<span class="material-symbols-outlined" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="text-display-sm font-display-sm text-on-surface tracking-tight font-bold">UGX 384,200,000</div>
+<div class="flex items-center gap-2 mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<span class="text-emerald-700 font-medium">100% verified check badge</span>
+</div>
+</div>
+<!-- Bank Status Indicators -->
+<div class="mt-4 pt-3 border-t border-outline-variant/40 flex items-center justify-between text-label-sm font-label-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+<span class="text-on-surface font-medium">Stanbic Bank</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+<span class="text-on-surface font-medium">Centenary Bank</span>
+</div>
+<span class="text-outline">Reconciled</span>
+</div>
+</div>
+<!-- Metric Card 3: Mobile Money Floating Escrow -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm hover:shadow transition-shadow flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="text-label-sm font-label-sm font-semibold text-outline uppercase tracking-wider">Mobile Money Escrow</span>
+<div class="w-7 h-7 rounded-lg bg-amber-50 flex items-center justify-center text-amber-700">
+<span class="material-symbols-outlined" data-icon="phone_android">phone_android</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="text-display-sm font-display-sm text-on-surface tracking-tight font-bold">UGX 38,950,000</div>
+<div class="flex items-center gap-1.5 mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-amber-600" data-icon="schedule">schedule</span>
+<span>MTN SchoolPay &amp; Airtel sweep</span>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/40 flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-on-surface-variant">Auto-settlement window</span>
+<span class="inline-flex items-center gap-1 font-semibold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+              17:00 EAT Today
+            </span>
+</div>
+</div>
+<!-- Metric Card 4: Unmatched Exceptions & Suspense -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm hover:shadow transition-shadow flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="text-label-sm font-label-sm font-semibold text-outline uppercase tracking-wider">Suspense &amp; Exceptions</span>
+<div class="w-7 h-7 rounded-lg bg-error-container/60 flex items-center justify-center text-error">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="text-display-sm font-display-sm text-on-surface tracking-tight font-bold text-error">UGX 5,500,000</div>
+<div class="flex items-center gap-1.5 mt-1.5 text-body-sm font-body-sm text-on-surface-variant">
+<span class="inline-flex items-center font-semibold text-label-sm font-label-sm bg-error-container text-on-error-container px-1.5 py-0.2 rounded">
+                6 Items Flagged
+              </span>
+<span>Requires code remapping</span>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/40 flex items-center justify-between text-label-sm font-label-sm">
+<span class="text-on-surface-variant">Sibling/Fee Suspense</span>
+<a class="font-bold text-secondary hover:underline inline-flex items-center gap-0.5" href="#exceptions">
+<span>Resolve Now</span>
+<span class="material-symbols-outlined text-[13px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Main Split Layout (65% / 35%) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
+<!-- ==================== LEFT COLUMN (65% width: 8 Cols of 12) ==================== -->
+<div class="lg:col-span-8 flex flex-col gap-5">
+<!-- Card: Today's Transaction Journal & Cashbook -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<!-- Table Header Toolbar -->
+<div class="p-space-md border-b border-outline-variant flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-surface-container-lowest">
+<div class="flex items-center gap-3">
+<h2 class="text-headline-sm font-headline-sm text-on-surface font-semibold">Today's Transaction Journal &amp; Cashbook</h2>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-label-sm font-label-sm font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  Live Feed
+                </span>
+</div>
+<!-- Filter & Search Controls -->
+<div class="flex items-center gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-2 text-outline text-[16px]" data-icon="search">search</span>
+<input class="pl-8 pr-2.5 py-1 text-body-sm font-body-sm rounded-lg border border-outline-variant bg-surface placeholder:text-outline text-on-surface w-44 focus:w-56 focus:outline-none focus:border-secondary transition-all" placeholder="Filter voucher or LIN..." type="text"/>
+</div>
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-outline-variant bg-surface hover:bg-surface-container text-label-md font-label-md text-on-surface-variant transition-colors" type="button">
+<span class="material-symbols-outlined text-[15px]" data-icon="filter_list">filter_list</span>
+<span>Batch</span>
+</button>
+</div>
+</div>
+<!-- Tabular Ledger -->
+<div class="overflow-x-auto custom-scroll">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface border-b border-outline-variant text-label-sm font-label-sm text-outline uppercase tracking-wider">
+<th class="py-3 px-3.5 font-semibold">Time</th>
+<th class="py-3 px-3 font-semibold">Receipt / Ref</th>
+<th class="py-3 px-3 font-semibold">Learner &amp; Class</th>
+<th class="py-3 px-3 font-semibold">Payer &amp; Channel</th>
+<th class="py-3 px-3 font-semibold text-right">Amount (UGX)</th>
+<th class="py-3 px-3 font-semibold text-center">Allocation Status</th>
+<th class="py-3 px-3 font-semibold text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/60 font-body-sm text-body-sm">
+<!-- Row 1 -->
+<tr class="hover:bg-surface transition-colors">
+<td class="py-3 px-3.5 text-tabular-numeric font-tabular-numeric text-outline whitespace-nowrap">14:32</td>
+<td class="py-3 px-3 whitespace-nowrap font-medium text-on-surface">
+<span class="inline-flex items-center gap-1 font-mono text-body-sm">
+<span class="material-symbols-outlined text-outline text-[15px]" data-icon="tag">tag</span>
+                        REC-9921
+                      </span>
+</td>
+<td class="py-3 px-3">
+<div class="font-medium text-on-surface">Mukasa Brian</div>
+<div class="text-label-sm font-label-sm text-outline">P.5 Blue • LIN: 894022</div>
+</td>
+<td class="py-3 px-3">
+<div class="text-on-surface">Esther Nakato</div>
+<div class="text-label-sm font-label-sm text-amber-700 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> MTN MoMo SchoolPay
+                      </div>
+</td>
+<td class="py-3 px-3 text-right font-tabular-numeric text-tabular-numeric font-semibold text-on-surface">
+                      450,000
+                    </td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-label-sm font-label-sm font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                        Cleared &amp; Posted
+                      </span>
+</td>
+<td class="py-3 px-3 text-right">
+<button class="w-7 h-7 rounded hover:bg-surface-container flex items-center justify-center text-outline hover:text-on-surface transition-colors" title="Print Official Receipt" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="print">print</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface transition-colors">
+<td class="py-3 px-3.5 text-tabular-numeric font-tabular-numeric text-outline whitespace-nowrap">14:15</td>
+<td class="py-3 px-3 whitespace-nowrap font-medium text-on-surface">
+<span class="inline-flex items-center gap-1 font-mono text-body-sm">
+<span class="material-symbols-outlined text-outline text-[15px]" data-icon="tag">tag</span>
+                        EFT-4402
+                      </span>
+</td>
+<td class="py-3 px-3">
+<div class="font-medium text-on-surface">Namaganda Sarah &amp; Joshua</div>
+<div class="text-label-sm font-label-sm text-outline">P.3 / P.1 Dual Sibling Split</div>
+</td>
+<td class="py-3 px-3">
+<div class="text-on-surface">Dr. Robert Ssemwogerere</div>
+<div class="text-label-sm font-label-sm text-secondary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Stanbic Bank EFT
+                      </div>
+</td>
+<td class="py-3 px-3 text-right font-tabular-numeric text-tabular-numeric font-semibold text-on-surface">
+                      1,200,000
+                    </td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-label-sm font-label-sm font-semibold bg-blue-50 text-blue-800 border border-blue-200">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                        Sibling Split Reconciled
+                      </span>
+</td>
+<td class="py-3 px-3 text-right">
+<button class="w-7 h-7 rounded hover:bg-surface-container flex items-center justify-center text-outline hover:text-on-surface transition-colors" title="View Split Ledger Breakdown" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="account_tree">account_tree</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface transition-colors">
+<td class="py-3 px-3.5 text-tabular-numeric font-tabular-numeric text-outline whitespace-nowrap">13:48</td>
+<td class="py-3 px-3 whitespace-nowrap font-medium text-on-surface">
+<span class="inline-flex items-center gap-1 font-mono text-body-sm">
+<span class="material-symbols-outlined text-outline text-[15px]" data-icon="tag">tag</span>
+                        REC-9884
+                      </span>
+</td>
+<td class="py-3 px-3">
+<div class="font-medium text-on-surface">Kemigisha Mary</div>
+<div class="text-label-sm font-label-sm text-outline">P.4 Green • LIN: 771203</div>
+</td>
+<td class="py-3 px-3">
+<div class="text-on-surface">Joyce Kemigisha</div>
+<div class="text-label-sm font-label-sm text-rose-600 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Airtel Money
+                      </div>
+</td>
+<td class="py-3 px-3 text-right font-tabular-numeric text-tabular-numeric font-semibold text-on-surface">
+                      250,000
+                    </td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-label-sm font-label-sm font-semibold bg-cyan-50 text-cyan-800 border border-cyan-200">
+<span class="w-1.5 h-1.5 rounded-full bg-cyan-600"></span>
+                        Ambiguous Match Confirmed
+                      </span>
+</td>
+<td class="py-3 px-3 text-right">
+<button class="w-7 h-7 rounded hover:bg-surface-container flex items-center justify-center text-outline hover:text-on-surface transition-colors" title="Print Official Receipt" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="print">print</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface transition-colors">
+<td class="py-3 px-3.5 text-tabular-numeric font-tabular-numeric text-outline whitespace-nowrap">12:10</td>
+<td class="py-3 px-3 whitespace-nowrap font-medium text-on-surface">
+<span class="inline-flex items-center gap-1 font-mono text-body-sm">
+<span class="material-symbols-outlined text-outline text-[15px]" data-icon="tag">tag</span>
+                        REC-9840
+                      </span>
+</td>
+<td class="py-3 px-3">
+<div class="font-medium text-on-surface">Katende John</div>
+<div class="text-label-sm font-label-sm text-outline">P.4 Yellow</div>
+</td>
+<td class="py-3 px-3">
+<div class="text-on-surface">Agnes Katende</div>
+<div class="text-label-sm font-label-sm text-amber-700 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> MTN MoMo
+                      </div>
+</td>
+<td class="py-3 px-3 text-right font-tabular-numeric text-tabular-numeric font-semibold text-on-surface">
+                      450,000
+                    </td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-label-sm font-label-sm font-semibold bg-purple-50 text-purple-800 border border-purple-200">
+<span class="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
+                        Fee Code Remapped
+                      </span>
+</td>
+<td class="py-3 px-3 text-right">
+<button class="w-7 h-7 rounded hover:bg-surface-container flex items-center justify-center text-outline hover:text-on-surface transition-colors" title="Review Mapping Audit" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="history">history</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface transition-colors">
+<td class="py-3 px-3.5 text-tabular-numeric font-tabular-numeric text-outline whitespace-nowrap">11:25</td>
+<td class="py-3 px-3 whitespace-nowrap font-medium text-on-surface">
+<span class="inline-flex items-center gap-1 font-mono text-body-sm">
+<span class="material-symbols-outlined text-outline text-[15px]" data-icon="tag">tag</span>
+                        REC-9812
+                      </span>
+</td>
+<td class="py-3 px-3">
+<div class="font-medium text-on-surface">Atuhaire Grace</div>
+<div class="text-label-sm font-label-sm text-outline">P.7 Red Candidate</div>
+</td>
+<td class="py-3 px-3">
+<div class="text-on-surface">Grace Atuhaire</div>
+<div class="text-label-sm font-label-sm text-outline flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Direct Cash Voucher
+                      </div>
+</td>
+<td class="py-3 px-3 text-right font-tabular-numeric text-tabular-numeric font-semibold text-on-surface">
+                      600,000
+                    </td>
+<td class="py-3 px-3 text-center">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-label-sm font-label-sm font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                        Bank Slip Attached
+                      </span>
+</td>
+<td class="py-3 px-3 text-right">
+<button class="w-7 h-7 rounded hover:bg-surface-container flex items-center justify-center text-outline hover:text-on-surface transition-colors" title="View Scanned Physical Slip" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="attach_file">attach_file</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Subtotal & Pagination Footer -->
+<div class="p-space-md border-t border-outline-variant bg-surface flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+<div class="flex items-center gap-2 text-label-md font-label-md text-on-surface-variant">
+<span>Displaying 5 of 26 items for current trading date</span>
+<span class="text-outline">•</span>
+<span class="font-semibold text-on-surface">Subtotal UGX 2,950,000</span>
+</div>
+<!-- Pagination Control -->
+<div class="flex items-center gap-1.5 text-label-md font-label-md">
+<button class="px-2.5 py-1 rounded border border-outline-variant bg-surface-container-lowest text-outline hover:text-on-surface disabled:opacity-40" disabled="" type="button">
+                  Previous
+                </button>
+<span class="px-2 py-0.5 rounded bg-secondary text-on-secondary font-semibold">1</span>
+<button class="px-2 py-0.5 rounded text-on-surface-variant hover:bg-surface-container" type="button">2</button>
+<button class="px-2 py-0.5 rounded text-on-surface-variant hover:bg-surface-container" type="button">3</button>
+<button class="px-2.5 py-1 rounded border border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container transition-colors" type="button">
+                  Next
+                </button>
+</div>
+</div>
+</div>
+<!-- Quick Reconciliation Action Banner -->
+<div class="bg-gradient-to-r from-surface-container-low to-surface-container-lowest border border-outline-variant rounded-xl p-space-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined" data-icon="sync">sync</span>
+</div>
+<div>
+<h4 class="text-headline-sm font-headline-sm font-semibold text-on-surface">Automated MoES Clearing Rule Active</h4>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+                  All SchoolPay transactions matching student LIN 100% are directly posted to the Uganda MoES General Ledger without bursar intervention.
+                </p>
+</div>
+</div>
+<button class="px-3 py-1.5 rounded-lg border border-outline-variant bg-surface hover:bg-surface-container text-label-md font-label-md font-semibold text-on-surface shrink-0" type="button">
+              Audit Rule Parameters
+            </button>
+</div>
+</div>
+<!-- ==================== RIGHT COLUMN (35% width: 4 Cols of 12) ==================== -->
+<div class="lg:col-span-4 flex flex-col gap-5">
+<!-- Card 1: Statutory DEO & Ministry Compliance -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant/60">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="gavel">gavel</span>
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface">Statutory Compliance</h3>
+</div>
+<span class="text-label-sm font-label-sm text-outline uppercase font-mono">DEO-AUDIT-V4</span>
+</div>
+<div class="mt-4 flex flex-col gap-3.5">
+<!-- Compliance Item 1 -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface border border-outline-variant/50">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-emerald-600" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="flex flex-col">
+<span class="text-label-md font-label-md font-semibold text-on-surface">Daily Settlement Batch Lock</span>
+<span class="text-label-sm font-label-sm text-outline">Ready to Lock • 26 transactions</span>
+</div>
+</div>
+<span class="text-label-sm font-label-sm font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                  Ready
+                </span>
+</div>
+<!-- Compliance Item 2 -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface border border-outline-variant/50">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-amber-600" data-icon="pending">pending</span>
+<div class="flex flex-col">
+<span class="text-label-md font-label-md font-semibold text-on-surface">DEO Form 8B Schedule</span>
+<span class="text-label-sm font-label-sm text-outline">Generated • Pending Digital Stamp</span>
+</div>
+</div>
+<span class="text-label-sm font-label-sm font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                  Pending
+                </span>
+</div>
+<!-- Compliance Item 3 -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface border border-outline-variant/50">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-emerald-600" data-icon="task_alt">task_alt</span>
+<div class="flex flex-col">
+<span class="text-label-md font-label-md font-semibold text-on-surface">EMIS / LIN Synchronization</span>
+<span class="text-label-sm font-label-sm text-outline">1,142 / 1,142 records synced</span>
+</div>
+</div>
+<span class="text-label-sm font-label-sm font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                  100% Validated
+                </span>
+</div>
+</div>
+<!-- Primary Compliance Action -->
+<button class="w-full mt-4 py-2.5 px-4 rounded-lg bg-primary hover:bg-primary-container text-on-primary text-label-md font-label-md font-semibold flex items-center justify-center gap-2 transition-all shadow-xs active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="lock">lock</span>
+<span>Proceed to EOD Settlement &amp; Lock</span>
+</button>
+</div>
+<!-- Card 2: Collection Channels Breakdown -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant/60">
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface">Collection Channels</h3>
+<span class="text-label-sm font-label-sm font-semibold text-emerald-700 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Live Gateway
+              </span>
+</div>
+<div class="mt-4 flex flex-col gap-4">
+<!-- Channel 1: MTN SchoolPay -->
+<div>
+<div class="flex justify-between items-center text-label-md font-label-md mb-1.5">
+<span class="font-medium text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                    MTN Mobile Money (SchoolPay)
+                  </span>
+<span class="font-tabular-numeric text-tabular-numeric font-bold text-on-surface">52% <span class="text-outline font-normal">• UGX 222.8M</span></span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-amber-500 h-full rounded-full" style="width: 52%"></div>
+</div>
+</div>
+<!-- Channel 2: Stanbic EFT -->
+<div>
+<div class="flex justify-between items-center text-label-md font-label-md mb-1.5">
+<span class="font-medium text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                    Stanbic Bank Direct EFT
+                  </span>
+<span class="font-tabular-numeric text-tabular-numeric font-bold text-on-surface">28% <span class="text-outline font-normal">• UGX 120.0M</span></span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 28%"></div>
+</div>
+</div>
+<!-- Channel 3: Airtel Money -->
+<div>
+<div class="flex justify-between items-center text-label-md font-label-md mb-1.5">
+<span class="font-medium text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                    Airtel Money Treasury
+                  </span>
+<span class="font-tabular-numeric text-tabular-numeric font-bold text-on-surface">14% <span class="text-outline font-normal">• UGX 60.0M</span></span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-rose-500 h-full rounded-full" style="width: 14%"></div>
+</div>
+</div>
+<!-- Channel 4: Direct Cash -->
+<div>
+<div class="flex justify-between items-center text-label-md font-label-md mb-1.5">
+<span class="font-medium text-on-surface flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-slate-500"></span>
+                    Direct Cash at Bursar Till
+                  </span>
+<span class="font-tabular-numeric text-tabular-numeric font-bold text-on-surface">6% <span class="text-outline font-normal">• UGX 25.8M</span></span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-slate-500 h-full rounded-full" style="width: 6%"></div>
+</div>
+</div>
+</div>
+<!-- Gateway Health Line -->
+<div class="mt-4 pt-3 border-t border-outline-variant/50 flex items-center justify-between text-label-sm font-label-sm text-outline">
+<span>Direct Aggregator Feed Active</span>
+<span class="font-mono text-on-surface font-medium">Gateway Latency: 1.2s</span>
+</div>
+</div>
+<!-- Card 3: Urgent Bursar Directive / Notice -->
+<div class="bg-amber-50/70 border border-amber-200 rounded-xl p-space-md shadow-2xs">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-amber-800 shrink-0">
+<span class="material-symbols-outlined" data-icon="notification_important">notification_important</span>
+</div>
+<div class="flex flex-col">
+<h4 class="text-label-md font-label-md font-bold text-amber-900">Term 3 UNEB Candidate Fee Deadline</h4>
+<p class="text-body-sm font-body-sm text-amber-800 mt-1 leading-relaxed">
+                  Reminder that Friday, Nov 1 is the statutory cutoff for P.7 candidate registration index slips. 42 candidate balances remain uncleared.
+                </p>
+<div class="mt-3">
+<a class="text-label-md font-label-md font-bold text-amber-900 hover:text-amber-950 inline-flex items-center gap-1 underline underline-offset-2" href="#defaulters">
+<span>View Candidate Defaulter List</span>
+<span class="material-symbols-outlined text-[15px]" data-icon="open_in_new">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

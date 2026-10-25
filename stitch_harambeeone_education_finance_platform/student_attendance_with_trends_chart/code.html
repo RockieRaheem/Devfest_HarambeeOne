@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Attendance</title>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed-dim": "#a9c7ff",
+                      "on-primary-fixed": "#001b3d",
+                      "surface-container-highest": "#e1e2e8",
+                      "on-tertiary-container": "#ff5a4e",
+                      "error": "#ba1a1a",
+                      "surface-bright": "#f8f9ff",
+                      "inverse-on-surface": "#eff0f6",
+                      "secondary-fixed": "#9cf5c0",
+                      "on-primary-fixed-variant": "#264778",
+                      "on-tertiary-fixed-variant": "#930009",
+                      "on-secondary-container": "#0a7147",
+                      "surface-tint": "#405f91",
+                      "tertiary-fixed-dim": "#ffb4ab",
+                      "surface-container-lowest": "#ffffff",
+                      "outline": "#747780",
+                      "on-secondary": "#ffffff",
+                      "primary": "#001736",
+                      "status-success": "#006d43",
+                      "on-background": "#191c20",
+                      "on-error-container": "#93000a",
+                      "on-primary-container": "#7594ca",
+                      "on-surface-subtle": "#43474f",
+                      "on-secondary-fixed-variant": "#005231",
+                      "on-error": "#ffffff",
+                      "secondary": "#006d43",
+                      "inverse-primary": "#a9c7ff",
+                      "on-tertiary-fixed": "#410002",
+                      "status-warning": "#d97706",
+                      "surface": "#f8f9ff",
+                      "surface-container-high": "#e7e8ee",
+                      "on-secondary-fixed": "#002111",
+                      "tertiary": "#390001",
+                      "surface-variant": "#e1e2e8",
+                      "on-surface-variant": "#43474f",
+                      "outline-variant": "#c4c6d0",
+                      "error-container": "#ffdad6",
+                      "surface-container-low": "#f2f3f9",
+                      "tertiary-container": "#600004",
+                      "inverse-surface": "#2e3135",
+                      "surface-dim": "#d8dae0",
+                      "on-surface": "#191c20",
+                      "secondary-fixed-dim": "#80d8a5",
+                      "primary-fixed": "#d6e3ff",
+                      "surface-container": "#eceef3",
+                      "tertiary-fixed": "#ffdad5",
+                      "surface-card": "#ffffff",
+                      "primary-container": "#002b5b",
+                      "on-tertiary": "#ffffff",
+                      "background": "#f8f9ff",
+                      "status-error": "#ba1a1a",
+                      "on-primary": "#ffffff",
+                      "secondary-container": "#99f2bd"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "margin-mobile": "16px",
+                      "unit": "4px",
+                      "margin-desktop": "24px",
+                      "stack-sm": "8px",
+                      "stack-lg": "32px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "body-md": ["Public Sans"],
+                      "body-lg": ["Public Sans"],
+                      "label-sm": ["Public Sans"],
+                      "headline-md": ["Public Sans"],
+                      "headline-sm": ["Public Sans"],
+                      "data-mono": ["Public Sans"],
+                      "headline-lg-mobile": ["Public Sans"],
+                      "headline-lg": ["Public Sans"]
+              },
+              "fontSize": {
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="flex items-center justify-between px-margin-mobile w-full h-14 bg-surface text-primary font-headline-sm border-b border-outline-variant flat no shadows transition-colors duration-200 active:opacity-70 docked full-width top-0 z-40 fixed">
+<button aria-label="Back" class="p-2 -ml-2 text-primary">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Attendance</h1>
+<button aria-label="Account" class="p-2 -mr-2 text-primary">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</header>
+<main class="pt-20 px-margin-mobile max-w-[1200px] mx-auto md:px-margin-desktop space-y-stack-md">
+<!-- Student Filter Bar -->
+<section class="flex space-x-2 overflow-x-auto pb-2 scrollbar-hide">
+<button class="flex-shrink-0 px-4 py-2 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm">
+                All Students
+            </button>
+<button class="flex-shrink-0 px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-sm text-label-sm hover:bg-surface-container-low transition-colors">
+                Sarah (Grade 4)
+            </button>
+<button class="flex-shrink-0 px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-sm text-label-sm hover:bg-surface-container-low transition-colors">
+                James (Grade 1)
+            </button>
+</section>
+<!-- Attendance Overview Card -->
+<section class="bg-surface-card rounded-lg border border-outline-variant p-margin-mobile shadow-sm">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-4">Current Term Overview</h2>
+<div class="flex flex-col md:flex-row items-center gap-6">
+<!-- Gauge -->
+<div class="relative w-32 h-32 flex-shrink-0">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-container-highest" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-status-success" cx="50" cy="50" fill="transparent" r="40" stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="15.07" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center flex-col">
+<span class="font-headline-md text-headline-md text-primary">94%</span>
+</div>
+</div>
+<!-- Stats -->
+<div class="grid grid-cols-2 gap-4 w-full">
+<div class="bg-surface-container-low rounded p-3 text-center border border-outline-variant">
+<span class="block font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Total Days</span>
+<span class="font-data-mono text-data-mono text-primary text-lg">45</span>
+</div>
+<div class="bg-surface-container-low rounded p-3 text-center border border-outline-variant">
+<span class="block font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Present</span>
+<span class="font-data-mono text-data-mono text-status-success text-lg">42</span>
+</div>
+<div class="bg-error-container rounded p-3 text-center border border-outline-variant">
+<span class="block font-label-sm text-label-sm text-on-error-container mb-1 uppercase tracking-wider">Absent</span>
+<span class="font-data-mono text-data-mono text-on-error-container text-lg">2</span>
+</div>
+<div class="bg-surface-container-highest rounded p-3 text-center border border-outline-variant">
+<span class="block font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase tracking-wider">Late</span>
+<span class="font-data-mono text-data-mono text-status-warning text-lg">1</span>
+</div>
+</div>
+</div>
+</section><section class="bg-surface-card rounded-lg border border-outline-variant p-margin-mobile shadow-sm">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-4">Monthly Trend</h2>
+<div class="relative h-32 w-full flex items-end justify-between gap-4 pt-6">
+<!-- Benchmark Line (90%) -->
+<div class="absolute bottom-[90%] left-0 w-full border-t border-dashed border-outline z-10">
+<span class="absolute -top-4 right-0 text-[10px] font-bold text-outline uppercase tracking-tighter">90% Goal</span>
+</div>
+<!-- Aug -->
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary rounded-t-lg transition-all duration-500" style="height: 92%;"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Aug</span>
+</div>
+<!-- Sep -->
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary rounded-t-lg transition-all duration-500" style="height: 88%;"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sep</span>
+</div>
+<!-- Oct -->
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary rounded-t-lg transition-all duration-500" style="height: 95%;"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Oct</span>
+</div>
+<!-- Nov -->
+<div class="flex-1 flex flex-col items-center gap-2">
+<div class="w-full bg-primary rounded-t-lg transition-all duration-500" style="height: 94%;"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Nov</span>
+</div>
+</div>
+</section>
+<!-- Attendance History -->
+<section class="bg-surface-card rounded-lg border border-outline-variant shadow-sm overflow-hidden">
+<div class="p-margin-mobile border-b border-outline-variant">
+<h2 class="font-headline-sm text-headline-sm text-primary">Recent Absences &amp; Lates</h2>
+</div>
+<ul class="divide-y divide-outline-variant">
+<li class="p-4 flex items-center justify-between">
+<div>
+<p class="font-body-md text-body-md text-primary mb-1">Oct 12, 2023</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Medical</p>
+</div>
+<span class="px-3 py-1 bg-error-container text-on-error-container font-label-sm text-label-sm rounded-full">Absent</span>
+</li>
+<li class="p-4 flex items-center justify-between">
+<div>
+<p class="font-body-md text-body-md text-primary mb-1">Sep 28, 2023</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Family Event</p>
+</div>
+<span class="px-3 py-1 bg-surface-container-highest text-status-warning font-label-sm text-label-sm rounded-full">Late</span>
+</li>
+<li class="p-4 flex items-center justify-between">
+<div>
+<p class="font-body-md text-body-md text-primary mb-1">Sep 15, 2023</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Illness</p>
+</div>
+<span class="px-3 py-1 bg-error-container text-on-error-container font-label-sm text-label-sm rounded-full">Absent</span>
+</li>
+</ul>
+</section>
+<!-- Action Button -->
+<div class="pt-4">
+<button class="w-full bg-primary text-on-primary h-12 rounded-lg font-body-md text-body-md font-semibold hover:bg-primary-container transition-colors shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="edit_calendar">edit_calendar</span>
+                Report Absence
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 pb-2 pt-1 bg-surface border-t border-outline-variant flat no shadows">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-all duration-200 active:scale-95 rounded-lg w-16" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-all duration-200 active:scale-95" href="#">
+<span class="material-symbols-outlined icon-fill" data-icon="child_care">child_care</span>
+<span class="font-label-sm text-label-sm mt-1">Children</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-all duration-200 active:scale-95 rounded-lg w-16" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-sm text-label-sm mt-1">Payments</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-low transition-all duration-200 active:scale-95 rounded-lg w-16" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-sm text-label-sm mt-1">Notifs</span>
+</a>
+</nav>
+</body></html>

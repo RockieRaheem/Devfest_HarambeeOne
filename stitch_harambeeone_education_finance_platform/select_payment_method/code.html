@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Select Payment Method - Parent Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#80d8a5",
+                        "surface-dim": "#d8dae0",
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "inverse-primary": "#a9c7ff",
+                        "surface-variant": "#e1e2e8",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#747780",
+                        "on-surface": "#191c20",
+                        "surface-card": "#ffffff",
+                        "status-success": "#006d43",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eceef3",
+                        "surface-container-highest": "#e1e2e8",
+                        "tertiary-fixed": "#ffdad5",
+                        "secondary-container": "#99f2bd",
+                        "inverse-surface": "#2e3135",
+                        "on-tertiary-fixed": "#410002",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#005231",
+                        "surface-tint": "#405f91",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#264778",
+                        "surface-container-low": "#f2f3f9",
+                        "surface-container-high": "#e7e8ee",
+                        "tertiary": "#390001",
+                        "on-surface-subtle": "#43474f",
+                        "surface-bright": "#f8f9ff",
+                        "status-error": "#ba1a1a",
+                        "outline-variant": "#c4c6d0",
+                        "on-secondary-container": "#0a7147",
+                        "on-secondary-fixed": "#002111",
+                        "secondary": "#006d43",
+                        "surface": "#f8f9ff",
+                        "tertiary-container": "#600004",
+                        "on-tertiary-container": "#ff5a4e",
+                        "primary-container": "#002b5b",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "on-surface-variant": "#43474f",
+                        "on-primary-container": "#7594ca",
+                        "secondary-fixed": "#9cf5c0",
+                        "on-background": "#191c20",
+                        "inverse-on-surface": "#eff0f6",
+                        "status-warning": "#d97706",
+                        "primary": "#001736",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#930009",
+                        "background": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#001b3d",
+                        "primary-fixed": "#d6e3ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "margin-desktop": "24px",
+                        "gutter": "16px",
+                        "margin-mobile": "16px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Public Sans"],
+                        "headline-md": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "label-sm": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "body-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .payment-option-radio:checked + div {
+            border-color: #001736;
+            background-color: #f2f3f9;
+        }
+        .payment-option-radio:checked + div .check-icon {
+            display: block;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
+<!-- TopAppBar (Transactional - Hidden Navigation Elements) -->
+<header class="bg-surface w-full top-0 sticky flex justify-between items-center px-margin-mobile py-unit max-w-full z-50">
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<span class="font-headline-md text-headline-md font-bold text-primary">Parent Portal</span>
+</div>
+<div>
+<!-- Suppressed trailing avatar for transactional flow, keeping empty div for flex layout -->
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow px-margin-mobile md:px-margin-desktop py-stack-lg max-w-[800px] w-full mx-auto pb-[100px]">
+<!-- Header Section -->
+<div class="mb-stack-lg text-center md:text-left">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-background mb-stack-sm">Choose how to pay</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Complete your payment for Term 2 Tuition Fees.</p>
+</div>
+<!-- Summary Card -->
+<div class="bg-surface-card border border-outline-variant rounded-xl p-stack-md mb-stack-lg flex flex-col items-center justify-center py-stack-lg shadow-sm">
+<span class="font-label-sm text-label-sm text-on-surface-subtle uppercase tracking-wider mb-2">Total Amount Due</span>
+<div class="flex items-baseline gap-1">
+<span class="font-headline-sm text-headline-sm text-on-surface-variant align-top mt-1">$</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary">1,250.00</span>
+</div>
+</div>
+<!-- Payment Options Form -->
+<form action="#" class="space-y-stack-md" method="POST">
+<!-- Mobile Money Option -->
+<label class="relative block cursor-pointer group">
+<input checked="" class="payment-option-radio peer sr-only" name="payment_method" type="radio" value="mobile_money"/>
+<div class="border border-outline-variant rounded-xl p-stack-md flex items-center gap-stack-md transition-all duration-200 hover:bg-surface-container-lowest bg-surface-card relative overflow-hidden group-hover:border-primary-container/50">
+<div class="flex-shrink-0 w-12 h-12 bg-surface-container flex items-center justify-center rounded-lg border border-outline-variant overflow-hidden">
+<img class="w-8 h-8 object-contain" data-alt="A macro shot of a generic, stylized mobile phone icon with a subtle dollar sign, representing mobile payments. The background is a crisp white with a soft, diffused shadow. Lighting is studio-quality, clean and modern, fitting a high-trust institutional finance theme. The aesthetic is flat and corporate minimalism." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3Q3eZXusylA_SuJXWYBNH8g-WymFRgS4pYi062c5_hy_7yaZOeRFLI2c12PWSW6tqubWAUtsY7Ka_jzrU-rzAi3Kb2AI0SlkyfBJqRQl5Y6H4kwH7QDpqsUffIuP_ndpEIjql99DNJ5tYxFuY4eywRltmsm6PUNtt_1pljpayLcPVLG1yLCcuOMrHwZU-zBpvrNgzg6GjtBt7TfBuqnUiGA4puR76bhorgW4B7ctjiFArxfKFuGmZuw"/>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Mobile Money</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">M-Pesa, Airtel Money, etc.</p>
+</div>
+<div class="flex-shrink-0">
+<span class="material-symbols-outlined text-primary hidden check-icon" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="material-symbols-outlined text-outline-variant peer-checked:hidden check-icon-empty" style="font-variation-settings: 'FILL' 0;">radio_button_unchecked</span>
+</div>
+</div>
+</label>
+<!-- Credit/Debit Card Option -->
+<label class="relative block cursor-pointer group">
+<input class="payment-option-radio peer sr-only" name="payment_method" type="radio" value="card"/>
+<div class="border border-outline-variant rounded-xl p-stack-md flex items-center gap-stack-md transition-all duration-200 hover:bg-surface-container-lowest bg-surface-card relative overflow-hidden group-hover:border-primary-container/50">
+<div class="flex-shrink-0 w-12 h-12 bg-surface-container flex items-center justify-center rounded-lg border border-outline-variant overflow-hidden">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 0;">credit_card</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Credit / Debit Card</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Visa, Mastercard, AMEX</p>
+</div>
+<div class="flex-shrink-0">
+<span class="material-symbols-outlined text-primary hidden check-icon" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="material-symbols-outlined text-outline-variant peer-checked:hidden check-icon-empty" style="font-variation-settings: 'FILL' 0;">radio_button_unchecked</span>
+</div>
+</div>
+</label>
+<!-- Bank Transfer Option -->
+<label class="relative block cursor-pointer group">
+<input class="payment-option-radio peer sr-only" name="payment_method" type="radio" value="bank_transfer"/>
+<div class="border border-outline-variant rounded-xl p-stack-md flex items-center gap-stack-md transition-all duration-200 hover:bg-surface-container-lowest bg-surface-card relative overflow-hidden group-hover:border-primary-container/50">
+<div class="flex-shrink-0 w-12 h-12 bg-surface-container flex items-center justify-center rounded-lg border border-outline-variant overflow-hidden">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 0;">account_balance</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Bank Transfer</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Direct EFT from your bank</p>
+</div>
+<div class="flex-shrink-0">
+<span class="material-symbols-outlined text-primary hidden check-icon" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="material-symbols-outlined text-outline-variant peer-checked:hidden check-icon-empty" style="font-variation-settings: 'FILL' 0;">radio_button_unchecked</span>
+</div>
+</div>
+</label>
+<!-- Action Area -->
+<div class="mt-stack-lg pt-stack-md border-t border-outline-variant flex flex-col md:flex-row-reverse gap-stack-md items-center justify-between">
+<button class="w-full md:w-auto bg-primary text-on-primary min-h-[48px] px-6 rounded-lg font-label-sm text-label-sm flex items-center justify-center gap-2 hover:bg-primary-container transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2" type="submit">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">lock</span>
+                    Pay Now
+                </button>
+<a class="w-full md:w-auto text-center font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors py-2" href="#">
+                    Cancel
+                </a>
+</div>
+<div class="text-center mt-4 flex items-center justify-center gap-1 text-on-surface-subtle font-body-md text-body-md text-xs">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+                Payments are securely processed.
+            </div>
+</form>
+</main>
+<!-- Navigation Shell (BottomNavBar or SideNav) SUPPRESSED for Transactional Screen per instructions -->
+</body></html>

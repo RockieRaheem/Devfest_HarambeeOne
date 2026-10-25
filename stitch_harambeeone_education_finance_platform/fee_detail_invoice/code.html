@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Fee Detail / Invoice</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#80d8a5",
+                        "surface-dim": "#d8dae0",
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "inverse-primary": "#a9c7ff",
+                        "surface-variant": "#e1e2e8",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#747780",
+                        "on-surface": "#191c20",
+                        "surface-card": "#ffffff",
+                        "status-success": "#006d43",
+                        "on-tertiary": "#ffffff",
+                        "surface-container": "#eceef3",
+                        "surface-container-highest": "#e1e2e8",
+                        "tertiary-fixed": "#ffdad5",
+                        "secondary-container": "#99f2bd",
+                        "inverse-surface": "#2e3135",
+                        "on-tertiary-fixed": "#410002",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#005231",
+                        "surface-tint": "#405f91",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#264778",
+                        "surface-container-low": "#f2f3f9",
+                        "surface-container-high": "#e7e8ee",
+                        "tertiary": "#390001",
+                        "on-surface-subtle": "#43474f",
+                        "surface-bright": "#f8f9ff",
+                        "status-error": "#ba1a1a",
+                        "outline-variant": "#c4c6d0",
+                        "on-secondary-container": "#0a7147",
+                        "on-secondary-fixed": "#002111",
+                        "secondary": "#006d43",
+                        "surface": "#f8f9ff",
+                        "tertiary-container": "#600004",
+                        "on-tertiary-container": "#ff5a4e",
+                        "primary-container": "#002b5b",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "on-surface-variant": "#43474f",
+                        "on-primary-container": "#7594ca",
+                        "secondary-fixed": "#9cf5c0",
+                        "on-background": "#191c20",
+                        "inverse-on-surface": "#eff0f6",
+                        "status-warning": "#d97706",
+                        "primary": "#001736",
+                        "error-container": "#ffdad6",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#930009",
+                        "background": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed": "#001b3d",
+                        "primary-fixed": "#d6e3ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "margin-desktop": "24px",
+                        "gutter": "16px",
+                        "margin-mobile": "16px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Public Sans"],
+                        "headline-md": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "label-sm": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "body-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Utility for 10% opacity backgrounds based on status color */
+        .bg-status-success-subtle { background-color: rgba(0, 109, 67, 0.1); }
+        .bg-status-warning-subtle { background-color: rgba(217, 119, 6, 0.1); }
+        .bg-status-error-subtle { background-color: rgba(186, 26, 26, 0.1); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:bg-surface-container-low">
+<!-- TopAppBar (Transactional - Hidden Nav Shell) -->
+<header class="bg-surface w-full top-0 sticky border-b border-outline-variant flat no shadows transition-colors duration-200 ease-in-out flex justify-between items-center px-margin-mobile py-unit max-w-full z-40">
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex-1 text-center">
+<h1 class="font-headline-sm text-headline-sm text-primary">Invoice #INV-2023-089</h1>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-low p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-3xl mx-auto md:py-margin-desktop px-margin-mobile py-stack-md flex flex-col gap-stack-lg">
+<!-- Summary Section (Glassmorphism/Card) -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl p-margin-mobile md:p-margin-desktop flex flex-col gap-stack-md relative overflow-hidden">
+<!-- Subtle decorative background element for premium feel -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container opacity-5 rounded-bl-full transform translate-x-8 -translate-y-8 pointer-events-none"></div>
+<div class="flex justify-between items-start w-full z-10">
+<div>
+<h2 class="font-body-md text-body-md text-on-surface-variant mb-unit">Student Name</h2>
+<p class="font-headline-sm text-headline-sm text-on-surface">Eleanor Vance</p>
+</div>
+<div class="bg-status-warning-subtle text-status-warning px-stack-sm py-unit rounded-full flex items-center gap-unit border border-status-warning/20">
+<span class="material-symbols-outlined text-[16px] leading-none" data-icon="pending">pending</span>
+<span class="font-label-sm text-label-sm">Due in 5 Days</span>
+</div>
+</div>
+<div class="w-full h-px bg-outline-variant my-unit z-10"></div>
+<div class="flex justify-between items-end w-full z-10">
+<div>
+<h2 class="font-body-md text-body-md text-on-surface-variant mb-unit">Fee Category</h2>
+<p class="font-headline-sm text-headline-sm text-on-surface">Fall Semester Tuition</p>
+</div>
+<div class="text-right">
+<h2 class="font-body-md text-body-md text-on-surface-variant mb-unit">Total Amount</h2>
+<p class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary">$4,250.00</p>
+</div>
+</div>
+</section>
+<!-- Line Item Breakdown -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl flex flex-col">
+<div class="px-margin-mobile py-stack-md border-b border-outline-variant bg-surface-bright rounded-t-xl">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-stack-sm">
+<span class="material-symbols-outlined text-primary" data-icon="receipt_long">receipt_long</span>
+                    Line Items
+                </h3>
+</div>
+<ul class="flex flex-col w-full">
+<!-- Item 1 -->
+<li class="flex justify-between items-center px-margin-mobile py-stack-md border-b border-outline-variant hover:bg-surface-bright transition-colors">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg text-on-surface">Base Tuition</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Core academic fees</span>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface">$3,800.00</span>
+</li>
+<!-- Item 2 -->
+<li class="flex justify-between items-center px-margin-mobile py-stack-md border-b border-outline-variant hover:bg-surface-bright transition-colors">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg text-on-surface">Lab Fees</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Advanced Chemistry Lab</span>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface">$250.00</span>
+</li>
+<!-- Item 3 -->
+<li class="flex justify-between items-center px-margin-mobile py-stack-md border-b border-outline-variant hover:bg-surface-bright transition-colors">
+<div class="flex flex-col">
+<span class="font-body-lg text-body-lg text-on-surface">Extracurricular Activity</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Debate Club Registration</span>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface">$200.00</span>
+</li>
+<!-- Total Row -->
+<li class="flex justify-between items-center px-margin-mobile py-stack-md bg-surface-container-low rounded-b-xl">
+<span class="font-headline-sm text-headline-sm text-on-surface">Total</span>
+<span class="font-data-mono text-data-mono text-primary font-bold text-lg">$4,250.00</span>
+</li>
+</ul>
+</section>
+<!-- Payment Details & Action -->
+<section class="flex flex-col gap-stack-md pb-stack-lg md:pb-0">
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-margin-mobile flex gap-stack-sm items-start">
+<span class="material-symbols-outlined text-on-surface-variant mt-1" data-icon="calendar_today">calendar_today</span>
+<div>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Payment Deadline</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">October 15, 2023. Late payments may incur a 5% fee.</p>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-headline-sm text-headline-sm py-stack-md px-margin-desktop rounded-lg flex items-center justify-center gap-stack-sm hover:bg-primary-fixed-variant transition-colors min-h-[48px] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+<span class="material-symbols-outlined" data-icon="credit_card" data-weight="fill">credit_card</span>
+                Proceed to Payment
+            </button>
+<button class="w-full bg-transparent border border-outline text-primary font-body-lg text-body-lg py-stack-sm px-margin-desktop rounded-lg flex items-center justify-center gap-stack-sm hover:bg-surface-container-low transition-colors min-h-[48px] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+<span class="material-symbols-outlined" data-icon="file_download">file_download</span>
+                Download PDF Invoice
+            </button>
+</section>
+</main>
+</body></html>

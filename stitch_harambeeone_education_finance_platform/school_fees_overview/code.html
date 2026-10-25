@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HarambeeOne Parent Portal - School Fees</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-fixed-dim": "#80d8a5",
+                      "surface-dim": "#d8dae0",
+                      "tertiary-fixed-dim": "#ffb4ab",
+                      "inverse-primary": "#a9c7ff",
+                      "surface-variant": "#e1e2e8",
+                      "surface-container-lowest": "#ffffff",
+                      "outline": "#747780",
+                      "on-surface": "#191c20",
+                      "surface-card": "#ffffff",
+                      "status-success": "#006d43",
+                      "on-tertiary": "#ffffff",
+                      "surface-container": "#eceef3",
+                      "surface-container-highest": "#e1e2e8",
+                      "tertiary-fixed": "#ffdad5",
+                      "secondary-container": "#99f2bd",
+                      "inverse-surface": "#2e3135",
+                      "on-tertiary-fixed": "#410002",
+                      "on-secondary": "#ffffff",
+                      "on-secondary-fixed-variant": "#005231",
+                      "surface-tint": "#405f91",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "on-primary-fixed-variant": "#264778",
+                      "surface-container-low": "#f2f3f9",
+                      "surface-container-high": "#e7e8ee",
+                      "tertiary": "#390001",
+                      "on-surface-subtle": "#43474f",
+                      "surface-bright": "#f8f9ff",
+                      "status-error": "#ba1a1a",
+                      "outline-variant": "#c4c6d0",
+                      "on-secondary-container": "#0a7147",
+                      "on-secondary-fixed": "#002111",
+                      "secondary": "#006d43",
+                      "surface": "#f8f9ff",
+                      "tertiary-container": "#600004",
+                      "on-tertiary-container": "#ff5a4e",
+                      "primary-container": "#002b5b",
+                      "primary-fixed-dim": "#a9c7ff",
+                      "on-surface-variant": "#43474f",
+                      "on-primary-container": "#7594ca",
+                      "secondary-fixed": "#9cf5c0",
+                      "on-background": "#191c20",
+                      "inverse-on-surface": "#eff0f6",
+                      "status-warning": "#d97706",
+                      "primary": "#001736",
+                      "error-container": "#ffdad6",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#930009",
+                      "background": "#f8f9ff",
+                      "on-error": "#ffffff",
+                      "on-primary-fixed": "#001b3d",
+                      "primary-fixed": "#d6e3ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "stack-sm": "8px",
+                      "stack-md": "16px",
+                      "margin-desktop": "24px",
+                      "gutter": "16px",
+                      "margin-mobile": "16px",
+                      "stack-lg": "32px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Public Sans"],
+                      "headline-md": ["Public Sans"],
+                      "body-lg": ["Public Sans"],
+                      "headline-lg-mobile": ["Public Sans"],
+                      "label-sm": ["Public Sans"],
+                      "data-mono": ["Public Sans"],
+                      "headline-sm": ["Public Sans"],
+                      "body-md": ["Public Sans"]
+              },
+              "fontSize": {
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24 md:pb-0 flex flex-col md:flex-row">
+<!-- TopAppBar (Mobile & Desktop Header) -->
+<header class="w-full top-0 sticky bg-surface border-b border-outline-variant z-40 md:w-64 md:h-screen md:flex-col md:sticky md:left-0">
+<div class="flex justify-between items-center px-margin-mobile py-unit max-w-full md:flex-col md:items-start md:p-margin-desktop md:h-full md:gap-8">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl" data-weight="fill">school</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Parent Portal</h1>
+</div>
+<button class="md:hidden">
+<img class="w-8 h-8 rounded-full object-cover" data-alt="A small circular portrait photograph of a modern parent smiling gently, bathed in soft, natural daylight. The image should have a professional yet approachable feel, with a clean, slightly blurred background in a light office or home setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrQXEhxMS2UNDUS09M4JYLXVjRp4sFxJT0lJmcservzc1V3NVfBZFf6VQTNB4KV-0xj3Z4bRFA4JrDGV8UFoyXJsi_FPKcEEEBQsjv1Qit9EfpJtLrOfBmCNtpy3I7rOFynFBDEY-A3_GmpZC2_l55KJMpC72fKG8FuX5-uJYvC_6L4daow5kEnoBlvROqiLTAd2mAg9ySDYUDtuD5569J8MZSAPlEz73Nz0Amlu6wkLs69_jX-9DvJA"/>
+</button>
+<!-- Desktop Navigation Links (Hidden on Mobile) -->
+<nav class="hidden md:flex flex-col gap-2 w-full mt-8">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-surface-container-highest text-primary font-medium transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-weight="fill">payments</span>
+<span class="font-body-md">Payments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-body-md">Notices</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors duration-200 ease-in-out mt-auto" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-body-md">Profile</span>
+</a>
+</nav>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg flex flex-col gap-stack-lg">
+<!-- Header & Filters -->
+<div class="flex flex-col md:flex-row md:justify-between md:items-end gap-4">
+<div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">School Fees</h2>
+<p class="font-body-md text-on-surface-variant mt-1">Manage tuition and related expenses.</p>
+</div>
+<div class="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
+<button class="px-4 py-2 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm whitespace-nowrap border border-primary-container">All Students</button>
+<button class="px-4 py-2 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap border border-outline-variant hover:bg-surface-container-high transition-colors">Jamal</button>
+<button class="px-4 py-2 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap border border-outline-variant hover:bg-surface-container-high transition-colors">Maya</button>
+</div>
+</div>
+<!-- Total Balance Card -->
+<section class="bg-primary text-on-primary rounded-xl p-stack-md md:p-margin-desktop flex flex-col md:flex-row justify-between items-start md:items-center shadow-sm relative overflow-hidden">
+<!-- Subtle background pattern -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 100% 0%, #ffffff 1px, transparent 1px), radial-gradient(circle at 0% 100%, #ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="z-10 mb-6 md:mb-0">
+<p class="font-label-sm text-label-sm text-inverse-primary uppercase tracking-wider mb-2">Total Outstanding Balance</p>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-md text-headline-md text-inverse-primary">$</span>
+<span class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg">3,450.00</span>
+</div>
+<p class="font-body-md text-sm text-inverse-primary mt-2">Due by Oct 15, 2024</p>
+</div>
+<button class="z-10 w-full md:w-auto min-h-[48px] px-8 py-3 bg-secondary text-on-secondary rounded-lg font-headline-sm text-headline-sm hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span>Pay All</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</section>
+<!-- Upcoming & Current Fees List -->
+<section>
+<div class="flex justify-between items-center mb-stack-md">
+<h3 class="font-headline-sm text-headline-sm text-primary">Upcoming &amp; Current Fees</h3>
+<button class="text-secondary font-label-sm text-label-sm hover:underline">View History</button>
+</div>
+<div class="bg-surface-card rounded-xl border border-outline-variant overflow-hidden flex flex-col">
+<!-- Item 1: Maya (Overdue) -->
+<div class="p-stack-md border-b border-outline-variant last:border-0 hover:bg-surface-container-lowest transition-colors flex flex-col md:flex-row gap-4 md:items-center">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded">Maya (Grade 10)</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-error/10 text-error">Overdue</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Term 1 Tuition</h4>
+<p class="font-body-md text-on-surface-variant text-sm mt-1">Due: Sep 1, 2024</p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto mt-2 md:mt-0">
+<span class="font-data-mono text-data-mono text-on-surface">$1,200.00</span>
+<button class="min-h-[40px] px-4 py-2 border border-outline-variant rounded-lg font-label-sm text-label-sm text-primary hover:bg-surface-container-low transition-colors">Pay Now</button>
+</div>
+</div>
+<!-- Item 2: Jamal (Pending) -->
+<div class="p-stack-md border-b border-outline-variant last:border-0 hover:bg-surface-container-lowest transition-colors flex flex-col md:flex-row gap-4 md:items-center">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded">Jamal (Grade 8)</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-status-warning/10 text-status-warning">Pending</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Term 1 Tuition</h4>
+<p class="font-body-md text-on-surface-variant text-sm mt-1">Due: Oct 15, 2024</p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto mt-2 md:mt-0">
+<span class="font-data-mono text-data-mono text-on-surface">$2,100.00</span>
+<button class="min-h-[40px] px-4 py-2 border border-outline-variant rounded-lg font-label-sm text-label-sm text-primary hover:bg-surface-container-low transition-colors">Pay Now</button>
+</div>
+</div>
+<!-- Item 3: Shared (Pending) -->
+<div class="p-stack-md border-b border-outline-variant last:border-0 hover:bg-surface-container-lowest transition-colors flex flex-col md:flex-row gap-4 md:items-center">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded">Family</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-status-warning/10 text-status-warning">Pending</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Annual Tech Fee</h4>
+<p class="font-body-md text-on-surface-variant text-sm mt-1">Due: Oct 15, 2024</p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto mt-2 md:mt-0">
+<span class="font-data-mono text-data-mono text-on-surface">$150.00</span>
+<button class="min-h-[40px] px-4 py-2 border border-outline-variant rounded-lg font-label-sm text-label-sm text-primary hover:bg-surface-container-low transition-colors">Pay Now</button>
+</div>
+</div>
+<!-- Item 4: Maya (Paid) -->
+<div class="p-stack-md border-b border-outline-variant last:border-0 hover:bg-surface-container-lowest transition-colors flex flex-col md:flex-row gap-4 md:items-center opacity-75">
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded">Maya (Grade 10)</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-status-success/10 text-status-success">Paid</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Uniform Deposit</h4>
+<p class="font-body-md text-on-surface-variant text-sm mt-1">Paid on Aug 20, 2024</p>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto mt-2 md:mt-0">
+<span class="font-data-mono text-data-mono text-on-surface-variant line-through">$50.00</span>
+<button class="min-h-[40px] px-4 py-2 text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1 hover:bg-surface-container-low rounded-lg transition-colors" disabled="">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                            Settled
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center px-margin-mobile py-stack-sm pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-stack-md py-stack-sm hover:bg-surface-container-high transition-all active:scale-95 duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-[10px] mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-stack-md py-stack-sm hover:bg-surface-container-high transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined" data-weight="fill">payments</span>
+<span class="font-label-sm text-[10px] mt-1 font-medium">Payments</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-stack-md py-stack-sm hover:bg-surface-container-high transition-all active:scale-95 duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-sm text-[10px] mt-1">Notices</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-stack-md py-stack-sm hover:bg-surface-container-high transition-all active:scale-95 duration-150 rounded-xl" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-[10px] mt-1">Profile</span>
+</a>
+</nav>
+<style>
+        /* Hide scrollbar for filter chips */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Safe area padding for newer mobile devices */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .pb-safe {
+                padding-bottom: calc(env(safe-area-inset-bottom) + 8px);
+            }
+        }
+    </style>
+</body></html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Permission Slip Detail - HarambeeOne</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected via script -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "status-success": "#006d43",
+                        "on-surface-variant": "#43474f",
+                        "on-surface": "#191c20",
+                        "secondary-fixed-dim": "#80d8a5",
+                        "secondary": "#006d43",
+                        "outline-variant": "#c4c6d0",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2e3135",
+                        "primary-container": "#002b5b",
+                        "secondary-fixed": "#9cf5c0",
+                        "on-error-container": "#93000a",
+                        "on-secondary-container": "#0a7147",
+                        "background": "#f8f9ff",
+                        "surface-container": "#eceef3",
+                        "tertiary-container": "#600004",
+                        "surface-bright": "#f8f9ff",
+                        "surface-container-highest": "#e1e2e8",
+                        "surface-tint": "#405f91",
+                        "surface-variant": "#e1e2e8",
+                        "status-warning": "#d97706",
+                        "on-primary": "#ffffff",
+                        "surface-card": "#ffffff",
+                        "on-background": "#191c20",
+                        "primary": "#001736",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#930009",
+                        "inverse-on-surface": "#eff0f6",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed": "#410002",
+                        "surface-container-high": "#e7e8ee",
+                        "surface-dim": "#d8dae0",
+                        "on-primary-container": "#7594ca",
+                        "on-primary-fixed-variant": "#264778",
+                        "on-secondary-fixed-variant": "#005231",
+                        "on-error": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "status-error": "#ba1a1a",
+                        "tertiary": "#390001",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "on-secondary-fixed": "#002111",
+                        "primary-fixed": "#d6e3ff",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#ffdad5",
+                        "outline": "#747780",
+                        "surface-container-low": "#f2f3f9",
+                        "on-primary-fixed": "#001b3d",
+                        "on-surface-subtle": "#43474f",
+                        "on-tertiary-container": "#ff5a4e",
+                        "secondary-container": "#99f2bd",
+                        "inverse-primary": "#a9c7ff"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    spacing: {
+                        "stack-md": "16px",
+                        "gutter": "16px",
+                        "margin-desktop": "24px",
+                        "stack-sm": "8px",
+                        "margin-mobile": "16px",
+                        "unit": "4px",
+                        "stack-lg": "32px",
+                        "safe": "env(safe-area-inset-bottom)"
+                    },
+                    fontFamily: {
+                        "body-md": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "label-sm": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "headline-md": ["Public Sans"]
+                    },
+                    fontSize: {
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "data-mono": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-lg-mobile": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "700" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { -webkit-tap-highlight-color: transparent; }
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        /* Hide scrollbar for IE, Edge and Firefox */
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased md:bg-surface-container-low min-h-screen flex flex-col">
+<!-- TopAppBar (JSON Component) -->
+<!-- Navigation intent implies a task/transactional flow, but prompt asks to INCLUDE TopAppBar. -->
+<header class="bg-surface dark:bg-surface text-primary dark:text-primary-fixed-dim font-headline-sm text-headline-sm w-full sticky top-0 z-50 border-b border-outline-variant dark:border-outline-variant flex items-center justify-between px-margin-mobile h-14 w-full shadow-none bg-surface md:bg-surface-card md:rounded-b-lg md:mx-auto md:max-w-7xl md:mt-4 md:border md:border-outline-variant/30">
+<button class="hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-95 transition-transform p-2 rounded-full -ml-2 text-on-surface-variant dark:text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="arrow_back" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed-dim">Permission Slips</h1>
+<button class="hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-95 transition-transform p-2 rounded-full -mr-2 text-on-surface-variant dark:text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="account_circle" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+</button>
+</header>
+<!-- Main Canvas -->
+<!-- Content intent is linear/transactional (Signing a slip), but prompt mandates BottomNavBar inclusion. We will suppress it on Desktop per rules, but render for Mobile per prompt. -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg pb-32">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Left Column / Main Info -->
+<div class="md:col-span-8 flex flex-col gap-stack-md">
+<!-- Event Header Card -->
+<div class="bg-surface-card rounded-lg border border-outline-variant/30 p-margin-mobile flex flex-col gap-stack-sm shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-fixed/20 rounded-bl-full -mr-10 -mt-10 pointer-events-none"></div>
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2 py-1 bg-status-warning/10 text-status-warning font-label-sm text-label-sm rounded-full border border-status-warning/20">Action Required</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Due in 3 days</span>
+</div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">Grade 8 Science Museum Trip</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Please review the details below and provide your digital signature to grant permission for your child to attend this field trip.</p>
+</div>
+<!-- Event Details Bento -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+<!-- Date/Time -->
+<div class="bg-surface-card rounded-lg border border-outline-variant/30 p-margin-mobile flex flex-col gap-unit col-span-2 shadow-sm">
+<div class="flex items-center gap-2 text-primary mb-1">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">calendar_today</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Date &amp; Time</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">Oct 24, 2024</span>
+<span class="font-body-md text-body-md text-on-surface-variant">9:00 AM - 3:00 PM</span>
+</div>
+<!-- Cost -->
+<div class="bg-surface-card rounded-lg border border-outline-variant/30 p-margin-mobile flex flex-col gap-unit col-span-1 shadow-sm">
+<div class="flex items-center gap-2 text-status-success mb-1">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">payments</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Cost</span>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface text-xl">$15.00</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-xs">Fee applied to account</span>
+</div>
+<!-- Transport -->
+<div class="bg-surface-card rounded-lg border border-outline-variant/30 p-margin-mobile flex flex-col gap-unit col-span-1 shadow-sm">
+<div class="flex items-center gap-2 text-surface-tint mb-1">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 0;">directions_bus</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Transport</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface text-lg leading-tight">School Bus</span>
+</div>
+<!-- Location Full Width -->
+<div class="bg-surface-card rounded-lg border border-outline-variant/30 p-0 flex flex-col col-span-2 md:col-span-4 shadow-sm overflow-hidden h-48 relative">
+<img class="absolute inset-0 w-full h-full object-cover opacity-60" data-alt="A stylized, clean vector map interface showing a route from a school to a city science museum. The map uses a light mode aesthetic with soft blue and green tones, clean white roads, and subtle drop shadows on location pins. The style is modern, corporate utility, resembling a high-end GPS application with minimal text and clear geographic hierarchy." data-location="City Science Museum" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtsfAR4zwzs8mIXBUulClmpTYSEB_QmlIv3iyfYroN3v75rF5SegL6VqJL7mPvAAljqWSaMzh1aI3o3xsr8ckY7h7pv_nagVFcdODPWJbkl19T98wMavCNeawJIaeQGSje7c85iznuLyPs0l5IiucVUKl114fIYphU7yPrItGkKI7nn8aGDirWVG6_zXiKO3kTfzwPunD_4OHpKIKU-nPofogUsOdUfc0fx09Eh23oWthLwQAQhORitw">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-card/90 via-surface-card/40 to-transparent flex flex-col justify-end p-margin-mobile">
+<div class="flex items-center gap-2 text-primary mb-1 drop-shadow-md">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">location_on</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider bg-surface-card/80 px-2 rounded backdrop-blur-sm">Location</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface bg-surface-card/80 px-2 py-1 inline-block w-fit rounded backdrop-blur-sm">City Science Museum</span>
+<span class="font-body-md text-body-md text-on-surface-variant bg-surface-card/80 px-2 pb-1 inline-block w-fit rounded-b backdrop-blur-sm">123 Discovery Way, Metroville</span>
+</div>
+</div>
+</div>
+<!-- Emergency Contact Card -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant/40 p-margin-mobile flex flex-col gap-stack-sm shadow-sm">
+<div class="flex items-center justify-between border-b border-outline-variant/20 pb-2">
+<div class="flex items-center gap-2 text-error">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">medical_information</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Emergency Contact on File</h3>
+</div>
+<button class="text-primary font-label-sm text-label-sm hover:underline">Edit</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Primary Contact</span>
+<span class="block font-body-lg text-body-lg text-on-surface font-medium">Sarah Jenkins (Mother)</span>
+<span class="block font-data-mono text-data-mono text-on-surface-variant mt-1">(555) 123-4567</span>
+</div>
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant mb-1">Medical Alerts</span>
+<span class="inline-block px-2 py-1 bg-error-container text-on-error-container font-label-sm text-label-sm rounded border border-error/20">Allergy: Peanuts</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column / Action Sticky -->
+<div class="md:col-span-4 flex flex-col gap-stack-md">
+<!-- Signature Card -->
+<div class="bg-surface-card rounded-lg border-t-4 border-t-primary border-x border-b border-outline-variant/30 p-margin-mobile flex flex-col gap-stack-md shadow-sm md:sticky md:top-24">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Digital Signature</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">By signing below, you acknowledge and agree to the details of this event.</p>
+</div>
+<!-- Input Form -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-col gap-2">
+    <div class="flex justify-between items-end">
+        <label class="font-label-sm text-label-sm text-on-surface-variant" for="signature-pad">Digital Signature</label>
+        <button class="text-primary font-label-sm text-label-sm hover:underline flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">refresh</span>
+            Clear
+        </button>
+    </div>
+    <div class="relative w-full h-32 bg-surface-container-low border border-outline-variant/40 rounded-lg overflow-hidden flex flex-col justify-end p-4">
+        <div class="w-full border-b border-dashed border-outline-variant/60 flex justify-between items-end pb-1">
+            <span class="text-outline text-xs uppercase tracking-widest opacity-60">Sign here</span>
+            <span class="text-outline text-xs opacity-40">X</span>
+        </div>
+        <div class="absolute inset-0 cursor-crosshair"></div>
+    </div>
+</div>
+<div class="flex items-start gap-3 mt-2">
+<div class="flex items-center h-6">
+<input class="w-5 h-5 text-primary bg-surface border-outline-variant rounded focus:ring-primary focus:ring-2 border-2" id="terms" type="checkbox">
+</div>
+<label class="font-body-md text-body-md text-on-surface leading-snug" for="terms">
+                                I agree to the <a class="text-primary hover:underline" href="#">terms and conditions</a> and authorize my child's participation.
+                            </label>
+</div>
+</div>
+<div class="flex flex-col gap-3 mt-4 pt-4 border-t border-outline-variant/20">
+<button class="w-full h-12 bg-primary text-on-primary font-headline-sm text-headline-sm rounded-lg hover:bg-primary-fixed hover:text-on-primary-fixed transition-colors active:scale-[0.98] flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">draw</span>
+                            Sign &amp; Submit
+                        </button>
+<button class="w-full h-12 bg-transparent text-error font-label-sm text-label-sm rounded-lg hover:bg-error-container/50 transition-colors active:scale-[0.98] flex items-center justify-center">
+                            Decline Slip
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (JSON Component) -->
+<!-- Responsive Pivot: Show only on md:hidden. Active tab is "Slips" based on page intent. -->
+<nav class="md:hidden bg-surface dark:bg-surface fixed bottom-0 left-0 w-full z-50 border-t border-outline-variant dark:border-outline-variant flex justify-around items-center px-4 py-3 pb-safe shadow-none">
+<!-- Dashboard (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<!-- Slips (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container rounded-full px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1 text-primary dark:text-primary-fixed-dim" data-icon="description" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="font-label-sm text-label-sm text-primary dark:text-primary-fixed-dim">Slips</span>
+</a>
+<!-- Events (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="event_upcoming" style="font-variation-settings: 'FILL' 0;">event_upcoming</span>
+<span class="font-label-sm text-label-sm">Events</span>
+</a>
+<!-- Settings (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-all active:scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="settings" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-label-sm text-label-sm">Settings</span>
+</a>
+</nav>
+
+
+</body></html>

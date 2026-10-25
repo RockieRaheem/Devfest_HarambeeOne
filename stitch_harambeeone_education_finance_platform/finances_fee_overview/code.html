@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduFlow / HarambeeOne - Finances &amp; Tuition</title>
+<!-- Google Fonts: Inter & Source Serif 4 -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary": "#454649",
+            "surface-tint": "#4b6174",
+            "surface-container": "#eceef3",
+            "surface-container-highest": "#e0e2e8",
+            "on-surface": "#181c20",
+            "on-background": "#181c20",
+            "secondary-fixed-dim": "#c7c6c4",
+            "tertiary-container": "#5c5e60",
+            "primary-container": "#4a6073",
+            "tertiary-fixed": "#e2e2e5",
+            "outline": "#73777d",
+            "on-secondary-container": "#626361",
+            "inverse-primary": "#b2c9df",
+            "secondary-container": "#e0e0dd",
+            "on-tertiary-container": "#d7d7da",
+            "on-error-container": "#93000a",
+            "surface-container-high": "#e6e8ee",
+            "primary-fixed": "#cee5fc",
+            "inverse-on-surface": "#eef1f6",
+            "primary": "#32485a",
+            "on-tertiary": "#ffffff",
+            "surface-dim": "#d8dadf",
+            "secondary-fixed": "#e3e2e0",
+            "surface-variant": "#e0e2e8",
+            "on-tertiary-fixed": "#1a1c1e",
+            "outline-variant": "#c3c7cc",
+            "on-error": "#ffffff",
+            "on-tertiary-fixed-variant": "#454749",
+            "on-secondary-fixed-variant": "#464745",
+            "primary-fixed-dim": "#b2c9df",
+            "surface-container-low": "#f1f4f9",
+            "on-primary-fixed-variant": "#33495b",
+            "surface-container-lowest": "#ffffff",
+            "inverse-surface": "#2d3135",
+            "error": "#ba1a1a",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed": "#1a1c1a",
+            "secondary": "#5e5f5d",
+            "on-primary-container": "#c3daf0",
+            "surface": "#f7f9ff",
+            "surface-bright": "#f7f9ff",
+            "on-primary-fixed": "#041d2e",
+            "on-primary": "#ffffff",
+            "on-surface-variant": "#43474c",
+            "background": "#f7f9ff",
+            "tertiary-fixed-dim": "#c6c6c9",
+            "error-container": "#ffdad6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "container_max": "1280px",
+            "margin_mobile": "16px",
+            "base_unit": "4px",
+            "md": "16px",
+            "xl": "48px",
+            "gutter": "24px",
+            "xxl": "80px",
+            "lg": "24px",
+            "sm": "8px",
+            "xs": "4px"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "headline-lg": ["\"Source Serif 4\""],
+            "headline-lg-mobile": ["\"Source Serif 4\""],
+            "label-md": ["Inter"],
+            "headline-md": ["\"Source Serif 4\""],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "display-lg": ["\"Source Serif 4\""]
+          },
+          "fontSize": {
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+            "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+            "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased selection:bg-primary selection:text-on-primary">
+<!-- TopAppBar Component (from Shared Components JSON with custom screen header context) -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-margin_mobile h-16 bg-surface dark:bg-inverse-surface shadow-sm dark:shadow-none">
+<div class="flex items-center space-x-3">
+<button aria-label="Go back" class="w-10 h-10 rounded-full flex items-center justify-center text-primary dark:text-inverse-primary hover:bg-surface-container-low dark:hover:bg-inverse-surface transition-colors active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div>
+<h1 class="font-headline-md text-headline-md text-primary dark:text-inverse-primary leading-tight font-semibold">Finances &amp; Tuition</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant dark:text-surface-variant flex items-center gap-1">
+<span>Evans Family</span>
+<span>•</span>
+<span class="text-primary font-medium">Harambee Academy</span>
+</p>
+</div>
+</div>
+<div class="flex items-center space-x-2">
+<button aria-label="Notifications" class="w-10 h-10 rounded-full flex items-center justify-center text-primary dark:text-inverse-primary hover:bg-surface-container-low dark:hover:bg-inverse-surface transition-colors active:scale-95 transition-transform duration-150 relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error"></span>
+</button>
+</div>
+</header>
+<!-- Main Editorial Canvas -->
+<main class="pt-20 pb-28 px-margin_mobile max-w-container_max mx-auto">
+<!-- Editorial Greeting & Summary Hero Card -->
+<section class="mt-2 mb-lg bg-surface-container-lowest rounded-xl p-lg border border-on-surface/5 shadow-[0px_2px_4px_rgba(0,0,0,0.02),0px_8px_16px_rgba(0,0,0,0.04)] relative overflow-hidden">
+<!-- Subtle top tint accent -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-primary/20"></div>
+<div class="flex items-start justify-between">
+<div>
+<span class="inline-flex items-center gap-1.5 font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-primary/10 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            Term 3 Billing Cycle
+          </span>
+<h2 class="mt-3 font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Tuition &amp; Fees Balance</h2>
+</div>
+<div class="p-2 rounded-lg bg-surface-container-low text-primary">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-4 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg text-primary tracking-tight">UGX 3,450,000</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant mt-0.5">Approx. $920.00 USD Equivalent</p>
+</div>
+<div class="mt-2 sm:mt-0 flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-error-container/40 text-on-error-container w-fit">
+<span class="material-symbols-outlined text-sm" data-icon="event_upcoming">event_upcoming</span>
+<span class="font-label-sm text-label-sm font-semibold">Due Nov 15, 2024</span>
+</div>
+</div>
+<!-- Quick Action Pay CTA -->
+<div class="mt-6 pt-4 border-t border-on-surface/5 flex flex-col sm:flex-row gap-3">
+<button class="w-full bg-primary-container text-on-primary hover:bg-primary transition-colors py-3 px-6 rounded-xl font-body-md text-body-md font-medium flex items-center justify-center gap-2 shadow-sm active:scale-95 duration-150">
+<span>Make a Payment</span>
+<span class="material-symbols-outlined text-lg" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<button class="w-full sm:w-auto bg-transparent border border-primary/20 text-primary hover:bg-primary/5 transition-colors py-3 px-6 rounded-xl font-body-md text-body-md font-medium flex items-center justify-center gap-2 active:scale-95 duration-150">
+<span class="material-symbols-outlined text-lg" data-icon="receipt_long">receipt_long</span>
+<span>Statement</span>
+</button>
+</div>
+</section>
+<!-- Child-by-Child Breakdown -->
+<section class="mb-lg">
+<div class="flex items-center justify-between mb-3 px-1">
+<h3 class="font-headline-md text-headline-md text-on-surface">Student Breakdown</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2 Students Enrolled</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<!-- Child 1: Kwame Evans -->
+<div class="bg-surface-container-lowest rounded-xl p-md border border-on-surface/5 shadow-[0px_2px_4px_rgba(0,0,0,0.02)] flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-fixed text-on-primary-fixed-variant flex items-center justify-center font-headline-md font-medium text-base">
+                  KE
+                </div>
+<div>
+<h4 class="font-body-lg text-body-lg font-medium text-on-surface">Kwame Evans</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Grade 10 • Senior Secondary</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant">2 Invoices</span>
+</div>
+<div class="mt-4 bg-surface-container-low rounded-lg p-3">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Items due this term:</p>
+<p class="font-body-md text-body-md text-on-surface font-medium mt-0.5">Term 3 Tuition + Science Lab Fee</p>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-on-surface/5 flex items-baseline justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Total Due</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold">UGX 2,100,000</span>
+</div>
+</div>
+<!-- Child 2: Zara Evans -->
+<div class="bg-surface-container-lowest rounded-xl p-md border border-on-surface/5 shadow-[0px_2px_4px_rgba(0,0,0,0.02)] flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant flex items-center justify-center font-headline-md font-medium text-base">
+                  ZE
+                </div>
+<div>
+<h4 class="font-body-lg text-body-lg font-medium text-on-surface">Zara Evans</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Grade 7 • Lower Secondary</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant">1 Invoice</span>
+</div>
+<div class="mt-4 bg-surface-container-low rounded-lg p-3">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Items due this term:</p>
+<p class="font-body-md text-body-md text-on-surface font-medium mt-0.5">Tuition Term 3</p>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-on-surface/5 flex items-baseline justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Total Due</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold">UGX 1,350,000</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Payment Plan Progress Card -->
+<section class="mb-lg bg-surface-container-low rounded-xl p-lg border border-on-surface/5">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-base" data-icon="calendar_month">calendar_month</span>
+</div>
+<div>
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">Scheduled Installments</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Flexible Term 3 Payment Schedule</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-primary text-on-primary font-medium">Active</span>
+</div>
+<div class="mt-4">
+<div class="flex justify-between items-center mb-1.5">
+<span class="font-label-md text-label-md text-on-surface font-medium">2 of 4 Installments Paid</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">50% Completed</span>
+</div>
+<!-- Progress Bar Track -->
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 50%;"></div>
+</div>
+<div class="mt-3 flex items-center justify-between text-on-surface-variant">
+<p class="font-label-sm text-label-sm">Next scheduled auto-deduct: <strong class="text-on-surface font-semibold">Nov 15, 2024</strong></p>
+<button class="font-label-sm text-label-sm text-primary hover:underline font-semibold flex items-center gap-0.5">
+            Manage Plan
+            <span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Detailed Fee Schedule / Invoices List -->
+<section class="mb-xl">
+<div class="flex items-center justify-between mb-3 px-1">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Fee Schedule &amp; Invoices</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Academic Year 2024 / 2025</p>
+</div>
+<button class="font-label-md text-label-md text-primary hover:underline flex items-center gap-1 font-medium">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+          Filter
+        </button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl border border-on-surface/5 divide-y divide-on-surface/5 overflow-hidden shadow-[0px_2px_4px_rgba(0,0,0,0.02)]">
+<!-- Item 1: Term 3 Tuition - Kwame -->
+<div class="p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="p-2 rounded-lg bg-primary/10 text-primary mt-0.5">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Term 3 Tuition</h4>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-semibold">
+                    Action required
+                  </span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Kwame Evans • Grade 10 • Invoice #INV-2024-884</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="font-label-sm text-label-sm text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="schedule">schedule</span>
+                    Due Nov 15, 2024
+                  </span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<p class="font-body-lg text-body-lg font-semibold text-on-surface">UGX 1,800,000</p>
+<button class="mt-2 font-label-sm text-label-sm text-primary hover:text-primary-container font-medium underline">
+                Pay Now
+              </button>
+</div>
+</div>
+</div>
+<!-- Item 2: STEM & Robotics Lab Fee - Kwame -->
+<div class="p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="p-2 rounded-lg bg-surface-container text-primary mt-0.5">
+<span class="material-symbols-outlined" data-icon="biotech">biotech</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">STEM &amp; Robotics Lab Fee</h4>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-medium">
+                    Pending
+                  </span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Kwame Evans • Grade 10 • Invoice #INV-2024-889</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="event">event</span>
+                    Due Nov 15, 2024
+                  </span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<p class="font-body-lg text-body-lg font-semibold text-on-surface">UGX 300,000</p>
+<button class="mt-2 font-label-sm text-label-sm text-primary hover:text-primary-container font-medium underline">
+                Pay Now
+              </button>
+</div>
+</div>
+</div>
+<!-- Item 3: Term 3 Tuition - Zara -->
+<div class="p-md hover:bg-surface-container-low transition-colors">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="p-2 rounded-lg bg-surface-container text-primary mt-0.5">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Term 3 Tuition</h4>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-medium">
+                    Upcoming
+                  </span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">Zara Evans • Grade 7 • Invoice #INV-2024-912</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="event">event</span>
+                    Due Nov 20, 2024
+                  </span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<p class="font-body-lg text-body-lg font-semibold text-on-surface">UGX 1,350,000</p>
+<button class="mt-2 font-label-sm text-label-sm text-on-surface-variant hover:text-primary font-medium">
+                View Details
+              </button>
+</div>
+</div>
+</div>
+<!-- Item 4: Term 2 Tuition - Kwame (Paid) -->
+<div class="p-md hover:bg-surface-container-low transition-colors bg-surface-container-low/30">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="p-2 rounded-lg bg-surface-container-high text-secondary mt-0.5">
+<span class="material-symbols-outlined" data-icon="task_alt">task_alt</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h4 class="font-body-md text-body-md font-medium text-secondary line-through">Term 2 Tuition</h4>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-high text-secondary font-medium">
+                    Paid
+                  </span>
+</div>
+<p class="font-label-sm text-label-sm text-outline mt-0.5">Kwame Evans • Paid on Aug 12, 2024</p>
+<div class="mt-2">
+<button class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="download">download</span>
+                    Download Receipt
+                  </button>
+</div>
+</div>
+</div>
+<div class="text-right">
+<p class="font-body-lg text-body-lg font-medium text-secondary">UGX 1,800,000</p>
+<span class="font-label-sm text-label-sm text-outline">Cleared</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Support Assistance Box -->
+<section class="p-lg rounded-xl bg-surface-container-lowest border border-on-surface/5 flex items-start gap-4 mb-lg">
+<div class="p-2.5 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Need assistance or a bursary plan?</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+          The Bursar’s Office at Harambee Academy is ready to discuss personalized installment schedules or emergency fee adjustments.
+        </p>
+<div class="mt-3 flex items-center gap-4">
+<a class="font-label-md text-label-md text-primary hover:underline font-semibold flex items-center gap-1" href="#">
+<span>Contact Bursar</span>
+<span class="material-symbols-outlined text-xs" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<span class="text-outline-variant">•</span>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface font-medium" href="#">
+            Financial Aid Policy
+          </a>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Component (from Shared Components JSON with 'Finances' active) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin_mobile py-2 bg-surface dark:bg-inverse-surface shadow-sm dark:shadow-none">
+<!-- Item 1: Overview (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1.5 hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm mt-0.5">Overview</span>
+</a>
+<!-- Item 2: Finances (Active - mapped directly to page intent) -->
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl px-3 py-1.5 hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet" data-weight="fill" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-0.5">Finances</span>
+</a>
+<!-- Item 3: Academics (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1.5 hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+<span class="font-label-sm text-label-sm mt-0.5">Academics</span>
+</a>
+<!-- Item 4: Support (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1.5 hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span class="font-label-sm text-label-sm mt-0.5">Support</span>
+</a>
+</nav>
+</body></html>

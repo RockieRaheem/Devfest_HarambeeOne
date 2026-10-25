@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HarambeeOne Parent &amp; Guardian Portal</title>
+<!-- Google Fonts: Public Sans & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "primary-fixed-dim": "#bec6e0",
+            "on-secondary-container": "#fffbff",
+            "on-tertiary-fixed": "#002114",
+            "inverse-on-surface": "#eaf1ff",
+            "inverse-primary": "#bec6e0",
+            "surface-container-high": "#dce9ff",
+            "surface-container-low": "#eff4ff",
+            "surface-tint": "#565e74",
+            "secondary-container": "#4069f2",
+            "primary-container": "#131b2e",
+            "on-secondary-fixed": "#001551",
+            "surface": "#f8f9ff",
+            "on-surface-variant": "#45464d",
+            "on-primary-container": "#7c839b",
+            "on-surface": "#0b1c30",
+            "on-secondary-fixed-variant": "#0039b5",
+            "secondary-fixed": "#dce1ff",
+            "tertiary-fixed": "#85f8c4",
+            "surface-variant": "#d3e4fe",
+            "outline-variant": "#c6c6cd",
+            "on-primary-fixed": "#131b2e",
+            "error": "#ba1a1a",
+            "on-secondary": "#ffffff",
+            "on-primary-fixed-variant": "#3f465c",
+            "tertiary-container": "#002114",
+            "on-background": "#0b1c30",
+            "secondary-fixed-dim": "#b7c4ff",
+            "background": "#f8f9ff",
+            "tertiary": "#000000",
+            "inverse-surface": "#213145",
+            "secondary": "#1d4ed8",
+            "error-container": "#ffdad6",
+            "surface-dim": "#cbdbf5",
+            "on-tertiary-container": "#069669",
+            "surface-bright": "#f8f9ff",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#005137",
+            "surface-container-highest": "#d3e4fe",
+            "on-tertiary": "#ffffff",
+            "surface-container": "#e5eeff",
+            "outline": "#76777d",
+            "on-error-container": "#93000a",
+            "primary": "#000000",
+            "primary-fixed": "#dae2fd",
+            "on-error": "#ffffff",
+            "tertiary-fixed-dim": "#68dba9"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "gutter": "1.5rem",
+            "margin-mobile": "1rem",
+            "space-xl": "2.5rem",
+            "gutter-mobile": "1rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "display-lg": ["Public Sans"],
+            "label-md": ["Inter"],
+            "display-sm-mobile": ["Public Sans"],
+            "body-md": ["Inter"],
+            "headline-md": ["Public Sans"],
+            "tabular-numeric": ["Inter"],
+            "headline-sm": ["Public Sans"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-lg": ["Public Sans"],
+            "display-sm": ["Public Sans"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+            "display-sm-mobile": ["26px", {"lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+            "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "tabular-numeric": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+            "headline-sm": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+            "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "display-sm": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "body-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md antialiased selection:bg-surface-container-high pb-28">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-margin-mobile h-16 bg-surface dark:bg-inverse-surface shadow-sm dark:shadow-none">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-primary-container text-on-primary flex items-center justify-center font-display-sm text-label-md tracking-wider font-bold shadow-sm">
+        HO
+      </div>
+<div>
+<span class="font-headline-md text-headline-md text-primary dark:text-inverse-primary tracking-tight block leading-none">HarambeeOne</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium tracking-normal block mt-0.5">Financial Governance Portal</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button aria-label="Notifications" class="relative p-2 rounded-xl text-on-surface hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[22px] leading-none" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center font-label-md text-on-surface font-semibold text-xs">
+        ME
+      </div>
+</div>
+</header>
+<!-- MAIN CANVAS -->
+<main class="max-w-4xl mx-auto px-margin-mobile pt-20 space-y-6">
+<!-- HERO GUARDIAN EXECUTIVE GREETING -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md sm:p-space-lg border border-outline-variant shadow-sm relative overflow-hidden">
+<div class="absolute -right-8 -top-8 w-40 h-40 bg-surface-container-low rounded-full pointer-events-none opacity-60"></div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
+<div>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-on-primary-fixed-variant text-label-sm font-label-sm mb-2 border border-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+            Primary Guardian • 2 Active Learners
+          </div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">Good afternoon, Marcus Evans</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">St. Augustine Royal Academy • Academic Year 2024/2025</p>
+</div>
+<div class="flex items-center gap-2 self-start sm:self-center bg-surface p-1 rounded-xl border border-outline-variant">
+<button class="px-3 py-1.5 text-label-sm font-label-sm rounded-lg bg-surface-container-lowest shadow-sm font-semibold text-primary transition-transform active:scale-95">
+            All Wards
+          </button>
+<button class="px-3 py-1.5 text-label-sm font-label-sm rounded-lg text-on-surface-variant hover:text-primary transition-colors active:scale-95">
+            Sarah
+          </button>
+<button class="px-3 py-1.5 text-label-sm font-label-sm rounded-lg text-on-surface-variant hover:text-primary transition-colors active:scale-95">
+            Joshua
+          </button>
+</div>
+</div>
+</section>
+<!-- QUICK INSTITUTIONAL ACTIONS GRID -->
+<section>
+<div class="flex items-center justify-between mb-3 px-1">
+<h2 class="font-label-md text-label-md text-on-surface-variant tracking-wider uppercase">Institutional Services</h2>
+<span class="font-label-sm text-label-sm text-secondary font-medium cursor-pointer hover:underline">Manage Mandates</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<!-- Action 1 -->
+<button class="flex flex-col items-start p-3.5 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm hover:border-secondary hover:shadow-md transition-all group text-left">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold text-sm">Pay Fees</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-xs mt-0.5">MoMo, Airtel &amp; Cards</span>
+</button>
+<!-- Action 2 -->
+<button class="flex flex-col items-start p-3.5 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm hover:border-secondary hover:shadow-md transition-all group text-left">
+<div class="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold text-sm">View Statements</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-xs mt-0.5">Audited Term Ledgers</span>
+</button>
+<!-- Action 3 -->
+<button class="flex flex-col items-start p-3.5 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm hover:border-secondary hover:shadow-md transition-all group text-left">
+<div class="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="event_available">event_available</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold text-sm">Attendance &amp; Notices</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-xs mt-0.5">98.4% Presence rate</span>
+</button>
+<!-- Action 4 -->
+<button class="flex flex-col items-start p-3.5 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm hover:border-secondary hover:shadow-md transition-all group text-left">
+<div class="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="school">school</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold text-sm">Academic Reports</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-xs mt-0.5">Term 2 Interim Cards</span>
+</button>
+</div>
+</section>
+<!-- EXECUTIVE STUDENT OVERVIEW CARDS -->
+<section class="space-y-4">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-label-md text-label-md text-on-surface-variant tracking-wider uppercase">Active Learners Financial Status</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Bursar Term Audit Validated</span>
+</div>
+<!-- STUDENT 1: Sarah Namaganda (Fully Cleared) -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md sm:p-space-lg border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-surface-container">
+<div class="flex items-start gap-3">
+<div class="w-11 h-11 rounded-xl bg-surface-container text-secondary font-headline-md font-bold flex items-center justify-center">
+              SN
+            </div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface leading-tight">Sarah Namaganda</h3>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-[#ecfdf5] text-[#059669] border border-[#a7f3d0]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#059669] mr-1.5"></span>
+                  Term 1 Fees Cleared
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                Primary 4 Blue • <span class="font-mono text-xs">LIN: UGX-2024-99812401</span>
+</p>
+</div>
+</div>
+<div class="sm:text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant block uppercase tracking-wider">Balance Due</span>
+<span class="font-display-sm text-display-sm font-bold text-on-surface font-tabular-numeric leading-tight">UGX 0</span>
+</div>
+</div>
+<div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary" data-icon="calendar_month">calendar_month</span>
+<span>Next Term Invoicing: <strong class="text-on-surface font-semibold">Nov 15, 2024</strong></span>
+</div>
+<div class="flex items-center gap-2.5 sm:justify-end">
+<button class="px-3.5 py-1.5 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface font-label-sm text-label-sm hover:bg-surface-container-low transition-colors inline-flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]" data-icon="receipt_long">receipt_long</span>
+              View Ledger
+            </button>
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container text-secondary font-label-sm text-label-sm hover:bg-surface-container-high transition-colors inline-flex items-center gap-1.5 font-semibold">
+<span class="material-symbols-outlined text-[16px]" data-icon="download">download</span>
+              Download Official Receipt
+            </button>
+</div>
+</div>
+</article>
+<!-- STUDENT 2: Joshua Namaganda (Balance Due) -->
+<article class="bg-surface-container-lowest rounded-xl p-space-md sm:p-space-lg border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-surface-container">
+<div class="flex items-start gap-3">
+<div class="w-11 h-11 rounded-xl bg-surface-container text-secondary font-headline-md font-bold flex items-center justify-center">
+              JN
+            </div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface leading-tight">Joshua Namaganda</h3>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-[#fffbeb] text-[#b45309] border border-[#fde68a]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#b45309] mr-1.5"></span>
+                  Balance Due
+                </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                Primary 1 Green • <span class="font-mono text-xs">LIN: UGX-2025-88410291</span>
+</p>
+</div>
+</div>
+<div class="sm:text-right">
+<span class="font-label-sm text-label-sm text-error block uppercase tracking-wider font-semibold">Remaining Due</span>
+<span class="font-display-sm text-display-sm font-bold text-error font-tabular-numeric leading-tight">UGX 350,000</span>
+</div>
+</div>
+<!-- Progress Tracking Ledger -->
+<div class="mt-4 space-y-2">
+<div class="flex justify-between items-center text-xs font-label-sm text-on-surface-variant">
+<span>Payment Fulfillment: <strong>66.6%</strong></span>
+<span>Paid <strong class="text-on-surface font-tabular-numeric">UGX 700,000</strong> of UGX 1,050,000</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-secondary h-2 rounded-full transition-all duration-500" style="width: 66.6%"></div>
+</div>
+</div>
+<div class="mt-4 pt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-2 text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-[#b45309]" data-icon="warning">warning</span>
+<span>Final clearance required prior to Term Examination week</span>
+</div>
+<div class="flex items-center gap-2 sm:justify-end">
+<button class="w-full sm:w-auto px-4 py-2 rounded-lg bg-secondary text-on-primary font-label-sm text-label-sm font-semibold hover:bg-[#1e40af] transition-all inline-flex items-center justify-center gap-1.5 shadow-sm active:scale-95">
+<span class="material-symbols-outlined text-[16px]" data-icon="bolt">bolt</span>
+              Pay via SchoolPay / MoMo
+            </button>
+</div>
+</div>
+</article>
+</section>
+<!-- RECENT FINANCIAL ACTIVITY FEED -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md sm:p-space-lg border border-outline-variant shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div>
+<h2 class="font-headline-md text-headline-md font-bold text-on-surface">Recent Financial Activity</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Automated bank reconciliation via National Switch</p>
+</div>
+<button class="text-label-sm font-label-sm text-secondary hover:underline font-semibold">
+          Export Statement
+        </button>
+</div>
+<div class="divide-y divide-surface-container">
+<!-- Feed Item 1 -->
+<div class="py-3.5 flex items-start justify-between gap-3 first:pt-1 last:pb-1">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-[#ecfdf5] border border-[#a7f3d0] text-[#059669] flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[20px]" data-icon="check_circle">check_circle</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">UGX 400,000 Paid via MTN Mobile Money</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                Sarah Namaganda • Primary 4 Term 1 Tuition
+              </p>
+<div class="flex items-center gap-3 mt-1.5 text-xs text-on-surface-variant">
+<span class="font-mono bg-surface px-1.5 py-0.5 rounded border border-outline-variant text-[11px]">Ref: RCP-SCHPAY-304</span>
+<span>Today, 10:42 AM</span>
+<span class="inline-flex items-center gap-1 text-[#059669] font-medium">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified">verified</span>
+                  Receipt Verified
+                </span>
+</div>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-headline-sm text-headline-sm font-bold text-[#059669] font-tabular-numeric">+UGX 400,000</span>
+<span class="block text-label-sm text-label-sm text-on-surface-variant mt-0.5">Credit Approved</span>
+</div>
+</div>
+<!-- Feed Item 2 -->
+<div class="py-3.5 flex items-start justify-between gap-3 first:pt-1 last:pb-1">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-secondary flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[20px]" data-icon="volunteer_activism">volunteer_activism</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">UGX 600,000 Donor Subsidy Credited</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+                Mastercard STEM Girls Initiative Foundation Scholarship
+              </p>
+<div class="flex items-center gap-3 mt-1.5 text-xs text-on-surface-variant">
+<span class="font-mono bg-surface px-1.5 py-0.5 rounded border border-outline-variant text-[11px]">Grant ID: MCF-2024-91B</span>
+<span>Yesterday, 03:15 PM</span>
+<span class="text-secondary font-medium">Institutional Grant</span>
+</div>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-headline-sm text-headline-sm font-bold text-secondary font-tabular-numeric">+UGX 600,000</span>
+<span class="block text-label-sm text-label-sm text-on-surface-variant mt-0.5">Subsidized</span>
+</div>
+</div>
+</div>
+</section>
+<!-- FISCAL ADVISORY NOTE -->
+<section class="bg-surface-container-low rounded-xl p-4 border border-surface-variant flex items-center justify-between text-xs text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary" data-icon="shield">shield</span>
+<span>All transactions are legally protected and tokenized under Central Bank of Uganda Regulatory Sandbox Act 2020.</span>
+</div>
+<a class="text-secondary font-semibold hover:underline flex-shrink-0 ml-2" href="#">Compliance Notice</a>
+</section>
+</main>
+<!-- BOTTOM NAVIGATION BAR (Fixed Mobile Destination Anchor) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile py-2 bg-surface dark:bg-inverse-surface shadow-sm dark:shadow-none">
+<!-- Tab 1: Overview (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl px-3 py-1.5 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm text-white mt-0.5">Overview</span>
+</a>
+<!-- Tab 2: Finances -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1.5 hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-0.5">Finances</span>
+</a>
+<!-- Tab 3: Academics -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1.5 hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="school">school</span>
+<span class="font-label-sm text-label-sm mt-0.5">Academics</span>
+</a>
+<!-- Tab 4: Support -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1.5 hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="contact_support">contact_support</span>
+<span class="font-label-sm text-label-sm mt-0.5">Support</span>
+</a>
+</nav>
+</body></html>

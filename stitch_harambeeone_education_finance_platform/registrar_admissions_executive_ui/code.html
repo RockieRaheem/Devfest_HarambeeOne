@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registrar &amp; Admissions - HarambeeOne MoES</title>
+<!-- Material Symbols Outlined Font -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Public Sans & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with custom theme -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-primary": "#bec6e0",
+            "surface-tint": "#565e74",
+            "surface-container-highest": "#d3e4fe",
+            "on-tertiary-fixed": "#002114",
+            "on-tertiary-container": "#069669",
+            "background": "#f8f9ff",
+            "surface": "#f8f9ff",
+            "tertiary-fixed": "#85f8c4",
+            "secondary-fixed-dim": "#b7c4ff",
+            "surface-container-high": "#dce9ff",
+            "secondary": "#1d4ed8",
+            "on-secondary": "#ffffff",
+            "surface-container-low": "#eff4ff",
+            "primary-container": "#131b2e",
+            "on-tertiary": "#ffffff",
+            "surface-variant": "#d3e4fe",
+            "secondary-container": "#4069f2",
+            "primary-fixed-dim": "#bec6e0",
+            "inverse-on-surface": "#eaf1ff",
+            "on-primary-fixed": "#131b2e",
+            "primary-fixed": "#dae2fd",
+            "surface-dim": "#cbdbf5",
+            "surface-container": "#e5eeff",
+            "surface-container-lowest": "#ffffff",
+            "outline-variant": "#c6c6cd",
+            "surface-bright": "#f8f9ff",
+            "inverse-surface": "#213145",
+            "on-primary-fixed-variant": "#3f465c",
+            "secondary-fixed": "#dce1ff",
+            "primary": "#000000",
+            "tertiary": "#000000",
+            "tertiary-container": "#002114",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#7c839b",
+            "error": "#ba1a1a",
+            "tertiary-fixed-dim": "#68dba9",
+            "on-tertiary-fixed-variant": "#005137",
+            "on-error": "#ffffff",
+            "outline": "#76777d",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-background": "#0b1c30",
+            "on-surface": "#0b1c30",
+            "on-surface-variant": "#45464d",
+            "on-secondary-fixed-variant": "#0039b5",
+            "on-secondary-container": "#fffbff",
+            "on-secondary-fixed": "#001551"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "margin": "2rem",
+            "gutter-mobile": "1rem",
+            "space-md": "1rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem",
+            "gutter": "1.5rem",
+            "margin-mobile": "1rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "tabular-numeric": ["Inter"],
+            "display-sm-mobile": ["Public Sans"],
+            "label-sm": ["Inter"],
+            "display-lg": ["Public Sans"],
+            "body-sm": ["Inter"],
+            "headline-sm": ["Public Sans"],
+            "display-sm": ["Public Sans"],
+            "label-md": ["Inter"],
+            "headline-lg": ["Public Sans"],
+            "headline-md": ["Public Sans"]
+          },
+          "fontSize": {
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "tabular-numeric": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "display-sm-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "display-sm": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* Custom subtle scrollbar for tables */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f8f9ff;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md min-h-screen flex flex-col">
+<!-- ================= TOP NAV BAR (Shared Component) ================= -->
+<header class="flex justify-between items-center w-full px-space-lg h-16 sticky top-0 z-50 bg-surface-container-lowest dark:bg-primary-container border-b border-outline-variant dark:border-outline shadow-sm">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center text-surface-container-lowest font-headline-md font-bold shadow-sm">
+<span class="text-secondary font-display-sm text-lg">H1</span>
+</div>
+<div>
+<span class="text-headline-md font-headline-md font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">HarambeeOne MoES</span>
+<div class="text-[10px] text-on-surface-variant font-label-sm tracking-wider uppercase -mt-1">National Institutional Cloud</div>
+</div>
+</div>
+<!-- Quick Search Bar (Left Oriented) -->
+<div class="hidden lg:flex items-center relative w-72">
+<span class="material-symbols-outlined text-outline absolute left-3 text-lg" data-icon="search">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 text-body-sm bg-surface-container-low border border-outline-variant rounded-lg focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary text-on-surface placeholder:text-outline" placeholder="Search LIN, SchoolPay ID, Learner..." type="text"/>
+</div>
+<!-- Nav Links -->
+<nav class="hidden xl:flex items-center gap-6 h-16 ml-4">
+<a class="text-secondary dark:text-secondary-fixed font-bold border-b-2 border-secondary dark:border-secondary-fixed h-full flex items-center text-label-md" href="#">Term 1 2025</a>
+<a class="text-on-surface-variant dark:text-inverse-primary font-normal h-full flex items-center text-label-md hover:text-secondary transition-colors duration-150" href="#">Audit Log</a>
+</nav>
+</div>
+<!-- Trailing Actions & Credentials -->
+<div class="flex items-center gap-3">
+<button class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-lowest border border-outline-variant rounded-lg text-label-md font-label-md text-on-surface hover:bg-surface-container-low hover:text-secondary transition-colors duration-150 active:scale-95">
+<span class="material-symbols-outlined text-base" data-icon="fact_check">fact_check</span>
+        Verify Audit Trail
+      </button>
+<button class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-primary text-on-primary rounded-lg text-label-md font-label-md hover:bg-primary-container transition-colors duration-150 active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-base" data-icon="add_circle">add_circle</span>
+        Post Ledger Entry
+      </button>
+<div class="h-6 w-px bg-outline-variant mx-1 hidden md:block"></div>
+<div class="flex items-center gap-1">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low hover:text-secondary rounded-lg transition-colors duration-150 relative" title="Notifications">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full ring-2 ring-surface-container-lowest"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low hover:text-secondary rounded-lg transition-colors duration-150" title="Help Desk">
+<span class="material-symbols-outlined text-xl" data-icon="help_outline">help_outline</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low hover:text-secondary rounded-lg transition-colors duration-150" title="System Settings">
+<span class="material-symbols-outlined text-xl" data-icon="tune">tune</span>
+</button>
+</div>
+<div class="flex items-center gap-2 pl-2 border-l border-outline-variant">
+<img alt="Uganda Ministry of Education &amp; Sports Chief Bursar Credential Seal" class="w-8 h-8 rounded-full border border-outline-variant object-contain bg-surface-container-low p-0.5" data-alt="Uganda Ministry of Education and Sports verified gold circular institutional seal emblem with national crested crane coat of arms, sharp vector lines, high executive contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8gKzRkv-mwrOT8HVBDuvozdN7zdrLzAevgd8w4IvD2d7OaPgKdIRXvi4s63EZ2SMhlJW1HUEOvmUjpJbjbCP7yfBqYXNk12S25QZFrQH-XF3bdtvZHgBbijA6MmXukIrTCXPD_FQdhBvqH_OrN3OUkq43qQMFUCLeJDVS_3dghPsopuiMkxlKRUp5hUqQfyasu2x4sVuEP25WcFAVKCS-tZL33ZkdFcpbc6OCvputL5PQO0iO8guOmQ"/>
+<div class="hidden md:flex flex-col text-left">
+<span class="text-label-sm font-label-sm text-on-surface font-semibold leading-tight">Chief Bursar</span>
+<span class="text-[10px] text-outline">EMIS #0921-A</span>
+</div>
+</div>
+</div>
+</header>
+<!-- ================= LAYOUT WRAPPER ================= -->
+<div class="flex flex-1 relative">
+<!-- ================= SIDE NAV BAR (Shared Component) ================= -->
+<aside class="flex flex-col justify-between w-64 h-screen fixed left-0 top-0 pt-16 z-40 px-space-md pb-space-lg bg-surface-container-lowest dark:bg-primary-container border-r border-outline-variant dark:border-outline shadow-sm">
+<div class="flex flex-col mt-4">
+<!-- Institutional Badge Box -->
+<div class="flex items-center gap-3 p-3 bg-surface-container-low rounded-xl border border-outline-variant mb-4">
+<img alt="Republic of Uganda Crest National Emblem" class="w-10 h-10 rounded-lg object-contain bg-surface-container-lowest p-1 border border-outline-variant" data-alt="Republic of Uganda official national crest emblem badge with shield and spears, hyper-detailed institutional metallic gold finish, deep navy outline backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgrgnP-GBXr5CNb7Qi7P2y88AhlHZnDLb2njqeY1EEzyp9nY4zGqlQKzPkdd4jLkkLc-p9lYJEFPf41TBvwD7gDAQrcd1l6CFB4W1Yv2Lzd5HQqB6NZelN3AfXubJZyXKHv_cOFeDk_CgrhMj_VVMs0J77q-VhqKhlGzKxKLHd0wEYZCXKyb0Z4LJmmzhTpP2yMCa3BjIE20zd3zA7PeeSEbocZnGi5y1shClK9CysYFAYQQf8tsUyrw"/>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface dark:text-inverse-on-surface leading-tight">HarambeeOne Portal</span>
+<span class="text-[11px] text-outline font-body-sm">Uganda MoES Statutory Desk</span>
+</div>
+</div>
+<!-- Quick CTA inside Sidenav -->
+<button class="flex items-center justify-center gap-2 w-full py-2 mb-4 bg-secondary text-on-secondary rounded-lg font-label-md text-label-md shadow-sm hover:bg-secondary-container transition-all duration-150 active:scale-95">
+<span class="material-symbols-outlined text-lg" data-icon="post_add">post_add</span>
+          New Fiscal Batch
+        </button>
+<!-- Main Navigation Menu: EXACT LABELS AND ICONS -->
+<nav class="space-y-1">
+<!-- 1. Bursar Command -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-inverse-primary font-medium hover:bg-surface-container-low dark:hover:bg-surface-container-highest hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="dashboard">dashboard</span>
+<span class="text-label-md font-label-md">Bursar Command</span>
+</a>
+<!-- 2. Live Reconciliation -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-inverse-primary font-medium hover:bg-surface-container-low dark:hover:bg-surface-container-highest hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="sync_alt">sync_alt</span>
+<span class="text-label-md font-label-md">Live Reconciliation</span>
+</a>
+<!-- 3. Student Ledgers -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-inverse-primary font-medium hover:bg-surface-container-low dark:hover:bg-surface-container-highest hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="account_balance">account_balance</span>
+<span class="text-label-md font-label-md">Student Ledgers</span>
+</a>
+<!-- 4. Registrar Admissions - ACTIVE -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface-container dark:bg-surface-variant text-secondary dark:text-secondary-fixed font-bold border-l-4 border-secondary transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="school">school</span>
+<span class="text-label-md font-label-md">Registrar Admissions</span>
+</a>
+<!-- 5. Statutory DEO Reports -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-inverse-primary font-medium hover:bg-surface-container-low dark:hover:bg-surface-container-highest hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="description">description</span>
+<span class="text-label-md font-label-md">Statutory DEO Reports</span>
+</a>
+<!-- 6. System Settings -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant dark:text-inverse-primary font-medium hover:bg-surface-container-low dark:hover:bg-surface-container-highest hover:text-secondary dark:hover:text-secondary-fixed transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="settings">settings</span>
+<span class="text-label-md font-label-md">System Settings</span>
+</a>
+</nav>
+</div>
+<!-- Footer Action Links -->
+<div class="pt-4 border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-secondary transition-colors text-label-sm font-label-sm" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="support_agent">support_agent</span>
+<span>MoES Direct Line</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-secondary transition-colors text-label-sm font-label-sm" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="verified_user">verified_user</span>
+<span>Fiscal Security</span>
+</a>
+<div class="px-3 pt-2 text-[10px] text-outline">
+          Version 4.18.2 • Secure MoES Node #7
+        </div>
+</div>
+</aside>
+<!-- ================= MAIN CONTENT CANVAS ================= -->
+<main class="ml-64 flex-1 p-space-xl min-w-0 max-w-[1536px]">
+<!-- PAGE HEADER -->
+<section class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-space-lg mb-space-lg border-b border-outline-variant">
+<div>
+<div class="flex items-center gap-3 flex-wrap">
+<h1 class="text-headline-lg font-headline-lg text-on-surface font-extrabold tracking-tight">
+              Registrar &amp; Admissions: Student Onboarding, Stream Assignment &amp; Multi-Guardian Binding
+            </h1>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-label-sm font-label-sm">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              MoES National EMIS / LIN Sync Active
+            </span>
+</div>
+<p class="text-body-sm font-body-sm text-outline mt-1">
+            Kampala Primary Institutional Cluster • Direct UNEB API integration &amp; statutory parent SMS verification ledger
+          </p>
+</div>
+<div class="flex items-center gap-3 flex-wrap">
+<button class="inline-flex items-center gap-2 px-3.5 py-2 bg-surface-container-lowest border border-outline-variant text-on-surface rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors duration-150 shadow-sm active:scale-95">
+<span class="material-symbols-outlined text-lg text-outline" data-icon="file_upload">file_upload</span>
+            Import MoES Batch (CSV)
+          </button>
+<button class="inline-flex items-center gap-2 px-3.5 py-2 bg-surface-container-lowest border border-outline-variant text-on-surface rounded-lg font-label-md text-label-md hover:bg-surface-container-low transition-colors duration-150 shadow-sm active:scale-95">
+<span class="material-symbols-outlined text-lg text-outline" data-icon="download">download</span>
+            Download Admission Registers
+          </button>
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-secondary text-on-secondary rounded-lg font-label-md text-label-md hover:bg-secondary-container transition-all duration-150 shadow-sm active:scale-95">
+<span class="material-symbols-outlined text-lg" data-icon="person_add">person_add</span>
+            Enroll New Learner
+          </button>
+</div>
+</section>
+<!-- TOP SUMMARY METRIC CARDS (Level 1 Elevation) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-gutter mb-space-xl">
+<!-- Metric 1: Total Enrolled Learners -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Total Enrolled Learners</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="groups">groups</span>
+</div>
+</div>
+<div>
+<div class="text-display-sm font-display-sm text-on-surface font-bold tracking-tight">1,142</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-label-sm bg-emerald-50 text-emerald-700 font-semibold">100% LIN Validated</span>
+<span class="text-body-sm font-body-sm text-outline">+42 this term</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<!-- Metric 2: Pending Stream Allocation -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Pending Stream Allocation</span>
+<div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600">
+<span class="material-symbols-outlined text-lg" data-icon="pending_actions">pending_actions</span>
+</div>
+</div>
+<div>
+<div class="text-display-sm font-display-sm text-on-surface font-bold tracking-tight">8</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-label-sm bg-amber-50 text-amber-800 font-semibold border border-amber-200">Requires Action</span>
+<span class="text-body-sm font-body-sm text-outline">Awaiting stream placement</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-amber-500 h-full rounded-full" style="width: 28%;"></div>
+</div>
+</div>
+<!-- Metric 3: Multi-Guardian Binding -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Multi-Guardian Binding</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="family_restroom">family_restroom</span>
+</div>
+</div>
+<div>
+<div class="text-display-sm font-display-sm text-on-surface font-bold tracking-tight">98.4%</div>
+<div class="flex items-center gap-2 mt-1 text-body-sm font-body-sm text-outline">
+<span class="text-on-surface font-semibold">1,124</span> primary • 
+              <span class="text-on-surface font-semibold">842</span> secondary
+            </div>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-emerald-500 h-full rounded-full" style="width: 98.4%;"></div>
+</div>
+</div>
+<!-- Metric 4: Statutory UNEB Candidates -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-outline">Statutory UNEB Candidates</span>
+<div class="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600">
+<span class="material-symbols-outlined text-lg" data-icon="assignment_turned_in">assignment_turned_in</span>
+</div>
+</div>
+<div>
+<div class="text-display-sm font-display-sm text-on-surface font-bold tracking-tight">142</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-label-sm bg-purple-50 text-purple-800 font-semibold border border-purple-200">P.7 Registered</span>
+<span class="text-body-sm font-body-sm text-outline">Verified index numbers</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-low h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-purple-600 h-full rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+</section>
+<!-- ================= 2-COLUMN SPLIT MAIN WORKSPACE ================= -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter items-start">
+<!-- LEFT/CENTER COLUMN: Tabbed Active Admissions & Learner Directory (8 Cols) -->
+<div class="xl:col-span-8 space-y-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<!-- Table Action Header & Tabs -->
+<div class="p-space-md border-b border-outline-variant bg-surface-container-lowest">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+<div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container text-secondary font-bold text-label-md whitespace-nowrap">
+                    Active Enrolled Learners (1,142)
+                  </button>
+<button class="px-3.5 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low text-label-md font-medium whitespace-nowrap flex items-center gap-1.5">
+                    New Registration Queue
+                    <span class="px-1.5 py-0.2 bg-amber-100 text-amber-800 rounded-full text-xs font-semibold">8</span>
+</button>
+<button class="px-3.5 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low text-label-md font-medium whitespace-nowrap">
+                    Guardian Binding Verification
+                  </button>
+<button class="px-3.5 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low text-label-md font-medium whitespace-nowrap">
+                    Stream Capacity Matrix
+                  </button>
+</div>
+<div class="flex items-center gap-2 self-end sm:self-auto">
+<button class="p-1.5 border border-outline-variant rounded-lg text-outline hover:text-on-surface hover:bg-surface-container-low" title="Filter columns">
+<span class="material-symbols-outlined text-lg" data-icon="filter_list">filter_list</span>
+</button>
+<button class="p-1.5 border border-outline-variant rounded-lg text-outline hover:text-on-surface hover:bg-surface-container-low" title="Table options">
+<span class="material-symbols-outlined text-lg" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Filter Strip & Multi-Search -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-2 pt-2 border-t border-outline-variant">
+<div class="md:col-span-6 relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-lg" data-icon="search">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 text-body-sm bg-surface border border-outline-variant rounded-lg focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary text-on-surface placeholder:text-outline" placeholder="Search by LIN (e.g. UG-2024-...), Learner Name, Guardian Phone..." type="text"/>
+</div>
+<div class="md:col-span-3">
+<select class="w-full py-1.5 px-3 text-body-sm bg-surface border border-outline-variant rounded-lg focus:outline-none focus:border-secondary text-on-surface">
+<option>All Classes &amp; Streams</option>
+<option>Primary 4 Blue</option>
+<option>Primary 5 Green</option>
+<option>Primary 1 Yellow</option>
+<option>Primary 7 Red (Candidate)</option>
+</select>
+</div>
+<div class="md:col-span-3">
+<select class="w-full py-1.5 px-3 text-body-sm bg-surface border border-outline-variant rounded-lg focus:outline-none focus:border-secondary text-on-surface">
+<option>All Binding Statuses</option>
+<option>Fully Validated (Dual Guardian)</option>
+<option>Needs Guardian KYC</option>
+<option>Pending Fee Clearance</option>
+</select>
+</div>
+</div>
+</div>
+<!-- High-Density Tabular Ledger -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant text-[11px] font-label-sm tracking-wider uppercase text-outline">
+<th class="py-3 px-4">Learner Details</th>
+<th class="py-3 px-4">Class &amp; Stream</th>
+<th class="py-3 px-4">Linked Guardians (Binding)</th>
+<th class="py-3 px-4">Fee Code &amp; SchoolPay</th>
+<th class="py-3 px-4">Status</th>
+<th class="py-3 px-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant text-body-sm font-body-sm">
+<!-- Row 1: Namaganda Sarah -->
+<tr class="hover:bg-surface-container-low transition-colors duration-100">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img alt="Namaganda Sarah Profile" class="w-9 h-9 rounded-full object-cover border border-outline-variant flex-shrink-0" data-alt="Official portrait photograph of a young African primary school student girl wearing a crisp institutional blue school uniform with braided hair against a neutral studio backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9QubTZQn8H-Avg9g4BZtDn0Nm9aPp7ppYNZY5pm4wvGeCnnZiuL8oUvB9v41cvkbGEeGtIiCQtgwaWRNy2IqMIgN8xaOb1jrWCK7K3gmkKOwTe2OuheUWkc3rcwUn9tEaif6tav4SnVTaiXo_Nrem9Ycuj57MS9GP61RLgIQqEtoVRoyTsrY0ZMyhc5F5mGcZDXJXZNr6xBF6q-Eo_ar-Al9moLtfkcMCufkAmo7JNVM4CPP8MzrkFA"/>
+<div>
+<div class="font-semibold text-on-surface text-body-md flex items-center gap-1.5">
+                            Namaganda Sarah
+                            <span class="material-symbols-outlined text-xs text-secondary" data-icon="verified" title="Verified MoES LIN">verified</span>
+</div>
+<div class="text-[11px] font-tabular-numeric text-outline">LIN: UG-2024-99812401</div>
+<div class="text-[10px] font-tabular-numeric text-outline">INDEX: UNEB/002/P7/041</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">P.4 Blue</div>
+<div class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface-container text-[11px] text-on-surface-variant mt-0.5">
+<span class="material-symbols-outlined text-xs" data-icon="badge">badge</span>
+                        Tr. Okello David
+                      </div>
+</td>
+<td class="py-3.5 px-4">
+<div class="space-y-1">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.2 bg-blue-50 text-blue-700 text-[10px] font-bold rounded">Mother</span>
+<span class="text-on-surface font-medium">Nalubega Prossy</span>
+<span class="material-symbols-outlined text-emerald-600 text-xs" data-icon="check_circle" title="Verified Phone">check_circle</span>
+</div>
+<div class="text-[11px] font-tabular-numeric text-outline">+256 772 491 802</div>
+<div class="flex items-center gap-1.5 text-[11px] text-outline">
+<span class="px-1.5 py-0.2 bg-gray-100 text-gray-700 text-[10px] font-semibold rounded">Father</span>
+                          Mukasa Peter (+256 701...)
+                        </div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-mono text-xs font-tabular-numeric font-semibold text-on-surface">SPAY-8821094</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-label-sm border border-emerald-200 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Active Direct
+                      </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        Validated
+                      </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2 py-1 text-label-sm font-label-sm text-secondary hover:bg-surface-container rounded transition-colors" title="Manage Learner Profile">
+                          Manage
+                        </button>
+<button class="p-1 text-outline hover:text-on-surface hover:bg-surface-container-low rounded" title="Reassign Stream">
+<span class="material-symbols-outlined text-base" data-icon="swap_horiz">swap_horiz</span>
+</button>
+<button class="p-1 text-outline hover:text-on-surface hover:bg-surface-container-low rounded" title="Edit Guardians">
+<span class="material-symbols-outlined text-base" data-icon="edit">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Katende John -->
+<tr class="hover:bg-surface-container-low transition-colors duration-100">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img alt="Katende John Profile" class="w-9 h-9 rounded-full object-cover border border-outline-variant flex-shrink-0" data-alt="Clear frontal studio portrait of a neat primary school African boy wearing a formal navy school collared shirt with soft natural lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyKpWSuxvPK4_U-RYOJKemSBCCNCTKuuUmABd-0-JMEv0Lr45RsyXGAZx-nOJ83zlwYcxAtnPEHQVArSZm9U3BZStEXvbg3sMxUS2Q94XXt883PUqWzTIGBsKc5mtZuSYOYexhZzEqg9cBvYSr5cDccItLKMbvkRxGGMIPLyA7pSsd9Tz-eSmmFreKeF8FSAkTS7erV4kpcufGizUUXhxyEJiULMZcCULIKvsrlcbzvuu6ekhV_OlTwg"/>
+<div>
+<div class="font-semibold text-on-surface text-body-md flex items-center gap-1.5">
+                            Katende John
+                            <span class="material-symbols-outlined text-xs text-secondary" data-icon="verified" title="Verified MoES LIN">verified</span>
+</div>
+<div class="text-[11px] font-tabular-numeric text-outline">LIN: UG-2023-41209312</div>
+<div class="text-[10px] font-tabular-numeric text-outline">INDEX: UNEB/002/P7/012</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">P.5 Green</div>
+<div class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface-container text-[11px] text-on-surface-variant mt-0.5">
+<span class="material-symbols-outlined text-xs" data-icon="badge">badge</span>
+                        Tr. Namubiru Grace
+                      </div>
+</td>
+<td class="py-3.5 px-4">
+<div class="space-y-1">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.2 bg-blue-50 text-blue-700 text-[10px] font-bold rounded">Father</span>
+<span class="text-on-surface font-medium">Katende Samuel</span>
+<span class="material-symbols-outlined text-emerald-600 text-xs" data-icon="check_circle" title="Verified Phone">check_circle</span>
+</div>
+<div class="text-[11px] font-tabular-numeric text-outline">+256 754 110 932</div>
+<div class="flex items-center gap-1.5 text-[11px] text-amber-600">
+<span class="material-symbols-outlined text-xs" data-icon="warning">warning</span>
+                          Secondary Guardian unconfirmed
+                        </div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-mono text-xs font-tabular-numeric font-semibold text-on-surface">SPAY-3190822</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-label-sm border border-emerald-200 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Active Direct
+                      </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                        Needs Guardian KYC
+                      </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2 py-1 text-label-sm font-label-sm text-secondary hover:bg-surface-container rounded transition-colors" title="Manage Learner Profile">
+                          Manage
+                        </button>
+<button class="p-1 text-outline hover:text-on-surface hover:bg-surface-container-low rounded" title="Reassign Stream">
+<span class="material-symbols-outlined text-base" data-icon="swap_horiz">swap_horiz</span>
+</button>
+<button class="p-1 text-outline hover:text-on-surface hover:bg-surface-container-low rounded" title="Edit Guardians">
+<span class="material-symbols-outlined text-base" data-icon="edit">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Mukasa Brian -->
+<tr class="hover:bg-surface-container-low transition-colors duration-100">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img alt="Mukasa Brian Profile" class="w-9 h-9 rounded-full object-cover border border-outline-variant flex-shrink-0" data-alt="Headshot of a younger African male elementary student smiling gently in an educational setting, clean primary uniform with high clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNXVCecrs6mKJ7pr3GMs4telcgVLl9qGyYRToqjXtnxN3ieV2gOpgPHg2TsT_Z053qTDmoi4-YSKCiauIEa7Q4GqUgo72spgGLLVm9uPovaEPGsnF8XXMi6pBgBn5l9y_WMsUbzEHWhsFvg-xsDvdwOFlIRIS2YqDNsC1YtVPja7Jvd8e23tkMr_C_0hJBT4X5OTxuLFxC2wJ6KI7kGoGyIJeeYoqxuM9XJJiZ9lEYE13sWV_yGMxK-A"/>
+<div>
+<div class="font-semibold text-on-surface text-body-md flex items-center gap-1.5">
+                            Mukasa Brian
+                            <span class="material-symbols-outlined text-xs text-secondary" data-icon="verified" title="Verified MoES LIN">verified</span>
+</div>
+<div class="text-[11px] font-tabular-numeric text-outline">LIN: UG-2025-10499201</div>
+<div class="text-[10px] font-tabular-numeric text-outline">INDEX: P1-REG-2025</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">P.1 Yellow</div>
+<div class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface-container text-[11px] text-on-surface-variant mt-0.5">
+<span class="material-symbols-outlined text-xs" data-icon="badge">badge</span>
+                        Tr. Kintu Fred
+                      </div>
+</td>
+<td class="py-3.5 px-4">
+<div class="space-y-1">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.2 bg-blue-50 text-blue-700 text-[10px] font-bold rounded">Guardian</span>
+<span class="text-on-surface font-medium">Mrs. Achan Beatrice</span>
+<span class="material-symbols-outlined text-emerald-600 text-xs" data-icon="check_circle" title="Verified Phone">check_circle</span>
+</div>
+<div class="text-[11px] font-tabular-numeric text-outline">+256 702 993 118</div>
+<div class="text-[11px] text-outline">Relationship: Aunt / Legal Custodian</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-mono text-xs font-tabular-numeric font-semibold text-on-surface">SPAY-9901452</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[10px] font-label-sm border border-blue-200 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Syncing MoES
+                      </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-50 text-rose-800 border border-rose-200 text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                        Pending Fee Clearance
+                      </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2 py-1 text-label-sm font-label-sm text-secondary hover:bg-surface-container rounded transition-colors" title="Manage Learner Profile">
+                          Manage
+                        </button>
+<button class="p-1 text-outline hover:text-on-surface hover:bg-surface-container-low rounded" title="Reassign Stream">
+<span class="material-symbols-outlined text-base" data-icon="swap_horiz">swap_horiz</span>
+</button>
+<button class="p-1 text-outline hover:text-on-surface hover:bg-surface-container-low rounded" title="Edit Guardians">
+<span class="material-symbols-outlined text-base" data-icon="edit">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Kemigisha Mary -->
+<tr class="hover:bg-surface-container-low transition-colors duration-100">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<img alt="Kemigisha Mary Profile" class="w-9 h-9 rounded-full object-cover border border-outline-variant flex-shrink-0" data-alt="Portrait of an older primary Ugandan school girl candidate with neat posture, wearing a gold and navy blazer school uniform in an executive studio setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNmQsTdCqmFMI0ePfOPKKivAwKrcw49LrrKQk2ZbCIQCuE7MG25v5tp22mwVweAKmuOYcZL9uMzxmo4Cq6ZeK1B91PQZvxUIBZMwxy1E1vkbOpfsV8tgyobuTUQ1Va1753ozoFUx4JqvlaueoG2hLz467AuCAw5Qqx2g7IJsjjBdb_UPXA8fQz4sLbWtNgXTHgTLgDnq5ishWErPezjjgM3KGR58DgzU2pUR_3Fdifyv4vib_9mDE8kg"/>
+<div>
+<div class="font-semibold text-on-surface text-body-md flex items-center gap-1.5">
+                            Kemigisha Mary
+                            <span class="material-symbols-outlined text-xs text-secondary" data-icon="verified" title="Verified MoES LIN">verified</span>
+</div>
+<div class="text-[11px] font-tabular-numeric text-outline">LIN: UG-2020-00192834</div>
+<div class="text-[10px] font-tabular-numeric text-outline">INDEX: UNEB/002/P7/003</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-medium text-on-surface">P.7 Red</div>
+<div class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-purple-50 text-purple-700 text-[11px] font-semibold mt-0.5">
+<span class="material-symbols-outlined text-xs" data-icon="school">school</span>
+                        UNEB P.7 Candidate Stream
+                      </div>
+</td>
+<td class="py-3.5 px-4">
+<div class="space-y-1">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.2 bg-blue-50 text-blue-700 text-[10px] font-bold rounded">Father</span>
+<span class="text-on-surface font-medium">Bukenya Robert</span>
+<span class="material-symbols-outlined text-emerald-600 text-xs" data-icon="check_circle" title="Verified Phone">check_circle</span>
+</div>
+<div class="text-[11px] font-tabular-numeric text-outline">+256 782 500 121</div>
+<div class="flex items-center gap-1.5 text-[11px] text-outline">
+<span class="px-1.5 py-0.2 bg-gray-100 text-gray-700 text-[10px] font-semibold rounded">Mother</span>
+                          Kemigisha Joyce (+256 777...)
+                        </div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="font-mono text-xs font-tabular-numeric font-semibold text-on-surface">SPAY-5510294</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-label-sm border border-emerald-200 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Active Direct
+                      </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        Validated
+                      </span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2 py-1 text-label-sm font-label-sm text-secondary hover:bg-surface-container rounded transition-colors" title="Manage Learner Profile">
+                          Manage
+                        </button>
+<button class="p-1 text-outline hover:text-on-surface hover:bg-surface-container-low rounded" title="Reassign Stream">
+<span class="material-symbols-outlined text-base" data-icon="swap_horiz">swap_horiz</span>
+</button>
+<button class="p-1 text-outline hover:text-on-surface hover:bg-surface-container-low rounded" title="Edit Guardians">
+<span class="material-symbols-outlined text-base" data-icon="edit">edit</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Pagination & Count Strip -->
+<div class="p-space-md border-t border-outline-variant bg-surface-container-lowest flex flex-col sm:flex-row items-center justify-between gap-3 text-body-sm text-outline">
+<div>
+                Showing <span class="font-semibold text-on-surface">1–4</span> of <span class="font-semibold text-on-surface">1,142</span> Registered Institutional Learners
+              </div>
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 border border-outline-variant rounded-md text-label-sm font-medium hover:bg-surface-container-low disabled:opacity-40" disabled="">Previous</button>
+<button class="px-3 py-1 bg-secondary text-on-secondary rounded-md text-label-sm font-bold">1</button>
+<button class="px-3 py-1 border border-outline-variant rounded-md text-label-sm hover:bg-surface-container-low text-on-surface">2</button>
+<button class="px-3 py-1 border border-outline-variant rounded-md text-label-sm hover:bg-surface-container-low text-on-surface">3</button>
+<span class="px-1 text-outline">...</span>
+<button class="px-3 py-1 border border-outline-variant rounded-md text-label-sm hover:bg-surface-container-low text-on-surface">115</button>
+<button class="px-2.5 py-1 border border-outline-variant rounded-md text-label-sm font-medium hover:bg-surface-container-low text-on-surface">Next</button>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Operational Panel (4 Cols) -->
+<div class="xl:col-span-4 space-y-gutter">
+<!-- QUICK LEARNER ONBOARDING FORM / STREAM ALLOCATOR -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm overflow-hidden">
+<div class="p-space-md border-b border-outline-variant bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-xl" data-icon="how_to_reg">how_to_reg</span>
+<h2 class="text-headline-sm font-headline-sm font-bold text-on-surface">Quick Intake &amp; Stream Allocator</h2>
+</div>
+<span class="text-[10px] font-bold px-2 py-0.5 bg-blue-100 text-blue-800 rounded">Step 2 of 4</span>
+</div>
+<form class="p-space-md space-y-4" onsubmit="event.preventDefault();">
+<!-- Step Progress Dots -->
+<div class="flex items-center justify-between px-2 pt-1 pb-2 border-b border-outline-variant text-[11px] font-label-sm">
+<div class="flex items-center gap-1.5 text-secondary font-bold">
+<span class="w-5 h-5 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-xs">1</span>
+<span>LIN Validation</span>
+</div>
+<div class="w-8 h-px bg-secondary"></div>
+<div class="flex items-center gap-1.5 text-secondary font-bold">
+<span class="w-5 h-5 rounded-full bg-secondary text-on-secondary flex items-center justify-center text-xs">2</span>
+<span>Stream &amp; Class</span>
+</div>
+<div class="w-8 h-px bg-outline-variant"></div>
+<div class="flex items-center gap-1.5 text-outline">
+<span class="w-5 h-5 rounded-full bg-surface-container-low border border-outline-variant flex items-center justify-center text-xs">3</span>
+<span>Guardians</span>
+</div>
+</div>
+<!-- Input: Learner MoES LIN -->
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface mb-1 uppercase tracking-wide">
+                  Learner LIN (EMIS Code)
+                </label>
+<div class="relative">
+<input class="w-full px-3 py-2 text-body-sm font-tabular-numeric bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-2 focus:ring-secondary focus:border-secondary text-on-surface font-semibold" type="text" value="UG-2025-88410291"/>
+<span class="absolute right-2.5 top-2.5 text-emerald-600 flex items-center gap-1 text-[11px] font-label-sm">
+<span class="material-symbols-outlined text-base" data-icon="check_circle">check_circle</span> Verified
+                  </span>
+</div>
+<p class="text-[11px] text-outline mt-1">Matched: <strong class="text-on-surface">Kato Emmanuel Isaac</strong> (DOB: 12-Apr-2015)</p>
+</div>
+<!-- Input: Candidate / Class Selection -->
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface mb-1 uppercase tracking-wide">Target Class</label>
+<select class="w-full px-3 py-2 text-body-sm bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-2 focus:ring-secondary text-on-surface">
+<option>Primary 4</option>
+<option>Primary 5</option>
+<option>Primary 6</option>
+<option>Primary 7 (Candidate)</option>
+</select>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-on-surface mb-1 uppercase tracking-wide">Target Stream</label>
+<select class="w-full px-3 py-2 text-body-sm bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-2 focus:ring-secondary text-on-surface">
+<option>Stream Blue (Recommended)</option>
+<option>Stream Green</option>
+<option>Stream Yellow</option>
+<option>Stream Red</option>
+</select>
+</div>
+</div>
+<!-- Stream Capacity Meter (Live visual indicator) -->
+<div class="p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<div class="flex items-center justify-between text-label-sm mb-1.5">
+<span class="font-semibold text-on-surface">P.4 Blue Stream Capacity</span>
+<span class="font-tabular-numeric font-bold text-secondary">42 / 45 seats occupied</span>
+</div>
+<div class="w-full bg-outline-variant h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 93.3%;"></div>
+</div>
+<div class="flex items-center justify-between text-[11px] text-outline mt-1.5">
+<span>3 seats remaining</span>
+<span class="text-amber-700 font-medium">Near optimal quota</span>
+</div>
+</div>
+<!-- Guardian Linkage & SMS PIN Dispatch -->
+<div class="pt-2 border-t border-outline-variant space-y-3">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm uppercase tracking-wide text-on-surface font-semibold">Primary Guardian Binding</span>
+<span class="text-[11px] text-secondary font-bold cursor-pointer hover:underline">+ Add 2nd Guardian</span>
+</div>
+<div>
+<input class="w-full px-3 py-1.5 text-body-sm bg-surface-container-lowest border border-outline-variant rounded-lg mb-2 focus:ring-1 focus:ring-secondary text-on-surface" placeholder="Guardian Full Name" type="text" value="Kato Stephen Ssebugwawo"/>
+<div class="flex gap-2">
+<div class="relative flex-1">
+<span class="absolute left-3 top-2 text-xs font-semibold text-outline">+256</span>
+<input class="w-full pl-12 pr-3 py-1.5 text-body-sm font-tabular-numeric bg-surface-container-lowest border border-outline-variant rounded-lg focus:ring-1 focus:ring-secondary text-on-surface" type="text" value="772 884 192"/>
+</div>
+<button class="px-3 py-1.5 bg-surface-container border border-outline-variant rounded-lg text-label-sm font-bold text-secondary hover:bg-surface-container-high transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-sm" data-icon="sms">sms</span>
+                      Send PIN
+                    </button>
+</div>
+<p class="text-[11px] text-outline mt-1">SMS one-time authentication OTP will be dispatched immediately.</p>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="pt-2 flex items-center justify-end gap-2">
+<button class="px-3.5 py-2 border border-outline-variant rounded-lg text-label-md font-label-md text-on-surface hover:bg-surface-container-low transition-colors" type="button">
+                  Save as Draft
+                </button>
+<button class="px-4 py-2 bg-secondary text-on-secondary rounded-lg text-label-md font-label-md hover:bg-secondary-container transition-all shadow-sm flex items-center gap-1.5" type="submit">
+<span>Allocate &amp; Bind</span>
+<span class="material-symbols-outlined text-base" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+<!-- DISTRICT EMIS SYNC STATUS MODULE -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-emerald-500 ring-4 ring-emerald-100 animate-pulse"></div>
+<h3 class="text-headline-sm font-headline-sm font-bold text-on-surface">District EMIS Sync Status</h3>
+</div>
+<span class="text-[11px] font-tabular-numeric text-outline font-semibold">Ping: 18ms</span>
+</div>
+<div class="mt-3 space-y-2.5 text-body-sm">
+<div class="flex items-center justify-between text-outline">
+<span>Statutory Authority:</span>
+<span class="font-medium text-on-surface text-right">Uganda MoES Statutory Cloud</span>
+</div>
+<div class="flex items-center justify-between text-outline">
+<span>District Hub:</span>
+<span class="font-medium text-on-surface">Kampala Central DEO Node</span>
+</div>
+<div class="flex items-center justify-between text-outline">
+<span>Last Sync Timestamp:</span>
+<span class="font-tabular-numeric text-on-surface font-semibold">Today, 10:48:12 EAT</span>
+</div>
+<div class="flex items-center justify-between text-outline">
+<span>Statutory Batch Queue:</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 text-label-sm font-semibold">
+<span class="material-symbols-outlined text-xs" data-icon="cloud_done">cloud_done</span> 0 Unsynced
+                </span>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant flex items-center justify-between">
+<button class="text-label-sm font-label-sm text-secondary font-bold hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span>
+                Force Immediate Resync
+              </button>
+<span class="text-[10px] text-outline">API v2.4 (Encrypted TLS 1.3)</span>
+</div>
+</div>
+<!-- STREAM CAPACITY SNAPSHOT QUICK WIDGET -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-space-md shadow-sm">
+<h3 class="text-label-sm font-label-sm uppercase tracking-wider text-outline mb-3 font-semibold">
+              Live Stream Utilization Summary
+            </h3>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-[12px] mb-1 font-medium">
+<span class="text-on-surface">P.7 Red (UNEB Candidate)</span>
+<span class="font-tabular-numeric text-outline font-semibold">45 / 45 <strong class="text-rose-600">(Full)</strong></span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-rose-500 h-full rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[12px] mb-1 font-medium">
+<span class="text-on-surface">P.5 Green</span>
+<span class="font-tabular-numeric text-outline font-semibold">39 / 45</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full rounded-full" style="width: 86.6%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[12px] mb-1 font-medium">
+<span class="text-on-surface">P.1 Yellow (Early Intake)</span>
+<span class="font-tabular-numeric text-outline font-semibold">31 / 40</span>
+</div>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 77.5%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Micro-Interactions Script -->
+<script>
+    // Lightweight atmospheric and interactive logic
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('HarambeeOne MoES Registrar & Admissions Desk Initialized.');
+    });
+  </script>
+</body></html>

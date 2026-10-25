@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HarambeeOne Institutional Portal - Bursar Reconciliation</title>
+<!-- Google Fonts: Public Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-high": "#dce9ff",
+            "tertiary-container": "#4f1c02",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary": "#ffffff",
+            "outline": "#747780",
+            "primary-fixed": "#d6e3ff",
+            "tertiary-fixed": "#ffdbcd",
+            "on-secondary-container": "#007147",
+            "surface-dim": "#cbdbf5",
+            "background": "#f8f9ff",
+            "surface": "#f8f9ff",
+            "on-tertiary": "#ffffff",
+            "primary-fixed-dim": "#a9c7ff",
+            "on-primary-fixed-variant": "#264778",
+            "inverse-primary": "#a9c7ff",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#713619",
+            "on-primary-container": "#7594ca",
+            "on-primary": "#ffffff",
+            "error": "#ba1a1a",
+            "surface-container": "#e5eeff",
+            "on-surface-variant": "#43474f",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#eff4ff",
+            "on-surface": "#0b1c30",
+            "on-tertiary-fixed": "#360f00",
+            "secondary": "#006d43",
+            "secondary-container": "#75f8b3",
+            "on-secondary-fixed": "#002111",
+            "primary-container": "#002b5b",
+            "surface-bright": "#f8f9ff",
+            "on-error": "#ffffff",
+            "tertiary": "#2f0c00",
+            "surface-tint": "#405f91",
+            "on-background": "#0b1c30",
+            "on-tertiary-container": "#cd805d",
+            "tertiary-fixed-dim": "#ffb596",
+            "secondary-fixed": "#78fbb6",
+            "surface-variant": "#d3e4fe",
+            "primary": "#001736",
+            "on-secondary-fixed-variant": "#005232",
+            "on-error-container": "#93000a",
+            "inverse-on-surface": "#eaf1ff",
+            "secondary-fixed-dim": "#59de9b",
+            "outline-variant": "#c4c6d0",
+            "inverse-surface": "#213145",
+            "on-primary-fixed": "#001b3d"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "section-gap": "32px",
+            "container-padding": "24px",
+            "unit": "4px",
+            "gutter": "16px"
+          },
+          "fontFamily": {
+            "data-mono": ["Public Sans"],
+            "body-md": ["Public Sans"],
+            "body-lg": ["Public Sans"],
+            "headline-md": ["Public Sans"],
+            "display-lg": ["Public Sans"],
+            "headline-sm": ["Public Sans"],
+            "label-sm": ["Public Sans"]
+          },
+          "fontSize": {
+            "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md min-h-screen flex flex-col antialiased">
+<!-- TopNavBar (Shared Component JSON definition) -->
+<header class="flex justify-between items-center w-full px-container-padding h-16 sticky top-0 z-50 bg-surface-container-lowest border-b border-outline-variant">
+<!-- Left: Brand Logo & Institutional Search -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="account_balance">account_balance</span>
+<span class="font-headline-sm text-headline-sm font-bold text-primary tracking-tight">HarambeeOne</span>
+</div>
+<div class="relative w-80 hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-lg" data-icon="search">search</span>
+<input class="w-full pl-9 pr-4 py-1.5 bg-surface-container-low border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-primary transition-colors" placeholder="Search transactions..." type="text"/>
+</div>
+</div>
+<!-- Right: Context Actions & User Profile -->
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer active:opacity-80" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full ring-2 ring-surface-container-lowest"></span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors cursor-pointer active:opacity-80" title="Switch Apps">
+<span class="material-symbols-outlined" data-icon="apps">apps</span>
+</button>
+<div class="h-6 w-px bg-outline-variant mx-1"></div>
+<!-- User Badge: Bursar -->
+<div class="flex items-center gap-3 pl-1 cursor-pointer">
+<img class="w-9 h-9 rounded-full border border-outline-variant object-cover" data-alt="A professional headshot portrait of an institutional African school bursar wearing formal navy corporate attire in a well-lit office interior, crisp neutral lighting, confident and warm expression, modern professional color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc3Aavi7lBj9nPNRoqGs82Kda_uAdSUjVFlOT_WHMeBfam67deukPmCeSn8-dVu2-2Q2eFOwxCPL0UhUWP3DTf8VqvWOUd3JWZM6y3QdLb9xwb2UKnuCGmHCxefrXgx7Jdu8pyTnKs_6tzVwrllG4WcUAhkDyC-nKP5QzvVxtclSLv4J6Quaur-bW8Rx2Nac797ZsiH88T3p36bsdGIR2dqS7-egRayG36JrFgpigExTPlxGK3UMFI_Q"/>
+<div class="hidden sm:flex flex-col text-left">
+<span class="font-data-mono text-data-mono text-primary font-bold leading-tight">J. Doe</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Bursar</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Layout: Sidebar + Canvas Workspace -->
+<div class="flex flex-1 overflow-hidden">
+<!-- SideNavBar (Shared Component JSON definition) -->
+<aside class="flex flex-col h-[calc(100vh-4rem)] sticky left-0 top-16 py-gutter bg-surface-container-low border-r border-outline-variant w-64 flex-shrink-0 select-none">
+<!-- School Institution Header -->
+<div class="px-5 pb-4 mb-3 border-b border-outline-variant flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold font-headline-sm">
+          SM
+        </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-primary leading-tight font-bold">St. Mary's Primary</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Institutional Portal</span>
+</div>
+</div>
+<!-- Navigation Tabs List -->
+<nav class="flex-1 px-3 space-y-1">
+<!-- Dashboard -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Students -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="school">school</span>
+<span>Students</span>
+</a>
+<!-- Finance -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="payments">payments</span>
+<span>Finance</span>
+</a>
+<!-- Reconciliation (ACTIVE) -->
+<a class="flex items-center justify-between px-3 py-2 rounded-lg bg-secondary-container text-on-secondary-container font-semibold transition-all active:scale-95 duration-150 font-label-sm text-label-sm" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-xl" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span>Reconciliation</span>
+</div>
+<span class="bg-error text-on-error text-[10px] font-bold px-1.5 py-0.5 rounded-full">1</span>
+</a>
+<!-- Sponsorship -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="volunteer_activism">volunteer_activism</span>
+<span>Sponsorship</span>
+</a>
+<!-- Reports -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="assessment">assessment</span>
+<span>Reports</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<!-- Sidebar Footer -->
+<div class="px-3 pt-3 mt-auto border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-all active:scale-95 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="help">help</span>
+<span>Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-all active:scale-95 duration-150 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Reconciliation Content Area -->
+<main class="flex-1 overflow-y-auto px-6 py-6 max-w-[1440px] flex flex-col gap-6">
+<!-- Page Header & Action Bar -->
+<div class="flex flex-col gap-4">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<h1 class="font-headline-md text-headline-md text-primary font-bold tracking-tight">Reconciliation</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Match incoming payments to learner accounts.</p>
+</div>
+<!-- Quick Stats & Top Actions -->
+<div class="flex flex-wrap items-center gap-3"><div class="flex items-center gap-2 bg-surface-container-lowest px-3 py-1.5 rounded-lg border border-outline-variant"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="font-label-sm text-label-sm text-on-surface-variant">Reconciled Today:</span><span class="font-data-mono text-data-mono text-primary font-bold">UGX 2,150,000</span></div><div class="flex items-center gap-2 bg-surface-container-lowest px-3 py-1.5 rounded-lg border border-outline-variant"><span class="w-2 h-2 rounded-full bg-outline"></span><span class="font-label-sm text-label-sm text-on-surface-variant">Pending:</span><span class="font-data-mono text-data-mono text-primary font-bold">9</span></div><div class="flex items-center gap-2 bg-error-container text-on-error-container px-3 py-1.5 rounded-lg border border-error/20"><span class="material-symbols-outlined text-sm" data-icon="warning">warning</span><span class="font-label-sm text-label-sm font-semibold">Exceptions:</span><span class="font-data-mono text-data-mono font-bold">1 Remaining</span></div><button class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-lowest border border-outline-variant rounded-lg font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-base" data-icon="tune">tune</span><span>Filter</span></button><button class="flex items-center gap-1.5 px-4 py-1.5 bg-secondary hover:bg-secondary/90 text-on-secondary rounded-lg font-label-sm text-label-sm font-semibold transition-colors shadow-sm"><span class="material-symbols-outlined text-base" data-icon="auto_mode">auto_mode</span><span>Auto-Reconcile</span></button></div>
+</div>
+<!-- Filter Chips Bar -->
+<div class="flex items-center gap-2 border-y border-outline-variant/60 py-2.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="filter_alt">filter_alt</span>
+            Filters:
+          </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-surface-container border border-outline-variant text-primary">
+            Date: Last 7 Days
+            <span class="material-symbols-outlined text-xs cursor-pointer hover:text-error" data-icon="close">close</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-surface-container border border-outline-variant text-primary">
+            Channel: All
+            <span class="material-symbols-outlined text-xs cursor-pointer hover:text-error" data-icon="close">close</span>
+</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-tertiary-fixed text-on-tertiary-fixed border border-tertiary-fixed-dim">Status: Unmatched Exceptions (1)
+            <span class="material-symbols-outlined text-xs cursor-pointer hover:text-error" data-icon="close">close</span></span>
+<button class="text-xs text-on-surface-variant underline hover:text-primary ml-2">Clear all</button>
+</div>
+<!-- Prominent Attention / Alert Banner -->
+<div class="bg-surface-container-low border-l-4 border-secondary p-4 rounded-r-lg flex items-start justify-between gap-4 border border-outline-variant/60 shadow-sm"><div class="flex items-start gap-3"><span class="material-symbols-outlined text-secondary mt-0.5 text-2xl" data-icon="task_alt">task_alt</span><div><div class="flex items-center gap-2"><h3 class="font-body-md text-body-md font-bold text-primary">Stanbic Bank EFT Deposit of UGX 1,200,000 successfully split &amp; posted to Sarah Namaganda (UGX 700k) and Joshua Namaganda (UGX 500k) ledgers.</h3><span class="bg-secondary-container text-on-secondary-container text-[11px] font-bold px-2 py-0.5 rounded-full">LEDGERS UPDATED</span></div><p class="font-body-md text-body-md text-on-surface-variant mt-1">Audit Ref: <strong class="text-primary font-data-mono">#HB-2024-STAN-992831</strong> • Itemized SMS receipts dispatched to guardian Patrick Namaganda (+256 701 443 119) at 10:52 AM.</p></div></div><span class="bg-secondary-container text-on-secondary-container text-xs font-bold px-2.5 py-1 rounded-full whitespace-nowrap">POSTED • BURSAR AUDIT CLOSED</span></div>
+</div>
+<!-- Main Two-Column Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- Left Column: Incoming (Bank/MoMo) Queue (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-3.5">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Incoming (Bank/MoMo)</h2>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed px-2 py-0.5 rounded text-xs font-bold">1 Exception • Needs Allocation</span>
+</div>
+<span class="text-xs text-on-surface-variant font-medium">Sort: Newest</span>
+</div>
+<!-- Queue Card 1: ACTIVE SELECTED CARD (Stanbic Bank EFT) -->
+<div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant hover:border-outline transition-all opacity-90 hover:opacity-100 cursor-pointer shadow-sm"><div class="flex items-start justify-between gap-2 mb-2"><div class="flex items-center gap-2"><span class="font-display-lg text-[22px] font-bold text-primary tracking-tight">UGX 1,200,000</span><span class="bg-secondary-container text-on-secondary-container text-[11px] font-bold px-2 py-0.5 rounded-full">SPLIT RECONCILED</span></div><span class="text-xs text-outline font-data-mono">STAN-992831</span></div><div class="flex items-center gap-2 font-data-mono text-xs text-on-surface-variant mb-2"><span>Stanbic Bank EFT</span><span>•</span><span class="font-medium text-primary">Acme Traders Ltd</span></div><div class="bg-surface-container-low/60 p-2.5 rounded-lg border border-outline-variant/50 mb-2.5 text-xs text-on-surface-variant"><div class="font-medium text-primary mb-1 flex items-center justify-between"><span>Split: Sarah (UGX 700k) &amp; Joshua (UGX 500k)</span><span class="text-secondary font-semibold">100% Allocated</span></div><span class="text-on-surface-variant">Guardian: Patrick Namaganda (+256 701 443 119)</span></div><div class="flex items-center justify-between text-xs text-outline pt-1"><div class="flex items-center gap-1"><span class="material-symbols-outlined text-sm text-secondary" data-icon="check_circle">check_circle</span><span>Reconciled Just Now • 10:52 AM</span></div><span class="material-symbols-outlined text-base text-outline" data-icon="lock">lock</span></div></div>
+<!-- Queue Card 2: Reconciled Item -->
+<div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant hover:border-outline transition-all opacity-85 hover:opacity-100 cursor-pointer">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">UGX 250,000</span>
+<span class="bg-secondary-container text-on-secondary-container text-[11px] font-bold px-2 py-0.5 rounded-full">
+                  RECONCILED
+                </span>
+</div>
+<span class="text-xs text-outline font-data-mono">AIR-552190</span>
+</div>
+<div class="flex items-center gap-2 font-data-mono text-xs text-on-surface-variant mb-2">
+<span>Payer: +256 701 443 119</span>
+<span>•</span>
+<span class="text-secondary font-medium">Airtel Money</span>
+</div>
+<div class="bg-surface-container-low/60 p-2 rounded-lg border border-outline-variant/40 mb-2.5 text-xs text-on-surface-variant">
+<span class="font-medium text-primary">"Balance Mary K"</span> → Allocated to Mary Kemigisha (P5), Ledger #4010 Cleared
+            </div>
+<div class="flex items-center justify-between text-xs text-outline pt-1">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-sm text-secondary" data-icon="check_circle">check_circle</span>
+<span>Reconciled Just Now • 10:48 AM</span>
+</div>
+<span class="material-symbols-outlined text-base text-outline" data-icon="lock">lock</span>
+</div>
+</div>
+<!-- Queue Card 3: Fee Code Mismatch -->
+<div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant hover:border-error transition-all cursor-pointer">
+<div class="flex items-start justify-between gap-2 mb-2">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">UGX 450,000</span>
+<span class="bg-error-container text-on-error-container text-[11px] font-bold px-2 py-0.5 rounded-full">
+                  FEE CODE MISMATCH
+                </span>
+</div>
+<span class="text-xs text-outline font-data-mono">MTN-89472301</span>
+</div>
+<div class="flex items-center gap-2 font-data-mono text-xs text-on-surface-variant mb-2">
+<span>Payer: +256 788 123 456</span>
+<span>•</span>
+<span>MTN MoMo</span>
+</div>
+<div class="bg-surface-container-low p-2.5 rounded-lg border border-outline-variant/50 text-xs">
+<div class="text-on-surface-variant">
+<span class="font-medium text-on-surface">Narration:</span> "School fees for John Katende P4" (Code 9980 Invalid)
+              </div>
+</div>
+<div class="flex items-center justify-between text-xs text-on-surface-variant pt-3">
+<span>Today, 09:42 AM</span>
+<span class="text-primary font-medium hover:underline flex items-center">
+                Review Mismatch
+                <span class="material-symbols-outlined text-xs ml-0.5" data-icon="chevron_right">chevron_right</span>
+</span>
+</div>
+</div>
+</div>
+<!-- Right Column: Manual Exception Resolution & Allocation Workspace (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-5"><div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant"><div class="flex items-center justify-between mb-1.5"><div class="flex items-center gap-2.5"><span class="material-symbols-outlined text-secondary text-2xl" data-icon="verified">verified</span><h2 class="font-headline-sm text-headline-sm font-bold text-primary">Reconciliation Details • SIBLING SPLIT POSTED TO LEDGERS</h2></div><span class="bg-secondary-container text-on-secondary-container font-bold text-xs px-2.5 py-0.5 rounded-full border border-secondary/20">LEDGERS POSTED</span></div><p class="font-body-md text-body-md text-on-surface-variant">Audit Trail: Transaction <strong class="text-primary font-data-mono">STAN-992831</strong> (UGX 1,200,000) posted to learner accounts at <strong class="text-primary">10:52 AM</strong> by Bursar (<strong class="text-primary">J. Doe</strong>).</p></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant hover:border-secondary transition-all shadow-sm"><div class="flex items-start justify-between gap-2 border-b border-outline-variant/60 pb-3 mb-3"><div class="flex items-center gap-2.5"><div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary font-bold text-sm">SN</div><div><div class="flex items-center gap-1.5"><span class="font-body-lg text-body-lg font-bold text-primary">Sarah Namaganda</span><span class="bg-surface-container text-on-surface-variant text-[10px] font-semibold px-1.5 py-0.5 rounded">P6</span></div><span class="text-[11px] text-outline font-data-mono">STU-2023-089</span></div></div><span class="bg-secondary-container text-on-secondary-container text-xs font-bold px-2 py-0.5 rounded-full">87.5% Paid</span></div><div class="space-y-2 text-xs mb-3"><div class="flex justify-between text-on-surface-variant"><span>Previous Balance:</span><span class="font-data-mono text-outline line-through">UGX 800,000</span></div><div class="flex justify-between items-baseline font-medium"><span class="text-secondary">Amount Credited:</span><span class="font-data-mono text-secondary font-bold text-sm">- UGX 700,000</span></div><div class="p-2 bg-surface-container-low rounded text-[11px] text-on-surface-variant space-y-0.5"><div>• Tuition: <span class="font-semibold text-primary">UGX 650,000</span> (Fully Settled ✓)</div><div>• Term Lunch: <span class="font-semibold text-primary">UGX 50,000</span> (Partial)</div></div><div class="flex justify-between pt-1 border-t border-outline-variant/50 font-bold text-on-surface"><span>New Outstanding:</span><span class="font-data-mono text-error">UGX 100,000</span></div></div><div class="flex items-center justify-between text-[11px] border-t border-outline-variant/40 pt-2.5"><span class="text-outline font-data-mono">Voucher: VCHR-2024-T3-0943</span><button class="text-secondary font-semibold hover:underline flex items-center gap-0.5">View Ledger <span class="material-symbols-outlined text-xs" data-icon="arrow_outward">arrow_outward</span></button></div></div><div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant hover:border-secondary transition-all shadow-sm"><div class="flex items-start justify-between gap-2 border-b border-outline-variant/60 pb-3 mb-3"><div class="flex items-center gap-2.5"><div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary font-bold text-sm">JN</div><div><div class="flex items-center gap-1.5"><span class="font-body-lg text-body-lg font-bold text-primary">Joshua Namaganda</span><span class="bg-surface-container text-on-surface-variant text-[10px] font-semibold px-1.5 py-0.5 rounded">P3</span></div><span class="text-[11px] text-outline font-data-mono">STU-2024-112</span></div></div><span class="bg-secondary-container text-on-secondary-container text-xs font-bold px-2 py-0.5 rounded-full">90.9% Paid</span></div><div class="space-y-2 text-xs mb-3"><div class="flex justify-between text-on-surface-variant"><span>Previous Balance:</span><span class="font-data-mono text-outline line-through">UGX 550,000</span></div><div class="flex justify-between items-baseline font-medium"><span class="text-secondary">Amount Credited:</span><span class="font-data-mono text-secondary font-bold text-sm">- UGX 500,000</span></div><div class="p-2 bg-surface-container-low rounded text-[11px] text-on-surface-variant space-y-0.5"><div>• Term 3 Tuition: <span class="font-semibold text-primary">UGX 500,000</span> (Partial)</div><div class="text-outline">• Ledger #4012 credited</div></div><div class="flex justify-between pt-1 border-t border-outline-variant/50 font-bold text-on-surface"><span>New Outstanding:</span><span class="font-data-mono text-error">UGX 50,000</span></div></div><div class="flex items-center justify-between text-[11px] border-t border-outline-variant/40 pt-2.5"><span class="text-outline font-data-mono">Voucher: VCHR-2024-T3-0944</span><button class="text-secondary font-semibold hover:underline flex items-center gap-0.5">View Ledger <span class="material-symbols-outlined text-xs" data-icon="arrow_outward">arrow_outward</span></button></div></div></div><div class="bg-surface-container-low rounded-xl p-4 border border-outline-variant/80 text-xs space-y-3"><div class="flex items-center justify-between border-b border-outline-variant/50 pb-2"><span class="font-label-sm text-label-sm font-bold text-primary uppercase tracking-wide">Settlement Audit Trail &amp; Banking Parameters</span><span class="text-[11px] text-secondary font-semibold flex items-center gap-1"><span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span> Suspense Cleared</span></div><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><div class="space-y-1"><span class="text-outline font-medium">Channel &amp; Settlement Batch:</span><p class="font-data-mono text-primary font-semibold">Stanbic EFT • STB-UG-2023-1102-EFT</p></div><div class="space-y-1"><span class="text-outline font-medium">Suspense Clearance Routing:</span><p class="font-semibold text-on-surface">A/C 903001882910 → Tuition Ledgers #4011 &amp; #4012</p></div><div class="space-y-1"><span class="text-outline font-medium">Bursar Resolution Note:</span><p class="text-on-surface bg-surface-container-lowest p-2 rounded border border-outline-variant/60">Verified EFT deposit from Acme Traders Ltd accounts office. Verified payment intended for Patrick Namaganda family ledger. Split 700k/500k confirmed.</p></div><div class="space-y-1"><span class="text-outline font-medium">Guardian Notification Dispatch:</span><div class="bg-surface-container-lowest p-2 rounded border border-outline-variant/60 flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-base mt-0.5" data-icon="mark_email_read">mark_email_read</span><div><p class="font-semibold text-primary">SMS Receipts Delivered</p><p class="text-[11px] text-on-surface-variant">To Patrick Namaganda (+256 701 443 119) with official voucher links.</p></div></div></div></div></div><div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant flex flex-wrap items-center justify-between gap-3"><div class="flex flex-wrap items-center gap-2.5"><button class="px-4 py-2 bg-secondary hover:bg-secondary/90 text-on-secondary font-label-sm text-sm font-bold rounded-lg transition-colors flex items-center gap-2 shadow-sm"><span class="material-symbols-outlined text-lg" data-icon="arrow_forward">arrow_forward</span><span>Proceed to Next Exception (UGX 450k Mismatch)</span></button><button class="px-3.5 py-2 bg-surface-container-low hover:bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold border border-outline-variant rounded-lg transition-colors flex items-center gap-2"><span class="material-symbols-outlined text-base text-primary" data-icon="download">download</span><span>Download Split Payment Receipts (PDF / ZIP)</span></button></div><div class="flex items-center gap-2"><button class="px-3 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm flex items-center gap-1.5 transition-colors" title="Resend SMS"><span class="material-symbols-outlined text-base" data-icon="sms">sms</span><span>Resend Guardian SMS</span></button><button class="p-2 border border-outline-variant rounded-lg hover:bg-surface-container-low text-on-surface-variant transition-colors" title="Print Audit Summary"><span class="material-symbols-outlined text-lg" data-icon="print">print</span></button></div></div></div>
+</div>
+</main>
+</div>
+</body></html>

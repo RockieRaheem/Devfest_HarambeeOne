@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HarambeeOne Parent Portal - Academic Progress</title>
+<!-- Fonts: Public Sans & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#ffffff",
+            "secondary": "#1d4ed8",
+            "primary-fixed-dim": "#bec6e0",
+            "tertiary-container": "#002114",
+            "outline-variant": "#c6c6cd",
+            "surface-bright": "#f8f9ff",
+            "on-tertiary-fixed": "#002114",
+            "on-surface": "#0b1c30",
+            "surface": "#f8f9ff",
+            "surface-dim": "#cbdbf5",
+            "secondary-container": "#4069f2",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed": "#001551",
+            "on-tertiary-fixed-variant": "#005137",
+            "on-tertiary-container": "#069669",
+            "surface-container-high": "#dce9ff",
+            "surface-tint": "#565e74",
+            "secondary-fixed": "#dce1ff",
+            "primary-container": "#131b2e",
+            "on-secondary-fixed-variant": "#0039b5",
+            "on-primary-fixed-variant": "#3f465c",
+            "on-background": "#0b1c30",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-variant": "#d3e4fe",
+            "secondary-fixed-dim": "#b7c4ff",
+            "surface-container-low": "#eff4ff",
+            "tertiary-fixed-dim": "#68dba9",
+            "tertiary-fixed": "#85f8c4",
+            "on-error": "#ffffff",
+            "error": "#ba1a1a",
+            "tertiary": "#000000",
+            "background": "#f8f9ff",
+            "on-secondary-container": "#fffbff",
+            "on-primary-fixed": "#131b2e",
+            "on-primary-container": "#7c839b",
+            "on-error-container": "#93000a",
+            "surface-container": "#e5eeff",
+            "inverse-primary": "#bec6e0",
+            "outline": "#76777d",
+            "primary-fixed": "#dae2fd",
+            "on-primary": "#ffffff",
+            "inverse-surface": "#213145",
+            "error-container": "#ffdad6",
+            "on-surface-variant": "#45464d",
+            "primary": "#000000",
+            "on-tertiary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-mobile": "1rem",
+            "gutter": "1.5rem",
+            "gutter-mobile": "1rem",
+            "space-xl": "2.5rem",
+            "margin": "2rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "display-lg": ["Public Sans"],
+            "display-sm-mobile": ["Public Sans"],
+            "tabular-numeric": ["Inter"],
+            "body-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-sm": ["Public Sans"],
+            "headline-lg": ["Public Sans"],
+            "headline-md": ["Public Sans"],
+            "display-sm": ["Public Sans"]
+          },
+          "fontSize": {
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "display-sm-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "tabular-numeric": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "display-sm": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-level-1 {
+      box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen pb-24 selection:bg-secondary selection:text-white">
+<!-- TOP APP BAR (Shared Component Anchor) -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center px-margin-mobile md:px-margin h-14 w-full z-50 sticky top-0 backdrop-blur-md bg-opacity-95">
+<div class="flex items-center space-x-3">
+<button aria-label="Navigate back" class="p-1 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary text-xl">arrow_back</span>
+</button>
+<!-- Brand & Section Anchor -->
+<div class="flex items-center space-x-2">
+<span class="font-headline-md text-headline-md text-primary font-bold tracking-tight">HarambeeOne</span>
+<span class="text-outline text-xs">/</span>
+<span class="font-headline-sm text-headline-sm text-primary dark:text-inverse-primary">Academic Progress</span>
+</div>
+</div>
+<!-- Ward Switcher / Student Switcher -->
+<div class="flex items-center space-x-3">
+<div class="relative inline-flex items-center">
+<button class="flex items-center space-x-2 bg-surface-container-lowest border border-outline-variant hover:border-secondary px-2.5 py-1 rounded transition-all text-left">
+<div class="w-6 h-6 rounded-full bg-secondary-fixed text-secondary flex items-center justify-center font-bold text-xs">
+            NS
+          </div>
+<div class="hidden sm:block">
+<span class="block font-label-sm text-label-sm text-on-surface">Sarah Namaganda</span>
+<span class="block text-[10px] text-on-surface-variant leading-none">Switch to Joshua</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-base">swap_horiz</span>
+</button>
+</div>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant hidden md:block">
+<img class="w-full h-full object-cover" data-alt="A dignified close-up photographic portrait of an East African primary school female student in crisp navy school uniform against a clean architectural classroom background, natural balanced lighting, editorial standard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBXouJC234dp0T7KJIqAXhgbMWmPS2wop-zGhA-GqXDayncXiIF3Y6zpCu_3_CyCnutiIg2JGGTbML8zEkKtdqn_Ff308LLWsB9M68w7Y9OjVew3POId2l1C_zk2d24fCzGa_XToh6tBVn_jkQ_5ERPfUm7vVo-F74kUl552YwK0LrcaoCLYB1vDFVRfLdADr2IcEfq4E1hFxfMWB44SW8mk2PEeoFrPcYMlLH3FPhvJxw-sXoWleAmQ"/>
+</div>
+</div>
+</header>
+<!-- MAIN CANVAS -->
+<main class="max-w-[1536px] mx-auto px-margin-mobile md:px-margin pt-6">
+<!-- SUB-NAV / CONTEXT HEADER & TERM SELECTOR -->
+<section class="flex flex-col md:flex-row md:items-center md:justify-between pb-6 gap-4 border-b border-outline-variant/60">
+<div>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600 mr-1.5"></span>
+            UGANDA NATIONAL CURRICULUM • EMIS COMPLIANT
+          </span>
+<span class="text-xs text-on-surface-variant font-tabular-numeric">LIN: UGX-2024-99812401</span>
+</div>
+<h1 class="font-display-sm text-display-sm text-primary tracking-tight mt-1">Namaganda Sarah</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Class: Primary 4 Blue • Kampala Campus • Admission Yr: 2021</p>
+</div>
+<!-- Term Selector Toggle & Primary Action -->
+<div class="flex flex-wrap items-center gap-2">
+<div class="inline-flex p-1 bg-surface-container rounded border border-outline-variant/70">
+<button class="px-3 py-1.5 bg-surface-container-lowest rounded shadow-sm font-label-md text-label-md text-primary font-semibold">
+            Term 1 2025 (Active)
+          </button>
+<button class="px-3 py-1.5 text-on-surface-variant hover:text-primary rounded font-label-md text-label-md transition-colors">
+            Term 3 2024 (Archived)
+          </button>
+</div>
+<button class="inline-flex items-center space-x-2 bg-primary text-on-primary hover:bg-slate-800 px-4 py-2 rounded text-xs font-semibold tracking-wide transition-all shadow-sm">
+<span class="material-symbols-outlined text-base">download</span>
+<span>Certified Report Card (PDF)</span>
+</button>
+</div>
+</section>
+<!-- EXECUTIVE KPI BENTO GRID -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+<!-- Metric 1: Aggregate Score -->
+<div class="bg-surface-container-lowest border border-outline-variant/70 rounded p-space-md custom-level-1 relative overflow-hidden">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Term Aggregate GPA</span>
+<span class="material-symbols-outlined text-secondary text-xl">analytics</span>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="font-display-sm text-display-sm text-primary font-bold">89.2%</span>
+<span class="font-label-sm text-label-sm text-emerald-600 font-semibold flex items-center">
+<span class="material-symbols-outlined text-xs">arrow_upward</span> +3.4%
+          </span>
+</div>
+<div class="mt-2 text-xs text-on-surface-variant flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>Grade Distinction 1 (D1 Standard)</span>
+</div>
+</div>
+<!-- Metric 2: Class Rank -->
+<div class="bg-surface-container-lowest border border-outline-variant/70 rounded p-space-md custom-level-1">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Cohort Position</span>
+<span class="material-symbols-outlined text-secondary text-xl">leaderboard</span>
+</div>
+<div class="mt-3 flex items-baseline gap-1">
+<span class="font-display-sm text-display-sm text-primary font-bold">3<span class="text-xl font-normal text-on-surface-variant">rd</span></span>
+<span class="text-sm font-medium text-on-surface-variant font-tabular-numeric">of 54 learners</span>
+</div>
+<div class="mt-2 text-xs text-on-surface-variant flex items-center gap-1">
+<span class="text-secondary font-semibold">Top 5.5th Percentile</span> in Primary 4 Stream
+        </div>
+</div>
+<!-- Metric 3: Verified Attendance -->
+<div class="bg-surface-container-lowest border border-outline-variant/70 rounded p-space-md custom-level-1">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Verified Attendance</span>
+<span class="material-symbols-outlined text-secondary text-xl">event_available</span>
+</div>
+<div class="mt-3 flex items-baseline gap-2">
+<span class="font-display-sm text-display-sm text-primary font-bold">98.4%</span>
+<span class="text-xs text-on-surface-variant">61 / 62 Days</span>
+</div>
+<div class="mt-2 text-xs text-on-surface-variant">
+          Authorized Medical Leave: 1 Day
+        </div>
+</div>
+<!-- Metric 4: Direct Action & Conference -->
+<div class="bg-surface-container-lowest border border-outline-variant/70 rounded p-space-md custom-level-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Parent-Teacher Sync</span>
+<span class="material-symbols-outlined text-primary text-xl">handshake</span>
+</div>
+<p class="text-xs text-on-surface-variant mt-2">Next available window: March 28th, 2025.</p>
+</div>
+<button class="w-full mt-3 bg-surface-container-low border border-secondary text-secondary hover:bg-secondary hover:text-white transition-all py-1.5 px-3 rounded font-label-md text-label-md text-center font-semibold flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-sm">calendar_month</span>
+<span>Schedule Conference</span>
+</button>
+</div>
+</section>
+<!-- TWO-COLUMN LAYOUT: PERFORMANCE SUMMARY & SUBJECT EVALUATION BREAKDOWN -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
+<!-- LEFT 8-COL: DETAILED SUBJECT EVALUATION LEDGER -->
+<div class="lg:col-span-8 space-y-6">
+<div class="bg-surface-container-lowest border border-outline-variant/70 rounded custom-level-1 overflow-hidden">
+<div class="p-space-md border-b border-outline-variant/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary font-bold">Continuous Assessment &amp; Subject Breakdown</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Summative assessments, competency rubrics, and comparative class baselines.</p>
+</div>
+<span class="inline-flex items-center text-xs font-semibold text-secondary">
+<span class="material-symbols-outlined text-sm mr-1">tune</span> Grade Scale: UNEB D1-F9
+            </span>
+</div>
+<!-- Ledger Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-bright border-b border-outline-variant/60 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+<th class="py-3 px-4">Subject &amp; Instructor</th>
+<th class="py-3 px-3 text-center">Score</th>
+<th class="py-3 px-3 text-center">Grade</th>
+<th class="py-3 px-4">Class Benchmark</th>
+<th class="py-3 px-4 text-right">Evaluation Rubric</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/40 font-body-sm">
+<!-- Subject 1: Mathematics -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-sm text-primary font-bold">Mathematics</div>
+<div class="text-xs text-on-surface-variant">Lead Instructor: Mr. Okello S.</div>
+</td>
+<td class="py-3.5 px-3 text-center">
+<span class="font-tabular-numeric text-base font-bold text-primary">94%</span>
+</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      D1
+                    </span>
+</td>
+<td class="py-3.5 px-4">
+<div class="text-xs font-tabular-numeric text-on-surface-variant flex justify-between mb-1">
+<span>Class Avg: 72%</span>
+<span class="text-emerald-600 font-semibold">+22%</span>
+</div>
+<div class="w-32 bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 94%"></div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="text-secondary hover:text-on-secondary-fixed-variant text-xs font-semibold underline decoration-1 underline-offset-2 inline-flex items-center">
+                      Detailed Rubric <span class="material-symbols-outlined text-sm ml-0.5">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Subject 2: Science & Health -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-sm text-primary font-bold">Science &amp; Health</div>
+<div class="text-xs text-emerald-700 flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-xs">verified</span> Lab practicals cleared
+                    </div>
+</td>
+<td class="py-3.5 px-3 text-center">
+<span class="font-tabular-numeric text-base font-bold text-primary">91%</span>
+</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      D1
+                    </span>
+</td>
+<td class="py-3.5 px-4">
+<div class="text-xs font-tabular-numeric text-on-surface-variant flex justify-between mb-1">
+<span>Class Avg: 70%</span>
+<span class="text-emerald-600 font-semibold">+21%</span>
+</div>
+<div class="w-32 bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 91%"></div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="text-secondary hover:text-on-secondary-fixed-variant text-xs font-semibold underline decoration-1 underline-offset-2 inline-flex items-center">
+                      Detailed Rubric <span class="material-symbols-outlined text-sm ml-0.5">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Subject 3: English & Literacy -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-sm text-primary font-bold">English &amp; Literacy</div>
+<div class="text-xs text-on-surface-variant">Reading comprehension: High Advanced</div>
+</td>
+<td class="py-3.5 px-3 text-center">
+<span class="font-tabular-numeric text-base font-bold text-primary">86%</span>
+</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-blue-50 text-blue-800 border border-blue-200">
+                      D2
+                    </span>
+</td>
+<td class="py-3.5 px-4">
+<div class="text-xs font-tabular-numeric text-on-surface-variant flex justify-between mb-1">
+<span>Class Avg: 68%</span>
+<span class="text-emerald-600 font-semibold">+18%</span>
+</div>
+<div class="w-32 bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 86%"></div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="text-secondary hover:text-on-secondary-fixed-variant text-xs font-semibold underline decoration-1 underline-offset-2 inline-flex items-center">
+                      Detailed Rubric <span class="material-symbols-outlined text-sm ml-0.5">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Subject 4: Social Studies & RE -->
+<tr class="hover:bg-surface-bright transition-colors">
+<td class="py-3.5 px-4">
+<div class="font-headline-sm text-sm text-primary font-bold">Social Studies &amp; RE</div>
+<div class="text-xs text-on-surface-variant">Civic education mastery verified</div>
+</td>
+<td class="py-3.5 px-3 text-center">
+<span class="font-tabular-numeric text-base font-bold text-primary">86%</span>
+</td>
+<td class="py-3.5 px-3 text-center">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-blue-50 text-blue-800 border border-blue-200">
+                      D2
+                    </span>
+</td>
+<td class="py-3.5 px-4">
+<div class="text-xs font-tabular-numeric text-on-surface-variant flex justify-between mb-1">
+<span>Class Avg: 65%</span>
+<span class="text-emerald-600 font-semibold">+21%</span>
+</div>
+<div class="w-32 bg-surface-container-high rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 86%"></div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<button class="text-secondary hover:text-on-secondary-fixed-variant text-xs font-semibold underline decoration-1 underline-offset-2 inline-flex items-center">
+                      Detailed Rubric <span class="material-symbols-outlined text-sm ml-0.5">chevron_right</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Bottom Ledger Summary Footnote -->
+<div class="bg-surface-bright p-3 border-t border-outline-variant/60 flex items-center justify-between text-xs text-on-surface-variant">
+<span>Aggregated Aggregate: <strong>4 Points (Distinction 1 Overall)</strong></span>
+<span>Accredited Examination Board Standard</span>
+</div>
+</div>
+<!-- Competency Radar / Learning Milestones Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/70 rounded p-space-md custom-level-1">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-headline-sm text-headline-sm text-primary font-bold">Core Developmental Milestones</h3>
+<span class="text-xs text-on-surface-variant font-medium">Term 1 Assessment Cycle</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="p-3 bg-surface-container-low rounded border border-outline-variant/40">
+<div class="flex items-center space-x-2 text-secondary mb-1">
+<span class="material-symbols-outlined text-lg">psychology</span>
+<span class="font-label-md text-label-md font-bold">Critical Reasoning</span>
+</div>
+<p class="text-xs text-on-surface-variant">Excels in multistep logic problems &amp; empirical hypothesis creation.</p>
+<div class="mt-2 text-xs font-semibold text-emerald-700">Level: Exemplary</div>
+</div>
+<div class="p-3 bg-surface-container-low rounded border border-outline-variant/40">
+<div class="flex items-center space-x-2 text-secondary mb-1">
+<span class="material-symbols-outlined text-lg">groups</span>
+<span class="font-label-md text-label-md font-bold">Collaborative Leadership</span>
+</div>
+<p class="text-xs text-on-surface-variant">Active head of peer reading group and cooperative projects.</p>
+<div class="mt-2 text-xs font-semibold text-emerald-700">Level: Advanced</div>
+</div>
+<div class="p-3 bg-surface-container-low rounded border border-outline-variant/40">
+<div class="flex items-center space-x-2 text-secondary mb-1">
+<span class="material-symbols-outlined text-lg">draw</span>
+<span class="font-label-md text-label-md font-bold">Creative Expression</span>
+</div>
+<p class="text-xs text-on-surface-variant">High proficiency in contextual essay writing and spatial design.</p>
+<div class="mt-2 text-xs font-semibold text-emerald-700">Level: Proficient</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT 4-COL: TEACHER REMARKS & EMIS CERTIFICATION SEAL -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Performance Remarks & Class Teacher Stamp -->
+<div class="bg-surface-container-lowest border border-outline-variant/70 rounded p-space-md custom-level-1 relative">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant/50">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Teacher Endorsement</span>
+<span class="material-symbols-outlined text-emerald-600 text-lg">verified</span>
+</div>
+<div class="mt-4">
+<div class="text-xs font-semibold text-on-surface-variant uppercase tracking-wider">Class Teacher Remarks:</div>
+<blockquote class="mt-2 text-sm italic text-on-surface leading-relaxed bg-surface-bright p-3 rounded border-l-2 border-secondary font-serif">
+              "Outstanding analytical acumen in mathematics and sciences. Continues to lead literacy group with enthusiasm and maturity."
+            </blockquote>
+</div>
+<!-- Official Signature Stamp Area -->
+<div class="mt-6 pt-4 border-t border-dashed border-outline-variant flex items-center justify-between">
+<div>
+<div class="text-xs font-bold text-primary">Mrs. Florence Nabawanuka</div>
+<div class="text-[11px] text-on-surface-variant">Senior Lead Educator • P.4 Stream</div>
+<div class="text-[10px] text-outline font-tabular-numeric mt-0.5">Signed: 18 March 2025</div>
+</div>
+<!-- Styled Stamp Simulation -->
+<div class="w-16 h-16 rounded-full border-2 border-emerald-700/60 p-1 flex items-center justify-center text-center rotate-[-6deg] select-none pointer-events-none">
+<div class="w-full h-full border border-emerald-700/40 rounded-full flex flex-col items-center justify-center text-[8px] font-bold text-emerald-800 leading-tight">
+<span>OFFICIAL</span>
+<span class="font-mono text-[7px]">VERIFIED</span>
+<span>HARAMBEE</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Official MoES EMIS Seal Validation Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/70 rounded p-space-md custom-level-1">
+<div class="flex items-center space-x-3 mb-3">
+<div class="w-9 h-9 rounded bg-surface-container flex items-center justify-center text-primary font-bold text-sm">
+<span class="material-symbols-outlined text-secondary">approval</span>
+</div>
+<div>
+<h4 class="font-headline-sm text-sm text-primary font-bold">MoES EMIS Certification</h4>
+<p class="text-[11px] text-on-surface-variant">Ministry of Education &amp; Sports Record</p>
+</div>
+</div>
+<div class="space-y-2 py-2 border-y border-outline-variant/40 text-xs">
+<div class="flex justify-between">
+<span class="text-on-surface-variant">National Accreditation:</span>
+<span class="font-semibold text-primary">P-4/KLA/88219</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Verification Status:</span>
+<span class="font-semibold text-emerald-700 inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                Digitally Anchored
+              </span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Institutional Code:</span>
+<span class="font-tabular-numeric text-primary">KPS-5501-CENTRAL</span>
+</div>
+</div>
+<div class="mt-4">
+<button class="w-full bg-surface-container-lowest hover:bg-surface-bright border border-outline-variant text-primary py-2 px-3 rounded text-xs font-semibold flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-base text-secondary">verified_user</span>
+<span>Verify Cryptographic Seal</span>
+</button>
+</div>
+</div>
+<!-- Next Term Calendar Alert -->
+<div class="bg-surface-container-low border border-outline-variant/60 rounded p-4 text-xs">
+<div class="font-bold text-primary flex items-center gap-1.5 mb-1">
+<span class="material-symbols-outlined text-secondary text-base">info</span>
+<span>Academic Term 2 Resumption</span>
+</div>
+<p class="text-on-surface-variant leading-normal">
+            Term 2 officially commences on May 26, 2025. Pre-term scholastic materials and subject syllabus outlines will be unlocked May 15.
+          </p>
+</div>
+</div>
+</div>
+</main>
+<!-- BOTTOM NAV BAR (Mandatory Shared Component Blueprint from JSON) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 pb-safe bg-surface dark:bg-inverse-surface rounded-t-xl shadow-md dark:shadow-none border-t border-outline-variant dark:border-outline md:max-w-md md:left-1/2 md:-translate-x-1/2 md:bottom-2 md:rounded-xl">
+<!-- Item 1: Dashboard -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-4 py-1 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span class="font-label-sm text-label-sm mt-0.5">Dashboard</span>
+</a>
+<!-- Item 2: Academics (ACTIVE MAPPING BASED ON PAGE PURPOSE) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full px-4 py-1 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">school</span>
+<span class="font-label-sm text-label-sm mt-0.5 font-bold">Academics</span>
+</a>
+<!-- Item 3: Payments -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-4 py-1 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined text-xl">payments</span>
+<span class="font-label-sm text-label-sm mt-0.5">Payments</span>
+</a>
+<!-- Item 4: Notices -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-4 py-1 hover:bg-surface-container-low transition-all" href="#">
+<span class="material-symbols-outlined text-xl">notifications</span>
+<span class="font-label-sm text-label-sm mt-0.5">Notices</span>
+</a>
+</nav>
+</body></html>

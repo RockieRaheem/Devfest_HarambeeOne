@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Help Center - HarambeeOne Parent Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "tertiary-container": "#600004",
+                            "tertiary-fixed": "#ffdad5",
+                            "secondary-container": "#99f2bd",
+                            "on-secondary": "#ffffff",
+                            "surface-tint": "#405f91",
+                            "on-surface-variant": "#43474f",
+                            "status-success": "#006d43",
+                            "secondary-fixed-dim": "#80d8a5",
+                            "error-container": "#ffdad6",
+                            "surface-card": "#ffffff",
+                            "inverse-on-surface": "#eff0f6",
+                            "secondary-fixed": "#9cf5c0",
+                            "surface-container-low": "#f2f3f9",
+                            "on-primary": "#ffffff",
+                            "primary-container": "#002b5b",
+                            "surface-dim": "#d8dae0",
+                            "secondary": "#006d43",
+                            "surface-container-highest": "#e1e2e8",
+                            "on-primary-fixed": "#001b3d",
+                            "primary-fixed-dim": "#a9c7ff",
+                            "background": "#f8f9ff",
+                            "surface-bright": "#f8f9ff",
+                            "status-error": "#ba1a1a",
+                            "tertiary": "#390001",
+                            "on-tertiary": "#ffffff",
+                            "outline": "#747780",
+                            "on-secondary-fixed-variant": "#005231",
+                            "tertiary-fixed-dim": "#ffb4ab",
+                            "on-secondary-container": "#0a7147",
+                            "on-tertiary-container": "#ff5a4e",
+                            "on-surface-subtle": "#43474f",
+                            "outline-variant": "#c4c6d0",
+                            "on-surface": "#191c20",
+                            "error": "#ba1a1a",
+                            "primary-fixed": "#d6e3ff",
+                            "on-background": "#191c20",
+                            "on-tertiary-fixed-variant": "#930009",
+                            "surface-container-lowest": "#ffffff",
+                            "surface-container-high": "#e7e8ee",
+                            "on-error-container": "#93000a",
+                            "primary": "#001736",
+                            "inverse-surface": "#2e3135",
+                            "on-primary-container": "#7594ca",
+                            "on-error": "#ffffff",
+                            "surface": "#f8f9ff",
+                            "surface-variant": "#e1e2e8",
+                            "inverse-primary": "#a9c7ff",
+                            "surface-container": "#eceef3",
+                            "on-primary-fixed-variant": "#264778",
+                            "on-tertiary-fixed": "#410002",
+                            "on-secondary-fixed": "#002111",
+                            "status-warning": "#d97706"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.25rem",
+                            "lg": "0.5rem",
+                            "xl": "0.75rem",
+                            "full": "9999px"
+                    },
+                    "spacing": {
+                            "unit": "4px",
+                            "stack-lg": "32px",
+                            "margin-mobile": "16px",
+                            "margin-desktop": "24px",
+                            "gutter": "16px",
+                            "stack-sm": "8px",
+                            "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                            "headline-md": ["Public Sans"],
+                            "body-md": ["Public Sans"],
+                            "headline-lg": ["Public Sans"],
+                            "label-sm": ["Public Sans"],
+                            "headline-lg-mobile": ["Public Sans"],
+                            "headline-sm": ["Public Sans"],
+                            "body-lg": ["Public Sans"],
+                            "data-mono": ["Public Sans"]
+                    },
+                    "fontSize": {
+                            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                            "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                            "headline-lg-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                            "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                            "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .tap-highlight-transparent { -webkit-tap-highlight-color: transparent; }
+        
+        /* Accordion Animations */
+        .accordion-content {
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 200px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+        .accordion-item.active .material-symbols-outlined.chevron {
+            transform: rotate(180deg);
+        }
+        .chevron {
+            transition: transform 0.3s ease;
+        }
+        
+        /* Hide scrollbar for horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface-container-low text-on-surface antialiased pb-24 pt-16">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-margin-mobile h-12 bg-surface dark:bg-on-background border-b border-outline-variant dark:border-outline">
+<button aria-label="Go back" class="p-2 -ml-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-100 tap-highlight-transparent text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed">Help Center</h1>
+<button aria-label="Search help" class="p-2 -mr-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-100 tap-highlight-transparent text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<main class="px-margin-mobile max-w-[1200px] mx-auto md:px-margin-desktop md:mt-8 space-y-stack-lg">
+<!-- Search Hero -->
+<section class="mt-stack-md pt-4">
+<div class="relative w-full shadow-sm rounded-lg overflow-hidden border border-outline-variant/50 focus-within:border-primary-container focus-within:border-2 transition-all bg-surface-card">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-outline" data-icon="search">search</span>
+</div>
+<input class="block w-full pl-12 pr-4 py-4 bg-transparent border-none text-body-lg text-on-surface focus:ring-0 placeholder:text-on-surface-subtle" placeholder="How can we help?" type="text"/>
+</div>
+</section>
+<!-- Quick Links / Popular Topics Bento Grid -->
+<section>
+<h2 class="font-headline-sm text-headline-sm text-primary-container mb-stack-md">Popular Topics</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter">
+<a class="flex flex-col items-center justify-center p-stack-md bg-surface-card border border-outline-variant/30 rounded-xl shadow-sm hover:border-primary-container hover:shadow-md transition-all active:scale-95 tap-highlight-transparent group text-center gap-2" href="#">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-secondary-container transition-colors text-primary-container group-hover:text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Payments &amp; Fees</span>
+</a>
+<a class="flex flex-col items-center justify-center p-stack-md bg-surface-card border border-outline-variant/30 rounded-xl shadow-sm hover:border-primary-container hover:shadow-md transition-all active:scale-95 tap-highlight-transparent group text-center gap-2" href="#">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-secondary-container transition-colors text-primary-container group-hover:text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="folder_shared">folder_shared</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Student Records</span>
+</a>
+<a class="flex flex-col items-center justify-center p-stack-md bg-surface-card border border-outline-variant/30 rounded-xl shadow-sm hover:border-primary-container hover:shadow-md transition-all active:scale-95 tap-highlight-transparent group text-center gap-2" href="#">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-secondary-container transition-colors text-primary-container group-hover:text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">App Troubleshooting</span>
+</a>
+<a class="flex flex-col items-center justify-center p-stack-md bg-surface-card border border-outline-variant/30 rounded-xl shadow-sm hover:border-primary-container hover:shadow-md transition-all active:scale-95 tap-highlight-transparent group text-center gap-2" href="#">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-secondary-container transition-colors text-primary-container group-hover:text-on-secondary-container">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">School Documents</span>
+</a>
+</div>
+</section>
+<!-- Video Tutorials -->
+<section>
+<h2 class="font-headline-sm text-headline-sm text-primary-container mb-stack-md">Video Tutorials</h2>
+<!-- Featured Video -->
+<div class="bg-surface-card border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden mb-stack-md cursor-pointer hover:border-primary-container hover:shadow-md transition-all active:scale-95 tap-highlight-transparent group relative">
+<div class="relative w-full pt-[56.25%] bg-surface-container">
+<img alt="How to Pay Tuition Online Thumbnail" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA04FEtR9aA0nvkBNnIAU_eMId0TodD9vz54A33bjnXToHkpIezrkbDnH5A0lTQwRVt29PKrdpAn1GG8-c1b_U1SCXFDzKpVPNwd1GX-w0lmEuvOCCOjdi8lAqhqTHdagZuly35spS9qU4FUGn82E1CiHkjIkgwMIjY0byXpQYe2LH_yEQUMh7D4JH2WSi-yuS6-V_YlGzJNvCiJjeWb_GR9CN9v-3EmQ8-FORCDleVEfouJgZmicPHHA"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+<div class="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center text-primary shadow-lg backdrop-blur-sm">
+<span class="material-symbols-outlined text-[32px]" data-icon="play_arrow">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-4">
+<span class="font-label-sm text-label-sm text-primary font-bold uppercase tracking-wider mb-1 block">Featured</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface line-clamp-2">How do I pay tuition online?</h3>
+</div>
+</div>
+<!-- More Tutorials Horizontal Scroll -->
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface mb-stack-sm">More Tutorials</h3>
+<div class="flex overflow-x-auto gap-stack-md pb-2 -mx-margin-mobile px-margin-mobile md:mx-0 md:px-0 snap-x snap-mandatory no-scrollbar">
+<div class="w-[260px] flex-shrink-0 snap-start bg-surface-card border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden cursor-pointer hover:border-primary-container hover:shadow-md transition-all active:scale-95 tap-highlight-transparent group">
+<div class="relative w-full pt-[56.25%] bg-surface-container">
+<img alt="Understanding Your Child's Ledger Thumbnail" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6KjQek_kDOa_6FOMN2wbU08FpUt7ep6EtUYTZsjRoY4Ysji6fD68uU1sBsXbgHpHqUv3fL08brryCULe4nM7V9RlsRaPZ6pG5KiVZxRmsazfpX4EzGQYDNRIUjJULdzbtQCtXGxqLDkRcfAXnp6Vln7KaLvKhVi51pudQDk-ditmV5YIjzm4Oi35B4fwYTbOxtFbUwrAHQtMBtPDgeJp58jbieq-yP6wdOrqzlh_2UKj8CXwGUIm5kA"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+<div class="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-primary shadow-sm backdrop-blur-sm">
+<span class="material-symbols-outlined text-[24px]" data-icon="play_arrow">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-3">
+<h4 class="font-body-md text-body-md font-medium text-on-surface line-clamp-2">Understanding Your Child's Ledger</h4>
+</div>
+</div>
+<div class="w-[260px] flex-shrink-0 snap-start bg-surface-card border border-outline-variant/30 rounded-xl shadow-sm overflow-hidden cursor-pointer hover:border-primary-container hover:shadow-md transition-all active:scale-95 tap-highlight-transparent group">
+<div class="relative w-full pt-[56.25%] bg-surface-container">
+<img alt="Managing Notification Settings Thumbnail" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoywpbXtTMiTfYX42GYYKC9jbNCCf21yMXWnmbSLpU8zHeUnV6Ie5K19bEPfzuztGU0NmghE_fVCnhaCUiH96A-PgjqbxYEnYUIYUbb7nYVLu4Z9GFDMeGsVmbD5eFEk0Pw4kN0XbcPUEjz1PsZ164Xx5yziC5XllIET1vlfJ0b3QERp55RY8z2kagypqPwV2Wxly5-8IvsemxxkISgJHjP1FkyiPcHnwyp-Xfq2COpdWSMfM09uszHw"/>
+<div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+<div class="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center text-primary shadow-sm backdrop-blur-sm">
+<span class="material-symbols-outlined text-[24px]" data-icon="play_arrow">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="p-3">
+<h4 class="font-body-md text-body-md font-medium text-on-surface line-clamp-2">Managing Notification Settings</h4>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Accordion -->
+<section>
+<h2 class="font-headline-sm text-headline-sm text-primary-container mb-stack-md">Frequently Asked Questions</h2>
+<div class="bg-surface-card border border-outline-variant/30 rounded-xl shadow-sm divide-y divide-outline-variant/30">
+<div class="accordion-item cursor-pointer hover:bg-surface-container-low transition-colors px-stack-md">
+<button class="w-full flex justify-between items-center py-4 text-left tap-highlight-transparent focus:outline-none">
+<span class="font-body-md text-body-md font-semibold text-on-surface">How do I pay tuition online?</span>
+<span class="material-symbols-outlined text-outline chevron" data-icon="expand_more">expand_more</span>
+</button>
+<div class="accordion-content">
+<p class="font-body-md text-body-md text-on-surface-variant">Navigate to the 'Payments' tab in the bottom navigation. You can view outstanding balances and initiate a secure payment using your preferred payment method linked to your account.</p>
+</div>
+</div>
+<div class="accordion-item cursor-pointer hover:bg-surface-container-low transition-colors px-stack-md">
+<button class="w-full flex justify-between items-center py-4 text-left tap-highlight-transparent focus:outline-none">
+<span class="font-body-md text-body-md font-semibold text-on-surface">Where can I find my child's report card?</span>
+<span class="material-symbols-outlined text-outline chevron" data-icon="expand_more">expand_more</span>
+</button>
+<div class="accordion-content">
+<p class="font-body-md text-body-md text-on-surface-variant">Report cards are available under the 'Student Records' section. Select your child's profile, then tap on 'Academic Documents' to view or download the latest reports.</p>
+</div>
+</div>
+<div class="accordion-item cursor-pointer hover:bg-surface-container-low transition-colors px-stack-md">
+<button class="w-full flex justify-between items-center py-4 text-left tap-highlight-transparent focus:outline-none">
+<span class="font-body-md text-body-md font-semibold text-on-surface">How do I update my emergency contact info?</span>
+<span class="material-symbols-outlined text-outline chevron" data-icon="expand_more">expand_more</span>
+</button>
+<div class="accordion-content">
+<p class="font-body-md text-body-md text-on-surface-variant">Go to your 'Profile' via the bottom navigation, select 'Account Settings', and then 'Emergency Contacts' to edit or add new contact information.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Support -->
+<section class="pb-stack-lg">
+<h2 class="font-headline-sm text-headline-sm text-primary-container mb-stack-md">Still need help?</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-md">
+<button class="flex items-center gap-4 p-4 bg-surface-card border border-outline-variant/30 rounded-xl shadow-sm hover:border-primary-container hover:shadow-md transition-all active:scale-95 tap-highlight-transparent text-left w-full group">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container group-hover:bg-primary-container group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="chat">chat</span>
+</div>
+<div>
+<div class="font-body-md text-body-md font-semibold text-on-surface">Live Chat</div>
+<div class="font-label-sm text-label-sm text-on-surface-subtle normal-case">Usually replies in minutes</div>
+</div>
+</button>
+<button class="flex items-center gap-4 p-4 bg-surface-card border border-outline-variant/30 rounded-xl shadow-sm hover:border-primary-container hover:shadow-md transition-all active:scale-95 tap-highlight-transparent text-left w-full group">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container group-hover:bg-primary-container group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+</div>
+<div>
+<div class="font-body-md text-body-md font-semibold text-on-surface">Email Support</div>
+<div class="font-label-sm text-label-sm text-on-surface-subtle normal-case">support@harambeeone.edu</div>
+</div>
+</button>
+<button class="flex items-center gap-4 p-4 bg-surface-card border border-outline-variant/30 rounded-xl shadow-sm hover:border-primary-container hover:shadow-md transition-all active:scale-95 tap-highlight-transparent text-left w-full group">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container group-hover:bg-primary-container group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="call">call</span>
+</div>
+<div>
+<div class="font-body-md text-body-md font-semibold text-on-surface">Call Help Desk</div>
+<div class="font-label-sm text-label-sm text-on-surface-subtle normal-case">Mon-Fri, 8am-5pm EST</div>
+</div>
+</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center px-margin-mobile py-2 bg-surface dark:bg-on-background border-t border-outline-variant dark:border-outline">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-90 duration-150 p-2 rounded-lg tap-highlight-transparent w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-90 duration-150 p-2 rounded-lg tap-highlight-transparent w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="payments">payments</span>
+<span class="font-label-sm text-label-sm">Payments</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary dark:text-secondary-fixed font-bold hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-90 duration-150 p-2 rounded-lg tap-highlight-transparent w-16" href="#">
+<div class="px-4 py-1 bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full flex items-center justify-center mb-1">
+<span class="material-symbols-outlined" data-icon="help" data-weight="fill">help</span>
+</div>
+<span class="font-label-sm text-label-sm">Help</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-90 duration-150 p-2 rounded-lg tap-highlight-transparent w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple accordion logic
+        document.querySelectorAll('.accordion-item').forEach(item => {
+            const btn = item.querySelector('button');
+            btn.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all other accordions
+                document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                });
+
+                // Toggle current accordion
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body></html>

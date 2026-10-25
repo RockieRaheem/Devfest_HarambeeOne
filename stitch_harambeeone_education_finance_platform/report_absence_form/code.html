@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<title>Report Absence - HarambeeOne</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-card": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e1e2e8",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#002b5b",
+                        "on-error-container": "#93000a",
+                        "inverse-primary": "#a9c7ff",
+                        "surface-container-low": "#f2f3f9",
+                        "inverse-on-surface": "#eff0f6",
+                        "status-warning": "#d97706",
+                        "on-primary-container": "#7594ca",
+                        "on-tertiary-container": "#ff5a4e",
+                        "surface-variant": "#e1e2e8",
+                        "on-surface-subtle": "#43474f",
+                        "surface-bright": "#f8f9ff",
+                        "status-success": "#006d43",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "secondary-container": "#99f2bd",
+                        "surface-dim": "#d8dae0",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#264778",
+                        "outline-variant": "#c4c6d0",
+                        "status-error": "#ba1a1a",
+                        "secondary-fixed-dim": "#80d8a5",
+                        "primary-fixed": "#d6e3ff",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "surface": "#f8f9ff",
+                        "primary": "#001736",
+                        "outline": "#747780",
+                        "on-background": "#191c20",
+                        "on-secondary-container": "#0a7147",
+                        "surface-tint": "#405f91",
+                        "secondary": "#006d43",
+                        "on-secondary-fixed-variant": "#005231",
+                        "on-surface-variant": "#43474f",
+                        "tertiary-container": "#600004",
+                        "tertiary-fixed": "#ffdad5",
+                        "on-primary-fixed": "#001b3d",
+                        "inverse-surface": "#2e3135",
+                        "surface-container": "#eceef3",
+                        "tertiary": "#390001",
+                        "secondary-fixed": "#9cf5c0",
+                        "background": "#f8f9ff",
+                        "on-surface": "#191c20",
+                        "surface-container-high": "#e7e8ee",
+                        "on-tertiary-fixed-variant": "#930009",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed": "#002111",
+                        "on-tertiary-fixed": "#410002"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "gutter": "16px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px",
+                        "margin-desktop": "24px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "headline-md": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "label-sm": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+            .pt-safe { padding-top: env(safe-area-inset-top); }
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col pt-safe pb-safe selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant flex items-center px-margin-mobile h-14" role="banner">
+<button aria-label="Go back" class="p-2 -ml-2 text-primary hover:bg-surface-container-low active:scale-95 transition-all rounded-full">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="ml-2 font-headline-sm text-headline-sm text-primary flex-1 truncate">Report Absence</h1>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-14 mb-16 overflow-y-auto px-margin-mobile py-stack-lg max-w-3xl mx-auto w-full md:px-margin-desktop">
+<form class="flex flex-col gap-stack-lg">
+<!-- Student Selection (Bento-style chips) -->
+<section aria-labelledby="student-selection-heading">
+<h2 class="font-body-md text-body-md font-semibold text-on-surface-subtle mb-stack-sm uppercase tracking-wider" id="student-selection-heading">Select Child</h2>
+<div class="grid grid-cols-2 gap-unit">
+<label class="relative cursor-pointer group">
+<input checked="" class="peer sr-only" name="student" type="radio" value="student1"/>
+<div class="bg-surface-card border border-outline-variant rounded-lg p-3 flex items-center gap-3 transition-all peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-headline-sm text-headline-sm">
+                                JS
+                            </div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-body-md font-semibold text-on-surface truncate">Jamal Smith</p>
+<p class="font-label-sm text-label-sm text-on-surface-subtle truncate">Grade 8</p>
+</div>
+</div>
+</label>
+<label class="relative cursor-pointer group">
+<input class="peer sr-only" name="student" type="radio" value="student2"/>
+<div class="bg-surface-card border border-outline-variant rounded-lg p-3 flex items-center gap-3 transition-all peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary peer-focus-visible:ring-2 peer-focus-visible:ring-offset-2 peer-focus-visible:ring-primary">
+<div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-headline-sm text-headline-sm">
+                                MS
+                            </div>
+<div class="flex-1 min-w-0">
+<p class="font-body-md text-body-md font-semibold text-on-surface truncate">Maya Smith</p>
+<p class="font-label-sm text-label-sm text-on-surface-subtle truncate">Grade 5</p>
+</div>
+</div>
+</label>
+</div>
+</section>
+<!-- Date Selection Grid -->
+<section aria-labelledby="date-selection-heading" class="grid grid-cols-2 gap-gutter">
+<h2 class="sr-only" id="date-selection-heading">Date Selection</h2>
+<div class="flex flex-col gap-unit">
+<label class="font-body-md text-body-md font-semibold text-on-surface-subtle" for="start-date">Start Date</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">calendar_today</span>
+<input class="w-full pl-10 pr-3 py-3 bg-surface-card border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none" id="start-date" name="start-date" required="" type="date"/>
+</div>
+</div>
+<div class="flex flex-col gap-unit">
+<label class="font-body-md text-body-md font-semibold text-on-surface-subtle" for="end-date">End Date</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">calendar_month</span>
+<input class="w-full pl-10 pr-3 py-3 bg-surface-card border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none" id="end-date" name="end-date" type="date"/>
+</div>
+</div>
+</section>
+<!-- Reason Selection -->
+<section aria-labelledby="reason-selection-heading">
+<h2 class="font-body-md text-body-md font-semibold text-on-surface-subtle mb-unit" id="reason-selection-heading">Reason for Absence</h2>
+<div class="relative">
+<select class="w-full pl-4 pr-10 py-3 bg-surface-card border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors appearance-none cursor-pointer" id="absence-reason" name="absence-reason" required="">
+<option disabled="" hidden="" selected="" value="">Select a reason...</option>
+<option value="illness">Illness / Sick Leave</option>
+<option value="medical">Medical Appointment</option>
+<option value="family">Family Event / Emergency</option>
+<option value="religious">Religious Observance</option>
+<option value="other">Other (Please specify below)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-outline pointer-events-none">expand_more</span>
+</div>
+</section>
+<!-- Additional Notes -->
+<section aria-labelledby="notes-heading">
+<h2 class="font-body-md text-body-md font-semibold text-on-surface-subtle mb-unit" id="notes-heading">Additional Notes</h2>
+<textarea class="w-full p-4 bg-surface-card border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-y" id="notes" name="notes" placeholder="Provide any additional context or details here..." rows="4"></textarea>
+</section>
+<!-- Submission Area -->
+<div class="mt-stack-md">
+<button class="w-full bg-primary text-on-primary py-4 px-6 rounded-lg font-headline-sm text-headline-sm flex items-center justify-center gap-2 hover:bg-opacity-90 active:scale-[0.98] transition-all min-h-[48px]" type="submit">
+<span class="material-symbols-outlined filled" data-icon="send">send</span>
+                    Submit Report
+                </button>
+<p class="text-center font-label-sm text-label-sm text-on-surface-subtle mt-4">
+                    Falsifying attendance records violates school policy.
+                </p>
+</div>
+</form>
+</main>
+<!-- BottomNavBar (Hidden on md, visible on mobile) -->
+<nav aria-label="Primary Mobile Navigation" class="md:hidden fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant pb-safe">
+<div class="flex justify-around items-center h-16 w-full px-2">
+<a aria-label="Home" class="flex flex-col items-center justify-center text-on-surface-subtle px-4 py-1 hover:bg-surface-container transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a aria-label="Payments" class="flex flex-col items-center justify-center text-on-surface-subtle px-4 py-1 hover:bg-surface-container transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-sm text-label-sm mt-1">Payments</span>
+</a>
+<a aria-current="page" aria-label="Absence, Current Page" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined filled" data-icon="event_busy">event_busy</span>
+<span class="font-label-sm text-label-sm mt-1">Absence</span>
+</a>
+<a aria-label="Notices" class="flex flex-col items-center justify-center text-on-surface-subtle px-4 py-1 hover:bg-surface-container transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-sm text-label-sm mt-1">Notices</span>
+</a>
+</div>
+</nav>
+<script>
+        // Simple form validation logic for demonstration
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin" data-icon="progress_activity">progress_activity</span> Submitting...`;
+            btn.classList.add('opacity-80', 'cursor-not-allowed');
+            
+            setTimeout(() => {
+                btn.innerHTML = `<span class="material-symbols-outlined filled" data-icon="check_circle">check_circle</span> Report Submitted`;
+                btn.classList.replace('bg-primary', 'bg-status-success');
+                btn.classList.replace('text-on-primary', 'text-on-secondary');
+                
+                setTimeout(() => {
+                    // Reset for demo purposes
+                    btn.innerHTML = originalText;
+                    btn.classList.replace('bg-status-success', 'bg-primary');
+                    btn.classList.replace('text-on-secondary', 'text-on-primary');
+                    btn.classList.remove('opacity-80', 'cursor-not-allowed');
+                    e.target.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Set min date for start date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('start-date').min = today;
+        document.getElementById('end-date').min = today;
+
+        document.getElementById('start-date').addEventListener('change', (e) => {
+            document.getElementById('end-date').min = e.target.value;
+            if(document.getElementById('end-date').value && document.getElementById('end-date').value < e.target.value) {
+                document.getElementById('end-date').value = e.target.value;
+            }
+        });
+    </script>
+</body></html>

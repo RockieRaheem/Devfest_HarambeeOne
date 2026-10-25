@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Student Financial Ledger - HarambeeOne</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#dce9ff",
+                      "on-secondary-fixed": "#002111",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed": "#360f00",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed-variant": "#264778",
+                      "outline-variant": "#c4c6d0",
+                      "on-tertiary-fixed-variant": "#713619",
+                      "secondary-fixed": "#78fbb6",
+                      "tertiary-fixed": "#ffdbcd",
+                      "error-container": "#ffdad6",
+                      "primary-container": "#002b5b",
+                      "background": "#f8f9ff",
+                      "surface-container": "#e5eeff",
+                      "surface-dim": "#cbdbf5",
+                      "on-error": "#ffffff",
+                      "on-surface": "#0b1c30",
+                      "tertiary-container": "#4f1c02",
+                      "surface": "#f8f9ff",
+                      "on-surface-variant": "#43474f",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-secondary-container": "#007147",
+                      "surface-container-highest": "#d3e4fe",
+                      "surface-variant": "#d3e4fe",
+                      "on-secondary": "#ffffff",
+                      "surface-container-low": "#eff4ff",
+                      "tertiary": "#2f0c00",
+                      "on-error-container": "#93000a",
+                      "surface-tint": "#405f91",
+                      "tertiary-fixed-dim": "#ffb596",
+                      "inverse-primary": "#a9c7ff",
+                      "secondary-fixed-dim": "#59de9b",
+                      "surface-bright": "#f8f9ff",
+                      "on-secondary-fixed-variant": "#005232",
+                      "inverse-surface": "#213145",
+                      "error": "#ba1a1a",
+                      "secondary": "#006d43",
+                      "on-tertiary-container": "#cd805d",
+                      "primary": "#001736",
+                      "on-primary-container": "#7594ca",
+                      "secondary-container": "#75f8b3",
+                      "surface-container-lowest": "#ffffff",
+                      "on-background": "#0b1c30",
+                      "outline": "#747780",
+                      "primary-fixed": "#d6e3ff",
+                      "on-primary-fixed": "#001b3d",
+                      "primary-fixed-dim": "#a9c7ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "container-padding": "24px",
+                      "unit": "4px",
+                      "gutter": "16px",
+                      "section-gap": "32px"
+              },
+              "fontFamily": {
+                      "label-sm": [
+                              "Public Sans"
+                      ],
+                      "body-lg": [
+                              "Public Sans"
+                      ],
+                      "data-mono": [
+                              "Public Sans"
+                      ],
+                      "headline-sm": [
+                              "Public Sans"
+                      ],
+                      "headline-md": [
+                              "Public Sans"
+                      ],
+                      "display-lg": [
+                              "Public Sans"
+                      ],
+                      "body-md": [
+                              "Public Sans"
+                      ]
+              },
+              "fontSize": {
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-mono": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background font-body-md flex min-h-screen">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-screen sticky left-0 top-0 py-gutter bg-surface-container-low dark:bg-surface-dim font-label-sm text-label-sm docked full-height left-0 w-64 border-r border-outline-variant dark:border-outline flat no shadows">
+<div class="px-gutter mb-6 flex flex-col items-center">
+<div class="w-16 h-16 rounded-full bg-surface-container-highest mb-2 flex items-center justify-center overflow-hidden">
+<img class="object-cover w-full h-full" data-alt="A clean, modern institutional crest logo for St. Mary's Primary school, emphasizing stability and education in a minimalist vector style, set against a light background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeQWZJlYp5pYJycBQ2meimccjqSNTyGCOUb4q5sqpzn7kci5tC8ha7UxyjXfThEEpYo9am1Cyn-jXKPi5W-SIsOdPnssJibtZQZoRRfZ70V5ABSB-aSqxqYEQsEdh8O6-XWkMPESL0xnxvEEdx7kf27tFzZnypMgbKYHCPt2ecW7hbO6_hsLk_EFuWL3eVK4McVka-A-UsCfyaGTMiFOjWBNMNUVYHDlz2T-JofmJhTjYiV6wxEFqxMw"/>
+</div>
+<h1 class="font-headline-md text-headline-md text-primary text-center">St. Mary's Primary</h1>
+<p class="text-on-surface-variant text-center mt-1">Institutional Portal</p>
+</div>
+<ul class="flex-1 overflow-y-auto px-4 space-y-2">
+<li>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center px-4 py-3 rounded-lg bg-secondary-container text-on-secondary-container font-semibold transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 1;">school</span>
+                    Students
+                </a>
+</li>
+<li>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">payments</span>
+                    Finance
+                </a>
+</li>
+<li>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">account_balance_wallet</span>
+                    Reconciliation
+                </a>
+</li>
+<li>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">volunteer_activism</span>
+                    Sponsorship
+                </a>
+</li>
+<li>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">assessment</span>
+                    Reports
+                </a>
+</li>
+<li>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+<div class="px-4 mt-auto space-y-2 pt-4 border-t border-outline-variant">
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">help</span>
+                Help Center
+            </a>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined mr-3">logout</span>
+                Logout
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 bg-surface">
+<!-- TopNavBar (Mobile context usually, but kept for full layout structure per instructions if not strictly mobile) -->
+<header class="flex justify-between items-center w-full px-container-padding h-16 sticky top-0 z-50 bg-surface-container-lowest dark:bg-surface border-b border-outline-variant dark:border-outline flat no shadows font-body-md text-body-md md:hidden">
+<div class="flex items-center">
+<span class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed">HarambeeOne</span>
+</div>
+<div class="flex items-center space-x-4">
+<span class="material-symbols-outlined cursor-pointer active:opacity-80 hover:bg-surface-container-low transition-colors p-2 rounded-full text-on-surface-variant">notifications</span>
+<span class="material-symbols-outlined cursor-pointer active:opacity-80 hover:bg-surface-container-low transition-colors p-2 rounded-full text-on-surface-variant">apps</span>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-sm text-label-sm hover:opacity-90 transition-opacity">Bursar</button>
+</div>
+</header>
+<!-- Canvas -->
+<div class="flex-1 overflow-y-auto p-container-padding">
+<div class="max-w-[1440px] mx-auto space-y-section-gap">
+<!-- Header Section -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-outline-variant pb-6">
+<div>
+<div class="flex items-center gap-3 mb-2">
+<h2 class="font-display-lg text-display-lg text-primary">Namono Sarah</h2>
+<span class="px-2 py-1 rounded bg-surface-container-highest text-on-surface font-label-sm text-label-sm border border-outline-variant">Active</span>
+</div>
+<div class="flex flex-wrap gap-x-6 gap-y-2 text-on-surface-variant font-body-md text-body-md">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">badge</span> Admission ID: P5-2023-042</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">class</span> Class: P5 Blue</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[18px]">group</span> Guardian: John Namono (Father)</span>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 border border-outline text-on-surface rounded-lg font-label-sm text-label-sm hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span> Generate Receipt
+                        </button>
+<button class="px-4 py-2 border border-outline text-on-surface rounded-lg font-label-sm text-label-sm hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">money_off</span> Apply Waiver
+                        </button>
+</div>
+</div>
+<!-- Bento Grid Summary -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Total Billed -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
+<div class="flex items-center gap-2 text-on-surface-variant mb-4">
+<span class="material-symbols-outlined text-[20px]">account_balance</span>
+<h3 class="font-label-sm text-label-sm uppercase tracking-wider">Total Billed (Term II)</h3>
+</div>
+<div class="font-display-lg text-display-lg text-primary">
+                            UGX 1,200,000
+                        </div>
+</div>
+<!-- Total Paid -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute right-0 top-0 w-24 h-24 bg-secondary-container rounded-bl-full opacity-20 -mr-4 -mt-4"></div>
+<div class="flex items-center gap-2 text-on-surface-variant mb-4 relative z-10">
+<span class="material-symbols-outlined text-[20px] text-secondary">check_circle</span>
+<h3 class="font-label-sm text-label-sm uppercase tracking-wider">Total Paid</h3>
+</div>
+<div class="font-display-lg text-display-lg text-secondary relative z-10">
+                            UGX 850,000
+                        </div>
+</div>
+<!-- Current Balance -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 flex flex-col justify-between">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">pending_actions</span>
+<h3 class="font-label-sm text-label-sm uppercase tracking-wider">Current Balance</h3>
+</div>
+<span class="px-2 py-1 rounded bg-error-container text-on-error-container font-label-sm text-label-sm">Due in 14 days</span>
+</div>
+<div class="font-display-lg text-display-lg text-error">
+                            UGX 350,000
+                        </div>
+<div class="mt-2 text-on-surface-variant font-label-sm text-label-sm">
+                            Includes UGX 150,000 Sponsorship pending
+                        </div>
+</div>
+</div>
+<!-- Ledger Table Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden flex flex-col">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-container-low/50">
+<h3 class="font-headline-sm text-headline-sm text-primary">Financial Ledger</h3>
+<button class="text-primary hover:bg-surface-container p-2 rounded-full transition-colors" title="Add Comment">
+<span class="material-symbols-outlined">add_comment</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest border-b border-outline font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+<th class="px-6 py-4 sticky top-0 bg-surface-container-lowest">Date</th>
+<th class="px-6 py-4 sticky top-0 bg-surface-container-lowest">Type</th>
+<th class="px-6 py-4 sticky top-0 bg-surface-container-lowest">Description</th>
+<th class="px-6 py-4 sticky top-0 bg-surface-container-lowest">Ref #</th>
+<th class="px-6 py-4 sticky top-0 bg-surface-container-lowest text-right">Amount (UGX)</th>
+<th class="px-6 py-4 sticky top-0 bg-surface-container-lowest text-right">Balance (UGX)</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface">
+<tr class="border-b border-outline-variant hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-3">01-May-2024</td>
+<td class="px-6 py-3"><span class="px-2 py-1 rounded bg-surface-variant text-on-surface font-label-sm text-label-sm">Charge</span></td>
+<td class="px-6 py-3">Term II Tuition Fee</td>
+<td class="px-6 py-3 text-on-surface-variant font-data-mono text-data-mono">INV-T2-001</td>
+<td class="px-6 py-3 text-right font-data-mono text-data-mono text-error">1,000,000</td>
+<td class="px-6 py-3 text-right font-data-mono text-data-mono">1,000,000</td>
+</tr>
+<tr class="bg-[#F8FAFC] border-b border-outline-variant hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-3">01-May-2024</td>
+<td class="px-6 py-3"><span class="px-2 py-1 rounded bg-surface-variant text-on-surface font-label-sm text-label-sm">Charge</span></td>
+<td class="px-6 py-3">Development Fund</td>
+<td class="px-6 py-3 text-on-surface-variant font-data-mono text-data-mono">INV-T2-002</td>
+<td class="px-6 py-3 text-right font-data-mono text-data-mono text-error">200,000</td>
+<td class="px-6 py-3 text-right font-data-mono text-data-mono">1,200,000</td>
+</tr>
+<tr class="border-b border-outline-variant hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-3">15-May-2024</td>
+<td class="px-6 py-3"><span class="px-2 py-1 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">Payment</span></td>
+<td class="px-6 py-3">SchoolPay Mobile Money</td>
+<td class="px-6 py-3 text-on-surface-variant font-data-mono text-data-mono">RCPT-8834</td>
+<td class="px-6 py-3 text-right font-data-mono text-data-mono text-secondary">(400,000)</td>
+<td class="px-6 py-3 text-right font-data-mono text-data-mono">800,000</td>
+</tr>
+<tr class="bg-[#F8FAFC] border-b border-outline-variant hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-3">20-May-2024</td>
+<td class="px-6 py-3"><span class="px-2 py-1 rounded bg-primary-container text-on-primary-container font-label-sm text-label-sm">Sponsor</span></td>
+<td class="px-6 py-3 flex items-center gap-2">
+                                        NGO Scholarship Fund 
+                                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-secondary text-on-secondary text-[10px] font-bold uppercase tracking-wider" title="Settled via Stellar Network">
+<span class="material-symbols-outlined text-[12px]">verified</span> Sponsor Settled
+                                        </span>
+</td>
+<td class="px-6 py-3 text-on-surface-variant font-data-mono text-data-mono">XLM-TX-92A</td>
+<td class="px-6 py-3 text-right font-data-mono text-data-mono text-secondary">(450,000)</td>
+<td class="px-6 py-3 text-right font-data-mono text-data-mono">350,000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

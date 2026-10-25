@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HarambeeOne — The Financial Operating System for African Education</title>
+<!-- Google Fonts: Inter & Public Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Verbatim Tailwind Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "error": "#ba1a1a",
+            "primary": "#000000",
+            "on-tertiary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed": "#001551",
+            "surface-bright": "#f8f9ff",
+            "background": "#f8f9ff",
+            "on-primary": "#ffffff",
+            "secondary": "#1d4ed8",
+            "on-surface": "#0b1c30",
+            "primary-container": "#131b2e",
+            "on-primary-fixed-variant": "#3f465c",
+            "on-primary-container": "#7c839b",
+            "surface-dim": "#cbdbf5",
+            "tertiary-fixed": "#85f8c4",
+            "on-secondary-container": "#fffbff",
+            "surface-container-high": "#dce9ff",
+            "surface-container-low": "#eff4ff",
+            "outline-variant": "#c6c6cd",
+            "on-background": "#0b1c30",
+            "secondary-fixed": "#dce1ff",
+            "inverse-on-surface": "#eaf1ff",
+            "tertiary-fixed-dim": "#68dba9",
+            "surface-tint": "#565e74",
+            "inverse-surface": "#213145",
+            "on-tertiary-fixed-variant": "#005137",
+            "on-surface-variant": "#45464d",
+            "on-tertiary-container": "#069669",
+            "secondary-container": "#4069f2",
+            "surface-variant": "#d3e4fe",
+            "surface": "#f8f9ff",
+            "surface-container-highest": "#d3e4fe",
+            "primary-fixed": "#dae2fd",
+            "tertiary-container": "#002114",
+            "primary-fixed-dim": "#bec6e0",
+            "outline": "#76777d",
+            "on-secondary": "#ffffff",
+            "tertiary": "#000000",
+            "surface-container": "#e5eeff",
+            "on-primary-fixed": "#131b2e",
+            "on-error": "#ffffff",
+            "secondary-fixed-dim": "#b7c4ff",
+            "on-error-container": "#93000a",
+            "on-tertiary-fixed": "#002114",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#bec6e0",
+            "on-secondary-fixed-variant": "#0039b5"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-mobile": "1rem",
+            "gutter-mobile": "1rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "gutter": "1.5rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem"
+          },
+          "fontFamily": {
+            "tabular-numeric": ["Inter"],
+            "headline-sm": ["Public Sans"],
+            "label-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "label-md": ["Inter"],
+            "display-sm": ["Public Sans"],
+            "display-sm-mobile": ["Public Sans"],
+            "body-lg": ["Inter"],
+            "headline-lg": ["Public Sans"],
+            "display-lg": ["Public Sans"],
+            "headline-md": ["Public Sans"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "tabular-numeric": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "display-sm": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "display-sm-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- TopNavBar (Shared Component Anchor) -->
+<header class="bg-surface-container-lowest dark:bg-inverse-surface docked full-width top-0 sticky z-50 border-b border-outline-variant/30 dark:border-outline/20 shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center w-full px-6 py-3 max-w-7xl mx-auto">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded bg-primary-container flex items-center justify-center text-surface-bright shadow-sm">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+</div>
+<a class="text-headline-md font-headline-md font-bold text-on-surface dark:text-inverse-on-surface tracking-tight" href="#">
+          HarambeeOne
+        </a>
+<span class="hidden lg:inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider bg-surface-container-low text-secondary border border-secondary/20 ml-1">
+          UG • FinOps
+        </span>
+</div>
+<!-- Navigation Links from JSON Anchor -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-secondary dark:text-secondary-fixed font-semibold border-b-2 border-secondary dark:border-secondary-fixed pb-1 text-label-md font-label-md transition-colors" href="#solutions">
+          Solutions
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface/80 font-medium hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors text-label-md font-label-md hover:text-secondary dark:hover:text-secondary-fixed" href="#compliance">
+          Compliance
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface/80 font-medium hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors text-label-md font-label-md hover:text-secondary dark:hover:text-secondary-fixed" href="#ledger-demo">
+          Ledger Demo
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface/80 font-medium hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors text-label-md font-label-md hover:text-secondary dark:hover:text-secondary-fixed" href="#donors">
+          Donors
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface/80 font-medium hover:text-on-surface dark:hover:text-inverse-on-surface transition-colors text-label-md font-label-md hover:text-secondary dark:hover:text-secondary-fixed" href="#pricing">
+          Pricing
+        </a>
+</nav>
+<!-- Trailing Action Buttons -->
+<div class="flex items-center gap-3">
+<a class="text-label-md font-label-md px-3.5 py-2 rounded text-on-surface hover:text-secondary transition-all duration-200 active:scale-95 border border-outline-variant/40 bg-surface-container-lowest" href="#portal">
+          Portal Login
+        </a>
+<a class="text-label-md font-label-md px-4 py-2 rounded bg-primary text-on-primary hover:bg-primary-container transition-all duration-200 active:scale-95 shadow-sm font-semibold flex items-center gap-1.5" href="#demo">
+<span>Request Demo</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</header>
+<main class="flex-1">
+<!-- Hero Section -->
+<section class="relative overflow-hidden pt-10 pb-16 md:pt-16 md:pb-24 border-b border-outline-variant/30">
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<!-- Left Hero Content -->
+<div class="lg:col-span-7 flex flex-col items-start">
+<!-- Regulatory Eyebrow Badge -->
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low border border-secondary/20 mb-6 shadow-sm">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container animate-pulse"></span>
+<span class="text-label-sm font-label-sm text-on-surface font-semibold tracking-wide">
+              Official Participant — Bank of Uganda Sandbox &amp; MoES EMIS Certified
+            </span>
+</div>
+<!-- Bold Headline -->
+<h1 class="text-display-lg font-display-lg text-on-surface mb-5 leading-tight">
+            The Financial Operating System for African Education.
+          </h1>
+<!-- Subtitle -->
+<p class="text-body-lg font-body-lg text-on-surface-variant mb-8 max-w-2xl leading-relaxed">
+            Eliminate cashbook errors, automate MTN &amp; Airtel mobile money reconciliation in real time, and unlock programmable donor funding with complete audit integrity.
+          </p>
+<!-- CTAs -->
+<div class="flex flex-wrap items-center gap-4 mb-10 w-full sm:w-auto">
+<a class="px-6 py-3.5 rounded bg-primary text-on-primary hover:bg-primary-container text-body-md font-label-md flex items-center justify-center gap-2 shadow-sm transition-all duration-200 active:scale-95 font-semibold w-full sm:w-auto" href="#demo-form">
+<span>Request Institutional Demo</span>
+<span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+<a class="px-5 py-3.5 rounded bg-surface-container-lowest text-on-surface border border-outline-variant/60 hover:border-secondary hover:text-secondary text-body-md font-label-md flex items-center justify-center gap-2 transition-all duration-200 active:scale-95 font-semibold w-full sm:w-auto shadow-sm" href="#interactive-matrix">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">play_circle</span>
+<span>Explore Interactive Ledger</span>
+</a>
+</div>
+<!-- Trust Badges & Telemetry Bar -->
+<div class="w-full pt-6 border-t border-outline-variant/30">
+<p class="text-label-sm font-label-sm text-outline uppercase tracking-wider mb-3">
+              Trusted by 450+ Primary &amp; Secondary Institutions across Kampala, Wakiso, Mukono &amp; Jinja
+            </p>
+<div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-on-surface-variant text-body-sm font-body-sm">
+<div class="flex items-center gap-1.5 font-semibold text-on-surface">
+<span class="material-symbols-outlined text-secondary text-base">verified</span>
+<span>MoES EMIS Sync</span>
+</div>
+<div class="flex items-center gap-1.5 font-semibold text-on-surface">
+<span class="material-symbols-outlined text-on-tertiary-container text-base">assured_workload</span>
+<span>Bank of Uganda Sandboxed</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span>Stanbic Bank EFT</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span>Centenary Direct</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span>MTN SchoolPay</span>
+</div>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span>Airtel Money Push</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Hero Visual with Principal Image & Live Float Card -->
+<div class="lg:col-span-5 relative">
+<div class="relative mx-auto rounded-xl overflow-hidden border border-outline-variant/40 bg-surface-container-lowest shadow-md">
+<img alt="Mrs. Sarah Nakato, Headteacher at St. Augustine Royal Academy Kampala, using HarambeeOne real-time tablet ledger" class="w-full h-[460px] object-cover object-top filter contrast-[1.02]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlLm7xDGMlge7EjWFEMwSmfELRNhfAMBihd-a0lsoBteTgGuVFDd_3D_UyFgz0pxdCBnh4FXAlTeDDmdOGbcHkW8Oki6R99IdO1OMvPaUUJJY66tDz2gbgqrVOyB--JWvEw8MeGB-ywCnCQf5clGY7KKEIhB0ifXN8s09sMIiYVdH7n6orySIKmkWaqQBCjHVJPbMecRYnL2wAecJ3c8_Lj27MU4KzbLumFHp2P3du0bAIFX7-G2dGEA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 text-on-primary">
+<div class="text-label-sm font-label-sm uppercase tracking-wider text-tertiary-fixed font-bold">Executive Bursary Portal</div>
+<p class="text-body-md font-semibold text-surface-bright">Mrs. Sarah Nakato — Principal, St. Augustine Royal Academy</p>
+</div>
+</div>
+<!-- Floating Live Reconciliation Card -->
+<div class="absolute -bottom-6 -left-6 md:-left-8 bg-surface-container-lowest border border-outline-variant/50 rounded-lg p-4 shadow-lg max-w-xs md:max-w-sm">
+<div class="flex items-center justify-between gap-3 mb-2">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-on-tertiary-container animate-ping"></span>
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Live Cashbook Stream</span>
+</div>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-[#ecfdf5] text-[#059669] border border-[#a7f3d0] flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#059669]"></span>
+                Zero Variance
+              </span>
+</div>
+<div class="text-headline-sm font-headline-sm font-bold text-on-surface mb-1 font-tabular-numeric">
+              UGX 428,650,000
+            </div>
+<p class="text-body-sm font-body-sm text-on-surface-variant flex items-center justify-between">
+<span>Term 1 Fee Collections</span>
+<span class="text-on-tertiary-container font-semibold text-tabular-numeric">100% Reconciled</span>
+</p>
+<div class="mt-2.5 w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full w-full"></div>
+</div>
+</div>
+<!-- Live Floating Notification Chip -->
+<div class="hidden sm:flex absolute -top-4 -right-4 bg-surface-container-lowest border border-outline-variant/60 rounded-md py-2 px-3 items-center gap-2.5 shadow-md">
+<div class="w-7 h-7 rounded bg-[#ecfdf5] text-[#059669] flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-sm">bolt</span>
+</div>
+<div>
+<div class="text-[11px] font-bold text-on-surface">MTN Pay Real-Time Inflow</div>
+<div class="text-[10px] text-on-surface-variant font-tabular-numeric">LIN: 829104 • UGX 1,200,000 matched</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Key Numerical Proof Strip -->
+<section class="bg-surface-container-lowest border-b border-outline-variant/30 py-8">
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="border-l-2 border-secondary pl-4">
+<div class="text-display-sm font-display-lg text-on-surface font-bold font-tabular-numeric">UGX 42.8B+</div>
+<div class="text-label-md font-label-md text-on-surface-variant mt-1">Reconciled Volume (2024–2025)</div>
+</div>
+<div class="border-l-2 border-on-tertiary-container pl-4">
+<div class="text-display-sm font-display-lg text-on-surface font-bold font-tabular-numeric">99.8%</div>
+<div class="text-label-md font-label-md text-on-surface-variant mt-1">Automated Exception Resolution</div>
+</div>
+<div class="border-l-2 border-secondary pl-4">
+<div class="text-display-sm font-display-lg text-on-surface font-bold font-tabular-numeric">184,000+</div>
+<div class="text-label-md font-label-md text-on-surface-variant mt-1">Enrolled Learners Tracked</div>
+</div>
+<div class="border-l-2 border-on-tertiary-container pl-4">
+<div class="text-display-sm font-display-lg text-on-tertiary-container font-bold font-tabular-numeric">UGX 0.00</div>
+<div class="text-label-md font-label-md text-on-surface-variant mt-1">Lost in Unallocated Suspense</div>
+</div>
+</div>
+</section>
+<!-- Three Core Pillars (Value Proposition Bento Layout) -->
+<section class="py-16 md:py-24 bg-surface" id="solutions">
+<div class="max-w-7xl mx-auto px-6">
+<div class="max-w-3xl mb-12">
+<div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-secondary-fixed/50 text-on-secondary-fixed text-label-sm font-label-sm mb-3">
+<span class="material-symbols-outlined text-xs">tune</span>
+            Architected for African Education Governance
+          </div>
+<h2 class="text-headline-lg md:text-display-sm font-headline-lg text-on-surface font-bold">
+            One Core Ledger. Three Empowered Stakeholders.
+          </h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant mt-3">
+            Traditional accounting software fails under erratic power, fragmented mobile money payloads, and complex family fee splits. HarambeeOne re-engineers every touchpoint.
+          </p>
+</div>
+<!-- Bento Grid: 3 Pillars -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Pillar 1: Bursars & Headteachers (7 Cols) -->
+<div class="lg:col-span-7 bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-6 md:p-8 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="px-2.5 py-1 rounded text-label-sm font-label-sm bg-surface-container-high text-on-surface font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-secondary">calculate</span>
+                  For School Bursars &amp; Headteachers
+                </span>
+<span class="text-label-sm font-label-sm text-on-tertiary-container font-semibold bg-[#ecfdf5] px-2 py-0.5 rounded border border-[#a7f3d0]">
+                  Real-Time Settlement
+                </span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-3">
+                Automated Real-Time Reconciliation
+              </h3>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed mb-6">
+                Instant autonomous matching of bank EFTs, MTN SchoolPay, and Airtel Money. HarambeeOne algorithmically resolves complex sibling splits, miskeyed Learner Identification Numbers (LINs), and generates daily District Education Officer (DEO) statutory Form 8B filings before evening roll call.
+              </p>
+<!-- Feature Mini Ledger Box -->
+<div class="rounded-lg border border-outline-variant/30 bg-surface-container-low p-4 space-y-2.5 mb-6">
+<div class="flex justify-between items-center text-label-sm font-label-sm text-outline uppercase pb-2 border-b border-outline-variant/20">
+<span>Channel &amp; Reference</span>
+<span>Student / LIN</span>
+<span class="text-right">Amount &amp; Status</span>
+</div>
+<div class="flex justify-between items-center text-body-sm font-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-on-tertiary-container"></span>
+<span class="font-medium text-on-surface">MTN MM Ref #883921</span>
+</div>
+<span class="text-on-surface-variant">Kavuma David (LIN: 99120)</span>
+<div class="text-right">
+<span class="font-bold text-on-surface font-tabular-numeric">UGX 850,000</span>
+<span class="block text-[10px] text-on-tertiary-container font-semibold">Matched in 0.4s</span>
+</div>
+</div>
+<div class="flex justify-between items-center text-body-sm font-body-sm pt-2 border-t border-outline-variant/10">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-medium text-on-surface">Stanbic Bank EFT-094</span>
+</div>
+<span class="text-on-surface-variant">Twin Split: Nambi &amp; Kato</span>
+<div class="text-right">
+<span class="font-bold text-on-surface font-tabular-numeric">UGX 1,600,000</span>
+<span class="block text-[10px] text-secondary font-semibold">Split Executed</span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-4 pt-4 border-t border-outline-variant/20 text-center">
+<div>
+<div class="text-headline-sm font-headline-sm font-bold text-on-surface">14 Mins</div>
+<div class="text-[11px] text-on-surface-variant">Average Daily Close</div>
+</div>
+<div>
+<div class="text-headline-sm font-headline-sm font-bold text-on-surface">Zero</div>
+<div class="text-[11px] text-on-surface-variant">Lost Manual Slips</div>
+</div>
+<div>
+<div class="text-headline-sm font-headline-sm font-bold text-on-surface">100%</div>
+<div class="text-[11px] text-on-surface-variant">BOU Compliant Logs</div>
+</div>
+</div>
+</div>
+<!-- Pillar 3: Donors & Scholarship Programs (5 Cols) -->
+<div class="lg:col-span-5 bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-6 md:p-8 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="px-2.5 py-1 rounded text-label-sm font-label-sm bg-[#ecfdf5] text-on-tertiary-container font-semibold flex items-center gap-1.5 border border-[#a7f3d0]">
+<span class="material-symbols-outlined text-sm">lock_clock</span>
+                  For Donors &amp; Foundations
+                </span>
+<span class="text-label-sm font-label-sm text-outline font-medium">Smart Escrow</span>
+</div>
+<h3 class="text-headline-md font-headline-md text-on-surface mb-3">
+                Programmable Education Escrow
+              </h3>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed mb-6">
+                Institutional donors, NGOs, and diaspora sponsors disburse funds conditionally. Tranches unlock only upon verified biometric or teacher-signed UNEB attendance rosters and term progress records.
+              </p>
+<!-- Escrow Milestone Pipeline -->
+<div class="space-y-3 bg-surface-container-low p-4 rounded-lg border border-outline-variant/30 mb-6">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-tertiary-container text-base mt-0.5">check_circle</span>
+<div class="flex-1">
+<div class="text-body-sm font-semibold text-on-surface">Milestone 1: Term Enrollment</div>
+<div class="text-[12px] text-on-surface-variant">UGX 18,500,000 unlocked to school bursary ledger</div>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-base mt-0.5">hourglass_top</span>
+<div class="flex-1">
+<div class="text-body-sm font-semibold text-on-surface">Milestone 2: Mid-Term 85%+ Attendance</div>
+<div class="text-[12px] text-on-surface-variant">Smart escrow locked • Verification via EMIS sync</div>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-outline text-base mt-0.5">radio_button_unchecked</span>
+<div class="flex-1">
+<div class="text-body-sm font-semibold text-outline">Milestone 3: UNEB Exam Seating</div>
+<div class="text-[12px] text-outline">Scheduled release November 2025</div>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant/20 flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-on-surface-variant font-medium">100% Cryptographic Traceability</span>
+<a class="text-label-md font-label-md text-secondary font-semibold hover:underline flex items-center gap-1" href="#donors">
+<span>View Escrow Architecture</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Pillar 2: Parents & Guardians (Full Width 12 Cols with Image 126) -->
+<div class="lg:col-span-12 bg-surface-container-lowest border border-outline-variant/40 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+<div class="grid grid-cols-1 lg:grid-cols-12">
+<div class="lg:col-span-7 p-6 md:p-10 flex flex-col justify-between">
+<div>
+<div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-secondary-fixed/50 text-on-secondary-fixed text-label-sm font-label-sm mb-4">
+<span class="material-symbols-outlined text-sm">family_restroom</span>
+                    For Parents, Guardians &amp; Sponsors
+                  </div>
+<h3 class="text-headline-lg font-headline-lg text-on-surface mb-4">
+                    Dignified, Transparent School Payments Without Exploitative Middlemen
+                  </h3>
+<p class="text-body-lg font-body-lg text-on-surface-variant leading-relaxed mb-6">
+                    Parents can pay school fees via flexible micro-installments directly over USSD (*284#) or the lightweight mobile web app. Every transaction generates an instant digital SMS receipt with zero punitive convenience surcharges and 100% itemized fee clarity.
+                  </p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+<div class="flex items-start gap-3 p-3 rounded-lg border border-outline-variant/30 bg-surface-container-low">
+<span class="material-symbols-outlined text-secondary text-xl">sms</span>
+<div>
+<div class="text-body-sm font-semibold text-on-surface">Africa's Talking SMS Receipts</div>
+<div class="text-[12px] text-on-surface-variant">Instant proof of payment accepted at school gates without bank counter slips.</div>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 rounded-lg border border-outline-variant/30 bg-surface-container-low">
+<span class="material-symbols-outlined text-on-tertiary-container text-xl">calendar_month</span>
+<div>
+<div class="text-body-sm font-semibold text-on-surface">Predictable Term Schedules</div>
+<div class="text-[12px] text-on-surface-variant">Split fees across 3 gentle installments aligned with harvest and wage cycles.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-outline-variant/20 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-on-surface font-semibold">
+<span class="material-symbols-outlined text-on-tertiary-container text-base">check</span>
+                    Zero hidden convenience markups on Mobile Money
+                  </div>
+<a class="text-label-md font-label-md text-secondary font-semibold flex items-center gap-1 hover:underline" href="#portal">
+<span>Try Parent Fee Calculator</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Parent Photo Framing with image_126 -->
+<div class="lg:col-span-5 relative bg-surface-container-high min-h-[300px]">
+<img alt="Ugandan parents sitting at table reviewing transparent school fees on smartphone" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYoAfClPo3ThkTqPeblkWhsEKThEeX_BrUgjZvLhXHulxt0c-N1APm-xfIIHwNRM-PDmoc6jTrWy-InmzUNg_vrXTRPH5zQGvhQmPv4po2_7zJDGpayQDC9hYGNmXhiPMR4QTB-wUtyRrb6UO6qGCfxhT5ABQmyzpl1ZilbG3V8O2WWhthdSMJ3gozgEdlUxE-y3A_UlhdUPgDcasi-2UHdd4UHc0B_qTB5zG15ixVtrF1yPydrWyxyg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent lg:hidden"></div>
+<div class="absolute bottom-4 left-4 right-4 text-on-primary lg:hidden">
+<p class="text-body-sm font-semibold">Transparent School Fee Review on Mobile Phone</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Settlement Matrix & DEO Statutory Sync Deep Dive -->
+<section class="py-16 bg-surface-container-lowest border-y border-outline-variant/30" id="interactive-matrix">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center max-w-3xl mx-auto mb-12">
+<span class="px-2.5 py-1 rounded text-label-sm font-label-sm bg-surface-container text-secondary font-semibold uppercase tracking-wider">
+            Operational Comparison
+          </span>
+<h2 class="text-headline-lg md:text-display-sm font-headline-lg text-on-surface font-bold mt-3">
+            Manual Cashbooks vs. HarambeeOne Settlement
+          </h2>
+<p class="text-body-md md:text-body-lg font-body-md text-on-surface-variant mt-2">
+            See how replacing handwritten counterfoil receipts and disconnected spreadsheets transforms institutional velocity and audit hygiene.
+          </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+<!-- Column A: Traditional Manual Vouchers -->
+<div class="rounded-xl border border-error/30 bg-[#fef2f2]/30 p-6 md:p-8 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-error/20 mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error">cancel</span>
+<span class="text-headline-sm font-headline-sm text-error font-bold">Manual Paper &amp; Disconnected Spreadsheets</span>
+</div>
+<span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-error-container text-on-error-container">
+                  Legacy Risk
+                </span>
+</div>
+<ul class="space-y-4 text-body-md font-body-md text-on-surface">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-error text-base mt-0.5">close</span>
+<div>
+<span class="font-semibold text-on-surface">3-4 Weeks Latency:</span> Bursars spend weeks at the beginning of each term physically collecting bank deposit slips and manually keying amounts into Excel.
+                  </div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-error text-base mt-0.5">close</span>
+<div>
+<span class="font-semibold text-on-surface">14% Unallocated Cash Suspense:</span> Parents fail to write student admission numbers accurately on bank slips, leaving millions in unassigned floating limbo.
+                  </div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-error text-base mt-0.5">close</span>
+<div>
+<span class="font-semibold text-on-surface">Manual DEO Statutory Filing:</span> Preparing Form 8B schedules takes 40+ hours per month, frequently triggering municipal audit warnings.
+                  </div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-error text-base mt-0.5">close</span>
+<div>
+<span class="font-semibold text-on-surface">Vulnerable to Fake Slips:</span> Forged bank stamps and doctored SMS alerts cause revenue leakage up to 8% annually.
+                  </div>
+</li>
+</ul>
+</div>
+<div class="mt-8 pt-4 border-t border-error/20 flex items-center justify-between text-body-sm font-semibold text-error font-tabular-numeric">
+<span>Avg Reconciliation Delay: 21 Days</span>
+<span>Audit Discrepancy Risk: High</span>
+</div>
+</div>
+<!-- Column B: HarambeeOne Real-Time Ledger -->
+<div class="rounded-xl border border-secondary/30 bg-surface-container-low p-6 md:p-8 flex flex-col justify-between shadow-sm">
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-secondary/20 mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-headline-sm font-headline-sm text-secondary font-bold">HarambeeOne Autonomous Ledger</span>
+</div>
+<span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed">
+                  Institutional Standard
+                </span>
+</div>
+<ul class="space-y-4 text-body-md font-body-md text-on-surface">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-tertiary-container text-base mt-0.5">check</span>
+<div>
+<span class="font-semibold text-on-surface">Sub-Second Settlement:</span> Direct API integration with MTN Uganda, Airtel Money, Stanbic Bank, and Centenary settles incoming funds instantly.
+                  </div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-tertiary-container text-base mt-0.5">check</span>
+<div>
+<span class="font-semibold text-on-surface">Zero Suspense Accounts:</span> Algorithmic fuzzy-matching maps sibling student names, phone numbers, and LINs automatically.
+                  </div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-tertiary-container text-base mt-0.5">check</span>
+<div>
+<span class="font-semibold text-on-surface">1-Click MoES IFMS &amp; Form 8B Export:</span> Pre-formatted statutory compliance returns generated automatically according to Ugandan ministry standards.
+                  </div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-on-tertiary-container text-base mt-0.5">check</span>
+<div>
+<span class="font-semibold text-on-surface">Africa's Talking SMS Dispatch:</span> Verified, tamper-proof SMS receipts reach parent phones within 3 seconds of payment confirmation.
+                  </div>
+</li>
+</ul>
+</div>
+<div class="mt-8 pt-4 border-t border-secondary/20 flex items-center justify-between text-body-sm font-semibold text-secondary font-tabular-numeric">
+<span>Reconciliation Latency: 0.4 Seconds</span>
+<span>Audit Discrepancy Rate: 0.00%</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials from Ugandan Educators -->
+<section class="py-16 md:py-24 bg-surface">
+<div class="max-w-7xl mx-auto px-6">
+<div class="max-w-3xl mb-12">
+<span class="text-label-sm font-label-sm uppercase tracking-wider text-secondary font-bold">Institutional Validation</span>
+<h2 class="text-headline-lg md:text-display-sm font-headline-lg text-on-surface font-bold mt-2">
+            Trusted by Ugandan Principals &amp; Chief Bursars
+          </h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant mt-2">
+            Real feedback from educators operating in Kampala, Mukono, and Wakiso districts.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Testimonial 1: Mrs. Sarah Nakato -->
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-8 flex flex-col justify-between shadow-sm relative">
+<span class="material-symbols-outlined text-surface-container-highest text-5xl absolute top-6 right-6">format_quote</span>
+<div>
+<div class="flex items-center gap-1 text-on-tertiary-container mb-4">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm font-label-sm text-outline ml-2">Verified Institution</span>
+</div>
+<p class="text-body-lg font-body-lg text-on-surface italic leading-relaxed mb-6">
+                “HarambeeOne transformed our bursary office. Sibling fee splits used to take our bursars two full weeks each term; now it settles before tea break. Parents no longer stand in lines clutching faded bank receipts.”
+              </p>
+</div>
+<div class="flex items-center gap-4 pt-4 border-t border-outline-variant/20">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center font-bold text-secondary text-headline-sm">
+                SN
+              </div>
+<div>
+<div class="text-headline-sm font-headline-sm text-on-surface font-bold">Mrs. Sarah Nakato</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant">Headteacher, St. Augustine Royal Academy (Kampala)</div>
+<div class="text-[11px] text-outline">1,420 Enrolled Students • Secondary School</div>
+</div>
+</div>
+</div>
+<!-- Testimonial 2: CPA David Ssentamu -->
+<div class="bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-8 flex flex-col justify-between shadow-sm relative">
+<span class="material-symbols-outlined text-surface-container-highest text-5xl absolute top-6 right-6">format_quote</span>
+<div>
+<div class="flex items-center gap-1 text-on-tertiary-container mb-4">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm font-label-sm text-outline ml-2">Audit Certified</span>
+</div>
+<p class="text-body-lg font-body-lg text-on-surface italic leading-relaxed mb-6">
+                “The end-of-day statutory compliance export to the DEO alone saves us 40 hours of manual spreadsheet reconciliation every month. Our annual external audits now conclude in three business days without a single query.”
+              </p>
+</div>
+<div class="flex items-center gap-4 pt-4 border-t border-outline-variant/20">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center font-bold text-on-secondary-fixed text-headline-sm">
+                DS
+              </div>
+<div>
+<div class="text-headline-sm font-headline-sm text-on-surface font-bold">CPA David Ssentamu</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant">Senior Bursar &amp; Finance Director, Mukono District Schools</div>
+<div class="text-[11px] text-outline">4 Institution Cluster • 3,800 Learners</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Request Institutional Demo / Lead Capture Section -->
+<section class="py-16 md:py-20 bg-primary-container text-on-primary-container" id="demo-form">
+<div class="max-w-7xl mx-auto px-6">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+<div class="lg:col-span-7">
+<span class="px-2.5 py-1 rounded text-label-sm font-label-sm bg-surface-container-lowest/10 text-surface-bright font-semibold tracking-wider uppercase border border-surface-bright/20">
+              Rapid School Onboarding
+            </span>
+<h2 class="text-headline-lg md:text-display-sm font-headline-lg text-surface-bright font-bold mt-4 mb-4">
+              Ready to modernize your institution's school finances?
+            </h2>
+<p class="text-body-lg font-body-lg text-on-primary-container leading-relaxed mb-8">
+              Join over 450+ forward-thinking schools across Uganda. Deploy in under 48 hours with complete legacy data migration from Excel, Quickbooks, or paper ledgers, plus on-site training for your bursary staff.
+            </p>
+<div class="space-y-3">
+<div class="flex items-center gap-3 text-surface-bright text-body-sm font-medium">
+<span class="material-symbols-outlined text-secondary-fixed">check_circle</span>
+<span>Free on-site staff training across Kampala, Wakiso, Entebbe, and Jinja</span>
+</div>
+<div class="flex items-center gap-3 text-surface-bright text-body-sm font-medium">
+<span class="material-symbols-outlined text-secondary-fixed">check_circle</span>
+<span>Pre-configured integrations with Stanbic, Centenary, MTN &amp; Airtel Uganda</span>
+</div>
+<div class="flex items-center gap-3 text-surface-bright text-body-sm font-medium">
+<span class="material-symbols-outlined text-secondary-fixed">check_circle</span>
+<span>Certified MoES EMIS Form 8B automated compliance module</span>
+</div>
+</div>
+</div>
+<!-- Institutional Demo Booking Form -->
+<div class="lg:col-span-5 bg-surface-container-lowest text-on-surface rounded-xl p-6 md:p-8 shadow-xl border border-outline-variant/30">
+<h3 class="text-headline-md font-headline-md font-bold mb-1">Book an On-Site Bursary Audit</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-6">Our Kampala deployment engineers will contact you within 4 business hours.</p>
+<form class="space-y-4" onsubmit="event.preventDefault(); alert('Thank you. A HarambeeOne institutional specialist will reach out to your school bursary office.');">
+<div>
+<label class="block text-label-sm font-label-sm text-outline uppercase mb-1">School / Institution Name</label>
+<input class="w-full text-body-md font-body-md px-3.5 py-2.5 rounded border border-outline-variant/60 focus:border-secondary focus:ring-2 focus:ring-secondary/20 bg-surface-bright" placeholder="e.g. Kampala Parents High School" required="" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-label-sm font-label-sm text-outline uppercase mb-1">District / Town</label>
+<select class="w-full text-body-md font-body-md px-3 py-2.5 rounded border border-outline-variant/60 focus:border-secondary focus:ring-2 focus:ring-secondary/20 bg-surface-bright">
+<option>Kampala</option>
+<option>Wakiso</option>
+<option>Mukono</option>
+<option>Jinja</option>
+<option>Mbarara</option>
+<option>Gulu</option>
+<option>Other District</option>
+</select>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-outline uppercase mb-1">Learner Count</label>
+<select class="w-full text-body-md font-body-md px-3 py-2.5 rounded border border-outline-variant/60 focus:border-secondary focus:ring-2 focus:ring-secondary/20 bg-surface-bright">
+<option>Under 500</option>
+<option>500 – 1,500</option>
+<option>1,500 – 3,000</option>
+<option>3,000+</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-outline uppercase mb-1">Official Mobile / Telephone</label>
+<input class="w-full text-body-md font-body-md px-3.5 py-2.5 rounded border border-outline-variant/60 focus:border-secondary focus:ring-2 focus:ring-secondary/20 bg-surface-bright" placeholder="+256 700 000 000" required="" type="tel"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm text-outline uppercase mb-1">Your Role</label>
+<select class="w-full text-body-md font-body-md px-3 py-2.5 rounded border border-outline-variant/60 focus:border-secondary focus:ring-2 focus:ring-secondary/20 bg-surface-bright">
+<option>Headteacher / Principal</option>
+<option>School Bursar / Finance Officer</option>
+<option>Board Member / School Director</option>
+<option>Donor / Foundation Representative</option>
+</select>
+</div>
+<button class="w-full py-3 px-4 rounded bg-secondary hover:bg-secondary/90 text-on-secondary font-label-md text-body-md font-semibold transition-all duration-200 active:scale-95 shadow-md flex items-center justify-center gap-2 mt-2" type="submit">
+<span>Request Custom Deployment Plan</span>
+<span class="material-symbols-outlined text-base">send</span>
+</button>
+<p class="text-[11px] text-outline text-center mt-2">
+                Protected by Bank of Uganda sandbox participant protocols. Zero obligations.
+              </p>
+</form>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Component Anchor) -->
+<footer class="bg-primary-container dark:bg-surface-container-lowest text-on-primary-container dark:text-primary docked full-width bottom border-t border-outline-variant/20 dark:border-outline/30 flat no shadows">
+<div class="w-full px-6 py-12 md:py-16 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-12 border-b border-outline-variant/20">
+<div class="md:col-span-5">
+<div class="flex items-center gap-2.5 mb-4">
+<div class="w-8 h-8 rounded bg-secondary flex items-center justify-center text-on-secondary">
+<span class="material-symbols-outlined text-base">account_balance</span>
+</div>
+<span class="text-headline-md font-headline-md font-bold text-surface-bright dark:text-on-surface">
+              HarambeeOne
+            </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-primary-container/80 dark:text-on-surface-variant max-w-sm mb-4 leading-relaxed">
+            The institutional financial operating system engineered for schools, universities, and educational foundations across the Republic of Uganda.
+          </p>
+<div class="flex items-center gap-3 text-surface-bright/70 text-[12px]">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span>Plot 14, Clement Hill Road, Nakasero, Kampala, Uganda</span>
+</div>
+</div>
+<div class="md:col-span-7">
+<div class="text-headline-sm font-headline-sm text-surface-bright dark:text-on-surface font-semibold mb-4">
+            Institutional Regulatory Architecture
+          </div>
+<!-- Footer Links Array Executed Directly from JSON Anchor -->
+<div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-y-3 gap-x-6">
+<a class="text-on-primary-container/80 dark:text-on-surface-variant text-body-sm font-body-sm hover:text-surface-bright dark:hover:text-secondary transition-colors duration-150" href="#">
+              EMIS &amp; MoES Compliance
+            </a>
+<a class="text-on-primary-container/80 dark:text-on-surface-variant text-body-sm font-body-sm hover:text-surface-bright dark:hover:text-secondary transition-colors duration-150" href="#">
+              Audit Architecture
+            </a>
+<a class="text-on-primary-container/80 dark:text-on-surface-variant text-body-sm font-body-sm hover:text-surface-bright dark:hover:text-secondary transition-colors duration-150" href="#">
+              Bursar Ledger Guide
+            </a>
+<a class="text-on-primary-container/80 dark:text-on-surface-variant text-body-sm font-body-sm hover:text-surface-bright dark:hover:text-secondary transition-colors duration-150" href="#">
+              Donor Escrow Terms
+            </a>
+<a class="text-on-primary-container/80 dark:text-on-surface-variant text-body-sm font-body-sm hover:text-surface-bright dark:hover:text-secondary transition-colors duration-150" href="#">
+              BOU Regulatory Sandbox
+            </a>
+<a class="text-on-primary-container/80 dark:text-on-surface-variant text-body-sm font-body-sm hover:text-surface-bright dark:hover:text-secondary transition-colors duration-150" href="#">
+              Privacy Policy
+            </a>
+<a class="text-on-primary-container/80 dark:text-on-surface-variant text-body-sm font-body-sm hover:text-surface-bright dark:hover:text-secondary transition-colors duration-150" href="#">
+              Institutional SLA
+            </a>
+<a class="text-on-primary-container/80 dark:text-on-surface-variant text-body-sm font-body-sm hover:text-surface-bright dark:hover:text-secondary transition-colors duration-150" href="#">
+              Kampala Operations Desk
+            </a>
+</div>
+</div>
+</div>
+<!-- Copyright from Shared Components Anchor -->
+<div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+<p class="text-label-sm font-label-sm text-on-primary-container/80 dark:text-on-surface-variant text-center md:text-left">
+          © 2025 HarambeeOne Technologies Ltd. Registered &amp; regulated in the Republic of Uganda. MoES &amp; EMIS Framework Compliant. Bank of Uganda Sandbox Participant.
+        </p>
+<div class="flex items-center gap-4 text-surface-bright text-body-sm">
+<span class="inline-flex items-center gap-1.5 text-label-sm font-label-sm bg-surface-container-lowest/10 px-2.5 py-1 rounded border border-surface-bright/20">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span>
+            System Status: 99.98% Available
+          </span>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

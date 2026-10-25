@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Finances - HarambeeOne</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Source+Serif+4:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error-container": "#ffdad6",
+                        "on-error": "#ffffff",
+                        "deep-navy": "#002B5B",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "tertiary-container": "#3f261c",
+                        "tertiary-fixed": "#ffdbce",
+                        "background": "#faf9f7",
+                        "outline-variant": "#c4c6d0",
+                        "surface": "#faf9f7",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2f3130",
+                        "warning-ochre": "#B38B3F",
+                        "outline": "#747780",
+                        "secondary-fixed": "#d3e8d5",
+                        "on-surface-variant": "#43474f",
+                        "surface-container-lowest": "#ffffff",
+                        "clay-terracotta": "#8C6A5D",
+                        "secondary-container": "#d0e5d2",
+                        "tertiary-fixed-dim": "#e7beae",
+                        "surface-container-high": "#e9e8e6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#001b3d",
+                        "primary": "#001736",
+                        "ink-black": "#1A1C1E",
+                        "inverse-on-surface": "#f1f1ef",
+                        "surface-tint": "#405f91",
+                        "surface-bright": "#faf9f7",
+                        "on-tertiary-fixed": "#2c160c",
+                        "secondary": "#506354",
+                        "secondary-fixed-dim": "#b7ccb9",
+                        "on-background": "#1a1c1b",
+                        "primary-fixed": "#d6e3ff",
+                        "on-primary-container": "#7594ca",
+                        "on-primary-fixed-variant": "#264778",
+                        "on-secondary-fixed-variant": "#394b3d",
+                        "surface-container-low": "#f4f3f1",
+                        "surface-dim": "#dadad8",
+                        "primary-container": "#002b5b",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#e3e2e0",
+                        "inverse-primary": "#a9c7ff",
+                        "paper-white": "#F9F8F6",
+                        "on-secondary-container": "#546758",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#b08b7d",
+                        "on-tertiary-fixed-variant": "#5d4034",
+                        "success-jewel": "#2D5A43",
+                        "surface-container": "#efeeec",
+                        "surface-container-highest": "#e3e2e0",
+                        "sage-earth": "#4A5D4E",
+                        "on-surface": "#1a1c1b",
+                        "tertiary": "#271209",
+                        "on-secondary-fixed": "#0e1f13"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "gutter": "24px",
+                        "section-gap": "80px",
+                        "margin-mobile": "24px",
+                        "margin-desktop": "64px",
+                        "unit": "8px",
+                        "element-gap": "16px"
+                    },
+                    fontFamily: {
+                        "label-sm": ["Plus Jakarta Sans"],
+                        "headline-md": ["\"Source Serif 4\""],
+                        "body-sm": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["\"Source Serif 4\""],
+                        "headline-sm": ["\"Source Serif 4\""],
+                        "headline-lg": ["\"Source Serif 4\""],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"]
+                    },
+                    fontSize: {
+                        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700" }],
+                        "headline-md": ["28px", { lineHeight: "34px", fontWeight: "600" }],
+                        "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" }],
+                        "headline-lg-mobile": ["30px", { lineHeight: "36px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "headline-sm": ["22px", { lineHeight: "28px", fontWeight: "600" }],
+                        "headline-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "600" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #faf9f7;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 50;
+        }
+        .ambient-shadow {
+            box-shadow: 0 10px 40px -10px rgba(0, 43, 91, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface bg-background min-h-screen flex flex-col md:flex-row pb-24 md:pb-0">
+<!-- Desktop Navigation Drawer (Hidden on Mobile) -->
+<nav class="hidden md:flex h-screen w-80 max-w-[80vw] bg-paper-white dark:bg-ink-black border-r border-surface-variant/20 shadow-2xl shadow-deep-navy/5 flex-col gap-element-gap p-margin-desktop sticky top-0">
+<div class="mb-12">
+<h1 class="font-headline-sm text-headline-sm text-deep-navy font-bold tracking-tight">HarambeeOne</h1>
+</div>
+<div class="flex items-center gap-4 mb-8">
+<div class="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-surface-variant/30">
+<img alt="Parent Profile" class="w-full h-full object-cover" data-alt="A dignified profile portrait of a professional parent, Marcus Evans, in soft, natural studio lighting. The aesthetic is clean, modern, and aligned with a premium educational institution. Warm tones, shallow depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBInKqckZ8koCIfxSM5omZbuMcjMsc1lPYKmj51kj9Y3P2uRFPetURjVm692JSqZ3tliMBgDf1FEuODngJrBnpLl9YYfp0Dn-rHYOqD8puDbmicxh6JhDoi2Cu49Twy7EVV5j6R2cNXwiV9eZBsKNa4tckDIahE6kHhasiqdQEkbmAriEIpZiC4Yf7jbXMW0FApk2cMtKMPcf7At_8CNz6TUNfKy2ujldNyyiz-zBqhE7-2ttq2yIGhAw"/>
+</div>
+<div>
+<p class="font-label-md text-label-md text-deep-navy">Marcus Evans</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Primary Guardian</p>
+</div>
+</div>
+<div class="flex flex-col gap-2 flex-grow">
+<a class="flex items-center gap-4 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-body-md text-body-md">Overview</span>
+</a>
+<a class="flex items-center gap-4 p-3 rounded-lg text-deep-navy font-bold bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-body-md text-body-md">Finances</span>
+</a>
+<a class="flex items-center gap-4 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">school</span>
+<span class="font-body-md text-body-md">Academics</span>
+</a>
+<a class="flex items-center gap-4 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">contact_support</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+</div>
+<div class="mt-auto">
+<a class="flex items-center gap-4 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</div>
+</nav>
+<!-- Mobile Top App Bar -->
+<header class="md:hidden w-full top-0 sticky bg-background border-b border-surface-variant/30 flex justify-between items-center px-margin-mobile py-4 z-40">
+<button class="text-on-surface-variant hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold tracking-tight text-deep-navy">HarambeeOne</h1>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-surface-variant/30">
+<img alt="Parent Profile Avatar" class="w-full h-full object-cover" data-alt="A dignified profile portrait of a professional parent in soft, natural studio lighting. Clean, modern aesthetic. Warm tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg37Y1k39HE19tpXu7_ZFcExbg3XlhLabM_iLU2mPm9Dgz1b7JXcsFmdGoximPaBmUbbYY33mdpX87o46PTkGjw3sXZpjhPoZr6228i8rqU1ZNqG0l-PQHRoTOOOCBzHPGwyPbckUmAGXNRHOnx3fSJU5lOXTgEzvjbuk5Y0djiXmbBDypJNyTb3S6TX2BqBeAgbuWLMgxuufQELUmu9GXjFDz8UWAFBMbukLl3S3ZRp94Y9IK_q73gw"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow p-margin-mobile md:p-margin-desktop max-w-[1140px] mx-auto w-full">
+<!-- Header Section -->
+<section class="mb-section-gap">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-deep-navy mb-2">Finances</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Manage tuition, fees, and payment history for your family.</p>
+</section>
+<!-- Bento Grid Layout for Finances -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Balance Card (Spans 8 cols on desktop) -->
+<div class="md:col-span-8 bg-paper-white rounded-xl ambient-shadow border border-surface-variant/50 p-8 flex flex-col justify-between">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-2">Current Balance</p>
+<div class="flex items-baseline gap-2">
+<h3 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-deep-navy">$4,250.00</h3>
+<span class="font-body-md text-body-md text-on-surface-variant">due Oct 15</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-surface-variant/30 flex flex-col sm:flex-row gap-4 items-center justify-between">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-paper-white bg-secondary-container flex items-center justify-center text-on-secondary-container font-label-md text-label-md">
+                            KE
+                         </div>
+<div class="w-10 h-10 rounded-full border-2 border-paper-white bg-tertiary-container flex items-center justify-center text-on-tertiary font-label-md text-label-md">
+                            ZE
+                         </div>
+</div>
+<button class="w-full sm:w-auto bg-deep-navy text-on-primary font-body-md font-bold py-4 px-8 rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+<span>Make a Payment</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Auto-Pay Status (Spans 4 cols on desktop) -->
+<div class="md:col-span-4 bg-surface-container-low rounded-xl ambient-shadow border border-surface-variant/50 p-8 flex flex-col items-start">
+<div class="w-12 h-12 rounded-full bg-success-jewel/10 flex items-center justify-center mb-6 text-success-jewel">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">autorenew</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-deep-navy mb-2">Auto-Pay Active</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 flex-grow">Your connected Chase account (...4492) will be charged automatically on the 15th of each month.</p>
+<button class="text-deep-navy font-label-md text-label-md underline hover:text-primary-fixed-variant transition-colors">
+                    Manage Settings
+                </button>
+</div>
+<!-- Recent Invoices List (Spans full width) -->
+<div class="md:col-span-12 mt-8">
+<h3 class="font-headline-sm text-headline-sm text-deep-navy mb-6">Recent Activity</h3>
+<div class="bg-paper-white rounded-xl ambient-shadow border border-surface-variant/50 overflow-hidden">
+<!-- Row 1 -->
+<div class="px-6 py-6 border-b border-surface-variant/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-surface-container-lowest transition-colors">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center text-on-surface-variant shrink-0 mt-1">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-deep-navy text-base">Fall Term Tuition - Kwame</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Inv #88291-A • Sep 1, 2023</p>
+</div>
+</div>
+<div class="flex items-center justify-between sm:justify-end gap-6 sm:w-1/3">
+<span class="font-body-md text-body-md text-deep-navy font-bold">$2,125.00</span>
+<span class="bg-success-jewel/10 text-success-jewel font-label-sm text-label-sm px-3 py-1 rounded-full">Paid</span>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="px-6 py-6 border-b border-surface-variant/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-surface-container-lowest transition-colors">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center text-on-surface-variant shrink-0 mt-1">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-deep-navy text-base">Fall Term Tuition - Zara</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Inv #88291-B • Sep 1, 2023</p>
+</div>
+</div>
+<div class="flex items-center justify-between sm:justify-end gap-6 sm:w-1/3">
+<span class="font-body-md text-body-md text-deep-navy font-bold">$2,125.00</span>
+<span class="bg-success-jewel/10 text-success-jewel font-label-sm text-label-sm px-3 py-1 rounded-full">Paid</span>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="px-6 py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-surface-container-lowest transition-colors">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-variant/50 flex items-center justify-center text-on-surface-variant shrink-0 mt-1">
+<span class="material-symbols-outlined text-[20px]">science</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-deep-navy text-base">Lab Materials Fee - Kwame</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Inv #88292 • Aug 15, 2023</p>
+</div>
+</div>
+<div class="flex items-center justify-between sm:justify-end gap-6 sm:w-1/3">
+<span class="font-body-md text-body-md text-deep-navy font-bold">$150.00</span>
+<span class="bg-success-jewel/10 text-success-jewel font-label-sm text-label-sm px-3 py-1 rounded-full">Paid</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Mobile Bottom Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-paper-white shadow-[0_-4px_20px_rgba(0,43,91,0.05)] border-t-0">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-deep-navy transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-label-sm text-label-sm">Overview</span>
+</a>
+<a class="flex flex-col items-center justify-center text-deep-navy bg-secondary-fixed/50 rounded-xl px-4 py-1.5 transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm">Finances</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-deep-navy transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">school</span>
+<span class="font-label-sm text-label-sm">Academics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-deep-navy transition-transform duration-200 active:scale-90" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">contact_support</span>
+<span class="font-label-sm text-label-sm">Support</span>
+</a>
+</nav>
+</body></html>

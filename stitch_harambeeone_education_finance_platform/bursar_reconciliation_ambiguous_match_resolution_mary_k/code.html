@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HarambeeOne - Payment Reconciliation</title>
+<!-- Google Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected by Design System -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#dce9ff",
+                        "on-secondary-fixed": "#002111",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#264778",
+                        "outline-variant": "#c4c6d0",
+                        "on-tertiary-fixed-variant": "#713619",
+                        "secondary-fixed": "#78fbb6",
+                        "tertiary-fixed": "#ffdbcd",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#002b5b",
+                        "background": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "surface-dim": "#cbdbf5",
+                        "on-error": "#ffffff",
+                        "on-surface": "#0b1c30",
+                        "tertiary-container": "#4f1c02",
+                        "surface": "#f8f9ff",
+                        "on-surface-variant": "#43474f",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary-container": "#007147",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-variant": "#d3e4fe",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "tertiary": "#2f0c00",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#405f91",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "inverse-primary": "#a9c7ff",
+                        "secondary-fixed-dim": "#59de9b",
+                        "surface-bright": "#f8f9ff",
+                        "on-secondary-fixed-variant": "#005232",
+                        "inverse-surface": "#213145",
+                        "error": "#ba1a1a",
+                        "secondary": "#006d43",
+                        "on-tertiary-container": "#cd805d",
+                        "primary": "#001736",
+                        "on-primary-container": "#7594ca",
+                        "secondary-container": "#75f8b3",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#0b1c30",
+                        "outline": "#747780",
+                        "primary-fixed": "#d6e3ff",
+                        "on-primary-fixed": "#001b3d",
+                        "primary-fixed-dim": "#a9c7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "section-gap": "32px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "headline-md": ["Public Sans"],
+                        "display-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased flex">
+<!-- SideNavBar Component (Docked Left) -->
+<nav class="hidden md:flex bg-surface-container-low dark:bg-surface-dim font-label-sm text-label-sm docked full-height left-0 w-64 border-r border-outline-variant dark:border-outline flat no shadows flex-col h-screen sticky left-0 top-0 py-gutter shrink-0">
+<!-- Header -->
+<div class="px-gutter mb-section-gap flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden shrink-0">
+<img alt="School Logo" class="w-full h-full object-cover" data-alt="A clean, modern geometric logo for a fictional primary school, featuring abstract interlocking shapes in deep navy blue and emerald green on a solid white background. The style is flat, corporate, and trustworthy, suitable for an educational institution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_uCLJ3X0UD-2stQXBWwNLN1uQPBZefQLjUzGUYKhr9bLRC7z-O9EfOCp3DxayBLOgAH3V3nNUsphCrPlqA3BxP8zgjDSIl7jAA7tZUimjOB5jpc6tNC06ukrBI3XG9W_hojGnW6o42Ty26iKj-M7CJrIRGFAAfIQqJ6_N7WMRiyaYo7cRYXUlM_IyYjPsFOffKDul2U_Q_2XZPDie2Q9wnHKXf7kHS-JOG1niMfYXUfnS8am6wOhnJA"/>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-primary truncate" title="St. Mary's Primary">St. Mary's Primary</h1>
+<p class="text-on-surface-variant text-label-sm truncate" title="Institutional Portal">Institutional Portal</p>
+</div>
+</div>
+<!-- Main Tabs -->
+<div class="flex-1 overflow-y-auto px-unit space-y-unit">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px]">school</span>
+<span>Students</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span>Finance</span>
+</a>
+<!-- ACTIVE TAB -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-secondary-container text-on-secondary-container font-semibold active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span>Reconciliation</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px]">volunteer_activism</span>
+<span>Sponsorship</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px]">assessment</span>
+<span>Reports</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all active:scale-95 duration-150 group" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<!-- Footer Tabs -->
+<div class="mt-auto pt-gutter px-unit border-t border-outline-variant/30 space-y-unit">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span>Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all active:scale-95 duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-h-screen min-w-0">
+<!-- TopNavBar (Docked Top - visible mainly on mobile or as supplementary on desktop if needed, adapting JSON) -->
+<header class="md:hidden bg-surface-container-lowest dark:bg-surface font-body-md text-body-md docked full-width top-0 border-b border-outline-variant dark:border-outline flat no shadows flex justify-between items-center w-full px-container-padding h-16 sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer">menu</span>
+<span class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed truncate">HarambeeOne</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container-low transition-colors active:opacity-80 p-2 rounded-full">search</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden cursor-pointer">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A professional headshot of a school administrator in a bright, modern office setting. The lighting is soft and natural, conveying approachability and competence. Neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSKCRwromFAqohZ4L_PHcmpzGQIYhoOBECDiCzuXxswv3Ump-jbsiN1ek-7xen9sSfYroRzDgAsDu6Tgu5sgc0bW28jv7kpmcZ9e4VRRI-Bp_YYen7-g1xFX0V4bZAiHCpgPofuV46iB1lznuavCtj-jReUOWeaSGw6ct8BuWQvyNg5CjVWXKTasoXNdSUXHPAahdYu_DnOkw6HKunrrMW_b7Kyg9BsO9y9AV7N8CyNyUur6Tm-iUbvA"/>
+</div>
+</div>
+</header>
+<!-- Desktop Top App Bar (Supplementary Actions based on JSON TopNav properties) -->
+<div class="hidden md:flex bg-surface-container-lowest font-body-md text-body-md border-b border-outline-variant/50 flat no shadows justify-between items-center w-full px-container-padding h-16 sticky top-0 z-40">
+<div class="flex items-center gap-4 w-1/3">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50" placeholder="Search transactions..." type="text"/>
+</div>
+</div>
+<div class="flex items-center justify-end gap-2 w-2/3">
+<button class="text-primary hover:bg-surface-container-low transition-colors cursor-pointer active:opacity-80 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-primary hover:bg-surface-container-low transition-colors cursor-pointer active:opacity-80 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">apps</span>
+</button>
+<div class="h-6 w-px bg-outline-variant/50 mx-2"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden lg:block">
+<div class="font-data-mono text-data-mono text-on-surface">J. Doe</div>
+<div class="font-label-sm text-label-sm text-primary">Bursar</div>
+</div>
+<div class="w-9 h-9 rounded-full bg-surface-container-high overflow-hidden cursor-pointer border border-outline-variant/30">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A professional headshot of a school bursar looking directly at the camera with a friendly, confident expression. Bright lighting, modern corporate office background, shallow depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIFAHxvAml1mK2JMNfASnw82LxogFC92FBQlFdGJnBTRY5mo5Tz5ODow9cH7efZtPwCsYH1h5X2Z_G6MyGXZYYTab0kxGQECHY4S9aT3VkqKSgH_NVWGrOzNOLwGBBhxKXxaGWSA4cmD6ZaBYRHv5qLn_8hTCMMxk0DDp3mc4rHl8DiF-CYo3_zULQPZ_UoGiQlIGJ0IdspenOCOuO0FEnGRndobZqDb0kipA_llvdXMhXur_-bIPgsQ"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Page Canvas -->
+<div class="flex-1 p-container-padding lg:px-8 max-w-[1600px] mx-auto w-full flex flex-col gap-section-gap overflow-hidden">
+<!-- Page Header & Filters -->
+<div class="flex items-center justify-between px-4 py-3 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-lg border border-tertiary-fixed-dim shadow-sm shrink-0"><div class="flex items-center gap-2 font-body-md text-sm font-semibold"><span class="material-symbols-outlined text-tertiary-container text-[20px]">warning</span><span>3 Unmatched Exceptions Require Manual Bursar Review &amp; Allocation. Action needed to clear pending batch settlements.</span></div><div class="flex items-center gap-3"><span class="font-label-sm text-xs opacity-90 font-medium">Action Required</span><button class="material-symbols-outlined text-[18px] hover:opacity-75 transition-opacity">close</button></div></div><div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
+<div>
+<h2 class="font-display-lg text-display-lg text-primary">Reconciliation</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Match incoming payments to learner accounts.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant rounded-lg p-1"><button class="px-3 py-1.5 rounded text-on-surface-variant hover:bg-surface-container-low font-label-sm text-label-sm transition-colors">Reconciled Today (UGX 700k)</button><button class="px-3 py-1.5 rounded text-on-surface hover:bg-surface-container-low font-label-sm text-label-sm font-semibold">Pending (11)</button><button class="px-3 py-1.5 rounded bg-tertiary-container text-tertiary-fixed font-label-sm text-label-sm font-semibold flex items-center gap-1.5 shadow-sm"><span class="material-symbols-outlined text-[16px]">error</span> Exceptions (3)</button></div>
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg text-on-surface hover:bg-surface-container-low transition-colors font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+                        Filter
+                    </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg hover:bg-primary/90 transition-colors font-label-sm text-label-sm font-semibold shadow-sm">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+                        Auto-Reconcile
+                    </button>
+</div>
+</div>
+<!-- Quick Filters Row -->
+<div class="flex flex-wrap gap-2 shrink-0">
+<span class="px-3 py-1 rounded-full border border-outline-variant/50 bg-surface-container-lowest font-label-sm text-label-sm text-on-surface-variant cursor-pointer hover:bg-surface-container-low transition-colors flex items-center gap-1">
+                    Date: Last 7 Days <span class="material-symbols-outlined text-[14px]">arrow_drop_down</span>
+</span>
+<span class="px-3 py-1 rounded-full border border-outline-variant/50 bg-surface-container-lowest font-label-sm text-label-sm text-on-surface-variant cursor-pointer hover:bg-surface-container-low transition-colors flex items-center gap-1">
+                    Channel: All <span class="material-symbols-outlined text-[14px]">arrow_drop_down</span>
+</span>
+<span class="px-3 py-1 rounded-full border border-outline-variant/50 bg-surface-container-lowest font-label-sm text-label-sm text-on-surface-variant cursor-pointer hover:bg-surface-container-low transition-colors flex items-center gap-1">Status: Unmatched Exceptions <span class="material-symbols-outlined text-[14px]">close</span></span>
+</div>
+<!-- Dual Pane Split View -->
+<div class="flex-1 flex flex-col lg:flex-row gap-gutter min-h-0">
+<!-- Left Pane: Incoming Transactions -->
+<div class="w-full lg:w-5/12 xl:w-1/2 flex flex-col bg-surface-container-lowest border border-outline-variant/50 rounded-xl overflow-hidden shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
+<div class="p-4 border-b border-outline-variant/30 bg-surface-container-low/50 flex justify-between items-center shrink-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-outline">receipt_long</span>
+                            Incoming (Bank/MoMo)
+                        </h3>
+<span class="font-data-mono text-data-mono text-on-surface-variant bg-surface-container px-2 py-0.5 rounded text-xs">3 Exceptions • Needs Allocation</span>
+</div>
+<div class="flex-1 overflow-y-auto p-2 space-y-2"><div class="p-4 rounded-lg border border-outline-variant/30 bg-surface-container-lowest hover:bg-surface-container-low transition-colors cursor-pointer relative"><div class="absolute right-4 top-4"><span class="px-2 py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-[10px] tracking-wider uppercase font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">warning</span> EXCEPTION - NO NARRATION</span></div><div class="flex items-start justify-between mb-2"><div><div class="font-data-mono text-data-mono text-on-surface text-lg font-bold">UGX 1,200,000</div><div class="font-body-md text-body-md text-on-surface-variant text-xs mt-0.5">Ref: STAN-992831 • Stanbic Bank EFT</div></div></div><div class="bg-surface-container-low rounded p-2.5 border border-outline-variant/30 mb-2"><div class="font-body-md text-body-md text-on-surface-variant italic text-sm">"No narration provided"</div><div class="text-xs text-on-surface font-semibold mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-outline">domain</span> Payer: Acme Traders Ltd / Unknown Payer</div></div><div class="flex justify-between items-center font-label-sm text-label-sm text-on-surface-variant"><span class="text-xs text-on-surface-variant">Yesterday, 14:15 PM</span><span class="flex items-center gap-1 text-outline"><span class="material-symbols-outlined text-[14px]">account_balance</span> Bank Transfer</span></div></div><div class="p-4 rounded-lg border-2 border-primary bg-surface-container-lowest shadow-sm cursor-pointer relative"><div class="absolute right-4 top-4 flex items-center gap-1.5"><span class="px-2 py-0.5 rounded-full bg-primary text-on-primary font-label-sm text-[10px] font-bold tracking-wide uppercase">Active Review</span><span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-[10px] tracking-wider uppercase font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">help</span> AMBIGUOUS (3 MARYS)</span></div><div class="flex items-start justify-between mb-2"><div><div class="font-data-mono text-data-mono text-primary text-lg font-bold">UGX 250,000</div><div class="font-body-md text-body-md text-on-surface-variant text-xs mt-0.5">Ref: AIR-552190 • Payer: +256 701 443 119</div></div></div><div class="bg-surface-container-low rounded p-2.5 border border-outline-variant/30 mb-2"><div class="font-body-md text-body-md text-on-surface text-sm font-semibold">"Balance Mary K"</div><div class="text-xs text-tertiary-container font-medium mt-1 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">group</span> Conflicting candidates in P2, P5, and P7</div></div><div class="flex justify-between items-center font-label-sm text-label-sm text-on-surface-variant"><span class="text-xs text-on-surface-variant">Oct 24, 08:10 AM</span><span class="flex items-center gap-1 text-outline"><span class="material-symbols-outlined text-[14px]">smartphone</span> Airtel Money</span></div></div><div class="p-4 rounded-lg border border-outline-variant/30 bg-surface-container-lowest hover:bg-surface-container-low transition-colors cursor-pointer relative"><div class="absolute right-4 top-4"><span class="px-2 py-1 rounded-full bg-surface-variant text-on-surface-variant font-label-sm text-[10px] tracking-wider uppercase font-bold flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">sync_problem</span> FEE CODE MISMATCH</span></div><div class="flex items-start justify-between mb-2"><div><div class="font-data-mono text-data-mono text-on-surface text-lg font-bold">UGX 450,000</div><div class="font-body-md text-body-md text-on-surface-variant text-xs mt-0.5">Ref: MTN-89472301 • Payer: +256 788 123 456</div></div></div><div class="bg-surface rounded p-2 border border-outline-variant/20 mb-2"><div class="font-body-md text-body-md text-on-surface text-sm">"School fees for John Katende P4"</div><div class="text-xs text-on-surface-variant mt-1">Student exists; invalid fee category specified in payload</div></div><div class="flex justify-between items-center font-label-sm text-label-sm text-outline"><span>Today, 09:42 AM</span><span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">smartphone</span> MTN MoMo</span></div></div></div>
+</div>
+<!-- Right Pane: AI Suggestions & Match Action -->
+<div class="w-full lg:w-7/12 xl:w-1/2 flex flex-col bg-surface-container-lowest border border-outline-variant/50 rounded-xl overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.04)] relative"><div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-tertiary-fixed/30 to-transparent rounded-bl-full pointer-events-none -z-10"></div><div class="p-6 border-b border-outline-variant/30 shrink-0"><div class="flex items-center justify-between mb-2"><h3 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2"><span class="material-symbols-outlined text-tertiary-container">manage_search</span>Manual Exception Resolution • Ambiguous Student Match</h3><span class="px-3 py-1 rounded-full bg-tertiary-container text-tertiary-fixed font-label-sm text-xs font-bold tracking-wide uppercase flex items-center gap-1 shadow-sm"><span class="material-symbols-outlined text-[14px]">group</span>3 CANDIDATES DETECTED</span></div><p class="font-body-md text-body-md text-on-surface-variant">Review ambiguous transaction <span class="font-data-mono text-on-surface font-semibold">AIR-552190</span> and verify student candidate match before ledger posting.</p></div><div class="flex-1 overflow-y-auto p-6 space-y-6"><div class="bg-surface-container-low rounded-xl border border-outline-variant/40 p-4"><div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-outline-variant/30"><div><div class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Deposit Amount</div><div class="font-data-mono text-display-lg text-primary font-bold">UGX 250,000</div></div><div class="sm:text-right"><span class="inline-flex items-center gap-1 px-2.5 py-1 bg-surface-container-highest rounded text-xs font-data-mono font-semibold text-on-surface"><span class="material-symbols-outlined text-[14px]">smartphone</span> Airtel Money</span><div class="font-data-mono text-xs text-on-surface-variant mt-1">Ref: AIR-552190 • MoMo Gateway</div></div></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 text-xs font-body-md"><div><span class="text-outline">Deposited Payer:</span> <span class="font-semibold text-on-surface">+256 701 443 119 (Grace K. Namutebi)</span></div><div><span class="text-outline">Value Date:</span> <span class="font-semibold text-on-surface">Today, 08:10 AM</span></div><div><span class="text-outline">Narration / Memo:</span> <span class="font-semibold text-primary">"Balance Mary K"</span></div><div><span class="text-outline">Settlement Status:</span> <span class="text-tertiary-container font-semibold">Held in General Suspense</span></div></div></div><div><div class="flex items-center justify-between mb-2"><h4 class="font-headline-sm text-base font-semibold text-on-surface flex items-center gap-2"><span class="material-symbols-outlined text-[18px] text-primary">psychology</span> Disambiguation Candidates (3 Found)</h4><span class="text-xs text-on-surface-variant">Ranked by phone, balance &amp; initial match</span></div><div class="relative mb-3"><span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span><input class="w-full pl-9 pr-4 py-2 bg-surface-container-lowest rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors font-body-md text-sm text-on-surface placeholder:text-on-surface-variant/50" placeholder="Search student name, student ID, guardian name, or phone number to match..." type="text" value="Mary K"/></div><div class="space-y-3"><div class="bg-surface-container-lowest rounded-xl border-2 border-secondary bg-surface-container-low/20 p-4 relative shadow-sm"><div class="flex flex-col sm:flex-row justify-between items-start gap-3"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-secondary text-on-secondary flex items-center justify-center font-bold text-sm shrink-0">MK</div><div><div class="flex items-center gap-2 flex-wrap"><span class="font-headline-sm text-sm font-bold text-on-surface">Mary Kemigisha</span><span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[10px] font-semibold">Primary 5</span><span class="px-2 py-0.5 rounded bg-secondary-container text-on-secondary-container font-label-sm text-[10px] font-bold">Best Match</span><span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-label-sm text-[10px] font-semibold">Selected</span></div><div class="font-label-sm text-xs text-on-surface-variant mt-0.5">ID: STU-2023-044 • Guardian: Grace K. Namutebi (+256 701 443 119)</div><div class="mt-2 space-y-1"><div class="text-xs text-secondary flex items-center gap-1 font-medium"><span class="material-symbols-outlined text-[14px]">verified</span> Exact phone match: +256 701 443 119 (Grace K. Namutebi)</div><div class="text-xs text-secondary flex items-center gap-1 font-medium"><span class="material-symbols-outlined text-[14px]">check_circle</span> Outstanding Term 3 balance is exactly UGX 250,000</div><div class="text-xs text-secondary flex items-center gap-1 font-medium"><span class="material-symbols-outlined text-[14px]">match_case</span> Narration 'Mary K' matches initials &amp; first name</div></div></div></div><div class="flex sm:flex-col items-end justify-between w-full sm:w-auto shrink-0"><div class="text-right"><span class="font-label-sm text-[10px] uppercase tracking-wider text-outline block">Confidence</span><span class="font-data-mono text-headline-sm font-bold text-secondary">92%</span></div><span class="text-[10px] text-secondary font-bold">High Probability</span></div></div></div><div class="bg-surface-container-lowest rounded-xl border border-outline-variant/40 hover:border-outline-variant p-4 transition-colors relative"><div class="flex flex-col sm:flex-row justify-between items-start gap-3"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-surface-container-high text-on-surface flex items-center justify-center font-bold text-sm shrink-0">MK</div><div><div class="flex items-center gap-2"><span class="font-headline-sm text-sm font-bold text-on-surface">Mary Kyomugisha</span><span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[10px] font-semibold">Primary 2</span></div><div class="font-label-sm text-xs text-on-surface-variant mt-0.5">ID: STU-2024-118 • Guardian: Joseph Kyomugisha (+256 772 334 112)</div><div class="mt-2 text-xs text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-outline">info</span> Outstanding balance UGX 480,000 (Partial payment possible; phone mismatch)</div></div></div><div class="flex sm:flex-col items-end justify-between w-full sm:w-auto shrink-0"><div class="text-right"><span class="font-label-sm text-[10px] uppercase tracking-wider text-outline block">Confidence</span><span class="font-data-mono text-headline-sm font-bold text-on-surface">42%</span></div><span class="text-[10px] text-on-surface-variant font-medium">Partial Fit</span></div></div></div><div class="bg-surface-container-lowest rounded-xl border border-outline-variant/40 hover:border-outline-variant p-4 transition-colors relative"><div class="flex flex-col sm:flex-row justify-between items-start gap-3"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-lg bg-surface-container-high text-on-surface flex items-center justify-center font-bold text-sm shrink-0">MK</div><div><div class="flex items-center gap-2"><span class="font-headline-sm text-sm font-bold text-on-surface">Mary Kiconco</span><span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-[10px] font-semibold">Primary 7</span></div><div class="font-label-sm text-xs text-on-surface-variant mt-0.5">ID: STU-2021-019 • Guardian: Agnes Kiconco (+256 788 554 901)</div><div class="mt-2 text-xs text-on-surface-variant flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-outline">info</span> Outstanding balance UGX 150,000 (Would create UGX 100,000 unallocated credit)</div></div></div><div class="flex sm:flex-col items-end justify-between w-full sm:w-auto shrink-0"><div class="text-right"><span class="font-label-sm text-[10px] uppercase tracking-wider text-outline block">Confidence</span><span class="font-data-mono text-headline-sm font-bold text-on-surface">28%</span></div><span class="text-[10px] text-on-surface-variant font-medium">Low Match</span></div></div></div></div></div><div class="bg-surface-container-lowest rounded-xl border border-outline-variant/30 p-4"><div class="mb-3"><label class="block font-label-sm text-xs font-semibold text-on-surface mb-1">Audit &amp; Resolution Note</label><input class="w-full px-3 py-2 bg-surface rounded-lg border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors font-body-md text-xs text-on-surface placeholder:text-on-surface-variant/50" placeholder="Enter audit notes..." type="text" value="Confirmed matching phone +256 701 443 119 registered to guardian Grace K. Namutebi. Matches exact outstanding Term 3 tuition balance of UGX 250,000 for Mary Kemigisha (P5)."/></div><div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-1"><button class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-secondary text-on-secondary rounded-lg font-label-sm text-sm font-semibold hover:bg-secondary/90 transition-colors shadow-sm"><span class="material-symbols-outlined text-[18px]">check_circle</span>Allocate &amp; Match to Mary Kemigisha (P5)</button><button class="flex items-center justify-center gap-1.5 px-3 py-2.5 bg-surface-container-low hover:bg-surface-container-high border border-outline-variant/50 text-on-surface rounded-lg font-label-sm text-xs font-semibold transition-colors"><span class="material-symbols-outlined text-[16px]">call</span> Call Payer (+256 701 443 119)</button><button class="flex items-center justify-center gap-1.5 px-3 py-2.5 bg-surface-container-low hover:bg-surface-container-high border border-outline-variant/50 text-on-surface rounded-lg font-label-sm text-xs font-semibold transition-colors"><span class="material-symbols-outlined text-[16px]">sms</span> Send SMS Prompt for ID</button><button class="flex items-center justify-center gap-1.5 px-3 py-2.5 bg-surface-container-low hover:bg-surface-container-high border border-outline-variant/50 text-error rounded-lg font-label-sm text-xs font-semibold transition-colors"><span class="material-symbols-outlined text-[16px]">pause_circle</span> Hold Suspense</button></div></div></div></div>
+</div>
+</div>
+</main>
+</body></html>

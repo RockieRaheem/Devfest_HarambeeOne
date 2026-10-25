@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notices &amp; Alerts</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Source+Serif+4:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error-container": "#ffdad6",
+                      "on-error": "#ffffff",
+                      "deep-navy": "#002B5B",
+                      "error": "#ba1a1a",
+                      "primary-fixed-dim": "#a9c7ff",
+                      "tertiary-container": "#3f261c",
+                      "tertiary-fixed": "#ffdbce",
+                      "background": "#faf9f7",
+                      "outline-variant": "#c4c6d0",
+                      "surface": "#faf9f7",
+                      "on-primary": "#ffffff",
+                      "inverse-surface": "#2f3130",
+                      "warning-ochre": "#B38B3F",
+                      "outline": "#747780",
+                      "secondary-fixed": "#d3e8d5",
+                      "on-surface-variant": "#43474f",
+                      "surface-container-lowest": "#ffffff",
+                      "clay-terracotta": "#8C6A5D",
+                      "secondary-container": "#d0e5d2",
+                      "tertiary-fixed-dim": "#e7beae",
+                      "surface-container-high": "#e9e8e6",
+                      "on-tertiary": "#ffffff",
+                      "on-primary-fixed": "#001b3d",
+                      "primary": "#001736",
+                      "ink-black": "#1A1C1E",
+                      "inverse-on-surface": "#f1f1ef",
+                      "surface-tint": "#405f91",
+                      "surface-bright": "#faf9f7",
+                      "on-tertiary-fixed": "#2c160c",
+                      "secondary": "#506354",
+                      "secondary-fixed-dim": "#b7ccb9",
+                      "on-background": "#1a1c1b",
+                      "primary-fixed": "#d6e3ff",
+                      "on-primary-container": "#7594ca",
+                      "on-primary-fixed-variant": "#264778",
+                      "on-secondary-fixed-variant": "#394b3d",
+                      "surface-container-low": "#f4f3f1",
+                      "surface-dim": "#dadad8",
+                      "primary-container": "#002b5b",
+                      "on-secondary": "#ffffff",
+                      "surface-variant": "#e3e2e0",
+                      "inverse-primary": "#a9c7ff",
+                      "paper-white": "#F9F8F6",
+                      "on-secondary-container": "#546758",
+                      "on-error-container": "#93000a",
+                      "on-tertiary-container": "#b08b7d",
+                      "on-tertiary-fixed-variant": "#5d4034",
+                      "success-jewel": "#2D5A43",
+                      "surface-container": "#efeeec",
+                      "surface-container-highest": "#e3e2e0",
+                      "sage-earth": "#4A5D4E",
+                      "on-surface": "#1a1c1b",
+                      "tertiary": "#271209",
+                      "on-secondary-fixed": "#0e1f13"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "section-gap": "80px",
+                      "margin-mobile": "24px",
+                      "margin-desktop": "64px",
+                      "unit": "8px",
+                      "element-gap": "16px"
+              },
+              "fontFamily": {
+                      "label-sm": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-md": [
+                              "\"Source Serif 4\""
+                      ],
+                      "body-sm": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "label-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "\"Source Serif 4\""
+                      ],
+                      "headline-sm": [
+                              "\"Source Serif 4\""
+                      ],
+                      "headline-lg": [
+                              "\"Source Serif 4\""
+                      ],
+                      "body-md": [
+                              "Plus Jakarta Sans"
+                      ],
+                      "body-lg": [
+                              "Plus Jakarta Sans"
+                      ]
+              },
+              "fontSize": {
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "30px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-sm": [
+                              "22px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "40px",
+                              {
+                                      "lineHeight": "48px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-surface');
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Grain texture overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+            opacity: 0.6;
+        }
+        
+        .ambient-shadow {
+            box-shadow: 0 8px 30px rgba(0, 43, 91, 0.04);
+        }
+        
+        .card-outline {
+            border: 1px solid rgba(116, 119, 128, 0.15); /* outline-variant approx */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-40 bg-background border-b border-surface-variant/30 flex justify-between items-center px-margin-mobile py-4 hidden md:flex">
+<div class="flex items-center gap-4">
+<button class="text-deep-navy hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-deep-navy">HarambeeOne</h1>
+</div>
+<div>
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A small circular profile avatar showing a professional, friendly-looking parent. Natural lighting, high-quality, editorial style photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNETcSa-UU_IESeEL1J80udvrpN89s3dRLNXBLkBwkU7Oc_dcJ9Ad0kqPMEwR-PbVpfEclyU2OPtnDmhx1zppykcObr0lWOF9Zy_IMN_utVIPBNo5fC2qE6TH54T4oh-NrMajvuurHKFv4fSa4sH2RkgayhBcRM9P7O2aql6h76uFlo_tb-6-tmhWbcAXxdPYFx4AvluKTMj9gm_cFIjQvxNyqJsfB3xi_H8VNhIDcgGxnLJ_CZZkHhQ"/>
+</div>
+</header>
+<!-- Mobile Top Header (Simplified) -->
+<header class="md:hidden w-full top-0 sticky z-40 bg-background border-b border-surface-variant/30 flex justify-between items-center px-margin-mobile py-4">
+<h1 class="font-headline-sm text-headline-sm font-bold tracking-tight text-deep-navy">Notices &amp; Alerts</h1>
+<button class="text-deep-navy">
+<span class="material-symbols-outlined text-[24px]">filter_list</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-[1140px] mx-auto px-margin-mobile md:px-margin-desktop py-8 md:py-12 pb-32">
+<!-- Header Section -->
+<div class="mb-section-gap flex flex-col md:flex-row justify-between items-start md:items-end border-b border-surface-variant/50 pb-6">
+<div class="max-w-2xl">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-deep-navy mb-2">Your Feed</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Stay informed with the latest institutional updates, academic notices, and financial alerts.</p>
+</div>
+<div class="mt-4 md:mt-0 flex gap-4">
+<button class="font-label-md text-label-md text-deep-navy hover:opacity-80 transition-opacity border-b border-deep-navy pb-1">All Notices</button>
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-deep-navy transition-colors pb-1">Unread (3)</button>
+</div>
+</div>
+<!-- Bento Grid / Asymmetric Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Urgent Alert (Span 12 or 8) -->
+<div class="md:col-span-12 bg-error-container/30 rounded-xl p-6 md:p-8 ambient-shadow card-outline flex flex-col md:flex-row gap-6 items-start">
+<div class="flex-shrink-0 bg-error-container text-error rounded-full w-12 h-12 flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-2">
+<span class="font-label-sm text-label-sm text-error uppercase tracking-wider">Action Required</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">2 hours ago</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-deep-navy mb-2">Tuition Installment Past Due</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 max-w-3xl">The second installment for the Fall Semester is currently past due. Please review your account balance to avoid late fees or registration holds.</p>
+<button class="bg-deep-navy text-on-primary font-body-md font-bold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity">
+                        View Balance
+                    </button>
+</div>
+</div>
+<!-- Standard Notice (Span 8) -->
+<div class="md:col-span-8 bg-paper-white rounded-xl p-6 md:p-8 ambient-shadow card-outline flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-fixed-dim" style="font-variation-settings: 'FILL' 1;">campaign</span>
+<span class="font-label-sm text-label-sm text-deep-navy uppercase tracking-wider">Institutional News</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Yesterday</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-deep-navy mb-3">Headmaster's Monthly Address</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4 flex-grow">A message from Dr. Aris Thorne reflecting on the achievements of the past month and looking ahead to the upcoming Winter Arts Festival. We encourage all parents to review the full transcript.</p>
+<div class="mt-auto border-t border-surface-variant/50 pt-4 flex justify-between items-center">
+<button class="text-deep-navy font-label-md text-label-md flex items-center gap-1 hover:opacity-80">
+                        Read Full Address <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Smaller Status/Update Card (Span 4) -->
+<div class="md:col-span-4 bg-secondary-fixed/30 rounded-xl p-6 md:p-8 ambient-shadow card-outline flex flex-col justify-between relative overflow-hidden">
+<!-- Decorative element -->
+<div class="absolute -right-4 -top-4 w-24 h-24 bg-success-jewel/5 rounded-full blur-xl"></div>
+<div>
+<div class="flex justify-between items-start mb-4 relative z-10">
+<span class="font-label-sm text-label-sm text-success-jewel uppercase tracking-wider">Academic Update</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Oct 24</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-deep-navy mb-2 relative z-10">Mid-Term Reports Available</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6 relative z-10">Kwame's mid-term evaluation reports have been published to the academic portal.</p>
+</div>
+<button class="w-full bg-surface-container text-deep-navy font-label-md text-label-md px-4 py-3 rounded-lg hover:bg-surface-container-high transition-colors relative z-10">
+                    View Academic Profile
+                </button>
+</div>
+<!-- Image Heavy Editorial Card (Span 12) -->
+<div class="md:col-span-12 rounded-xl ambient-shadow card-outline overflow-hidden flex flex-col md:flex-row bg-paper-white mt-8">
+<div class="md:w-1/3 relative h-64 md:h-auto">
+<img class="absolute inset-0 w-full h-full object-cover" data-alt="A beautifully composed photograph of a modern, well-lit school library with students engaged in study. Warm, natural lighting, high contrast, editorial photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3XyOL8xQqmPg1mAIviWIkbrBJrYwYj3GXVarRKU588aCtTwldvTXX1ujvMcvG_LNI2zwoimPFUnW88GZX1xFOH9EJzBKOg8n_pRoU36ZyLSlWxgU1H90W5XvRIrYi20vF5KuiFuT9uDr4znF8JeTvbzSFgyhEH95TWbDd_88FJ2wtjtQ8KpWErMDkQQYJd7v2g_eRqHissmIapBIPxuidR1JGGbmHGt3d8OUG3HyXhDoBy1IoX54rkg"/>
+</div>
+<div class="md:w-2/3 p-6 md:p-10 flex flex-col justify-center">
+<div class="flex items-center gap-2 mb-4">
+<span class="font-label-sm text-label-sm text-sage-earth uppercase tracking-wider">Upcoming Event</span>
+<span class="text-outline-variant">•</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Nov 12 - 14</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-deep-navy mb-4">Winter Arts Festival &amp; Exhibition</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 max-w-2xl">Join us for a three-day celebration of student creativity, featuring gallery exhibitions, musical performances, and theatrical showcases across the campus.</p>
+<div>
+<button class="bg-transparent border border-deep-navy text-deep-navy font-body-md font-bold px-6 py-2.5 rounded-lg hover:bg-deep-navy/5 transition-colors">
+                            RSVP Details
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-paper-white shadow-[0_-4px_20px_rgba(0,43,91,0.05)] md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-deep-navy" href="#">
+<span class="material-symbols-outlined mb-1">dashboard</span>
+<span class="font-label-sm text-label-sm">Overview</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-deep-navy" href="#">
+<span class="material-symbols-outlined mb-1">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm">Finances</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-deep-navy" href="#">
+<span class="material-symbols-outlined mb-1">school</span>
+<span class="font-label-sm text-label-sm">Academics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-deep-navy bg-secondary-fixed/50 rounded-xl px-4 py-1.5" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">notifications</span>
+<span class="font-label-sm text-label-sm">Notices</span>
+</a>
+</nav>
+</body></html>

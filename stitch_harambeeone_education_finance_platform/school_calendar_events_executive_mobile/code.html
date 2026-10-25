@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HarambeeOne Parent Portal - School Calendar, Events &amp; Permission Slips</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Typography Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#ffffff",
+            "secondary": "#1d4ed8",
+            "primary-fixed-dim": "#bec6e0",
+            "tertiary-container": "#002114",
+            "outline-variant": "#c6c6cd",
+            "surface-bright": "#f8f9ff",
+            "on-tertiary-fixed": "#002114",
+            "on-surface": "#0b1c30",
+            "surface": "#f8f9ff",
+            "surface-dim": "#cbdbf5",
+            "secondary-container": "#4069f2",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed": "#001551",
+            "on-tertiary-fixed-variant": "#005137",
+            "on-tertiary-container": "#069669",
+            "surface-container-high": "#dce9ff",
+            "surface-tint": "#565e74",
+            "secondary-fixed": "#dce1ff",
+            "primary-container": "#131b2e",
+            "on-secondary-fixed-variant": "#0039b5",
+            "on-primary-fixed-variant": "#3f465c",
+            "on-background": "#0b1c30",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-variant": "#d3e4fe",
+            "secondary-fixed-dim": "#b7c4ff",
+            "surface-container-low": "#eff4ff",
+            "tertiary-fixed-dim": "#68dba9",
+            "tertiary-fixed": "#85f8c4",
+            "on-error": "#ffffff",
+            "error": "#ba1a1a",
+            "tertiary": "#000000",
+            "background": "#f8f9ff",
+            "on-secondary-container": "#fffbff",
+            "on-primary-fixed": "#131b2e",
+            "on-primary-container": "#7c839b",
+            "on-error-container": "#93000a",
+            "surface-container": "#e5eeff",
+            "inverse-primary": "#bec6e0",
+            "outline": "#76777d",
+            "primary-fixed": "#dae2fd",
+            "on-primary": "#ffffff",
+            "inverse-surface": "#213145",
+            "error-container": "#ffdad6",
+            "on-surface-variant": "#45464d",
+            "primary": "#000000",
+            "on-tertiary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "margin-mobile": "1rem",
+            "gutter": "1.5rem",
+            "gutter-mobile": "1rem",
+            "space-xl": "2.5rem",
+            "margin": "2rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "display-lg": ["Public Sans"],
+            "display-sm-mobile": ["Public Sans"],
+            "tabular-numeric": ["Inter"],
+            "body-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-sm": ["Public Sans"],
+            "headline-lg": ["Public Sans"],
+            "headline-md": ["Public Sans"],
+            "body-sm": ["Inter"],
+            "display-sm": ["Public Sans"]
+          },
+          "fontSize": {
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "display-sm-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "tabular-numeric": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "display-sm": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .hairline-card {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02);
+    }
+    .hairline-card-interactive:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen pb-28">
+<!-- TOP APP BAR (Shared Component Anchor) -->
+<header class="bg-surface docked full-width top-0 fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin h-14 bg-surface-container-lowest/90 backdrop-blur-md shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-surface-container-lowest flex items-center justify-center font-headline-sm text-headline-sm font-bold tracking-tight">
+        SO
+      </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm font-bold text-primary tracking-tight">HarambeeOne</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant -mt-1 hidden sm:inline">Executive Parent Portal</span>
+</div>
+</div>
+<!-- Center screen context (Shared headline: School Events) -->
+<div class="hidden md:flex items-center gap-2 px-3 py-1 bg-surface-container-low rounded-xl border border-[#e2e8f0]">
+<span class="material-symbols-outlined text-secondary text-[18px]">event_note</span>
+<span class="font-headline-sm text-headline-sm text-primary">School Events</span>
+<span class="text-outline text-xs">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Term 1 2025</span>
+</div>
+<!-- Trailing Action Anchor -->
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors active:scale-95 duration-150 text-sm font-body-sm" title="Switch Student Profile">
+<span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+<span class="font-label-sm text-label-sm font-medium text-on-surface hidden sm:inline">Sarah (P.6)</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+</div>
+</header>
+<!-- MAIN CANVAS -->
+<main class="pt-20 px-margin-mobile md:px-space-xl max-w-[1400px] mx-auto space-y-space-lg">
+<!-- HERO HEADER: School Calendar & Term Schedule -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-[#e2e8f0]">
+<div>
+<div class="flex items-center gap-2 mb-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold bg-[#ecfdf5] text-[#059669] border border-[#a7f3d0]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#059669] mr-1.5"></span>Term In Session
+          </span>
+<span class="font-label-sm text-label-sm text-outline">Academic Cycle 2024–2025</span>
+</div>
+<h1 class="font-display-lg text-[28px] md:text-display-lg text-primary tracking-tight">
+          School Calendar &amp; Term Schedule
+        </h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+          Term 1 2025 • Official Institutional Timetable &amp; Statutory Governance
+        </p>
+</div>
+<!-- Quick Action Controls -->
+<div class="flex items-center gap-2.5">
+<button class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-surface-container-lowest text-primary border border-[#cbd5e1] font-label-md text-label-md hover:bg-surface-container-low transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[18px]">calendar_add_on</span>
+<span>Sync iCal / Google</span>
+</button>
+<button class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-[#0f172a] text-surface-container-lowest font-label-md text-label-md hover:bg-[#1e293b] transition-colors active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>Download PDF</span>
+</button>
+</div>
+</div>
+<!-- PENDING ACTION BANNER: Sports Day Slip Authorization -->
+<div class="hairline-card rounded-xl p-space-md md:p-space-lg border-l-4 border-l-[#d97706] bg-gradient-to-r from-[#fffdfa] to-[#ffffff] relative overflow-hidden">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<div class="flex items-start gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-[#fef3c7] text-[#b45309] flex items-center justify-center shrink-0 mt-0.5 border border-[#fde68a]">
+<span class="material-symbols-outlined text-[24px]">assignment_late</span>
+</div>
+<div>
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-[#b45309] font-bold">Action Required</span>
+<span class="text-outline text-xs">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Deadline: Feb 26, 2025 (48h Remaining)</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-[#0f172a] mt-0.5">
+              Permission Slip Awaiting Authorization
+            </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 max-w-3xl">
+<strong class="text-on-surface font-semibold">Sports Day &amp; Inter-House Athletics Gala (Feb 28).</strong> Digital parental consent is mandated under MoES Section 4 safety policy for transport logistical boarding and emergency medical clearance for <strong class="text-on-surface">Sarah (P.6 Simba House)</strong>.
+            </p>
+</div>
+</div>
+<div class="flex items-center gap-3 shrink-0 self-end lg:self-center">
+<button class="px-3 py-2 text-on-surface-variant hover:text-primary font-label-md text-label-md transition-colors">
+            View Details
+          </button>
+<button class="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#1d4ed8] text-surface-container-lowest font-label-md text-label-md hover:bg-[#2563eb] transition-all active:scale-95 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">draw</span>
+<span>Review &amp; Sign Digitally</span>
+</button>
+</div>
+</div>
+</div>
+<!-- FILTER CHIPS ARCHITECTURE -->
+<div class="flex items-center justify-between gap-3 overflow-x-auto pb-1">
+<div class="flex items-center gap-2 shrink-0">
+<button class="px-3.5 py-1.5 rounded-full bg-[#0f172a] text-surface-container-lowest font-label-md text-label-md shadow-sm">
+          All Events
+        </button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container-lowest border border-[#cbd5e1] text-on-surface font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+          Exams &amp; Academics
+        </button>
+<button class="px-3.5 py-1.5 rounded-full bg-surface-container-lowest border border-[#cbd5e1] text-on-surface font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+          Sports &amp; Houses
+        </button>
+<button class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#fffbeb] border border-[#fde68a] text-[#b45309] font-label-md text-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-[#b45309]"></span>
+          Permission Slips (1 Pending)
+        </button>
+</div>
+<div class="hidden sm:flex items-center gap-2 shrink-0 text-on-surface-variant">
+<span class="font-label-sm text-label-sm">Displaying 4 institutional milestones</span>
+</div>
+</div>
+<!-- BENTO GRID: CALENDAR STRIP & DETAILED TIMELINE -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- LEFT COLUMN: Monthly Mini Calendar Strip & Overview (4 cols) -->
+<div class="lg:col-span-4 space-y-space-lg">
+<!-- Interactive Monthly Strip Card -->
+<div class="hairline-card rounded-xl p-space-md">
+<div class="flex items-center justify-between pb-3 mb-3 border-b border-[#e2e8f0]">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Institutional Month</span>
+<h3 class="font-headline-md text-headline-md text-primary">February 2025</h3>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-7 h-7 rounded-lg border border-[#e2e8f0] flex items-center justify-center hover:bg-surface-container-low text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="w-7 h-7 rounded-lg border border-[#e2e8f0] flex items-center justify-center hover:bg-surface-container-low text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Calendar Grid Header -->
+<div class="grid grid-cols-7 gap-1 text-center font-label-sm text-label-sm text-outline mb-2">
+<div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+</div>
+<!-- Days Layout -->
+<div class="grid grid-cols-7 gap-1 text-center font-tabular-numeric text-tabular-numeric text-on-surface">
+<div class="p-1.5 text-outline opacity-40">27</div>
+<div class="p-1.5 text-outline opacity-40">28</div>
+<div class="p-1.5 text-outline opacity-40">29</div>
+<div class="p-1.5 text-outline opacity-40">30</div>
+<div class="p-1.5 text-outline opacity-40">31</div>
+<div class="p-1.5">1</div>
+<div class="p-1.5 text-on-surface-variant">2</div>
+<div class="p-1.5">3</div>
+<div class="p-1.5">4</div>
+<div class="p-1.5">5</div>
+<div class="p-1.5">6</div>
+<div class="p-1.5">7</div>
+<div class="p-1.5">8</div>
+<div class="p-1.5 text-on-surface-variant">9</div>
+<div class="p-1.5">10</div>
+<div class="p-1.5">11</div>
+<div class="p-1.5">12</div>
+<div class="p-1.5">13</div>
+<div class="p-1.5">14</div>
+<div class="p-1.5">15</div>
+<div class="p-1.5 text-on-surface-variant">16</div>
+<div class="p-1.5">17</div>
+<div class="p-1.5">18</div>
+<div class="p-1.5">19</div>
+<div class="p-1.5">20</div>
+<div class="p-1.5">21</div>
+<div class="p-1.5">22</div>
+<div class="p-1.5 text-on-surface-variant">23</div>
+<!-- Current Active Week with indicators -->
+<div class="p-1.5">24</div>
+<div class="p-1.5 bg-[#f1f5f9] rounded-lg font-semibold text-secondary">25</div>
+<div class="p-1.5 relative">
+              26
+              <span class="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#b45309] rounded-full"></span>
+</div>
+<div class="p-1.5">27</div>
+<!-- Highlighted Gala Day -->
+<div class="p-1.5 bg-[#1d4ed8] text-surface-container-lowest rounded-lg font-bold relative shadow-sm">
+              28
+              <span class="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#f59e0b] rounded-full border border-surface-container-lowest"></span>
+</div>
+<div class="p-1.5">1</div>
+<div class="p-1.5 text-on-surface-variant">2</div>
+</div>
+<div class="mt-4 pt-3 border-t border-[#e2e8f0] space-y-2">
+<div class="flex items-center justify-between text-xs font-label-sm">
+<span class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-[#1d4ed8]"></span> Gala Event Date
+              </span>
+<span class="text-primary font-medium">Feb 28</span>
+</div>
+<div class="flex items-center justify-between text-xs font-label-sm">
+<span class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-[#b45309]"></span> Slip Submission Cutoff
+              </span>
+<span class="text-primary font-medium">Feb 26 (17:00 EAT)</span>
+</div>
+</div>
+</div>
+<!-- Registered Wards Summary Card -->
+<div class="hairline-card rounded-xl p-space-md">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block mb-2">Registered Student Profiles</span>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low border border-[#e2e8f0]">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-[#0f172a] text-surface-container-lowest font-headline-sm text-headline-sm flex items-center justify-center">S</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Sarah Nalwanga</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Primary 6 • Simba House</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[11px] font-label-sm bg-[#fef2f2] text-[#b91c1c] border border-[#fecaca] font-semibold">1 Action</span>
+</div>
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-lowest border border-[#e2e8f0]">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-[#475569] text-surface-container-lowest font-headline-sm text-headline-sm flex items-center justify-center">J</div>
+<div>
+<div class="font-headline-sm text-headline-sm text-on-surface">Joshua Mukasa</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Primary 4 • Chui House</div>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded text-[11px] font-label-sm bg-[#ecfdf5] text-[#059669] border border-[#a7f3d0] font-semibold">Clear</span>
+</div>
+</div>
+</div>
+<!-- Quick Help / Support Notice -->
+<div class="hairline-card rounded-xl p-space-md bg-[#f8fafc]">
+<div class="flex items-center gap-2 text-primary font-headline-sm text-headline-sm mb-1">
+<span class="material-symbols-outlined text-[18px] text-secondary">verified_user</span>
+            Academic Governance
+          </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            All curriculum timelines are synchronized real-time with the Ministry of Education &amp; Sports (MoES) and national UNEB circulars.
+          </p>
+</div>
+</div>
+<!-- RIGHT COLUMN: UPCOMING EVENTS FEED (8 cols) -->
+<div class="lg:col-span-8 space-y-space-md">
+<div class="flex items-center justify-between pb-1">
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">Institutional Events Ledger</h2>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Updated today at 08:30 EAT</span>
+</div>
+<!-- EVENT 1: Sports Day & Inter-House Athletics Gala -->
+<div class="hairline-card hairline-card-interactive rounded-xl p-space-lg transition-all duration-200 border-l-4 border-l-[#d97706]">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+<div class="flex items-start gap-3.5">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high text-primary flex flex-col items-center justify-center shrink-0 border border-[#cbd5e1]">
+<span class="font-label-sm text-[10px] tracking-wider uppercase text-on-surface-variant">FEB</span>
+<span class="font-headline-lg text-headline-lg text-primary font-bold -mt-1">28</span>
+</div>
+<div>
+<div class="flex items-center gap-2 flex-wrap mb-1">
+<span class="px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold bg-[#fffbeb] text-[#b45309] border border-[#fde68a] inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#b45309]"></span> Slip Pending Signature
+                  </span>
+<span class="px-2 py-0.5 rounded text-[11px] font-label-sm font-medium bg-[#f1f5f9] text-[#475569] border border-[#e2e8f0]">
+                    House Competition
+                  </span>
+</div>
+<h3 class="font-headline-lg text-[18px] text-primary font-bold">
+                  Sports Day &amp; Inter-House Athletics Gala
+                </h3>
+<div class="flex items-center gap-3 text-body-sm text-body-sm text-on-surface-variant mt-1 flex-wrap">
+<span class="inline-flex items-center gap-1 font-medium text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span> 09:00 AM EAT
+                  </span>
+<span>•</span>
+<span class="inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span> Main Sports Pavilion
+                  </span>
+<span>•</span>
+<span class="inline-flex items-center gap-1 text-primary font-medium">
+<span class="material-symbols-outlined text-[16px]">person</span> Ward: Sarah (Simba House)
+                  </span>
+</div>
+</div>
+</div>
+<div class="mt-3 sm:mt-0 flex sm:flex-col items-end justify-between sm:justify-start gap-2">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0f172a] text-surface-container-lowest font-label-md text-label-md hover:bg-[#1e293b] transition-colors active:scale-95 shadow-sm">
+<span>Sign Slip</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-[#f1f5f9] flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-on-surface-variant gap-2">
+<span>Simba House track events starting promptly at 09:30 AM. Spectator seating passes distributed digitally upon waiver execution.</span>
+<a class="text-secondary font-medium hover:underline inline-flex items-center gap-0.5 shrink-0" href="#">Download Program Guide</a>
+</div>
+</div>
+<!-- EVENT 2: Term 1 Mid-Term Assessments -->
+<div class="hairline-card hairline-card-interactive rounded-xl p-space-lg transition-all duration-200">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+<div class="flex items-start gap-3.5">
+<div class="w-12 h-12 rounded-xl bg-surface-container-low text-primary flex flex-col items-center justify-center shrink-0 border border-[#cbd5e1]">
+<span class="font-label-sm text-[10px] tracking-wider uppercase text-on-surface-variant">MAR</span>
+<span class="font-headline-lg text-headline-lg text-primary font-bold -mt-1">10</span>
+</div>
+<div>
+<div class="flex items-center gap-2 flex-wrap mb-1">
+<span class="px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold bg-[#ecfdf5] text-[#059669] border border-[#a7f3d0] inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#059669]"></span> Exam Timetable Released
+                  </span>
+<span class="px-2 py-0.5 rounded text-[11px] font-label-sm font-medium bg-[#f1f5f9] text-[#475569] border border-[#e2e8f0]">
+                    UNEB Format
+                  </span>
+</div>
+<h3 class="font-headline-lg text-[18px] text-primary font-bold">
+                  Term 1 Mid-Term Assessments
+                </h3>
+<div class="flex items-center gap-3 text-body-sm text-body-sm text-on-surface-variant mt-1 flex-wrap">
+<span class="inline-flex items-center gap-1 font-medium text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">date_range</span> Mar 10 - Mar 14, 2025
+                  </span>
+<span>•</span>
+<span class="inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">menu_book</span> Core Curriculum UNEB syllabus
+                  </span>
+<span>•</span>
+<span class="inline-flex items-center gap-1 text-primary font-medium">
+<span class="material-symbols-outlined text-[16px]">groups</span> Ward: Both Sarah &amp; Joshua
+                  </span>
+</div>
+</div>
+</div>
+<div class="mt-3 sm:mt-0 flex sm:flex-col items-end justify-between sm:justify-start gap-2">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-[#cbd5e1] text-primary font-label-md text-label-md hover:bg-surface-container-low transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>Timetable</span>
+</button>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-[#f1f5f9] flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-on-surface-variant gap-2">
+<span>Includes Mathematics, Integrated Science, Social Studies, and English Language for Upper Primary. Revision packs uploaded in parent hub.</span>
+<span class="font-tabular-numeric text-primary font-medium">5 Examination Days</span>
+</div>
+</div>
+<!-- EVENT 3: Annual PTA General Meeting & STEM Showcase -->
+<div class="hairline-card hairline-card-interactive rounded-xl p-space-lg transition-all duration-200">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+<div class="flex items-start gap-3.5">
+<div class="w-12 h-12 rounded-xl bg-surface-container-low text-primary flex flex-col items-center justify-center shrink-0 border border-[#cbd5e1]">
+<span class="font-label-sm text-[10px] tracking-wider uppercase text-on-surface-variant">MAR</span>
+<span class="font-headline-lg text-headline-lg text-primary font-bold -mt-1">22</span>
+</div>
+<div>
+<div class="flex items-center gap-2 flex-wrap mb-1">
+<span class="px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold bg-[#eff6ff] text-[#1d4ed8] border border-[#bfdbfe] inline-flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-[#1d4ed8]"></span> RSVP Confirmed
+                  </span>
+<span class="px-2 py-0.5 rounded text-[11px] font-label-sm font-medium bg-[#f1f5f9] text-[#475569] border border-[#e2e8f0]">
+                    Executive Assembly
+                  </span>
+</div>
+<h3 class="font-headline-lg text-[18px] text-primary font-bold">
+                  Annual PTA General Meeting &amp; STEM Showcase
+                </h3>
+<div class="flex items-center gap-3 text-body-sm text-body-sm text-on-surface-variant mt-1 flex-wrap">
+<span class="inline-flex items-center gap-1 font-medium text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">schedule</span> 10:00 AM EAT
+                  </span>
+<span>•</span>
+<span class="inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">apartment</span> Main Assembly Hall
+                  </span>
+<span>•</span>
+<span class="inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">ballot</span> Agenda: Science Lab expansion &amp; Soroban escrow report
+                  </span>
+</div>
+</div>
+</div>
+<div class="mt-3 sm:mt-0 flex sm:flex-col items-end justify-between sm:justify-start gap-2">
+<button class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-container-low text-primary font-label-md text-label-md hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[16px] text-[#059669]">check</span>
+<span>2 Seats Reserved</span>
+</button>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-[#f1f5f9] flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-on-surface-variant gap-2">
+<span>Special financial report briefing on solar grid installation and 2025/26 infrastructure bond allocation by Board Treasurer.</span>
+<a class="text-secondary font-medium hover:underline inline-flex items-center gap-0.5 shrink-0" href="#">View Meeting Docket</a>
+</div>
+</div>
+<!-- EVENT 4: Term 1 Mid-Term Break -->
+<div class="hairline-card hairline-card-interactive rounded-xl p-space-lg transition-all duration-200">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+<div class="flex items-start gap-3.5">
+<div class="w-12 h-12 rounded-xl bg-surface-container-low text-primary flex flex-col items-center justify-center shrink-0 border border-[#cbd5e1]">
+<span class="font-label-sm text-[10px] tracking-wider uppercase text-on-surface-variant">APR</span>
+<span class="font-headline-lg text-headline-lg text-primary font-bold -mt-1">04</span>
+</div>
+<div>
+<div class="flex items-center gap-2 flex-wrap mb-1">
+<span class="px-2 py-0.5 rounded text-[11px] font-label-sm font-semibold bg-[#f1f5f9] text-[#475569] border border-[#e2e8f0]">
+                    Scheduled Recess
+                  </span>
+</div>
+<h3 class="font-headline-lg text-[18px] text-primary font-bold">
+                  Term 1 Mid-Term Break (Boarding &amp; Day Scholars)
+                </h3>
+<div class="flex items-center gap-3 text-body-sm text-body-sm text-on-surface-variant mt-1 flex-wrap">
+<span class="inline-flex items-center gap-1 font-medium text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-secondary">event_available</span> Apr 04, 2025
+                  </span>
+<span>•</span>
+<span class="inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">departure_board</span> Staggered pickup starts 12:30 PM
+                  </span>
+<span>•</span>
+<span class="inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">school</span> Classes resume Apr 14, 2025
+                  </span>
+</div>
+</div>
+</div>
+<div class="mt-3 sm:mt-0 flex sm:flex-col items-end justify-between sm:justify-start gap-2">
+<span class="text-xs font-label-sm text-on-surface-variant bg-[#f8fafc] px-2.5 py-1.5 rounded-lg border border-[#e2e8f0]">
+                Transport Manifest Open
+              </span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- STATUTORY FOOTNOTE SECTION -->
+<footer class="pt-space-lg border-t border-[#e2e8f0] pb-8">
+<div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-body-sm text-on-surface-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-[20px]">verified</span>
+<div>
+<span class="font-semibold text-on-surface">Official statutory academic record:</span>
+<span>UNEB Exam Center #U0024, MoES Certified Academic Calendar.</span>
+</div>
+</div>
+<div class="flex items-center gap-4 text-outline">
+<span>HarambeeOne Institutional Portal v4.12</span>
+<span>•</span>
+<a class="hover:text-primary transition-colors" href="#">School Bylaws</a>
+<span>•</span>
+<a class="hover:text-primary transition-colors" href="#">Compliance Desk</a>
+</div>
+</div>
+</footer>
+</main>
+<!-- BOTTOM NAVIGATION BAR (Shared Component Anchor) -->
+<!-- Exactly mirrors JSON specification: labels ["Home", "Fees", "Events", "Notices"], active on "Events" -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface-container-lowest/95 backdrop-blur-md rounded-t-xl shadow-[0_-2px_10px_rgba(0,0,0,0.04)] md:hidden">
+<!-- Inactive: Home -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-high transition-colors active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined text-[22px]">home</span>
+<span class="font-label-sm text-label-sm mt-0.5">Home</span>
+</a>
+<!-- Inactive: Fees -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-high transition-colors active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined text-[22px]">payments</span>
+<span class="font-label-sm text-label-sm mt-0.5">Fees</span>
+</a>
+<!-- ACTIVE STATE: Events (Current Screen Intent Match) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-surface-container-lowest rounded-xl px-3.5 py-1 active:scale-95 duration-100 shadow-sm" href="#">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="font-label-sm text-label-sm mt-0.5 font-semibold">Events</span>
+</a>
+<!-- Inactive: Notices -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:bg-surface-container-high transition-colors active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined text-[22px]">notifications</span>
+<span class="font-label-sm text-label-sm mt-0.5">Notices</span>
+</a>
+</nav>
+<!-- DESKTOP FLOATING FOOTER INDICATOR (Optional Executive Refinement) -->
+<div class="hidden md:flex fixed bottom-5 right-8 bg-[#0f172a] text-surface-container-lowest px-4 py-2.5 rounded-full shadow-lg items-center gap-3 z-40 border border-[#334155]">
+<div class="w-2 h-2 rounded-full bg-[#10b981] animate-pulse"></div>
+<span class="font-label-sm text-label-sm font-medium">Calendar Synced with School Server</span>
+<span class="text-slate-500">•</span>
+<button class="font-label-sm text-label-sm text-[#93c5fd] hover:text-white transition-colors underline">Refresh</button>
+</div>
+</body></html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School Calendar - Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c4c6d0",
+                        "surface": "#f8f9ff",
+                        "surface-variant": "#e1e2e8",
+                        "surface-container": "#eceef3",
+                        "on-background": "#191c20",
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "tertiary": "#390001",
+                        "primary-container": "#002b5b",
+                        "on-tertiary-fixed": "#410002",
+                        "surface-tint": "#405f91",
+                        "secondary-fixed-dim": "#80d8a5",
+                        "surface-bright": "#f8f9ff",
+                        "status-success": "#006d43",
+                        "on-error-container": "#93000a",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "surface-container-highest": "#e1e2e8",
+                        "background": "#f8f9ff",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#99f2bd",
+                        "surface-dim": "#d8dae0",
+                        "secondary-fixed": "#9cf5c0",
+                        "on-surface-subtle": "#43474f",
+                        "inverse-surface": "#2e3135",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#d6e3ff",
+                        "on-primary-fixed": "#001b3d",
+                        "on-primary-container": "#7594ca",
+                        "on-tertiary-container": "#ff5a4e",
+                        "on-surface": "#191c20",
+                        "primary": "#001736",
+                        "on-surface-variant": "#43474f",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#002111",
+                        "surface-container-low": "#f2f3f9",
+                        "on-secondary-fixed-variant": "#005231",
+                        "surface-card": "#ffffff",
+                        "on-secondary-container": "#0a7147",
+                        "inverse-primary": "#a9c7ff",
+                        "on-tertiary-fixed-variant": "#930009",
+                        "surface-container-high": "#e7e8ee",
+                        "status-warning": "#d97706",
+                        "outline": "#747780",
+                        "tertiary-container": "#600004",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#eff0f6",
+                        "status-error": "#ba1a1a",
+                        "on-primary-fixed-variant": "#264778",
+                        "tertiary-fixed": "#ffdad5",
+                        "secondary": "#006d43",
+                        "on-error": "#ffffff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "margin-mobile": "16px",
+                        "gutter": "16px",
+                        "margin-desktop": "24px",
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "unit": "4px",
+                        "stack-sm": "8px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "label-sm": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "headline-md": ["Public Sans"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-24 flex flex-col md:max-w-md md:mx-auto md:border-x md:border-surface-variant relative">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky border-b border-surface-variant bg-surface z-40 transition-colors duration-200 ease-in-out flex items-center justify-between px-margin-mobile h-14 w-full">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-container-high shrink-0">
+<img alt="Guardian Profile Picture" class="w-full h-full object-cover" data-alt="A small, professional portrait photograph of a young woman with a warm smile, acting as a profile picture avatar in a clean, brightly lit corporate or modern school setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJ_v3xadHQPopU4dcKDVC_ssa204oPMrDmqvdQ2teQnOPMuS1e1dt-In0zOyY1XTkS4nqDIDyXXdpQd4Y5996v5Yzqt723XG38dvnGAD_sbGG3xLdHm63Diq-8yykCUobgiEKjBGFcm6kt7-hPUF1l0zptyhs414Q3ccVspI7axrbEGU5BsFCDg3b5mzcQXP0QU3IgU1nVB4soFUdUg9102HXo3PFPIJNp8QIo0ns1gqcLnQzwCUjkhw"/>
+</div>
+<h1 class="text-headline-md-mobile font-headline-md font-bold text-primary">School Calendar</h1>
+</div>
+<button aria-label="Filter specific students" class="p-2 hover:bg-surface-container-high rounded-full transition-colors flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="sync">filter_list</span>
+</button>
+</header>
+<main class="flex-grow px-margin-mobile pt-stack-md flex flex-col gap-stack-lg">
+<!-- Calendar Section -->
+<section class="bg-surface-card border border-surface-variant rounded-xl p-4 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-primary">October 2023</h2>
+<div class="flex gap-2">
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant"><span class="material-symbols-outlined">chevron_left</span></button>
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center font-label-sm text-label-sm text-on-surface-variant mb-2">
+<div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center font-body-md text-body-md">
+<!-- Row 1 -->
+<div class="p-2 text-outline">1</div>
+<div class="p-2 text-outline">2</div>
+<div class="p-2 text-outline">3</div>
+<div class="p-2 text-outline">4</div>
+<div class="p-2 text-outline">5</div>
+<div class="p-2 text-outline">6</div>
+<div class="p-2 text-outline">7</div>
+<!-- Row 2 -->
+<div class="p-2">8</div>
+<div class="p-2">9</div>
+<div class="p-2">10</div>
+<div class="p-2">11</div>
+<div class="p-2">12</div>
+<div class="p-2">13</div>
+<div class="p-2">14</div>
+<!-- Row 3 (Current Week highlighted subtly) -->
+<div class="p-2 rounded-full relative flex flex-col items-center justify-center">
+<span class="font-bold text-status-warning relative z-10">15</span>
+<div class="w-1 h-1 bg-status-warning rounded-full absolute bottom-1"></div>
+</div>
+<div class="p-2 bg-surface-container-high rounded-full">16</div>
+<div class="p-2 bg-surface-container-high rounded-full">17</div>
+<div class="p-2 bg-surface-container-high rounded-full relative flex flex-col items-center justify-center">
+<span class="relative z-10">18</span>
+<div class="w-1 h-1 bg-primary rounded-full absolute bottom-1"></div>
+</div>
+<div class="p-2 bg-surface-container-high rounded-full text-on-primary bg-primary font-bold shadow-sm">19</div> <!-- Today -->
+<div class="p-2 bg-surface-container-high rounded-full relative flex flex-col items-center justify-center">
+<span class="text-status-success relative z-10">20</span>
+<div class="w-1 h-1 bg-status-success rounded-full absolute bottom-1"></div>
+</div>
+<div class="p-2 bg-surface-container-high rounded-full relative flex flex-col items-center justify-center">
+<span class="text-status-success relative z-10">21</span>
+<div class="w-1 h-1 bg-status-success rounded-full absolute bottom-1"></div>
+</div>
+<!-- Row 4 -->
+<div class="p-2 relative flex flex-col items-center justify-center">
+<span class="text-status-success relative z-10">22</span>
+<div class="w-1 h-1 bg-status-success rounded-full absolute bottom-1"></div>
+</div>
+<div class="p-2 relative flex flex-col items-center justify-center">
+<span class="text-status-success relative z-10">23</span>
+<div class="w-1 h-1 bg-status-success rounded-full absolute bottom-1"></div>
+</div>
+<div class="p-2 relative flex flex-col items-center justify-center">
+<span class="text-status-success relative z-10">24</span>
+<div class="w-1 h-1 bg-status-success rounded-full absolute bottom-1"></div>
+</div>
+<div class="p-2">25</div>
+<div class="p-2">26</div>
+<div class="p-2">27</div>
+<div class="p-2">28</div>
+<!-- Row 5 -->
+<div class="p-2">29</div>
+<div class="p-2">30</div>
+<div class="p-2">31</div>
+<div class="p-2 text-outline">1</div>
+<div class="p-2 text-outline">2</div>
+<div class="p-2 text-outline">3</div>
+<div class="p-2 text-outline">4</div>
+</div>
+<!-- Legend -->
+<div class="flex gap-4 mt-2 justify-center font-label-sm text-label-sm text-on-surface-variant">
+<div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-status-warning"></span> Financial</div>
+<div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary"></span> Academic</div>
+<div class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-status-success"></span> Holiday</div>
+</div>
+</section><div class="flex gap-2 overflow-x-auto pb-2 px-1">
+<button class="bg-secondary-container text-on-secondary-container px-4 py-1.5 rounded-full font-label-sm text-label-sm whitespace-nowrap transition-colors active:scale-95">All Students</button>
+<button class="bg-surface-container text-on-surface-variant px-4 py-1.5 rounded-full font-label-sm text-label-sm whitespace-nowrap flex items-center gap-1.5 transition-colors hover:bg-surface-dim active:scale-95">
+<span class="material-symbols-outlined text-[18px]">person</span> Sarah (Grade 4)
+  </button>
+<button class="bg-surface-container text-on-surface-variant px-4 py-1.5 rounded-full font-label-sm text-label-sm whitespace-nowrap flex items-center gap-1.5 transition-colors hover:bg-surface-dim active:scale-95">
+<span class="material-symbols-outlined text-[18px]">person</span> James (Grade 1)
+  </button>
+</div>
+<!-- Event List -->
+<section class="flex flex-col gap-stack-md">
+<h3 class="font-headline-sm text-headline-sm text-primary">Upcoming Events</h3>
+<div class="flex flex-col gap-3">
+<!-- Event 1 (Financial) -->
+<div class="bg-surface-card border border-surface-variant rounded-xl p-4 flex gap-4 items-start relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-status-warning"></div>
+<div class="flex flex-col items-center justify-center w-12 shrink-0">
+<span class="font-label-sm text-label-sm text-status-warning uppercase">Oct</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">15</span>
+</div>
+<div class="flex flex-col gap-1 flex-grow">
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Tuition Deadline - Term 3</h4><span class="text-[10px] font-medium text-on-surface-variant uppercase tracking-wider block mt-1">Sarah - Grade 4</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 11:59 PM
+                        </p>
+</div>
+<div class="shrink-0 bg-status-warning/10 text-status-warning px-2 py-1 rounded font-label-sm text-label-sm whitespace-nowrap">
+                        Financial
+                    </div>
+</div>
+<!-- Event 2 (Academic) -->
+<div class="bg-surface-card border border-surface-variant rounded-xl p-4 flex gap-4 items-start relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex flex-col items-center justify-center w-12 shrink-0">
+<span class="font-label-sm text-label-sm text-primary uppercase">Oct</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">18</span>
+</div>
+<div class="flex flex-col gap-1 flex-grow">
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Parent-Teacher Association Meeting</h4><span class="text-[10px] font-medium text-on-surface-variant uppercase tracking-wider block mt-1">James - Grade 1</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 6:00 PM - 8:00 PM
+                        </p>
+</div>
+<div class="shrink-0 bg-primary/10 text-primary px-2 py-1 rounded font-label-sm text-label-sm whitespace-nowrap">
+                        Academic
+                    </div>
+</div>
+<!-- Event 3 (Holiday) -->
+<div class="bg-surface-card border border-surface-variant rounded-xl p-4 flex gap-4 items-start relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-status-success"></div>
+<div class="flex flex-col items-center justify-center w-12 shrink-0">
+<span class="font-label-sm text-label-sm text-status-success uppercase">Oct</span>
+<span class="font-headline-sm text-headline-sm text-on-surface text-center leading-tight">20<br/>- 24</span>
+</div>
+<div class="flex flex-col gap-1 flex-grow">
+<div class="flex justify-between items-start gap-2">
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Half-Term Break</h4><span class="text-[10px] font-medium text-on-surface-variant uppercase tracking-wider block mt-1">All Students</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">event</span> All Day
+                        </p>
+</div>
+<div class="shrink-0 bg-status-success/10 text-status-success px-2 py-1 rounded font-label-sm text-label-sm whitespace-nowrap">
+                        Holiday
+                    </div>
+</div>
+</div>
+<button class="mt-4 w-full h-12 bg-surface-container-high hover:bg-surface-dim text-primary font-body-md font-medium rounded-lg flex items-center justify-center gap-2 transition-colors border border-surface-variant focus:border-primary focus:border-2 outline-none">
+<span class="material-symbols-outlined">sync</span>
+                Sync to My Calendar
+            </button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center bg-surface pt-2 pb-4 px-2 border-t border-surface-variant z-50 md:hidden block">
+<!-- Inactive: Home -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container transition-transform duration-150 active:scale-95 group rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<!-- Inactive: Payments (assuming events/notices maps here or is general) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container transition-transform duration-150 active:scale-95 group rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-sm text-label-sm mt-1">Payments</span>
+</a>
+<!-- Active: Calendar -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month" data-weight="fill" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="font-label-sm text-label-sm mt-1 font-medium">Calendar</span>
+</a>
+<!-- Inactive: Profile (Mapping Inbox/Notices to closest general intent if needed, using JSON structure) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container transition-transform duration-150 active:scale-95 group rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-sm text-label-sm mt-1">Notices</span>
+</a>
+</nav>
+<!-- Desktop Sidebar Sidebar (Hidden on Mobile) - Simplified representation of the structure if reflow rules applied, though prompt implies mobile primary focus -->
+<aside class="hidden md:flex flex-col w-64 bg-surface-container-low border-r border-surface-variant fixed h-full left-0 top-0 py-stack-lg z-40 overflow-y-auto">
+<div class="px-6 mb-8">
+<h2 class="font-headline-md text-headline-md text-primary font-bold tracking-tight">School Portal</h2>
+</div>
+<div class="px-6 flex items-center gap-3 mb-8">
+<div class="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-surface-variant">
+<img alt="Guardian Profile" class="w-full h-full object-cover" data-alt="A small, professional portrait photograph of a young woman with a warm smile, acting as a profile picture avatar in a clean, brightly lit corporate or modern school setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAO-7lxHH_PbZuD3WXIzs7yeLiOTuxjgfC9qJA2kbAUmgApL-VaZlYhG1818yLMb4fD7-ZeVIVSwG7z0170R-cYVhrm09iD7404IeTE99-_K6og0OuD5eJ9o0XrZtcxlS64X0gifFvH9GNL_EMqGGNPzN1yl98wCNuFTC3R7yA6RPi1efn5enIHE9-q1HOY2kmUF6azVoht2yVYyJ5MqgVmw2RO0o6w8xkaq_LZJXkfxuLYF8umrKVwcw"/>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-primary leading-tight">Alex Johnson</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Parent / Guardian</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="text-on-surface-variant mx-2 px-4 py-3 hover:bg-surface-variant rounded-full transition-all duration-200 flex items-center gap-3 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span> Home
+            </a>
+<a class="text-on-surface-variant mx-2 px-4 py-3 hover:bg-surface-variant rounded-full transition-all duration-200 flex items-center gap-3 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span> Payments
+            </a>
+<!-- Active State -->
+<a class="bg-primary-container text-on-primary-container font-bold rounded-full mx-2 px-4 py-3 transition-all duration-200 flex items-center gap-3 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month" data-weight="fill" style="font-variation-settings: 'FILL' 1;">calendar_month</span> Calendar
+            </a>
+<a class="text-on-surface-variant mx-2 px-4 py-3 hover:bg-surface-variant rounded-full transition-all duration-200 flex items-center gap-3 font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span> Notices
+            </a>
+</nav>
+</aside>
+</body></html>

@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Reports &amp; Transcripts - HarambeeOne</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "status-success": "#006d43",
+                    "primary-fixed": "#d6e3ff",
+                    "on-tertiary-container": "#ff5a4e",
+                    "inverse-primary": "#a9c7ff",
+                    "on-tertiary-fixed-variant": "#930009",
+                    "surface-container-highest": "#e1e2e8",
+                    "surface-dim": "#d8dae0",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#410002",
+                    "surface-container-low": "#f2f3f9",
+                    "surface": "#f8f9ff",
+                    "on-secondary-container": "#0a7147",
+                    "error": "#ba1a1a",
+                    "on-primary-fixed-variant": "#264778",
+                    "status-error": "#ba1a1a",
+                    "surface-bright": "#f8f9ff",
+                    "status-warning": "#d97706",
+                    "on-secondary-fixed": "#002111",
+                    "on-secondary": "#ffffff",
+                    "outline": "#747780",
+                    "on-surface-subtle": "#43474f",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed-dim": "#80d8a5",
+                    "primary-fixed-dim": "#a9c7ff",
+                    "secondary": "#006d43",
+                    "on-primary-container": "#7594ca",
+                    "tertiary-fixed-dim": "#ffb4ab",
+                    "tertiary": "#390001",
+                    "primary-container": "#002b5b",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#005231",
+                    "on-primary-fixed": "#001b3d",
+                    "surface-container-high": "#e7e8ee",
+                    "secondary-container": "#99f2bd",
+                    "on-surface-variant": "#43474f",
+                    "on-surface": "#191c20",
+                    "on-background": "#191c20",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#e1e2e8",
+                    "inverse-surface": "#2e3135",
+                    "tertiary-container": "#600004",
+                    "outline-variant": "#c4c6d0",
+                    "surface-tint": "#405f91",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#9cf5c0",
+                    "tertiary-fixed": "#ffdad5",
+                    "surface-card": "#ffffff",
+                    "background": "#f8f9ff",
+                    "primary": "#001736",
+                    "inverse-on-surface": "#eff0f6",
+                    "on-error": "#ffffff",
+                    "surface-container": "#eceef3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "32px",
+                    "margin-mobile": "16px",
+                    "unit": "4px",
+                    "gutter": "16px",
+                    "margin-desktop": "24px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "data-mono": [
+                            "Public Sans"
+                    ],
+                    "body-lg": [
+                            "Public Sans"
+                    ],
+                    "label-sm": [
+                            "Public Sans"
+                    ],
+                    "headline-md": [
+                            "Public Sans"
+                    ],
+                    "headline-lg-mobile": [
+                            "Public Sans"
+                    ],
+                    "body-md": [
+                            "Public Sans"
+                    ],
+                    "headline-sm": [
+                            "Public Sans"
+                    ],
+                    "headline-lg": [
+                            "Public Sans"
+                    ]
+            },
+            "fontSize": {
+                    "data-mono": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-lg": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-sm": [
+                            "20px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+          }
+        },
+      }
+    </script>
+<style>
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom, 20px); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col relative pb-safe md:pb-0">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline z-40 transition-colors duration-200">
+<div class="flex items-center justify-between px-margin-mobile md:px-margin-desktop h-14 w-full">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-primary dark:text-inverse-primary hover:bg-surface-container-low dark:hover:bg-surface-container-high rounded-full p-2 transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary">HarambeeOne</h1>
+</div>
+<div class="flex items-center gap-4">
+<!-- Desktop Nav -->
+<nav class="hidden md:flex gap-6 mr-6">
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors" href="#">Payments</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant dark:text-on-surface-variant hover:text-primary transition-colors" href="#">Progress</a>
+<a class="font-label-sm text-label-sm text-primary dark:text-inverse-primary border-b-2 border-primary pb-1" href="#">Archive</a>
+</nav>
+<div class="flex items-center gap-2 cursor-pointer hover:bg-surface-container-low p-1 rounded-lg transition-colors">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-bold">
+                        P
+                    </div>
+<span class="hidden md:block font-label-sm text-label-sm text-on-surface">Parent Profile</span>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="arrow_drop_down">arrow_drop_down</span>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow w-full max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg flex flex-col gap-stack-lg mb-20 md:mb-0">
+<!-- Page Header & Student Switcher -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-stack-md">
+<div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary">Reports &amp; Transcripts</h2>
+<p class="font-body-md text-body-md text-on-surface-subtle mt-1">Access official academic records and term reports.</p>
+</div>
+<div class="bg-surface-card border border-outline-variant rounded-lg p-2 flex items-center gap-3 w-full md:w-auto shadow-sm">
+<img class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A small, professional portrait photo of a high school student smiling confidently against a neutral background. The lighting is soft and natural, typical of school ID photography. Corporate, clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAl6erzdDh3EhDP4S3VoWA9EDYIz5RXZ14MhksftY0R6X_g6NeJordwRybbBjPSCj6Wyf7EfDsWKw5FE_h-DcHu8byV9W_HHdA0ANKqAysnEXvJzNC-vaX1HqIaNU8GFfSxnjXww6gyfuqZhyj51VGkTLZbfsjp0Y5f-OPnEzPpkzI3PXKgdKrMbhrrpYUfBFJXIdk9qKsfPWxMJpOvek7V1h4g8SC8vb6ZGK_7yBTSxk-J8fd_cS8MnA"/>
+<div class="flex-grow">
+<p class="font-label-sm text-label-sm text-on-surface-variant">Viewing records for</p>
+<p class="font-data-mono text-data-mono text-on-surface">Sarah Jenkins</p>
+</div>
+<button class="p-2 hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined text-primary" data-icon="swap_vert">swap_vert</span>
+</button>
+</div>
+</div>
+<!-- Missing Report Notice -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-4 flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary mt-0.5" data-icon="info">info</span>
+<div>
+<p class="font-label-sm text-label-sm font-semibold text-primary">Missing a recent report?</p>
+<p class="font-body-md text-body-md text-on-surface-subtle mt-1">Term reports are typically published 2 weeks after the term ends. If a report is overdue, please contact the <a class="text-primary underline" href="#">Academic Office</a>.</p>
+</div>
+</div>
+<!-- Academic Years Archive -->
+<div class="flex flex-col gap-stack-lg">
+<!-- 2023 - 2024 -->
+<section class="flex flex-col gap-stack-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface border-b border-outline-variant pb-2">2023 - 2024 Academic Year</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Term 2 Report Card -->
+<div class="bg-surface-card border border-outline-variant rounded-xl p-4 flex flex-col gap-4 hover:border-primary transition-colors group">
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div>
+<h4 class="font-data-mono text-data-mono text-on-surface">Term 2 Report Card</h4>
+<p class="font-label-sm text-label-sm text-on-surface-subtle">Published Mar 15, 2024</p>
+</div>
+</div>
+</div>
+<div class="mt-auto flex gap-2 pt-2 border-t border-surface-variant">
+<button class="flex-1 py-2 px-3 bg-surface-container-lowest border border-outline-variant rounded-lg font-label-sm text-label-sm text-primary hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span> View
+                            </button>
+<button class="flex-1 py-2 px-3 bg-primary text-on-primary rounded-lg font-label-sm text-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span> PDF
+                            </button>
+</div>
+</div>
+<!-- Term 1 Report Card -->
+<div class="bg-surface-card border border-outline-variant rounded-xl p-4 flex flex-col gap-4 hover:border-primary transition-colors group">
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div>
+<h4 class="font-data-mono text-data-mono text-on-surface">Term 1 Report Card</h4>
+<p class="font-label-sm text-label-sm text-on-surface-subtle">Published Dec 10, 2023</p>
+</div>
+</div>
+</div>
+<div class="mt-auto flex gap-2 pt-2 border-t border-surface-variant">
+<button class="flex-1 py-2 px-3 bg-surface-container-lowest border border-outline-variant rounded-lg font-label-sm text-label-sm text-primary hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span> View
+                            </button>
+<button class="flex-1 py-2 px-3 bg-primary text-on-primary rounded-lg font-label-sm text-label-sm hover:bg-primary-container hover:text-on-primary-container transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span> PDF
+                            </button>
+</div>
+</div>
+<!-- Official Academic Transcript -->
+<div class="bg-surface-card border border-outline-variant rounded-xl p-4 flex flex-col gap-4 hover:border-primary transition-colors group relative overflow-hidden">
+<div class="absolute top-0 right-0 w-16 h-16 bg-primary/5 rounded-bl-full z-0"></div>
+<div class="flex justify-between items-start relative z-10">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+</div>
+<div>
+<h4 class="font-data-mono text-data-mono text-on-surface">Academic Transcript</h4>
+<div class="flex items-center gap-2 mt-1">
+<span class="px-2 py-0.5 bg-status-success/10 text-status-success rounded text-[10px] font-bold uppercase tracking-wider">Official</span>
+<p class="font-label-sm text-label-sm text-on-surface-subtle">Updated Mar 15, 2024</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto flex gap-2 pt-2 border-t border-surface-variant relative z-10">
+<button class="w-full py-2 px-3 bg-surface-container-lowest border border-outline-variant rounded-lg font-label-sm text-label-sm text-primary hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="lock">lock</span> Request Secure Copy
+                            </button>
+</div>
+</div>
+</div>
+</section>
+<!-- 2022 - 2023 -->
+<section class="flex flex-col gap-stack-md opacity-80 hover:opacity-100 transition-opacity">
+<h3 class="font-headline-sm text-headline-sm text-on-surface border-b border-outline-variant pb-2">2022 - 2023 Academic Year</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Term 2 Report Card -->
+<div class="bg-surface-card border border-outline-variant rounded-xl p-4 flex flex-col gap-4 hover:border-primary transition-colors group">
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-subtle group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div>
+<h4 class="font-data-mono text-data-mono text-on-surface">Term 2 Report Card</h4>
+<p class="font-label-sm text-label-sm text-on-surface-subtle">Published Mar 12, 2023</p>
+</div>
+</div>
+</div>
+<div class="mt-auto flex gap-2 pt-2 border-t border-surface-variant">
+<button class="w-full py-2 px-3 bg-surface-container-lowest border border-outline-variant rounded-lg font-label-sm text-label-sm text-primary hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span> Download PDF
+                            </button>
+</div>
+</div>
+<!-- Term 1 Report Card -->
+<div class="bg-surface-card border border-outline-variant rounded-xl p-4 flex flex-col gap-4 hover:border-primary transition-colors group">
+<div class="flex justify-between items-start">
+<div class="flex gap-3 items-center">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-subtle group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<div>
+<h4 class="font-data-mono text-data-mono text-on-surface">Term 1 Report Card</h4>
+<p class="font-label-sm text-label-sm text-on-surface-subtle">Published Dec 08, 2022</p>
+</div>
+</div>
+</div>
+<div class="mt-auto flex gap-2 pt-2 border-t border-surface-variant">
+<button class="w-full py-2 px-3 bg-surface-container-lowest border border-outline-variant rounded-lg font-label-sm text-label-sm text-primary hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span> Download PDF
+                            </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 flex justify-around items-center bg-surface dark:bg-surface py-2 pb-safe border-t border-outline-variant dark:border-outline">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-transform duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-transform duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="payments">payments</span>
+<span class="font-label-sm text-label-sm">Payments</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-4 py-1 hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-transform duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="school">school</span>
+<span class="font-label-sm text-label-sm">Progress</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full px-4 py-1 transition-transform duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="folder_open" data-weight="fill">folder_open</span>
+<span class="font-label-sm text-label-sm">Archive</span>
+</a>
+</nav>
+<!-- Material Symbols script replacement logic (optional, for safety if standard rendering needs help, though CSS class usually handles it) -->
+<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const icons = document.querySelectorAll('span[data-icon]');
+            icons.forEach(icon => {
+                icon.textContent = icon.getAttribute('data-icon');
+                if (icon.getAttribute('data-weight') === 'fill') {
+                    icon.style.fontVariationSettings = "'FILL' 1";
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registrar &amp; Admissions - HarambeeOne</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-surface": "#213145",
+            "surface-bright": "#f8f9ff",
+            "secondary-fixed": "#78fbb6",
+            "on-primary-fixed": "#001b3d",
+            "surface-tint": "#405f91",
+            "on-secondary-fixed": "#002111",
+            "surface-container-highest": "#d3e4fe",
+            "on-secondary-fixed-variant": "#005232",
+            "on-tertiary-fixed": "#360f00",
+            "surface-variant": "#d3e4fe",
+            "surface-container-low": "#eff4ff",
+            "on-tertiary-container": "#cd805d",
+            "surface": "#f8f9ff",
+            "surface-container-lowest": "#ffffff",
+            "inverse-on-surface": "#eaf1ff",
+            "on-tertiary": "#ffffff",
+            "surface-container-high": "#dce9ff",
+            "primary-fixed": "#d6e3ff",
+            "tertiary": "#2f0c00",
+            "inverse-primary": "#a9c7ff",
+            "primary-container": "#002b5b",
+            "primary-fixed-dim": "#a9c7ff",
+            "tertiary-container": "#4f1c02",
+            "error": "#ba1a1a",
+            "on-primary-container": "#7594ca",
+            "primary": "#001736",
+            "on-secondary": "#ffffff",
+            "on-surface-variant": "#43474f",
+            "error-container": "#ffdad6",
+            "tertiary-fixed": "#ffdbcd",
+            "secondary-container": "#75f8b3",
+            "on-background": "#0b1c30",
+            "surface-container": "#e5eeff",
+            "on-secondary-container": "#007147",
+            "outline-variant": "#c4c6d0",
+            "on-primary": "#ffffff",
+            "tertiary-fixed-dim": "#ffb596",
+            "secondary": "#006d43",
+            "on-primary-fixed-variant": "#264778",
+            "secondary-fixed-dim": "#59de9b",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-tertiary-fixed-variant": "#713619",
+            "on-surface": "#0b1c30",
+            "outline": "#747780",
+            "background": "#f8f9ff",
+            "surface-dim": "#cbdbf5"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "16px",
+            "container-padding": "24px",
+            "section-gap": "32px",
+            "unit": "4px"
+          },
+          "fontFamily": {
+            "display-lg": ["Public Sans"],
+            "body-md": ["Public Sans"],
+            "data-mono": ["Public Sans"],
+            "headline-md": ["Public Sans"],
+            "body-lg": ["Public Sans"],
+            "headline-sm": ["Public Sans"],
+            "label-sm": ["Public Sans"]
+          },
+          "fontSize": {
+            "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen">
+<!-- SideNavBar (Source of Truth JSON Executed) -->
+<aside class="fixed top-0 left-0 h-screen w-64 flex flex-col justify-between p-4 z-40 bg-surface-container-low border-r border-outline-variant">
+<div class="flex flex-col gap-6">
+<!-- Institutional Crest & Brand Title -->
+<div class="flex items-center gap-3 px-2">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-headline-sm" data-icon="account_balance">account_balance</span>
+</div>
+<div class="flex flex-col">
+<span class="text-headline-sm font-headline-sm text-primary font-bold">HarambeeOne</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Uganda Statutory EdFinance</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav aria-label="Sidebar Menu" class="flex flex-col gap-1.5">
+<!-- Admissions & Students: ACTIVE TAB -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface-container text-primary font-semibold transition-colors duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined text-primary" data-icon="school">school</span>
+<span class="text-body-md font-body-md">Admissions &amp; Students</span>
+</a>
+<!-- Governance & Approvals -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface hover:text-on-surface font-normal transition-colors duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="fact_check">fact_check</span>
+<span class="text-body-md font-body-md">Governance &amp; Approvals</span>
+</a>
+<!-- Sponsor Programs -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface hover:text-on-surface font-normal transition-colors duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="volunteer_activism">volunteer_activism</span>
+<span class="text-body-md font-body-md">Sponsor Programs</span>
+</a>
+<!-- Audit & Compliance -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface hover:text-on-surface font-normal transition-colors duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="policy">policy</span>
+<span class="text-body-md font-body-md">Audit &amp; Compliance</span>
+</a>
+<!-- Bursar Ledgers -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface hover:text-on-surface font-normal transition-colors duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+<span class="text-body-md font-body-md">Bursar Ledgers</span>
+</a>
+<!-- System Settings -->
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:bg-surface hover:text-on-surface font-normal transition-colors duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-body-md font-body-md">System Settings</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Footer -->
+<div class="flex flex-col gap-1 pt-4 border-t border-outline-variant">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface font-normal text-body-md font-body-md transition-colors duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span>Support Desk</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-error hover:bg-error-container font-normal text-body-md font-body-md transition-colors duration-150 ease-in-out" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Canvas Content wrapper -->
+<div class="pl-64 min-h-screen flex flex-col">
+<!-- TopNavBar (Source of Truth JSON Executed) -->
+<header class="flex justify-between items-center w-full px-container-padding h-16 bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-30">
+<!-- Search on Left -->
+<div class="flex items-center gap-4 w-96">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface rounded-lg border border-outline-variant text-body-md font-body-md focus:outline-none focus:border-primary" placeholder="Search learners by LIN, PLE index or Guardian NIN..." type="text"/>
+</div>
+</div>
+<!-- Trailing Identity & Actions -->
+<div class="flex items-center gap-6">
+<div class="text-right hidden sm:flex flex-col">
+<span class="text-body-md font-body-md font-semibold text-primary">St. Mary's Primary, Kampala</span>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Bursar Office • Admissions Office - Sister Grace N.</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors duration-150 relative" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="w-2 h-2 rounded-full bg-secondary absolute top-2 right-2"></span>
+</button>
+<button class="p-2 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors duration-150" title="Help">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<img class="w-9 h-9 rounded-full object-cover border border-outline-variant" data-alt="A dignified school bursar and administrator portrait wearing academic administrative attire with high key studio lighting against an institutional backdrop in a modern corporate African school office." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRTdX0SdmxAMRFPaazYFANoFyne9YbDpnBIVy6mKygrw32mFBMbomI7t5Z5AaNLjUVtKJepZznbBwtz8k-r7uFtsFiSKV6xOVpFndfo90RTvjXleoUBVL5IIVLs3xQlLecqF6uw-6NKInA8u8OtEMrxtwjCkNrnMfZAa3zJJi35mt4fjWLNvWiKmi6Brv7mAUv3zRw8TKF60qL7iGmaDCfjvFCq47JNpVDtzYlFtjHUDyG_YHfRGY0JA"/>
+</div>
+</div>
+</header>
+<!-- Main Viewport Body -->
+<main class="flex-1 p-container-padding max-w-[1440px] w-full mx-auto flex flex-col gap-section-gap">
+<!-- Page Header with Subtitle & Primary Actions -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-surface-container text-primary font-semibold">REGISTRAR ENROLLMENT PIPELINE</span>
+<span class="text-label-sm font-label-sm text-outline">•</span>
+<span class="text-label-sm font-label-sm text-secondary font-semibold">Term 3 Active</span>
+</div>
+<h1 class="text-display-lg font-display-lg text-primary">New Learner Admission &amp; Enrollment Protocol</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">Uganda MoES EMIS &amp; UNEB Compliant Registry • Academic Year 2024 / Term 3</p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<button class="px-3 py-2 rounded-lg border border-outline text-primary hover:bg-surface-container text-body-md font-body-md font-semibold transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="save">save</span>
+            Save Incomplete Draft
+          </button>
+<button class="px-3 py-2 rounded-lg border border-outline text-primary hover:bg-surface-container text-body-md font-body-md font-semibold transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="upload_file">upload_file</span>
+            Import MoES EMIS CSV
+          </button>
+<button class="px-4 py-2 rounded-lg bg-secondary text-on-secondary hover:bg-secondary/90 text-body-md font-body-md font-semibold transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="verified_user">verified_user</span>
+            Complete Enrollment &amp; Generate Fee Code
+          </button>
+</div>
+</div>
+<!-- Financial Ledger Hook Alert Banner -->
+<div class="p-4 rounded-lg bg-surface-container-lowest border border-outline-variant flex items-start gap-3 shadow-sm">
+<div class="p-2 rounded-lg bg-surface-container text-secondary flex-shrink-0">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<div class="flex-1">
+<h2 class="text-body-lg font-body-lg font-semibold text-primary">Automated Financial Ledger Hook Active</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-0.5">
+            Finalizing enrollment will immediately initialize an immutable Student Financial Ledger with unique SchoolPay PRN and dynamic QR code. All billing schedules and fee categories will be assigned synchronously to Kampala Branch Central Clearing.
+          </p>
+</div>
+<span class="text-label-sm font-label-sm px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-semibold">SYNCHRONIZED</span>
+</div>
+<!-- Tab Navigation Protocol Steps -->
+<div class="border-b border-outline-variant flex gap-6">
+<button class="pb-3 border-b-2 border-primary text-primary font-semibold text-body-md font-body-md flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary text-label-sm font-label-sm flex items-center justify-center font-bold">1</span>
+          Learner Identity &amp; MoES Verification
+        </button>
+<button class="pb-3 border-b-2 border-transparent text-on-surface-variant hover:text-primary font-medium text-body-md font-body-md flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant text-label-sm font-label-sm flex items-center justify-center font-bold">2</span>
+          Academic Stream &amp; Class Allocation
+        </button>
+<button class="pb-3 border-b-2 border-transparent text-on-surface-variant hover:text-primary font-medium text-body-md font-body-md flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant text-label-sm font-label-sm flex items-center justify-center font-bold">3</span>
+          Multi-Guardian &amp; Payer Binding
+        </button>
+<button class="pb-3 border-b-2 border-transparent text-on-surface-variant hover:text-primary font-medium text-body-md font-body-md flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-surface-container text-on-surface-variant text-label-sm font-label-sm flex items-center justify-center font-bold">4</span>
+          Historical Progression &amp; Transfer
+        </button>
+</div>
+<!-- Bento-style Multi-Step Detail Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- SECTION 1: Learner Identity & MoES Verification (Left 7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-lg border border-outline-variant flex flex-col gap-5">
+<div class="flex items-center justify-between border-b border-outline-variant pb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="badge">badge</span>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-primary">1. Learner Identity &amp; MoES Verification</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Validated against Ministry of Education and Sports (Uganda) database</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container text-label-sm font-label-sm font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle">check_circle</span>
+                Verified with UNEB Portal
+              </span>
+</div>
+<!-- Identity Upload & Bio Core -->
+<div class="grid grid-cols-1 sm:grid-cols-12 gap-5">
+<!-- Photo Upload Preview Box -->
+<div class="sm:col-span-4 flex flex-col gap-2">
+<label class="text-label-sm font-label-sm font-semibold text-primary">Passport Photo Preview</label>
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-3 flex flex-col items-center justify-center text-center bg-surface-container-low min-h-[170px] relative overflow-hidden group">
+<img class="w-24 h-28 object-cover rounded shadow-sm mb-2 border border-outline-variant" data-alt="A professional passport identity photograph of an East African Ugandan 12-year-old primary school student boy in formal school uniform, centered framing with soft balanced institutional light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuADqmxbFZxWHK9ojwI8eC9X4uCKm28ICcYIBkjX53ZsQz0OsbDekejf7-VZbhraO103AkZY9DLAo4cUq9NIYpGBhQFWB2mBkh9VcDGRV4Uy02SuQtNRPiFYhFL7P9aFy8X4puuLKlL311_3Z2hnGursqZ-CGp-PwjUDOFDxaMcuEueN7W20fBTQg4oUgL9CU0UdmQNtsNl0vx_QOTc58y_zOpkFa4xT5r6-vs79U69ZXv6eIEEomsXklw"/>
+<div class="flex items-center gap-2 text-label-sm font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]" data-icon="photo_camera">photo_camera</span>
+<span>Bio-Match: 99.4%</span>
+</div>
+</div>
+<div class="flex gap-1.5">
+<button class="flex-1 py-1 px-2 border border-outline rounded text-label-sm font-label-sm font-semibold hover:bg-surface-container flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="camera">camera</span>
+                    Webcam
+                  </button>
+<button class="flex-1 py-1 px-2 border border-outline rounded text-label-sm font-label-sm font-semibold hover:bg-surface-container flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="upload">upload</span>
+                    JPEG
+                  </button>
+</div>
+</div>
+<!-- Primary Form Fields -->
+<div class="sm:col-span-8 flex flex-col gap-4">
+<div>
+<label class="block text-label-sm font-label-sm font-semibold text-on-surface mb-1">Full Name (as per Birth Cert)</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-body-md font-body-md font-semibold text-primary focus:outline-none" readonly="" type="text" value="Kavuma Brian Mukasa"/>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-label-sm font-label-sm font-semibold text-on-surface mb-1">UNEB / PLE Index Number</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-data-mono font-data-mono text-primary focus:outline-none" readonly="" type="text" value="U0024/089/2023"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm font-semibold text-on-surface mb-1">MoES LIN (Learner ID)</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-data-mono font-data-mono text-primary focus:outline-none" readonly="" type="text" value="LIN-UG-2024-884102"/>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-3">
+<div>
+<label class="block text-label-sm font-label-sm font-semibold text-on-surface mb-1">Date of Birth</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-body-md font-body-md text-on-surface focus:outline-none" readonly="" type="text" value="14 March 2012 (12)"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm font-semibold text-on-surface mb-1">Gender</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-body-md font-body-md text-on-surface focus:outline-none" readonly="" type="text" value="Male"/>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm font-semibold text-on-surface mb-1">Nationality</label>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-3 py-2 text-body-md font-body-md text-on-surface focus:outline-none" readonly="" type="text" value="Ugandan"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Verification & Medical Footnotes -->
+<div class="flex flex-col gap-3 pt-3 border-t border-outline-variant">
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low border border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="fingerprint">fingerprint</span>
+<span class="text-body-md font-body-md font-semibold text-primary">NIRA NIN: CM12034981KLA</span>
+</div>
+<span class="text-label-sm font-label-sm text-secondary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="check">check</span>
+                  Verified via NIRA API
+                </span>
+</div>
+<div>
+<label class="block text-label-sm font-label-sm font-semibold text-on-surface mb-1">Special Needs &amp; Medical Sickbay Notes</label>
+<div class="p-3 bg-surface-container-low rounded-lg border border-outline-variant text-body-md font-body-md text-on-surface flex items-start gap-2">
+<span class="material-symbols-outlined text-error text-[20px] mt-0.5" data-icon="medical_services">medical_services</span>
+<span>Asthma (Inhaler kept at sickbay), Mild peanut allergy. Requires emergency notification if physical distress occurs during sports.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 2: Academic Stream & Class Allocation -->
+<div class="bg-surface-container-lowest p-6 rounded-lg border border-outline-variant flex flex-col gap-5">
+<div class="flex items-center justify-between border-b border-outline-variant pb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="meeting_room">meeting_room</span>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-primary">2. Academic Stream &amp; Class Allocation</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Class teacher attribution, room scheduling, and boarding categorization</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded bg-surface-container text-primary text-label-sm font-label-sm font-semibold">
+                Classroom Quota: 42/45
+              </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="p-4 rounded-lg border border-outline-variant bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm font-semibold text-on-surface-variant">Current Academic Level</span>
+<span class="material-symbols-outlined text-primary" data-icon="grade">grade</span>
+</div>
+<div class="text-headline-sm font-headline-sm text-primary font-bold">Primary 5 (P.5)</div>
+<div class="text-body-md font-body-md text-on-surface-variant">Assigned Stream: <span class="font-semibold text-primary">P.5 Blue</span></div>
+<div class="text-label-sm font-label-sm text-on-surface-variant border-t border-outline-variant pt-2 mt-1">
+                  Class Teacher: Mr. Okello Peter • Room B-104
+                </div>
+</div>
+<div class="p-4 rounded-lg border border-outline-variant bg-surface-container-low flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm font-semibold text-on-surface-variant">Attendance Model &amp; House</span>
+<span class="material-symbols-outlined text-secondary" data-icon="house">house</span>
+</div>
+<div class="text-headline-sm font-headline-sm text-primary font-bold">Day Scholar</div>
+<div class="text-body-md font-body-md text-on-surface-variant">Half-Board with School Lunch Package</div>
+<div class="text-label-sm font-label-sm text-on-surface-variant border-t border-outline-variant pt-2 mt-1 flex items-center justify-between">
+<span>House: <strong class="text-primary">Kabaka House</strong></span>
+<span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-bold text-[11px]">Yellow Color</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Multi-Guardian Binding & Ledger Hook (Right 5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<!-- SECTION 3: Multi-Guardian & Financial Payer Binding -->
+<div class="bg-surface-container-lowest p-6 rounded-lg border border-outline-variant flex flex-col gap-5">
+<div class="flex items-center justify-between border-b border-outline-variant pb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="family_restroom">family_restroom</span>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-primary">3. Multi-Guardian &amp; Payer Binding</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Parental authorizations &amp; SchoolPay routing</p>
+</div>
+</div>
+</div>
+<!-- Primary Guardian Card -->
+<div class="p-4 rounded-lg border-2 border-primary/20 bg-surface-container-low flex flex-col gap-3 relative">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-primary text-on-primary font-semibold">PRIMARY FEE PAYER</span>
+<span class="material-symbols-outlined text-secondary" data-icon="verified">verified</span>
+</div>
+<div>
+<h4 class="text-body-lg font-body-lg font-bold text-primary">Esther Nakato Mukasa</h4>
+<p class="text-body-md font-body-md text-on-surface-variant">Relationship: Mother • NIN: CM840291082KLA</p>
+</div>
+<div class="flex flex-col gap-1 text-body-md font-body-md bg-surface-container-lowest p-3 rounded border border-outline-variant">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant">Phone (MTN Mobile Money):</span>
+<span class="font-semibold text-primary">+256 772 849 102</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant">Email Billing:</span>
+<span class="text-primary">esther.nakato@mukasa.ug</span>
+</div>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant italic">
+                Receives SchoolPay SMS notifications, formal invoices, and flexible installment approval requests.
+              </p>
+</div>
+<!-- Secondary Guardian Card -->
+<div class="p-4 rounded-lg border border-outline-variant bg-surface-container-low flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm px-2 py-0.5 rounded bg-surface text-on-surface-variant font-semibold">SECONDARY GUARDIAN</span>
+<span class="text-label-sm font-label-sm text-outline font-mono">ID: SEC-8910</span>
+</div>
+<div>
+<h4 class="text-body-lg font-body-lg font-bold text-primary">David Mukasa</h4>
+<p class="text-body-md font-body-md text-on-surface-variant">Relationship: Father • Phone: +256 701 492 881 (Airtel Money)</p>
+</div>
+<div class="p-2.5 rounded bg-surface-container-lowest border border-outline-variant text-label-sm font-label-sm text-on-surface-variant">
+<strong class="text-primary">Granted Permissions:</strong> Academic Reports, Emergency Medical Consent, School Gate Sign-out Protocol.
+              </div>
+</div>
+<!-- Sibling Linkage Hook -->
+<div class="p-4 rounded-lg bg-surface-container border border-outline-variant flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="group_add">group_add</span>
+<span class="text-body-md font-body-md font-bold text-primary">Linked Sibling Discovered</span>
+</div>
+<input checked="" class="rounded border-outline text-secondary focus:ring-secondary w-4 h-4" type="checkbox"/>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant">
+<strong>Joan Nakato Mukasa</strong> (P.3 Yellow - ID: STU-2022-4412) shares matching guardian NIN.
+              </p>
+<div class="flex items-center justify-between pt-2 border-t border-outline-variant/60 text-label-sm font-label-sm">
+<span class="text-on-surface-variant">Auto-enable Sibling Split for Shared Mobile Money Deposits</span>
+<span class="text-secondary font-bold">Enabled</span>
+</div>
+</div>
+</div>
+<!-- SECTION 4: Fee Code & Historical Progression Hook -->
+<div class="bg-surface-container-lowest p-6 rounded-lg border border-outline-variant flex flex-col gap-5">
+<div class="flex items-center justify-between border-b border-outline-variant pb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="receipt_long">receipt_long</span>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-primary">4. Fee Code &amp; Financial Hook</h3>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Autonomous ledger assignment</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="p-3 rounded-lg bg-surface-container-low border border-outline-variant">
+<span class="text-label-sm font-label-sm text-on-surface-variant block">Assigned Student ID</span>
+<span class="text-headline-sm font-headline-sm font-bold text-primary">STU-2024-8901</span>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-low border border-outline-variant">
+<span class="text-label-sm font-label-sm text-on-surface-variant block">Generated SchoolPay PayCode</span>
+<span class="text-headline-sm font-headline-sm font-bold text-secondary font-mono tracking-tight">9920 4810 2489</span>
+</div>
+</div>
+<div class="p-3.5 rounded-lg bg-surface-container-low border border-outline-variant flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="text-label-sm font-label-sm text-on-surface-variant">Base Term Fee Package:</span>
+<span class="text-body-md font-body-md font-bold text-primary">UGX 850,000 / Term</span>
+</div>
+<div class="flex items-center justify-between text-label-sm font-label-sm text-on-surface-variant">
+<span>Tuition, Meals &amp; Statutory Assessment:</span>
+<span>P.5 Standard Day Scholar</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 pt-2">
+<button class="w-full py-2.5 px-4 rounded-lg border border-primary text-primary hover:bg-surface-container text-body-md font-body-md font-semibold transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="print">print</span>
+                Print Admission Letter &amp; Bank Slip
+              </button>
+<button class="w-full py-3 px-4 rounded-lg bg-primary text-on-primary hover:bg-primary-container text-body-md font-body-md font-bold transition-colors shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[20px]" data-icon="how_to_reg">how_to_reg</span>
+                Enroll Learner &amp; Activate Ledger
+              </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Recent Enrolled Learners Audit Log (Standard Corporate Data Table) -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant overflow-hidden mb-8">
+<div class="p-4 border-b border-outline-variant flex items-center justify-between bg-surface-container-low">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="history">history</span>
+<h4 class="text-body-lg font-body-lg font-bold text-primary">Recent Onboarding Batches • Term 3 Session</h4>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Live Ugandan Banking Interconnect: Online</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface text-label-sm font-label-sm text-on-surface-variant font-semibold">
+<th class="py-3 px-4">STUDENT NAME</th>
+<th class="py-3 px-4">STUDENT ID</th>
+<th class="py-3 px-4">CLASS &amp; STREAM</th>
+<th class="py-3 px-4">PRIMARY GUARDIAN</th>
+<th class="py-3 px-4">SCHOOLPAY CODE</th>
+<th class="py-3 px-4">LEDGER STATUS</th>
+<th class="py-3 px-4 text-right">ACTIONS</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md divide-y divide-outline-variant">
+<tr class="hover:bg-surface transition-colors">
+<td class="py-2.5 px-4 font-semibold text-primary">Kavuma Brian Mukasa</td>
+<td class="py-2.5 px-4 text-data-mono font-data-mono">STU-2024-8901</td>
+<td class="py-2.5 px-4">P.5 Blue</td>
+<td class="py-2.5 px-4">Esther Nakato (+256 772 849 102)</td>
+<td class="py-2.5 px-4 font-mono font-semibold text-secondary">9920 4810 2489</td>
+<td class="py-2.5 px-4">
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-secondary-container text-on-secondary-container font-semibold">Active &amp; Ready</span>
+</td>
+<td class="py-2.5 px-4 text-right">
+<button class="text-primary hover:text-secondary font-semibold text-label-sm font-label-sm">View Ledger</button>
+</td>
+</tr>
+<tr class="hover:bg-surface transition-colors bg-slate-50/50">
+<td class="py-2.5 px-4 font-semibold text-primary">Namubiru Sarah S.</td>
+<td class="py-2.5 px-4 text-data-mono font-data-mono">STU-2024-8900</td>
+<td class="py-2.5 px-4">P.5 Blue</td>
+<td class="py-2.5 px-4">Robert Ssempa (+256 782 119 400)</td>
+<td class="py-2.5 px-4 font-mono font-semibold text-secondary">9920 4810 2488</td>
+<td class="py-2.5 px-4">
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-secondary-container text-on-secondary-container font-semibold">Active &amp; Ready</span>
+</td>
+<td class="py-2.5 px-4 text-right">
+<button class="text-primary hover:text-secondary font-semibold text-label-sm font-label-sm">View Ledger</button>
+</td>
+</tr>
+<tr class="hover:bg-surface transition-colors">
+<td class="py-2.5 px-4 font-semibold text-primary">Okot Francis Xavier</td>
+<td class="py-2.5 px-4 text-data-mono font-data-mono">STU-2024-8899</td>
+<td class="py-2.5 px-4">P.5 Red</td>
+<td class="py-2.5 px-4">Grace Aber Okot (+256 703 555 120)</td>
+<td class="py-2.5 px-4 font-mono font-semibold text-secondary">9920 4810 2487</td>
+<td class="py-2.5 px-4">
+<span class="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-secondary-container text-on-secondary-container font-semibold">Active &amp; Ready</span>
+</td>
+<td class="py-2.5 px-4 text-right">
+<button class="text-primary hover:text-secondary font-semibold text-label-sm font-label-sm">View Ledger</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+</body></html>

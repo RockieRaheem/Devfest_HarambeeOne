@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Make School Fees Payment | HarambeeOne</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "primary-fixed-dim": "#bec6e0",
+            "on-secondary-container": "#fffbff",
+            "on-tertiary-fixed": "#002114",
+            "inverse-on-surface": "#eaf1ff",
+            "inverse-primary": "#bec6e0",
+            "surface-container-high": "#dce9ff",
+            "surface-container-low": "#eff4ff",
+            "surface-tint": "#565e74",
+            "secondary-container": "#4069f2",
+            "primary-container": "#131b2e",
+            "on-secondary-fixed": "#001551",
+            "surface": "#f8f9ff",
+            "on-surface-variant": "#45464d",
+            "on-primary-container": "#7c839b",
+            "on-surface": "#0b1c30",
+            "on-secondary-fixed-variant": "#0039b5",
+            "secondary-fixed": "#dce1ff",
+            "tertiary-fixed": "#85f8c4",
+            "surface-variant": "#d3e4fe",
+            "outline-variant": "#c6c6cd",
+            "on-primary-fixed": "#131b2e",
+            "error": "#ba1a1a",
+            "on-secondary": "#ffffff",
+            "on-primary-fixed-variant": "#3f465c",
+            "tertiary-container": "#002114",
+            "on-background": "#0b1c30",
+            "secondary-fixed-dim": "#b7c4ff",
+            "background": "#f8f9ff",
+            "tertiary": "#000000",
+            "inverse-surface": "#213145",
+            "secondary": "#1d4ed8",
+            "error-container": "#ffdad6",
+            "surface-dim": "#cbdbf5",
+            "on-tertiary-container": "#069669",
+            "surface-bright": "#f8f9ff",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed-variant": "#005137",
+            "surface-container-highest": "#d3e4fe",
+            "on-tertiary": "#ffffff",
+            "surface-container": "#e5eeff",
+            "outline": "#76777d",
+            "on-error-container": "#93000a",
+            "primary": "#000000",
+            "primary-fixed": "#dae2fd",
+            "on-error": "#ffffff",
+            "tertiary-fixed-dim": "#68dba9"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "gutter": "1.5rem",
+            "margin-mobile": "1rem",
+            "space-xl": "2.5rem",
+            "gutter-mobile": "1rem",
+            "margin": "2rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "display-lg": ["Public Sans"],
+            "label-md": ["Inter"],
+            "display-sm-mobile": ["Public Sans"],
+            "body-md": ["Inter"],
+            "headline-md": ["Public Sans"],
+            "tabular-numeric": ["Inter"],
+            "headline-sm": ["Public Sans"],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "headline-lg": ["Public Sans"],
+            "display-sm": ["Public Sans"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600"}],
+            "display-sm-mobile": ["26px", {"lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+            "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "tabular-numeric": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+            "headline-sm": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+            "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "display-sm": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "body-sm": ["13px", {"lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-fill {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    .level-1 {
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02);
+    }
+    .level-active {
+      box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+      border-color: #cbd5e1;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex justify-center selection:bg-secondary-fixed">
+<div class="w-full max-w-md min-h-screen flex flex-col bg-surface relative pb-28">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-margin-mobile h-16 bg-surface dark:bg-inverse-surface shadow-sm dark:shadow-none max-w-md mx-auto right-0 backdrop-blur-md bg-opacity-95">
+<button aria-label="Go back" class="w-10 h-10 flex items-center justify-center rounded-xl text-primary dark:text-inverse-primary hover:bg-surface-container-low dark:hover:bg-inverse-surface transition-colors active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary text-xl" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<span class="font-headline-md text-headline-md text-primary dark:text-inverse-primary tracking-tight font-bold">HarambeeOne</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant tracking-wider">SECURE BURSAR CHECKOUT</span>
+</div>
+<button aria-label="Support and Notifications" class="w-10 h-10 flex items-center justify-center rounded-xl text-primary dark:text-inverse-primary hover:bg-surface-container-low dark:hover:bg-inverse-surface transition-colors active:scale-95 transition-transform duration-150" type="button">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary text-xl" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 px-margin-mobile pt-20 pb-6 space-y-4">
+<!-- Breadcrumb & Status Subtitle -->
+<div class="flex items-center justify-between px-0.5 pt-1">
+<div class="flex items-center space-x-1.5">
+<span class="font-headline-lg text-headline-lg font-bold text-on-surface">Make School Fees Payment</span>
+</div>
+<div class="flex items-center space-x-1 bg-surface-container-low px-2 py-0.5 rounded-lg border border-outline-variant/30">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold uppercase">Term 1 • 2025</span>
+</div>
+</div>
+<!-- Learner Selector Segmented Control -->
+<section aria-labelledby="learner-selector-title" class="space-y-2">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold" id="learner-selector-title">Select Enrolled Student</h2>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Family Account #H1-8492</span>
+</div>
+<div class="grid grid-cols-1 gap-2">
+<!-- Joshua Namaganda (Active Selected) -->
+<div class="level-1 p-3.5 rounded-xl border-secondary/80 bg-white ring-1 ring-secondary/20 relative transition-all duration-150 cursor-pointer flex items-center justify-between">
+<div class="flex items-start space-x-3">
+<div class="w-10 h-10 rounded-xl bg-primary-container text-on-secondary flex items-center justify-center font-headline-sm font-bold text-sm shrink-0">
+                JN
+              </div>
+<div>
+<div class="flex items-center space-x-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Joshua Namaganda</span>
+<span class="bg-error-container/60 text-error px-1.5 py-0.2 rounded font-label-sm text-[10px] font-bold">DUE</span>
+</div>
+<div class="flex items-center space-x-2 mt-0.5">
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">P.1 Green</span>
+<span class="text-outline-variant">•</span>
+<span class="font-tabular-numeric text-body-sm font-semibold text-error">UGX 350,000 Due</span>
+</div>
+</div>
+</div>
+<div class="w-5 h-5 rounded-full border-2 border-secondary flex items-center justify-center bg-secondary">
+<span class="material-symbols-outlined text-white text-sm font-bold" data-icon="check">check</span>
+</div>
+</div>
+<!-- Sarah Namaganda (Secondary - Settled) -->
+<div class="level-1 p-3 rounded-xl border-slate-200/80 bg-white/70 hover:bg-white opacity-85 transition-all duration-150 cursor-pointer flex items-center justify-between">
+<div class="flex items-start space-x-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high text-on-surface-variant flex items-center justify-center font-headline-sm font-bold text-sm shrink-0">
+                SN
+              </div>
+<div>
+<div class="flex items-center space-x-2">
+<span class="font-headline-sm text-headline-sm font-medium text-on-surface">Sarah Namaganda</span>
+<span class="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] font-semibold bg-tertiary-fixed/30 text-on-tertiary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container mr-1"></span>
+                    SETTLED
+                  </span>
+</div>
+<div class="flex items-center space-x-2 mt-0.5">
+<span class="font-body-sm text-body-sm text-on-surface-variant">P.4 Blue</span>
+<span class="text-outline-variant">•</span>
+<span class="font-tabular-numeric text-body-sm text-on-tertiary-container font-semibold">UGX 0 Balance</span>
+</div>
+</div>
+</div>
+<div class="w-5 h-5 rounded-full border border-outline-variant"></div>
+</div>
+</div>
+</section>
+<!-- Invoice & Fee Breakdown Card -->
+<section class="level-1 rounded-xl p-space-md space-y-4 border border-slate-200">
+<div class="flex items-center justify-between pb-3 border-b border-slate-100">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Term 1 Outstanding Balance</span>
+<div class="flex items-baseline space-x-1.5 mt-0.5">
+<span class="font-display-sm text-display-sm text-on-surface font-extrabold tracking-tight">UGX 350,000</span>
+</div>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center space-x-1 text-xs px-2.5 py-1 rounded-full font-label-sm bg-amber-50 text-amber-800 border border-amber-200/60 font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+<span>Due in 6 Days</span>
+</span>
+<p class="font-body-sm text-[11px] text-on-surface-variant mt-1">Invoice #INV-2025-0418</p>
+</div>
+</div>
+<!-- Itemized Balance Summary -->
+<div class="space-y-2 bg-surface rounded-lg p-3 border border-slate-100">
+<div class="flex justify-between items-center text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Tuition Balance (Core Instruction)</span>
+<span class="font-tabular-numeric text-tabular-numeric font-semibold text-on-surface">UGX 250,000</span>
+</div>
+<div class="flex justify-between items-center text-body-sm font-body-sm">
+<span class="text-on-surface-variant">PTA Levy &amp; STEM Science Lab</span>
+<span class="font-tabular-numeric text-tabular-numeric font-semibold text-on-surface">UGX 100,000</span>
+</div>
+<div class="pt-2 border-t border-slate-200/70 flex justify-between items-center">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Total Payable Now</span>
+<span class="font-tabular-numeric font-bold text-on-surface text-base">UGX 350,000</span>
+</div>
+</div>
+<!-- Payment Amount Option Selector -->
+<div class="space-y-2 pt-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Payment Option</span>
+<div class="grid grid-cols-2 gap-2">
+<button class="py-2 px-3 rounded-lg border-2 border-secondary bg-surface-container-low text-secondary font-label-md text-label-md flex flex-col items-center text-center" type="button">
+<span class="font-bold">Pay Full Outstanding</span>
+<span class="text-[11px] font-medium font-tabular-numeric opacity-90">UGX 350,000</span>
+</button>
+<button class="py-2 px-3 rounded-lg border border-slate-200 bg-white text-on-surface-variant font-label-md text-label-md flex flex-col items-center text-center hover:bg-surface transition-colors" type="button">
+<span class="font-medium text-on-surface">Custom / Installment</span>
+<span class="text-[11px] text-on-surface-variant font-tabular-numeric">Min UGX 50,000</span>
+</button>
+</div>
+<!-- Pre-filled Interactive Input -->
+<div class="relative mt-2">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-on-surface-variant font-label-md font-semibold text-xs">UGX</span>
+<input class="w-full pl-12 pr-10 py-2.5 rounded-lg border border-slate-300 bg-white text-on-surface font-tabular-numeric font-bold text-base focus:border-secondary focus:ring-2 focus:ring-secondary/10 outline-none" readonly="" type="text" value="350,000"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center text-on-surface-variant">
+<span class="material-symbols-outlined text-base" data-icon="lock">lock</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Verified Payment Channels Selection -->
+<section class="space-y-2.5">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Verified Payment Channels (Uganda EdFinance)</h2>
+<span class="font-label-sm text-[11px] text-on-tertiary-container font-semibold flex items-center">
+<span class="material-symbols-outlined text-xs mr-0.5" data-icon="verified_user">verified_user</span> Instant Settlement
+          </span>
+</div>
+<div class="space-y-2">
+<!-- MTN Mobile Money (Selected) -->
+<label class="level-1 rounded-xl p-3.5 border-2 border-secondary bg-white flex items-start justify-between cursor-pointer relative block shadow-sm">
+<div class="flex items-start space-x-3">
+<div class="w-10 h-10 rounded-xl bg-amber-400 text-slate-900 font-extrabold flex items-center justify-center font-display-sm text-xs shrink-0 tracking-tight">
+                MTN
+              </div>
+<div class="space-y-0.5">
+<div class="flex items-center space-x-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">MTN Mobile Money</span>
+<span class="bg-amber-100 text-amber-900 text-[10px] font-bold px-1.5 py-0.2 rounded">SchoolPay Push</span>
+</div>
+<p class="font-body-sm text-xs text-on-surface-variant font-medium">Zero transaction charge promo • Instant Bursar Settlement</p>
+<div class="pt-1 flex items-center space-x-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<span class="text-[11px] font-semibold text-emerald-700 font-label-sm">Bursar Cashbook Live Link Active</span>
+</div>
+</div>
+</div>
+<div class="mt-1">
+<input checked="" class="w-4 h-4 text-secondary focus:ring-secondary border-slate-300" name="payment_channel" type="radio"/>
+</div>
+</label>
+<!-- Airtel Money Treasury -->
+<label class="level-1 rounded-xl p-3.5 border border-slate-200 bg-white hover:border-slate-300 flex items-start justify-between cursor-pointer relative block transition-all">
+<div class="flex items-start space-x-3">
+<div class="w-10 h-10 rounded-xl bg-red-600 text-white font-bold flex items-center justify-center font-display-sm text-xs shrink-0">
+                airtel
+              </div>
+<div class="space-y-0.5">
+<div class="flex items-center space-x-2">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Airtel Money Treasury</span>
+</div>
+<p class="font-body-sm text-xs text-on-surface-variant">Direct Pay via *185# with instant confirmation prompt</p>
+<span class="text-[11px] text-on-surface-variant/80 font-label-sm block">Standard network tariff applies</span>
+</div>
+</div>
+<div class="mt-1">
+<input class="w-4 h-4 text-secondary focus:ring-secondary border-slate-300" name="payment_channel" type="radio"/>
+</div>
+</label>
+<!-- Stanbic Bank SchoolPay EFT -->
+<label class="level-1 rounded-xl p-3.5 border border-slate-200 bg-white hover:border-slate-300 flex items-start justify-between cursor-pointer relative block transition-all">
+<div class="flex items-start space-x-3">
+<div class="w-10 h-10 rounded-xl bg-blue-700 text-white font-bold flex items-center justify-center font-display-sm text-xs shrink-0">
+                STAN
+              </div>
+<div class="space-y-0.5">
+<div class="flex items-center space-x-2">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Stanbic Bank SchoolPay EFT</span>
+</div>
+<p class="font-body-sm text-xs text-on-surface-variant">Bank reference code generated instantly for branch or online banking</p>
+</div>
+</div>
+<div class="mt-1">
+<input class="w-4 h-4 text-secondary focus:ring-secondary border-slate-300" name="payment_channel" type="radio"/>
+</div>
+</label>
+</div>
+</section>
+<!-- Guardian Mobile Money Phone Number Field -->
+<section class="level-1 rounded-xl p-4 bg-white space-y-2 border border-slate-200">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold" for="phone-input">
+            Guardian Mobile Money Phone Number
+          </label>
+<span class="inline-flex items-center space-x-1 text-on-tertiary-container text-xs font-semibold">
+<span class="material-symbols-outlined text-sm" data-icon="check_circle">check_circle</span>
+<span class="text-[11px]">Verified Primary Guardian</span>
+</span>
+</div>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-lg" data-icon="phone_iphone">phone_iphone</span>
+</div>
+<input class="w-full pl-10 pr-24 py-2.5 rounded-lg border border-slate-300 bg-white text-on-surface font-tabular-numeric font-semibold text-sm focus:border-secondary focus:ring-2 focus:ring-secondary/10 outline-none" id="phone-input" type="tel" value="+256 772 491 802"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+<button class="text-xs text-secondary font-semibold font-label-sm hover:underline" type="button">Change</button>
+</div>
+</div>
+<p class="text-[11px] text-on-surface-variant font-body-sm">
+          A USSD notification push prompt will appear on this handset to authorize PIN debit.
+        </p>
+</section>
+<!-- Primary Action CTA Button Block -->
+<div class="pt-2 space-y-3">
+<button class="w-full h-12 bg-primary hover:bg-slate-900 text-on-primary rounded-xl font-headline-sm text-headline-sm font-bold flex items-center justify-center space-x-2 shadow-md hover:shadow-lg active:scale-[0.99] transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-base" data-icon="lock">lock</span>
+<span>Authorize UGX 350,000 via MTN MoMo Push</span>
+<span class="material-symbols-outlined text-base text-primary-fixed-dim" data-icon="fingerprint">fingerprint</span>
+</button>
+<div class="flex items-center justify-center space-x-2 text-center px-4">
+<span class="material-symbols-outlined text-xs text-on-tertiary-container" data-icon="verified">verified</span>
+<p class="font-body-sm text-[11px] text-on-surface-variant leading-tight">
+            Transactions are cryptographically reconciled and posted instantly to the school's MoES certified cashbook.
+          </p>
+</div>
+</div>
+<!-- Quick Receipt Security Badge -->
+<div class="bg-surface-container-low rounded-lg p-2.5 flex items-center justify-between border border-outline-variant/30 text-xs">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-secondary text-base" data-icon="receipt_long">receipt_long</span>
+<span class="text-on-surface font-medium">Auto-SMS &amp; Tax Invoicing e-Receipt</span>
+</div>
+<span class="font-label-sm text-on-surface-variant font-semibold uppercase">UG-MoES #849</span>
+</div>
+</main>
+<!-- BottomNavBar (Destination Shell: Finances Active) -->
+<nav aria-label="HarambeeOne Primary Navigation" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile py-2 bg-surface dark:bg-inverse-surface shadow-sm dark:shadow-none max-w-md mx-auto right-0 backdrop-blur-md bg-opacity-95">
+<!-- Destination 1: Overview (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1.5 hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 transition-transform duration-150" href="#overview">
+<span class="material-symbols-outlined text-xl" data-icon="dashboard">dashboard</span>
+<span class="font-label-sm text-label-sm mt-0.5">Overview</span>
+</a>
+<!-- Destination 2: Finances (ACTIVE - exact semantic match for school fees checkout) -->
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl px-3 py-1.5 hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 transition-transform duration-150 font-medium" href="#finances">
+<span class="material-symbols-outlined material-symbols-fill text-xl text-white" data-icon="account_balance_wallet" data-weight="fill" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-0.5 text-white font-semibold">Finances</span>
+</a>
+<!-- Destination 3: Academics (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1.5 hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 transition-transform duration-150" href="#academics">
+<span class="material-symbols-outlined text-xl" data-icon="school">school</span>
+<span class="font-label-sm text-label-sm mt-0.5">Academics</span>
+</a>
+<!-- Destination 4: Support (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-3 py-1.5 hover:text-primary dark:hover:text-inverse-primary transition-colors active:scale-95 transition-transform duration-150" href="#support">
+<span class="material-symbols-outlined text-xl" data-icon="contact_support">contact_support</span>
+<span class="font-label-sm text-label-sm mt-0.5">Support</span>
+</a>
+</nav>
+</div>
+</body></html>

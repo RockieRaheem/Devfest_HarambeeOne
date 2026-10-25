@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Subject Report - Mathematics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#191c20",
+                        "inverse-on-surface": "#eff0f6",
+                        "surface-tint": "#405f91",
+                        "outline-variant": "#c4c6d0",
+                        "surface-variant": "#e1e2e8",
+                        "on-primary-fixed-variant": "#264778",
+                        "on-secondary-fixed": "#002111",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#930009",
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "outline": "#747780",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "secondary-fixed": "#9cf5c0",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "surface": "#f8f9ff",
+                        "inverse-surface": "#2e3135",
+                        "surface-card": "#ffffff",
+                        "surface-container-highest": "#e1e2e8",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed": "#ffdad5",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#99f2bd",
+                        "error": "#ba1a1a",
+                        "surface-container-low": "#f2f3f9",
+                        "surface-dim": "#d8dae0",
+                        "background": "#f8f9ff",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#e7e8ee",
+                        "inverse-primary": "#a9c7ff",
+                        "primary": "#001736",
+                        "on-surface-subtle": "#43474f",
+                        "status-error": "#ba1a1a",
+                        "on-primary-container": "#7594ca",
+                        "tertiary": "#390001",
+                        "tertiary-container": "#600004",
+                        "error-container": "#ffdad6",
+                        "primary-fixed": "#d6e3ff",
+                        "secondary-fixed-dim": "#80d8a5",
+                        "on-primary-fixed": "#001b3d",
+                        "primary-container": "#002b5b",
+                        "on-secondary-container": "#0a7147",
+                        "status-success": "#006d43",
+                        "on-tertiary-fixed": "#410002",
+                        "secondary": "#006d43",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#191c20",
+                        "on-secondary-fixed-variant": "#005231",
+                        "on-surface-variant": "#43474f",
+                        "surface-container": "#eceef3",
+                        "on-tertiary-container": "#ff5a4e",
+                        "status-warning": "#d97706"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "unit": "4px",
+                        "margin-desktop": "24px",
+                        "stack-md": "16px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "label-sm": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        /* Line Chart Simple CSS Implementation */
+        .chart-container { position: relative; height: 160px; width: 100%; display: flex; align-items: flex-end; padding-top: 20px; }
+        .chart-svg { width: 100%; height: 100%; overflow: visible; }
+        .chart-line { fill: none; stroke: theme('colors.secondary'); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+        .chart-area { fill: url(#chart-gradient); opacity: 0.2; }
+        .chart-point { fill: theme('colors.surface-card'); stroke: theme('colors.secondary'); stroke-width: 2; }
+        .chart-label { font-family: 'Public Sans', sans-serif; font-size: 10px; fill: theme('colors.outline'); }
+        
+        .progress-bar-bg { background-color: theme('colors.surface-container-highest'); border-radius: theme('borderRadius.full'); overflow: hidden; height: 8px; }
+        .progress-bar-fill { background-color: theme('colors.secondary'); height: 100%; border-radius: theme('borderRadius.full'); }
+        
+        /* Focus styles for accessibility */
+        *:focus-visible { outline: 2px solid theme('colors.primary'); outline-offset: 2px; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-safe">
+<!-- TopAppBar -->
+<header class="bg-surface text-primary flex justify-between items-center px-margin-mobile h-14 w-full z-50 docked full-width top-0 border-b border-outline-variant flat no shadows">
+<button aria-label="Go Back" class="flex items-center justify-center p-2 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-primary font-bold">Mathematics</h1>
+<div class="flex items-center justify-center w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Student Profile Photo" class="w-full h-full object-cover" data-alt="A small, professional portrait photograph of a young female student named Sarah, wearing a neat school uniform consisting of a white blouse. She has a bright, engaging smile. The lighting is soft and natural, suggesting a bright, modern school environment. The background is slightly blurred and neutral." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9ACgkAjnfniSGDmnW_eYz2mMdhdWuegu_Cl0PrB-IljYq2u2i5oqFD3Y1s-Bhw_ccW5ClIfxZxQyNC1GMZgF4Saxcw4MkDPvxF7H97q4Kn-KhJkw3BmPCBlRMDxrqauxCfSAY-3oxh1SS2W6y-lc-YjBPXcjTxXmrowp9wjcoQcBKhxWTVGGXiNCcvV1f6sHgSvYqFIhU9w2c0r1zZb9Wq9E0zm0WsQDow2fNx4M3xoP7jSYeF2LEKg"/>
+</div>
+</header>
+<main class="px-margin-mobile py-stack-md md:px-margin-desktop md:max-w-7xl md:mx-auto grid grid-cols-1 md:grid-cols-12 gap-stack-md">
+<!-- Left Column / Top Section on Mobile -->
+<div class="md:col-span-8 flex flex-col gap-stack-md">
+<!-- Subject Overview Card -->
+<section class="bg-surface-card rounded-xl border border-surface-variant p-stack-md shadow-sm">
+<div class="flex justify-between items-start mb-stack-md">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Term Grade</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Current Standing</p>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-5xl font-bold text-primary font-headline-lg">A</span>
+<span class="font-data-mono text-data-mono text-secondary mt-1">92% Average</span>
+</div>
+</div>
+<div class="inline-flex items-center gap-2 bg-secondary-container bg-opacity-20 text-on-secondary-container px-3 py-1 rounded-full mb-stack-md">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-sm text-label-sm">On Track</span>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-stack-sm flex gap-3">
+<div class="flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</div>
+<div>
+<h3 class="font-label-sm text-label-sm text-on-surface font-semibold">Teacher's Note - Mr. K. Okoro</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">"Sarah has shown excellent comprehension of recent algebra topics. She participates actively and completes assignments on time. Keep up the great work!"</p>
+</div>
+</div>
+</section>
+<!-- Grade Trend Chart -->
+<section class="bg-surface-card rounded-xl border border-surface-variant p-stack-md shadow-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-stack-sm">Grade Trend</h2>
+<div class="chart-container">
+<svg class="chart-svg" preserveaspectratio="none" viewbox="0 0 400 120">
+<defs>
+<lineargradient id="chart-gradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="theme('colors.secondary')" stop-opacity="0.5"></stop>
+<stop offset="100%" stop-color="theme('colors.secondary')" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Data Points roughly mapping to Jan-Oct trend for a 92% average student -->
+<path class="chart-area" d="M0,120 L0,40 L66,35 L133,50 L200,20 L266,25 L333,10 L400,15 L400,120 Z"></path>
+<path class="chart-line" d="M0,40 L66,35 L133,50 L200,20 L266,25 L333,10 L400,15"></path>
+<circle class="chart-point" cx="0" cy="40" r="4"></circle>
+<circle class="chart-point" cx="66" cy="35" r="4"></circle>
+<circle class="chart-point" cx="133" cy="50" r="4"></circle>
+<circle class="chart-point" cx="200" cy="20" r="4"></circle>
+<circle class="chart-point" cx="266" cy="25" r="4"></circle>
+<circle class="chart-point" cx="333" cy="10" r="4"></circle>
+<circle class="chart-point" cx="400" cy="15" r="4"></circle>
+</svg>
+</div>
+<div class="flex justify-between mt-2 px-1">
+<span class="chart-label">Jan</span>
+<span class="chart-label">Mar</span>
+<span class="chart-label">May</span>
+<span class="chart-label">Jul</span>
+<span class="chart-label">Sep</span>
+<span class="chart-label">Oct</span>
+</div>
+</section>
+</div>
+<!-- Right Column / Bottom Section on Mobile -->
+<div class="md:col-span-4 flex flex-col gap-stack-md">
+<!-- Assessment Categories -->
+<section class="bg-surface-card rounded-xl border border-surface-variant p-stack-md shadow-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-stack-md">Categories Breakdown</h2>
+<div class="flex flex-col gap-stack-sm">
+<!-- Category 1 -->
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-body-md text-body-md text-on-surface">Exams</span>
+<span class="font-data-mono text-data-mono text-primary">95%</span>
+</div>
+<div class="progress-bar-bg">
+<div class="progress-bar-fill" style="width: 95%;"></div>
+</div>
+</div>
+<!-- Category 2 -->
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-body-md text-body-md text-on-surface">Homework</span>
+<span class="font-data-mono text-data-mono text-primary">88%</span>
+</div>
+<div class="progress-bar-bg">
+<div class="progress-bar-fill" style="width: 88%;"></div>
+</div>
+</div>
+<!-- Category 3 -->
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-body-md text-body-md text-on-surface">Class Participation</span>
+<span class="font-data-mono text-data-mono text-primary">90%</span>
+</div>
+<div class="progress-bar-bg">
+<div class="progress-bar-fill" style="width: 90%;"></div>
+</div>
+</div>
+<!-- Category 4 -->
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-body-md text-body-md text-on-surface">Quizzes</span>
+<span class="font-data-mono text-data-mono text-primary">94%</span>
+</div>
+<div class="progress-bar-bg">
+<div class="progress-bar-fill" style="width: 94%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Grades List -->
+<section class="bg-surface-card rounded-xl border border-surface-variant p-stack-md shadow-sm flex-grow">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-stack-md">Recent Grades</h2>
+<ul class="flex flex-col">
+<li class="flex justify-between items-center py-stack-sm border-b border-surface-variant last:border-0">
+<div>
+<p class="font-body-md text-body-md text-on-surface font-medium">Algebra Quiz</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Oct 12</p>
+</div>
+<span class="font-data-mono text-data-mono text-secondary bg-secondary-container bg-opacity-20 px-2 py-1 rounded">98%</span>
+</li>
+<li class="flex justify-between items-center py-stack-sm border-b border-surface-variant last:border-0">
+<div>
+<p class="font-body-md text-body-md text-on-surface font-medium">Geometry Midterm</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Oct 05</p>
+</div>
+<span class="font-data-mono text-data-mono text-secondary bg-secondary-container bg-opacity-20 px-2 py-1 rounded">92%</span>
+</li>
+<li class="flex justify-between items-center py-stack-sm border-b border-surface-variant last:border-0">
+<div>
+<p class="font-body-md text-body-md text-on-surface font-medium">Equations Worksheet</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Sep 28</p>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface-variant bg-surface-container-highest px-2 py-1 rounded">85%</span>
+</li>
+</ul>
+</section>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-3 mt-auto">
+<button class="bg-primary text-on-primary font-body-md text-body-md font-semibold h-12 rounded-lg w-full flex items-center justify-center gap-2 hover:bg-primary-container hover:text-on-primary-container transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2">
+<span class="material-symbols-outlined text-sm">chat</span>
+                    Message Teacher
+                </button>
+<button class="bg-surface-card text-primary border border-outline-variant font-body-md text-body-md font-semibold h-12 rounded-lg w-full flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors focus:ring-2 focus:ring-primary focus:ring-offset-2">
+<span class="material-symbols-outlined text-sm">download</span>
+                    Download Syllabus
+                </button>
+</div>
+</div>
+</main>
+</body></html>

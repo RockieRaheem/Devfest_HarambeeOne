@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HarambeeOne - Sponsor Program Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#dce9ff",
+                        "on-secondary-fixed": "#002111",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#360f00",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed-variant": "#264778",
+                        "outline-variant": "#c4c6d0",
+                        "on-tertiary-fixed-variant": "#713619",
+                        "secondary-fixed": "#78fbb6",
+                        "tertiary-fixed": "#ffdbcd",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#002b5b",
+                        "background": "#f8f9ff",
+                        "surface-container": "#e5eeff",
+                        "surface-dim": "#cbdbf5",
+                        "on-error": "#ffffff",
+                        "on-surface": "#0b1c30",
+                        "tertiary-container": "#4f1c02",
+                        "surface": "#f8f9ff",
+                        "on-surface-variant": "#43474f",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-secondary-container": "#007147",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-variant": "#d3e4fe",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#eff4ff",
+                        "tertiary": "#2f0c00",
+                        "on-error-container": "#93000a",
+                        "surface-tint": "#405f91",
+                        "tertiary-fixed-dim": "#ffb596",
+                        "inverse-primary": "#a9c7ff",
+                        "secondary-fixed-dim": "#59de9b",
+                        "surface-bright": "#f8f9ff",
+                        "on-secondary-fixed-variant": "#005232",
+                        "inverse-surface": "#213145",
+                        "error": "#ba1a1a",
+                        "secondary": "#006d43",
+                        "on-tertiary-container": "#cd805d",
+                        "primary": "#001736",
+                        "on-primary-container": "#7594ca",
+                        "secondary-container": "#75f8b3",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#0b1c30",
+                        "outline": "#747780",
+                        "primary-fixed": "#d6e3ff",
+                        "on-primary-fixed": "#001b3d",
+                        "primary-fixed-dim": "#a9c7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "section-gap": "32px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "headline-md": ["Public Sans"],
+                        "display-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="bg-surface-container-low dark:bg-surface-dim text-primary dark:text-primary-fixed font-label-sm text-label-sm font-headline-md text-headline-md text-primary docked full-height left-0 w-64 border-r border-outline-variant dark:border-outline flat no shadows active:scale-95 duration-150 flex flex-col h-screen sticky left-0 top-0 py-gutter hidden md:flex shrink-0">
+<div class="px-gutter mb-section-gap">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-primary-container text-on-primary-container flex items-center justify-center font-bold">SM</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-primary truncate" title="St. Mary's Primary">St. Mary's Primary</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Institutional Portal</p>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-unit">
+<ul class="space-y-unit">
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">school</span>
+<span>Students</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span>Finance</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span>Reconciliation</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 rounded-lg bg-secondary-container text-on-secondary-container font-semibold hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+<span>Sponsorship</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span>Reports</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="px-unit mt-auto pt-gutter border-t border-outline-variant">
+<ul class="space-y-unit">
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Help Center</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-gutter py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:bg-surface-container-highest transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar (Mobile) - Hidden on Desktop -->
+<header class="bg-surface-container-lowest dark:bg-surface text-primary dark:text-primary-fixed font-body-md text-body-md font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed docked full-width top-0 border-b border-outline-variant dark:border-outline flat no shadows cursor-pointer active:opacity-80 flex justify-between items-center w-full px-container-padding h-16 sticky top-0 z-50 md:hidden">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant" id="mobile-menu-btn">menu</span>
+<span class="font-headline-sm text-headline-sm font-bold">HarambeeOne</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full p-1">notifications</span>
+<img alt="User profile photo" class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A small, professional headshot of a school administrator in a bright, modern office setting. Light mode aesthetic with clean lines and soft lighting, emphasizing trust and competence. High contrast, professional color grading." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPOctv3h0bdVdGdVgEM3TxZRYBS2SWnNEYB5IV7r3-CamTODOoWP7MWzUlCXRzc-aLpqZIdlslkSgplgwe8oYXC4i6Z90MzdBg-UtcEFsFPjJ_CV5tpH0cO6Ce1P5S6nztcVn8-5BRp8xi9_TxAe7RQEwz_Il9eFSs3svhSRdTJnFMkfGjvsF_9YSWjRod1IsWZZZUYBbDjVvL6eo4oJSb9Wm6sTq4kv1u68kpqMjn955mQcbneA-26A"/>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto p-container-padding space-y-section-gap">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2 py-1 bg-surface-container-high text-on-surface rounded font-label-sm text-label-sm border border-outline-variant">ACTIVE PROGRAM</span>
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container rounded font-label-sm text-label-sm font-semibold">SOROBAN CONTRACT</span>
+</div>
+<h2 class="font-display-lg text-display-lg text-primary">Educate Girls NGO</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-1">2024 Scholarship Fund</p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 border border-outline text-primary rounded-lg font-label-sm text-label-sm hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+                        Add Beneficiaries
+                    </button>
+<button class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label-sm text-label-sm hover:bg-primary-fixed hover:text-on-primary-fixed transition-colors flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+                        Fund Program
+                    </button>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Funding Status -->
+<div class="lg:col-span-2 bg-surface-container-lowest border border-outline-variant rounded-xl p-gutter flex flex-col justify-between">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-1">Funding Status</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Current budget allocation and disbursement.</p>
+</div>
+<button class="px-3 py-1.5 bg-secondary text-on-secondary rounded-lg font-label-sm text-label-sm hover:bg-secondary-fixed hover:text-on-secondary-fixed transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">rocket_launch</span>
+                            Trigger Disbursement
+                        </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter mb-6">
+<div class="p-4 bg-surface rounded-lg border border-surface-container-high">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase">Total Budget</p>
+<p class="font-display-lg text-display-lg text-primary font-data-mono">50,000 USDC</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">~190,000,000 UGX</p>
+</div>
+<div class="p-4 bg-surface rounded-lg border border-surface-container-high">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-1 uppercase">Allocated Amount</p>
+<p class="font-display-lg text-display-lg text-secondary font-data-mono">35,500 USDC</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">71% of total budget</p>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-sm text-label-sm mb-2">
+<span class="text-on-surface-variant">Disbursement Progress</span>
+<span class="text-primary font-bold">25,000 USDC Disbursed</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2.5 overflow-hidden border border-outline-variant/30">
+<div class="bg-secondary h-2.5 rounded-full" style="width: 50%"></div>
+</div>
+</div>
+</div>
+<!-- Program Rules Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-gutter relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-surface-container-low to-surface-container-lowest z-0"></div>
+<div class="relative z-10 flex flex-col h-full">
+<div class="flex items-center gap-2 mb-4 text-primary">
+<span class="material-symbols-outlined">gavel</span>
+<h3 class="font-headline-sm text-headline-sm">Program Rules</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Smart contract execution parameters for automated disbursement.</p>
+<div class="space-y-3 flex-1">
+<div class="flex items-start gap-3 p-3 bg-surface rounded-lg border border-outline-variant/50">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">check_circle</span>
+<div>
+<p class="font-data-mono text-data-mono text-on-surface">90% Attendance</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Required for monthly release</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-surface rounded-lg border border-outline-variant/50">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">check_circle</span>
+<div>
+<p class="font-data-mono text-data-mono text-on-surface">Active Enrollment</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Verified by school admin</p>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3 bg-surface rounded-lg border border-outline-variant/50">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">check_circle</span>
+<div>
+<p class="font-data-mono text-data-mono text-on-surface">Fiat Conversion</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Auto-settle to UGX</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Beneficiary List Table -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="p-gutter border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Beneficiary List</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Protected view. Student names are semi-anonymized.</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="pl-9 pr-4 py-1.5 border border-outline-variant rounded-lg font-body-md text-body-md focus:border-primary focus:ring-1 focus:ring-primary outline-none bg-surface-container-lowest text-on-surface" placeholder="Search ID..." type="text"/>
+</div>
+<button class="p-1.5 border border-outline-variant rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="py-3 px-gutter font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Student ID</th>
+<th class="py-3 px-gutter font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Grade</th>
+<th class="py-3 px-gutter font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Eligibility</th>
+<th class="py-3 px-gutter font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Allocation</th>
+<th class="py-3 px-gutter font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap">Status</th>
+<th class="py-3 px-gutter font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider whitespace-nowrap text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/50">
+<tr class="bg-surface-container-lowest hover:bg-surface transition-colors">
+<td class="py-3 px-gutter">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface font-data-mono text-data-mono">A.K.</div>
+<span class="font-data-mono text-data-mono text-on-surface">STU-2024-089</span>
+</div>
+</td>
+<td class="py-3 px-gutter font-body-md text-body-md text-on-surface">P6</td>
+<td class="py-3 px-gutter">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-secondary-container/30 text-secondary-fixed-dim font-label-sm text-label-sm border border-secondary-container">
+<span class="material-symbols-outlined text-[14px]">check</span> Eligible
+                                    </span>
+</td>
+<td class="py-3 px-gutter font-data-mono text-data-mono text-on-surface">500 USDC</td>
+<td class="py-3 px-gutter">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm border border-outline-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> FIAT_SETTLED
+                                    </span>
+</td>
+<td class="py-3 px-gutter text-right">
+<button class="text-primary hover:bg-surface-container-low p-1.5 rounded transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="bg-[#F8FAFC] hover:bg-surface transition-colors">
+<td class="py-3 px-gutter">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface font-data-mono text-data-mono">J.N.</div>
+<span class="font-data-mono text-data-mono text-on-surface">STU-2024-112</span>
+</div>
+</td>
+<td class="py-3 px-gutter font-body-md text-body-md text-on-surface">P5</td>
+<td class="py-3 px-gutter">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-secondary-container/30 text-secondary-fixed-dim font-label-sm text-label-sm border border-secondary-container">
+<span class="material-symbols-outlined text-[14px]">check</span> Eligible
+                                    </span>
+</td>
+<td class="py-3 px-gutter font-data-mono text-data-mono text-on-surface">500 USDC</td>
+<td class="py-3 px-gutter">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm border border-outline-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-tint"></span> ONCHAIN_SENT
+                                    </span>
+</td>
+<td class="py-3 px-gutter text-right">
+<button class="text-primary hover:bg-surface-container-low p-1.5 rounded transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="bg-surface-container-lowest hover:bg-surface transition-colors">
+<td class="py-3 px-gutter">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface font-data-mono text-data-mono">M.O.</div>
+<span class="font-data-mono text-data-mono text-on-surface">STU-2024-045</span>
+</div>
+</td>
+<td class="py-3 px-gutter font-body-md text-body-md text-on-surface">P7</td>
+<td class="py-3 px-gutter">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-error-container/30 text-error font-label-sm text-label-sm border border-error-container">
+<span class="material-symbols-outlined text-[14px]">close</span> Ineligible
+                                    </span>
+</td>
+<td class="py-3 px-gutter font-data-mono text-data-mono text-on-surface">500 USDC</td>
+<td class="py-3 px-gutter">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm border border-outline-variant opacity-70">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> PENDING_REVIEW
+                                    </span>
+</td>
+<td class="py-3 px-gutter text-right">
+<button class="text-primary hover:bg-surface-container-low p-1.5 rounded transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</body></html>

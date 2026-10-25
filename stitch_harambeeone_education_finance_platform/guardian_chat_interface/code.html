@@ -1,0 +1,307 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Guardian Chat - HarambeeOne</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#e7e8ee",
+                      "inverse-primary": "#a9c7ff",
+                      "on-tertiary-fixed-variant": "#930009",
+                      "on-secondary": "#ffffff",
+                      "surface-container-highest": "#e1e2e8",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#600004",
+                      "on-secondary-container": "#0a7147",
+                      "surface-card": "#ffffff",
+                      "error": "#ba1a1a",
+                      "on-tertiary-container": "#ff5a4e",
+                      "background": "#f8f9ff",
+                      "outline": "#747780",
+                      "tertiary-fixed-dim": "#ffb4ab",
+                      "primary": "#001736",
+                      "tertiary-fixed": "#ffdad5",
+                      "on-secondary-fixed-variant": "#005231",
+                      "status-warning": "#d97706",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed-dim": "#a9c7ff",
+                      "tertiary": "#390001",
+                      "primary-container": "#002b5b",
+                      "on-primary-container": "#7594ca",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#e1e2e8",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed": "#9cf5c0",
+                      "on-primary-fixed-variant": "#264778",
+                      "on-background": "#191c20",
+                      "surface": "#f8f9ff",
+                      "on-surface": "#191c20",
+                      "secondary": "#006d43",
+                      "status-success": "#006d43",
+                      "on-primary-fixed": "#001b3d",
+                      "on-primary": "#ffffff",
+                      "surface-bright": "#f8f9ff",
+                      "inverse-on-surface": "#eff0f6",
+                      "secondary-container": "#99f2bd",
+                      "surface-dim": "#d8dae0",
+                      "secondary-fixed-dim": "#80d8a5",
+                      "on-surface-variant": "#43474f",
+                      "outline-variant": "#c4c6d0",
+                      "on-secondary-fixed": "#002111",
+                      "on-tertiary-fixed": "#410002",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#f2f3f9",
+                      "on-surface-subtle": "#43474f",
+                      "status-error": "#ba1a1a",
+                      "inverse-surface": "#2e3135",
+                      "surface-container": "#eceef3",
+                      "surface-tint": "#405f91",
+                      "primary-fixed": "#d6e3ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-desktop": "24px",
+                      "unit": "4px",
+                      "stack-md": "16px",
+                      "margin-mobile": "16px",
+                      "gutter": "16px",
+                      "stack-sm": "8px",
+                      "stack-lg": "32px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Public Sans"
+                      ],
+                      "headline-md": [
+                              "Public Sans"
+                      ],
+                      "headline-lg": [
+                              "Public Sans"
+                      ],
+                      "body-md": [
+                              "Public Sans"
+                      ],
+                      "data-mono": [
+                              "Public Sans"
+                      ],
+                      "label-sm": [
+                              "Public Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "Public Sans"
+                      ],
+                      "headline-sm": [
+                              "Public Sans"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-mono": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-sm": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Hide scrollbar for clean chat view */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex flex-col h-screen overflow-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-on-background border-b border-outline-variant dark:border-outline flex items-center justify-between px-margin-mobile md:px-margin-desktop h-16 shadow-none transition-colors duration-200">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors text-primary dark:text-primary-fixed-dim focus:outline-none focus:ring-2 focus:ring-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed-dim truncate px-4 flex-1 text-center">
+            Sarah Namono (Primary)
+        </h1>
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-variant transition-colors text-primary dark:text-primary-fixed-dim focus:outline-none focus:ring-2 focus:ring-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">info</span>
+</button>
+</header>
+<!-- Chat Area -->
+<main class="flex-1 overflow-y-auto no-scrollbar pt-20 pb-24 px-margin-mobile md:px-margin-desktop bg-surface-container-lowest max-w-3xl w-full mx-auto flex flex-col space-y-4">
+<!-- Date Header -->
+<div class="flex justify-center my-2">
+<span class="bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm px-3 py-1 rounded-full">Today</span>
+</div>
+<!-- Message 1 (Incoming) -->
+<div class="flex flex-col items-start max-w-[85%] sm:max-w-[70%]">
+<div class="bg-surface-variant text-on-surface rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm border border-outline-variant/30">
+<p class="font-body-md text-body-md">Hi Sarah, I see my permissions were updated to Full Access. Thank you!</p>
+</div>
+<span class="text-[10px] text-on-surface-subtle mt-1 ml-1 font-label-sm">09:41 AM</span>
+</div>
+<!-- Message 2 (Outgoing) -->
+<div class="flex flex-col items-end max-w-[85%] sm:max-w-[70%] self-end">
+<div class="bg-primary text-on-primary rounded-2xl rounded-tr-sm px-4 py-3 shadow-sm">
+<p class="font-body-md text-body-md">You're welcome! I wanted to make sure you can help with John's tuition payments this term.</p>
+</div>
+<div class="flex items-center mt-1 mr-1 space-x-1">
+<span class="text-[10px] text-on-surface-subtle font-label-sm">09:45 AM</span>
+<span class="material-symbols-outlined text-[14px] text-status-success" style="font-variation-settings: 'FILL' 1;">done_all</span>
+</div>
+</div>
+<!-- Message 3 (Incoming) -->
+<div class="flex flex-col items-start max-w-[85%] sm:max-w-[70%]">
+<div class="bg-surface-variant text-on-surface rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm border border-outline-variant/30">
+<p class="font-body-md text-body-md">Perfect. I'll take a look at the ledger now and schedule the next payment.</p>
+</div>
+<span class="text-[10px] text-on-surface-subtle mt-1 ml-1 font-label-sm">09:48 AM</span>
+</div>
+<!-- Spacer to ensure last message isn't hidden by input -->
+<div class="h-4 w-full flex-shrink-0"></div>
+</main>
+<!-- Message Input Bar -->
+<div class="fixed bottom-[128px] md:bottom-[72px] w-full bg-transparent z-40 pointer-events-none">
+  <div class="max-w-3xl mx-auto px-margin-mobile flex space-x-2 overflow-x-auto no-scrollbar py-2 pointer-events-auto">
+    <button class="flex-shrink-0 px-4 py-1.5 bg-secondary-container text-on-secondary-container border border-outline-variant/50 rounded-full font-label-sm text-label-sm hover:bg-secondary-fixed-dim transition-colors active:scale-95 shadow-sm" onclick="const input = document.querySelector('textarea'); input.value = this.innerText; input.focus();">Payment scheduled</button>
+    <button class="flex-shrink-0 px-4 py-1.5 bg-secondary-container text-on-secondary-container border border-outline-variant/50 rounded-full font-label-sm text-label-sm hover:bg-secondary-fixed-dim transition-colors active:scale-95 shadow-sm" onclick="const input = document.querySelector('textarea'); input.value = this.innerText; input.focus();">Check the ledger</button>
+    <button class="flex-shrink-0 px-4 py-1.5 bg-secondary-container text-on-secondary-container border border-outline-variant/50 rounded-full font-label-sm text-label-sm hover:bg-secondary-fixed-dim transition-colors active:scale-95 shadow-sm" onclick="const input = document.querySelector('textarea'); input.value = this.innerText; input.focus();">Receipt downloaded</button>
+    <button class="flex-shrink-0 px-4 py-1.5 bg-secondary-container text-on-secondary-container border border-outline-variant/50 rounded-full font-label-sm text-label-sm hover:bg-secondary-fixed-dim transition-colors active:scale-95 shadow-sm" onclick="const input = document.querySelector('textarea'); input.value = this.innerText; input.focus();">Notice received</button>
+  <button class="flex-shrink-0 px-4 py-1.5 bg-secondary-container text-on-secondary-container border border-outline-variant/50 rounded-full font-label-sm text-label-sm hover:bg-secondary-fixed-dim transition-colors active:scale-95 shadow-sm" onclick="const input = document.querySelector('textarea'); input.value = this.innerText; input.focus();">Payment sent</button><button class="flex-shrink-0 px-4 py-1.5 bg-secondary-container text-on-secondary-container border border-outline-variant/50 rounded-full font-label-sm text-label-sm hover:bg-secondary-fixed-dim transition-colors active:scale-95 shadow-sm" onclick="const input = document.querySelector('textarea'); input.value = this.innerText; input.focus();">Receipt attached</button><button class="flex-shrink-0 px-4 py-1.5 bg-secondary-container text-on-secondary-container border border-outline-variant/50 rounded-full font-label-sm text-label-sm hover:bg-secondary-fixed-dim transition-colors active:scale-95 shadow-sm" onclick="const input = document.querySelector('textarea'); input.value = this.innerText; input.focus();">View student ledger</button><button class="flex-shrink-0 px-4 py-1.5 bg-secondary-container text-on-secondary-container border border-outline-variant/50 rounded-full font-label-sm text-label-sm hover:bg-secondary-fixed-dim transition-colors active:scale-95 shadow-sm" onclick="const input = document.querySelector('textarea'); input.value = this.innerText; input.focus();">Coordination needed</button></div>
+</div><div class="fixed bottom-16 md:bottom-0 w-full bg-surface-container border-t border-outline-variant/50 px-margin-mobile py-3 z-40">
+<div class="max-w-3xl mx-auto flex items-end space-x-2">
+<button class="flex-shrink-0 p-2 text-primary hover:bg-surface-container-highest rounded-full transition-colors mb-0.5 focus:outline-none focus:ring-2 focus:ring-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">add</span>
+</button>
+<div class="flex-1 bg-surface-container-lowest border border-outline-variant focus-within:border-primary focus-within:border-2 rounded-2xl flex items-center min-h-[48px] px-4 transition-all overflow-hidden">
+<textarea class="w-full bg-transparent border-none focus:ring-0 p-0 py-3 resize-none font-body-md text-body-md text-on-surface placeholder:text-outline max-h-32 no-scrollbar" oninput="this.style.height = ''; this.style.height = Math.min(this.scrollHeight, 128) + 'px'" placeholder="Type a message..." rows="1"></textarea>
+</div>
+<button class="flex-shrink-0 bg-primary text-on-primary w-12 h-12 rounded-full flex items-center justify-center hover:bg-primary-container transition-colors mb-0.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+<!-- BottomNavBar (Hidden on desktop, visible on mobile) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-16 bg-surface dark:bg-on-background px-2 border-t border-outline-variant dark:border-outline shadow-none z-50 md:hidden">
+<!-- Home (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-4 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-95 duration-150 rounded-xl group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" style="font-variation-settings: 'FILL' 0;">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<!-- Payments (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-4 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-95 duration-150 rounded-xl group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" style="font-variation-settings: 'FILL' 0;">payments</span>
+<span class="font-label-sm text-label-sm mt-1">Payments</span>
+</a>
+<!-- Messages (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-xl px-4 py-1 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-label-sm text-label-sm mt-1 font-bold">Messages</span>
+</a>
+<!-- Notices (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-4 py-1 hover:bg-surface-container-highest dark:hover:bg-surface-variant transition-colors active:scale-95 duration-150 rounded-xl group" href="#">
+<div class="relative">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" style="font-variation-settings: 'FILL' 0;">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</div>
+<span class="font-label-sm text-label-sm mt-1">Notices</span>
+</a>
+</nav>
+<!-- Desktop Side Navigation Alternative (Hidden on mobile) -->
+<aside class="hidden md:flex flex-col fixed left-0 top-16 h-[calc(100vh-64px)] w-64 bg-surface-container-low border-r border-outline-variant z-40 p-4 space-y-2">
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 0;">home</span>
+<span class="font-body-lg text-body-lg">Home</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 0;">payments</span>
+<span class="font-body-lg text-body-lg">Payments</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg bg-secondary-container text-on-secondary-container font-medium" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-body-lg text-body-lg font-semibold">Messages</span>
+</a>
+<a class="flex items-center px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-highest transition-colors" href="#">
+<span class="material-symbols-outlined mr-3" style="font-variation-settings: 'FILL' 0;">notifications</span>
+<span class="font-body-lg text-body-lg flex-1">Notices</span>
+<span class="bg-error text-on-error font-label-sm text-[10px] px-2 py-0.5 rounded-full">3</span>
+</a>
+</aside>
+
+
+</body></html>

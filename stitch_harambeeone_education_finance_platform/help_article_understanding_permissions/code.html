@@ -1,0 +1,344 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Understanding permissions - HarambeeOne</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#405f91",
+                        "surface-container-highest": "#e1e2e8",
+                        "background": "#f8f9ff",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed": "#410002",
+                        "surface-bright": "#f8f9ff",
+                        "on-secondary-container": "#0a7147",
+                        "tertiary": "#390001",
+                        "surface": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed-variant": "#005231",
+                        "on-primary-fixed-variant": "#264778",
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "on-secondary-fixed": "#002111",
+                        "secondary-fixed-dim": "#80d8a5",
+                        "surface-card": "#ffffff",
+                        "on-surface-subtle": "#43474f",
+                        "secondary-fixed": "#9cf5c0",
+                        "primary-fixed": "#d6e3ff",
+                        "outline-variant": "#c4c6d0",
+                        "inverse-on-surface": "#eff0f6",
+                        "outline": "#747780",
+                        "surface-container-low": "#f2f3f9",
+                        "error-container": "#ffdad6",
+                        "status-success": "#006d43",
+                        "primary": "#001736",
+                        "tertiary-fixed": "#ffdad5",
+                        "status-warning": "#d97706",
+                        "on-primary-fixed": "#001b3d",
+                        "on-tertiary-fixed-variant": "#930009",
+                        "on-primary-container": "#7594ca",
+                        "surface-variant": "#e1e2e8",
+                        "surface-dim": "#d8dae0",
+                        "status-error": "#ba1a1a",
+                        "on-surface-variant": "#43474f",
+                        "inverse-primary": "#a9c7ff",
+                        "primary-container": "#002b5b",
+                        "on-background": "#191c20",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2e3135",
+                        "secondary": "#006d43",
+                        "surface-container": "#eceef3",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#e7e8ee",
+                        "on-tertiary-container": "#ff5a4e",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#99f2bd",
+                        "on-secondary": "#ffffff",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "on-surface": "#191c20",
+                        "tertiary-container": "#600004"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "gutter": "16px",
+                        "margin-desktop": "24px",
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "stack-md": "16px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "headline-md": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "headline-sm": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-safe">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim docked full-width top-0 sticky z-50 border-b border-outline-variant dark:border-outline flat no shadows">
+<div class="flex items-center justify-between px-margin-mobile md:px-margin-desktop h-14 w-full">
+<button aria-label="Go back" class="p-2 -ml-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 active:opacity-70 text-on-surface-variant dark:text-on-surface-subtle">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm-mobile md:text-headline-sm text-primary dark:text-primary-fixed-dim truncate">Understanding permissions</h1>
+<button aria-label="Share" class="p-2 -mr-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors duration-200 active:opacity-70 text-on-surface-variant dark:text-on-surface-subtle">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</button>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Intro -->
+<section class="mb-stack-lg animate-fade-in-up">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-stack-md">Understanding permissions</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                Permissions control what information guardians can see and what actions they can take within the HarambeeOne Parent Portal. Assigning the correct permission level ensures that sensitive financial data is protected while maintaining transparency for all caregivers.
+            </p>
+</section>
+<!-- Bento Grid for Permission Types -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-gutter mb-stack-lg">
+<!-- Full Access Card -->
+<div class="bg-surface-card border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 group">
+<div class="flex items-center space-x-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="admin_panel_settings">admin_panel_settings</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary">Full Access</h3>
+</div>
+<div class="inline-block px-3 py-1 bg-secondary/10 rounded-full mb-4">
+<span class="font-label-sm text-label-sm text-status-success uppercase tracking-wider">Co-Guardian</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                    This level provides unrestricted access to the student's profile. Full Access guardians are typically primary caregivers responsible for financial commitments.
+                </p>
+<ul class="space-y-2">
+<li class="flex items-start">
+<span class="material-symbols-outlined text-status-success mr-2 text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-subtle">View all student academic data and records</span>
+</li>
+<li class="flex items-start">
+<span class="material-symbols-outlined text-status-success mr-2 text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-subtle">Receive all school notices and emergency alerts</span>
+</li>
+<li class="flex items-start">
+<span class="material-symbols-outlined text-status-success mr-2 text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-subtle">Initiate financial transactions and manage payments</span>
+</li>
+</ul>
+</div>
+<!-- View Only Card -->
+<div class="bg-surface-card border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 group">
+<div class="flex items-center space-x-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-subtle">
+<span class="material-symbols-outlined" data-icon="visibility">visibility</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary">View Only</h3>
+</div>
+<div class="inline-block px-3 py-1 bg-surface-container-high rounded-full mb-4">
+<span class="font-label-sm text-label-sm text-on-surface-subtle uppercase tracking-wider">Restricted</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                    Designed for extended family members or secondary caregivers who need to stay informed about academic progress but are not responsible for fees.
+                </p>
+<ul class="space-y-2">
+<li class="flex items-start">
+<span class="material-symbols-outlined text-status-success mr-2 text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-subtle">View academic reports and attendance</span>
+</li>
+<li class="flex items-start">
+<span class="material-symbols-outlined text-status-success mr-2 text-[20px]" data-icon="check_circle">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface-subtle">Receive school notices</span>
+</li>
+<li class="flex items-start opacity-60">
+<span class="material-symbols-outlined text-status-error mr-2 text-[20px]" data-icon="cancel">cancel</span>
+<span class="font-body-md text-body-md text-on-surface-subtle">Cannot initiate financial transactions</span>
+</li>
+</ul>
+</div>
+</section>
+<!-- Comparison Table -->
+<section class="mb-stack-lg animate-fade-in-up">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-stack-md">Primary vs. Secondary Guardian</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Primary Guardian Card -->
+<div class="bg-surface-card border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 group">
+<div class="flex items-center space-x-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary">Primary Guardian</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">The main point of contact, legally responsible for all financial obligations, tuition fees, and child data management. They serve as the primary billing contact for all school transactions.</p>
+</div>
+<!-- Secondary Guardian Card -->
+<div class="bg-surface-card border border-outline-variant rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300 group">
+<div class="flex items-center space-x-3 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-subtle">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary">Secondary Guardian</h3>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">A supporting role for additional caregivers. They can have either Full or View Only access but do not hold primary financial responsibility. They can view the ledger but are not responsible for fee settlements unless designated as a co-payer.</p>
+</div>
+</div>
+</section><div class="mt-stack-sm px-4 py-2 bg-surface-container-low rounded-lg border border-outline-variant flex items-start gap-2 mb-stack-lg"><span class="material-symbols-outlined text-surface-tint text-[20px]" data-icon="info">info</span><p class="font-body-md text-body-md text-on-surface-variant">Note: Only the Primary Guardian can authorize recurring payment schedules or change billing methods for mandatory school fees.</p></div><section class="mb-stack-lg bg-surface-card border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="p-4 bg-surface-container-low border-b border-outline-variant">
+<h3 class="font-headline-sm text-headline-sm text-primary">Capabilities Comparison</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-bright">
+<th class="p-4 font-label-sm text-label-sm text-on-surface-subtle font-semibold">Capability</th>
+<th class="p-4 font-label-sm text-label-sm text-primary font-semibold text-center w-1/4">Full Access</th>
+<th class="p-4 font-label-sm text-label-sm text-on-surface-subtle font-semibold text-center w-1/4">View Only</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="p-4 font-body-md text-body-md text-on-background">View Ledger</td>
+<td class="p-4 text-center"><span class="material-symbols-outlined text-status-success" data-icon="check">check</span></td>
+<td class="p-4 text-center"><span class="material-symbols-outlined text-status-error opacity-50" data-icon="close">close</span></td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors bg-surface-bright">
+<td class="p-4 font-body-md text-body-md text-on-background">One-time Payments</td>
+<td class="p-4 text-center"><span class="material-symbols-outlined text-status-success" data-icon="check">check</span></td>
+<td class="p-4 text-center"><span class="material-symbols-outlined text-status-error opacity-50" data-icon="close">close</span></td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="p-4 font-body-md text-body-md text-on-background">Recurring Payment Schedules</td>
+<td class="p-4 text-center"><span class="material-symbols-outlined text-status-success" data-icon="check">check</span></td>
+<td class="p-4 text-center"><span class="material-symbols-outlined text-status-error opacity-50" data-icon="close">close</span></td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors bg-surface-bright">
+<td class="p-4 font-body-md text-body-md text-on-background">View Academic Reports</td>
+<td class="p-4 text-center"><span class="material-symbols-outlined text-status-success" data-icon="check">check</span></td>
+<td class="p-4 text-center"><span class="material-symbols-outlined text-status-success" data-icon="check">check</span></td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors">
+<td class="p-4 font-body-md text-body-md text-on-background">Receive Emergency Alerts</td>
+<td class="p-4 text-center"><span class="material-symbols-outlined text-status-success" data-icon="check">check</span></td>
+<td class="p-4 text-center"><span class="material-symbols-outlined text-status-success" data-icon="check">check</span></td>
+</tr>
+<tr class="hover:bg-surface-container-lowest transition-colors bg-surface-bright">
+<td class="p-4 font-body-md text-body-md text-on-background">Edit Child Profile</td>
+<td class="p-4 text-center"><span class="material-symbols-outlined text-status-success" data-icon="check">check</span></td>
+<td class="p-4 text-center"><span class="material-symbols-outlined text-status-error opacity-50" data-icon="close">close</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Related Articles -->
+<section class="mb-stack-lg animate-fade-in-up">
+  <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-stack-md">How to change permissions</h2>
+  <div class="bg-surface-card border border-outline-variant rounded-xl p-6 shadow-sm">
+    <p class="font-body-md text-body-md text-on-surface-variant mb-4">
+      Primary Guardians can update the permission levels of secondary caregivers through the guardian management settings.
+    </p>
+    <ol class="space-y-3 list-decimal list-inside">
+      <li class="font-body-md text-body-md text-on-surface-subtle">
+        Go to the <span class="font-semibold text-primary">Profile</span> tab in the main navigation.
+      </li>
+      <li class="font-body-md text-body-md text-on-surface-subtle">
+        Select <span class="font-semibold text-primary">Guardian Management</span>.
+      </li>
+      <li class="font-body-md text-body-md text-on-surface-subtle">
+        Tap the guardian's name whose permissions you wish to change.
+      </li>
+      <li class="font-body-md text-body-md text-on-surface-subtle">
+        Select <span class="font-semibold text-primary">Edit Permissions</span> and choose between 'Full Access' or 'View Only'.
+      </li>
+      <li class="font-body-md text-body-md text-on-surface-subtle">
+        Tap <span class="font-semibold text-primary">Save Changes</span> to apply.
+      </li>
+    </ol>
+  </div>
+</section><section class="mb-stack-lg animate-fade-in-up">
+  <h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-stack-md">Permission Change History</h2>
+  <div class="bg-surface-card border border-outline-variant rounded-xl p-6 shadow-sm">
+    <div class="space-y-4">
+      <div class="flex gap-3">
+        <div class="mt-1">
+          <span class="material-symbols-outlined text-surface-tint" data-icon="history">history</span>
+        </div>
+        <div>
+          <p class="font-body-md text-body-md text-on-surface-variant font-semibold">Permissions updated to Full Access</p>
+          <p class="font-body-md text-body-md text-on-surface-subtle">by Sarah M. (Primary Guardian)</p>
+          <p class="font-label-sm text-label-sm text-on-surface-subtle mt-1">Oct 12, 2023</p>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <div class="mt-1">
+          <span class="material-symbols-outlined text-surface-tint" data-icon="person_add">person_add</span>
+        </div>
+        <div>
+          <p class="font-body-md text-body-md text-on-surface-variant font-semibold">New Secondary Guardian added (Mark T.)</p>
+          <p class="font-body-md text-body-md text-on-surface-subtle">by Sarah M.</p>
+          <p class="font-label-sm text-label-sm text-on-surface-subtle mt-1">Sep 28, 2023</p>
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <div class="mt-1">
+          <span class="material-symbols-outlined text-surface-tint" data-icon="update">update</span>
+        </div>
+        <div>
+          <p class="font-body-md text-body-md text-on-surface-variant font-semibold">Permissions set to View Only for Mark T.</p>
+          <p class="font-body-md text-body-md text-on-surface-subtle">by Sarah M.</p>
+          <p class="font-label-sm text-label-sm text-on-surface-subtle mt-1">Sep 28, 2023</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="mt-stack-lg pt-stack-md border-t border-outline-variant">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-stack-sm">Related Articles</h3>
+<div class="flex flex-col space-y-2">
+<a class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-low transition-colors group" href="#">
+<span class="font-body-md text-body-md text-surface-tint group-hover:text-primary transition-colors">Adding a second guardian</span>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-low transition-colors group" href="#">
+<span class="font-body-md text-body-md text-surface-tint group-hover:text-primary transition-colors">Removing a guardian</span>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+</section>
+</main>
+<!-- Suppressed Bottom Nav as this is a task-focused sub-page -->
+
+
+</body></html>

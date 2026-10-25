@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Parent Dashboard - HarambeeOne</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Source+Serif+4:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error-container": "#ffdad6",
+                    "on-error": "#ffffff",
+                    "deep-navy": "#002B5B",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#a9c7ff",
+                    "tertiary-container": "#3f261c",
+                    "tertiary-fixed": "#ffdbce",
+                    "background": "#faf9f7",
+                    "outline-variant": "#c4c6d0",
+                    "surface": "#faf9f7",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#2f3130",
+                    "warning-ochre": "#B38B3F",
+                    "outline": "#747780",
+                    "secondary-fixed": "#d3e8d5",
+                    "on-surface-variant": "#43474f",
+                    "surface-container-lowest": "#ffffff",
+                    "clay-terracotta": "#8C6A5D",
+                    "secondary-container": "#d0e5d2",
+                    "tertiary-fixed-dim": "#e7beae",
+                    "surface-container-high": "#e9e8e6",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed": "#001b3d",
+                    "primary": "#001736",
+                    "ink-black": "#1A1C1E",
+                    "inverse-on-surface": "#f1f1ef",
+                    "surface-tint": "#405f91",
+                    "surface-bright": "#faf9f7",
+                    "on-tertiary-fixed": "#2c160c",
+                    "secondary": "#506354",
+                    "secondary-fixed-dim": "#b7ccb9",
+                    "on-background": "#1a1c1b",
+                    "primary-fixed": "#d6e3ff",
+                    "on-primary-container": "#7594ca",
+                    "on-primary-fixed-variant": "#264778",
+                    "on-secondary-fixed-variant": "#394b3d",
+                    "surface-container-low": "#f4f3f1",
+                    "surface-dim": "#dadad8",
+                    "primary-container": "#002b5b",
+                    "on-secondary": "#ffffff",
+                    "surface-variant": "#e3e2e0",
+                    "inverse-primary": "#a9c7ff",
+                    "paper-white": "#F9F8F6",
+                    "on-secondary-container": "#546758",
+                    "on-error-container": "#93000a",
+                    "on-tertiary-container": "#b08b7d",
+                    "on-tertiary-fixed-variant": "#5d4034",
+                    "success-jewel": "#2D5A43",
+                    "surface-container": "#efeeec",
+                    "surface-container-highest": "#e3e2e0",
+                    "sage-earth": "#4A5D4E",
+                    "on-surface": "#1a1c1b",
+                    "tertiary": "#271209",
+                    "on-secondary-fixed": "#0e1f13"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "section-gap": "80px",
+                    "margin-mobile": "24px",
+                    "margin-desktop": "64px",
+                    "unit": "8px",
+                    "element-gap": "16px"
+            },
+            "fontFamily": {
+                    "label-sm": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "headline-md": [
+                            "\"Source Serif 4\""
+                    ],
+                    "body-sm": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "label-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "headline-lg-mobile": [
+                            "\"Source Serif 4\""
+                    ],
+                    "headline-sm": [
+                            "\"Source Serif 4\""
+                    ],
+                    "headline-lg": [
+                            "\"Source Serif 4\""
+                    ],
+                    "body-md": [
+                            "Plus Jakarta Sans"
+                    ],
+                    "body-lg": [
+                            "Plus Jakarta Sans"
+                    ]
+            },
+            "fontSize": {
+                    "label-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-md": [
+                            "28px",
+                            {
+                                    "lineHeight": "34px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-sm": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.02em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "30px",
+                            {
+                                    "lineHeight": "36px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-sm": [
+                            "22px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg": [
+                            "40px",
+                            {
+                                    "lineHeight": "48px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            background-color: theme('colors.background');
+        }
+        
+        .ambient-shadow {
+            box-shadow: 0 10px 40px -10px rgba(0, 43, 91, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background min-h-screen flex flex-col md:flex-row font-body-md">
+<!-- Mobile Top App Bar -->
+<header class="md:hidden w-full top-0 sticky bg-background dark:bg-ink-black border-b border-surface-variant/30 flex justify-between items-center px-margin-mobile py-4 z-40">
+<button class="hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<span class="material-symbols-outlined text-deep-navy dark:text-primary-fixed-dim" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-deep-navy dark:text-paper-white">HarambeeOne</h1>
+<button class="hover:opacity-80 transition-opacity active:scale-95 duration-200">
+<img alt="Parent Profile Avatar" class="w-8 h-8 rounded-full object-cover border border-surface-variant" data-alt="A highly detailed portrait photograph of a confident professional parent, dressed in sophisticated smart-casual attire. The background is a soft, out-of-focus modern office or home environment with warm, natural lighting. The color palette is composed of soft neutrals, deep navy blues, and subtle earth tones, conveying trust, reliability, and high-end editorial aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtBsjs4YDd2pZxT19nIXtaCoXDZi5MHaF_atJ-zDzoLrKPAFvk9FjDHhKR9MVC-1ZYF83itXomunC1EsFIdiIFaBz6fbb2pk5iIkr1VpGyf4kgO-cLONkAi3PgvuNExgCSfAjFsxagJ1mI-7LiRYIwfA04r6tjLBnNHvkVhqN8yqN3WwWtMahOageIDIsWvlW264KsE5XKTW9mwkCX6ZUVjkoCUN94v-xxiTaR6n0_gKch2BI2tNWL2w"/>
+</button>
+</header>
+<!-- Desktop Side Navigation -->
+<nav class="hidden md:flex h-screen sticky top-0 w-80 max-w-[80vw] bg-paper-white dark:bg-ink-black border-r border-surface-variant/20 shadow-2xl shadow-deep-navy/5 flex-col gap-element-gap p-margin-mobile z-40 shrink-0">
+<div class="mb-8">
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-deep-navy">HarambeeOne</h1>
+</div>
+<div class="flex items-center gap-4 mb-section-gap">
+<img alt="Parent Profile" class="w-12 h-12 rounded-full object-cover border border-surface-variant" data-alt="A highly detailed portrait photograph of a confident professional parent, dressed in sophisticated smart-casual attire. The background is a soft, out-of-focus modern office or home environment with warm, natural lighting. The color palette is composed of soft neutrals, deep navy blues, and subtle earth tones, conveying trust, reliability, and high-end editorial aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3Xr5ntJhKizaQZStt-_bXlhfBKOzLmPEAjre3pXCExY8cmXLlTSQStHD_wsTr4vQVbKjC9NzpHJDirH2jC4bXVZ6ILlpee5HkEZx3mW8tZE8QCdqWGTTpGXYaal2lQswlBKgffyHzt9WmdliDTiFEhiVGlyLyrY7AsnitHnfKIkADHoMq9v_WjBziMb1ePNfZqS0Pxxx-26ujKiT8gqz77HI5ch8Qm2P82wSNpATHWuEDvWQM9n-yBg"/>
+<div>
+<p class="font-label-md text-label-md text-deep-navy">Marcus Evans</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Primary Guardian</p>
+<p class="font-label-sm text-label-sm text-outline mt-1 uppercase tracking-wider">HarambeeOne ID: 88291</p>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-deep-navy dark:text-primary-fixed-dim font-bold bg-surface-container-low dark:bg-surface-container-highest active:opacity-70 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-md text-label-md">Overview</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:opacity-70 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_balance_wallet</span>
+<span class="font-label-md text-label-md">Finances</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:opacity-70 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">school</span>
+<span class="font-label-md text-label-md">Academics</span>
+</a>
+<div class="mt-8 mb-4">
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-wider px-4">Students</p>
+</div>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:opacity-70 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-label-md text-label-md">Kwame Evans</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:opacity-70 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-label-md text-label-md">Zara Evans</span>
+</a>
+<div class="mt-auto">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:opacity-70 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-on-surface-variant dark:text-outline hover:bg-surface-container dark:hover:bg-surface-container-high transition-colors active:opacity-70 transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">contact_support</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 max-w-[1140px] mx-auto w-full px-margin-mobile md:px-margin-desktop py-8 md:py-16 pb-32 md:pb-16 overflow-y-auto">
+<header class="mb-section-gap flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-wider mb-2">Welcome Back</p>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-deep-navy">Dashboard Overview</h2>
+</div>
+<button class="bg-deep-navy text-on-primary font-label-md text-label-md px-8 py-4 rounded-full hover:opacity-90 transition-opacity w-full md:w-auto text-center">
+                Make a Payment
+            </button>
+</header>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Financial Summary (Large Span) -->
+<section class="md:col-span-8 bg-paper-white rounded-xl p-8 ambient-shadow border border-surface-variant/50 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-fixed/20 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+<div class="flex justify-between items-start mb-12 relative z-10">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-deep-navy mb-1">Current Balance</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Term 2 Total Fees</p>
+</div>
+<span class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm px-3 py-1 rounded-full border border-surface-variant">Due in 14 days</span>
+</div>
+<div class="mb-12 relative z-10">
+<p class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-deep-navy font-bold">$4,250.00</p>
+</div>
+<div class="space-y-4 relative z-10">
+<div class="flex justify-between items-center py-4 border-b border-surface-variant/50">
+<span class="font-body-md text-body-md text-on-surface-variant">Kwame Evans (Grade 10)</span>
+<span class="font-label-md text-label-md text-deep-navy">$2,400.00</span>
+</div>
+<div class="flex justify-between items-center py-4">
+<span class="font-body-md text-body-md text-on-surface-variant">Zara Evans (Grade 7)</span>
+<span class="font-label-md text-label-md text-deep-navy">$1,850.00</span>
+</div>
+</div>
+</section>
+<!-- Quick Notices (Small Span) -->
+<section class="md:col-span-4 bg-secondary-fixed/30 rounded-xl p-8 ambient-shadow border border-secondary-fixed-dim/30 flex flex-col">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-success-jewel" style="font-variation-settings: 'FILL' 1;">campaign</span>
+<h3 class="font-headline-sm text-headline-sm text-deep-navy">Notices</h3>
+</div>
+<div class="flex-1 flex flex-col justify-center gap-6">
+<div class="bg-paper-white/80 p-5 rounded-lg border border-surface-variant/40">
+<span class="inline-block bg-[#F2F4F2] text-success-jewel font-label-sm text-label-sm px-2 py-0.5 rounded mb-2">Upcoming Event</span>
+<p class="font-label-md text-label-md text-deep-navy mb-1">Parent-Teacher Conferences</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Booking opens tomorrow at 9:00 AM.</p>
+</div>
+<div class="bg-paper-white/80 p-5 rounded-lg border border-surface-variant/40">
+<span class="inline-block bg-[#FDF8F0] text-warning-ochre font-label-sm text-label-sm px-2 py-0.5 rounded mb-2">Reminder</span>
+<p class="font-label-md text-label-md text-deep-navy mb-1">Field Trip Permission Slip</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Due for Zara by Friday.</p>
+</div>
+</div>
+</section>
+<!-- Students Section -->
+<section class="md:col-span-12 mt-section-gap">
+<h3 class="font-headline-sm text-headline-sm text-deep-navy mb-8">Students</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Kwame Card -->
+<div class="bg-paper-white rounded-xl p-6 ambient-shadow border border-surface-variant/50 flex gap-6 items-start hover:shadow-lg transition-shadow duration-300 cursor-pointer group">
+<img alt="Kwame Evans" class="w-24 h-24 rounded-lg object-cover" data-alt="A bright, high-quality portrait of a high school student boy, looking engaged and focused. He is wearing a neat, modern school uniform in navy and grey. The background is a slightly blurred, well-lit school library setting with large windows. The style is professional, warm, and highly editorial." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFTooPbiG0xaeVD6e_g-KAx8PLmWlttcSx9XD_tCrkcdKklEyaHZTWu8pJlwL41bIFXOs7xvaRAyOfv1QC2LoNPd9RBZIH9VFCB_9NWCCJX4YZX8VA791ZwmLZHHS3QQ-0oL4wzYsUKtqfIyavo-ESpOYlxt7a4xX8RSvejuXILTkMsDW1E8jkw5JU49CKvd0633KoHCa4PTiQGZG0yqqvdEsK2gSHJl4l-6R8ugmJ_BjfQVNTgJ4K5A"/>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-headline-sm text-headline-sm text-deep-navy group-hover:text-surface-tint transition-colors">Kwame Evans</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Grade 10 • Homeroom 10B</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-deep-navy transition-colors">chevron_right</span>
+</div>
+<div class="flex gap-4 mt-6 border-t border-surface-variant/50 pt-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">calendar_today</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">View Timetable</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">assignment</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Reports</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Zara Card -->
+<div class="bg-paper-white rounded-xl p-6 ambient-shadow border border-surface-variant/50 flex gap-6 items-start hover:shadow-lg transition-shadow duration-300 cursor-pointer group">
+<img alt="Zara Evans" class="w-24 h-24 rounded-lg object-cover" data-alt="A bright, high-quality portrait of a middle school student girl, smiling naturally. She is wearing a neat, modern school uniform in navy and grey. The background is a slightly blurred, vibrant school courtyard setting with natural sunlight. The style is professional, warm, and highly editorial." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOAs60ExkaGx-wpWJWMLHiirijGWL9Nqqocz3s-soAQUISRKbLJTlQGtrDgJsTZZUTW_AcTCf3_sLUGHYMUlyAXtxFYmhe4lYNfAIzNmvMQx_UMRrvYQRLrv_R014nJ9d0pHUxbJkWikvs7Fruj2Gu-r47_0dUu58xRdR96PAI1KwOaoU_hGATYNyyNYoR04j-avUglOTyOdzTQiASabMTuVAEQoFn3dYr2DNYeY_AfZr9E2zab55y2Q"/>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-2">
+<div>
+<h4 class="font-headline-sm text-headline-sm text-deep-navy group-hover:text-surface-tint transition-colors">Zara Evans</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Grade 7 • Homeroom 7A</p>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-deep-navy transition-colors">chevron_right</span>
+</div>
+<div class="flex gap-4 mt-6 border-t border-surface-variant/50 pt-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">calendar_today</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">View Timetable</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">assignment</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Reports</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Mobile Bottom Nav Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-paper-white dark:bg-ink-black shadow-[0_-4px_20px_rgba(0,43,91,0.05)]">
+<a class="flex flex-col items-center justify-center text-deep-navy dark:text-primary-fixed-dim bg-secondary-fixed/50 dark:bg-secondary-container/20 rounded-xl px-4 py-1.5 active:scale-90 transition-transform duration-200 hover:text-deep-navy dark:hover:text-primary-fixed" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-sm text-label-sm mt-1">Overview</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:scale-90 transition-transform duration-200 hover:text-deep-navy dark:hover:text-primary-fixed px-4 py-1.5" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm mt-1">Finances</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:scale-90 transition-transform duration-200 hover:text-deep-navy dark:hover:text-primary-fixed px-4 py-1.5" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">school</span>
+<span class="font-label-sm text-label-sm mt-1">Academics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline active:scale-90 transition-transform duration-200 hover:text-deep-navy dark:hover:text-primary-fixed px-4 py-1.5" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">contact_support</span>
+<span class="font-label-sm text-label-sm mt-1">Support</span>
+</a>
+</nav>
+</body></html>

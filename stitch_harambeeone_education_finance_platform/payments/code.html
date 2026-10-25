@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Payments - HarambeeOne</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c4c6d0",
+                        "on-tertiary-container": "#ff5a4e",
+                        "on-surface-subtle": "#43474f",
+                        "surface": "#f8f9ff",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#80d8a5",
+                        "surface-tint": "#405f91",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "status-error": "#ba1a1a",
+                        "surface-container": "#eceef3",
+                        "error": "#ba1a1a",
+                        "secondary": "#006d43",
+                        "on-secondary-container": "#0a7147",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f2f3f9",
+                        "surface-dim": "#d8dae0",
+                        "on-surface-variant": "#43474f",
+                        "status-warning": "#d97706",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#191c20",
+                        "tertiary": "#390001",
+                        "status-success": "#006d43",
+                        "on-primary-fixed-variant": "#264778",
+                        "on-secondary-fixed-variant": "#005231",
+                        "surface-card": "#ffffff",
+                        "inverse-on-surface": "#eff0f6",
+                        "on-secondary-fixed": "#002111",
+                        "primary-container": "#002b5b",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#930009",
+                        "secondary-container": "#99f2bd",
+                        "primary": "#001736",
+                        "on-tertiary-fixed": "#410002",
+                        "on-primary-container": "#7594ca",
+                        "inverse-surface": "#2e3135",
+                        "on-error": "#ffffff",
+                        "outline": "#747780",
+                        "surface-container-high": "#e7e8ee",
+                        "tertiary-container": "#600004",
+                        "surface-bright": "#f8f9ff",
+                        "secondary-fixed": "#9cf5c0",
+                        "surface-variant": "#e1e2e8",
+                        "tertiary-fixed": "#ffdad5",
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "inverse-primary": "#a9c7ff",
+                        "on-background": "#191c20",
+                        "primary-fixed": "#d6e3ff",
+                        "surface-container-highest": "#e1e2e8",
+                        "background": "#f8f9ff",
+                        "on-primary-fixed": "#001b3d",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "24px",
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px",
+                        "margin-mobile": "16px",
+                        "gutter": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "label-sm": ["Public Sans"],
+                        "headline-md": ["Public Sans"],
+                        "headline-sm": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .radio-custom:checked + div { border-color: #001736; background-color: #f2f3f9; }
+        .checkbox-custom:checked + div { background-color: #001736; border-color: #001736; }
+        .checkbox-custom:checked + div svg { opacity: 1; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased min-h-screen flex flex-col pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 border-b border-surface-container-high bg-surface flex items-center justify-between px-margin-mobile h-14">
+<div class="flex items-center gap-4">
+<button aria-label="Go back" class="text-primary hover:bg-surface-container-low transition-colors duration-200 active:opacity-70 rounded-full p-2 -ml-2">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Payments</h1>
+</div>
+<!-- Optional Right Action, left empty for balance -->
+<div class="w-10"></div>
+</header>
+<main class="flex-1 max-w-[1200px] w-full mx-auto md:px-margin-desktop md:pt-stack-lg md:grid md:grid-cols-12 md:gap-gutter">
+<!-- Desktop Sidebar Nav (Hidden on Mobile) -->
+<aside class="hidden md:flex flex-col col-span-3 border-r border-surface-container-high pr-gutter min-h-[calc(100vh-3.5rem)] sticky top-14 py-stack-md">
+<nav class="flex flex-col gap-unit">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span>Home</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-secondary-container text-on-secondary-container font-body-md text-body-md font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="payments" data-weight="fill" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span>Payments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span>Notices</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-colors font-body-md text-body-md" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span>Profile</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<div class="col-span-12 md:col-span-6 lg:col-span-5 flex flex-col gap-stack-lg px-margin-mobile pt-stack-md pb-stack-lg md:px-0">
+<!-- Child Selector (Horizontal Scroll on Mobile) -->
+<section class="flex flex-col gap-stack-sm">
+<h2 class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Select Student</h2>
+<div class="flex gap-unit overflow-x-auto hide-scrollbar -mx-margin-mobile px-margin-mobile md:mx-0 md:px-0 md:flex-wrap">
+<label class="relative cursor-pointer shrink-0">
+<input checked="" class="peer sr-only radio-custom" name="child_select" type="radio"/>
+<div class="flex items-center gap-3 px-4 py-2 rounded-full border border-outline-variant bg-surface-card transition-all duration-200">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-body-md text-body-md font-bold">
+                                SN
+                            </div>
+<span class="font-body-md text-body-md font-medium text-on-surface">Sarah Namono</span>
+</div>
+</label>
+<label class="relative cursor-pointer shrink-0">
+<input class="peer sr-only radio-custom" name="child_select" type="radio"/>
+<div class="flex items-center gap-3 px-4 py-2 rounded-full border border-outline-variant bg-surface-card transition-all duration-200">
+<div class="w-8 h-8 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center font-body-md text-body-md font-bold">
+                                JN
+                            </div>
+<span class="font-body-md text-body-md font-medium text-on-surface">John Namono</span>
+</div>
+</label>
+</div>
+</section>
+<!-- Summary Card -->
+<section class="bg-surface-card rounded-xl border border-surface-container-high p-stack-md flex flex-col gap-stack-sm shadow-sm">
+<div class="flex justify-between items-start">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Total Outstanding Balance</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary mt-1">UGX 450,000</span>
+</div>
+<div class="bg-error-container text-on-error-container px-2 py-1 rounded font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="error">error</span>
+                        Due in 5 days
+                    </div>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden mt-2">
+<div class="bg-secondary h-full rounded-full w-[40%] transition-all duration-500"></div>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Paid: UGX 300,000</span>
+<span>Total: UGX 750,000</span>
+</div>
+</section>
+<!-- Fee Items Selection -->
+<section class="flex flex-col gap-stack-sm">
+<div class="flex justify-between items-center mb-1">
+<h2 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Outstanding Items</h2>
+<span class="font-label-sm text-label-sm text-primary cursor-pointer hover:underline">Select All</span>
+</div>
+<div class="flex flex-col border border-surface-container-high rounded-xl overflow-hidden bg-surface-card">
+<!-- Item 1 -->
+<label class="flex items-start gap-3 p-4 border-b border-surface-container-high cursor-pointer hover:bg-surface-container-lowest transition-colors relative">
+<input checked="" class="peer sr-only checkbox-custom" type="checkbox"/>
+<div class="w-5 h-5 rounded border-2 border-outline-variant mt-0.5 flex-shrink-0 flex items-center justify-center transition-colors">
+<svg class="w-3.5 h-3.5 text-on-primary opacity-0 transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<div class="flex-1 flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Term II Tuition Fee</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Mandatory</span>
+</div>
+<span class="font-data-mono text-data-mono text-primary">UGX 350,000</span>
+</label>
+<!-- Item 2 -->
+<label class="flex items-start gap-3 p-4 cursor-pointer hover:bg-surface-container-lowest transition-colors relative">
+<input checked="" class="peer sr-only checkbox-custom" type="checkbox"/>
+<div class="w-5 h-5 rounded border-2 border-outline-variant mt-0.5 flex-shrink-0 flex items-center justify-center transition-colors">
+<svg class="w-3.5 h-3.5 text-on-primary opacity-0 transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</div>
+<div class="flex-1 flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface">Development Fund</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Optional contribution</span>
+</div>
+<span class="font-data-mono text-data-mono text-primary">UGX 100,000</span>
+</label>
+</div>
+</section>
+<!-- Payment Method -->
+<section class="flex flex-col gap-stack-sm mt-stack-sm">
+<h2 class="font-headline-sm text-headline-sm font-semibold text-on-surface mb-1">Payment Method</h2>
+<div class="grid grid-cols-2 gap-unit">
+<label class="cursor-pointer">
+<input checked="" class="peer sr-only radio-custom" name="payment_method" type="radio"/>
+<div class="border border-outline-variant rounded-lg p-4 flex flex-col items-center gap-2 bg-surface-card transition-all text-center h-full">
+<span class="material-symbols-outlined text-[32px] text-surface-tint" data-icon="smartphone">smartphone</span>
+<span class="font-body-md text-body-md font-medium">Mobile Money</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-auto">MTN / Airtel</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only radio-custom" name="payment_method" type="radio"/>
+<div class="border border-outline-variant rounded-lg p-4 flex flex-col items-center gap-2 bg-surface-card transition-all text-center h-full">
+<span class="material-symbols-outlined text-[32px] text-surface-tint" data-icon="account_balance">account_balance</span>
+<span class="font-body-md text-body-md font-medium">Bank Transfer</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-auto">EFT / RTGS</span>
+</div>
+</label>
+</div>
+</section>
+</div>
+<!-- Desktop Payment Summary Sidebar (Hidden on Mobile) -->
+<div class="hidden md:flex flex-col col-span-4 lg:col-span-4 pt-stack-md px-margin-desktop">
+<div class="bg-surface-card border border-surface-container-high rounded-xl p-6 sticky top-20 flex flex-col gap-4 shadow-sm">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface border-b border-surface-container-high pb-4">Payment Summary</h3>
+<div class="flex justify-between items-center font-body-md text-body-md text-on-surface-variant">
+<span>Selected Items (2)</span>
+<span class="font-data-mono text-data-mono">UGX 450,000</span>
+</div>
+<div class="flex justify-between items-center font-body-md text-body-md text-on-surface-variant">
+<span>Transaction Fee</span>
+<span class="font-data-mono text-data-mono">UGX 2,500</span>
+</div>
+<div class="border-t border-surface-container-high pt-4 flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Total</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">UGX 452,500</span>
+</div>
+<button class="w-full bg-primary text-on-primary font-body-lg text-body-lg font-semibold h-12 rounded-lg mt-4 hover:opacity-90 transition-opacity flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span>
+                    Pay Now
+                </button>
+</div>
+</div>
+</main>
+<!-- Mobile Sticky Action Bar -->
+<div class="md:hidden fixed bottom-14 left-0 w-full bg-surface-card border-t border-surface-container-high p-margin-mobile shadow-[0_-4px_12px_rgba(0,0,0,0.05)] z-40">
+<div class="flex justify-between items-center mb-3">
+<span class="font-body-md text-body-md text-on-surface-variant">Total to pay</span>
+<span class="font-headline-sm text-headline-sm font-bold text-primary">UGX 452,500</span>
+</div>
+<button class="w-full bg-primary text-on-primary font-body-lg text-body-lg font-semibold h-12 rounded-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2 active:scale-[0.98]">
+<span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span>
+            Pay Now
+        </button>
+</div>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center bg-surface border-t border-surface-container-high py-2 px-margin-mobile z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform duration-150 active:scale-95 w-16" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="payments" data-weight="fill" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="font-label-sm text-label-sm mt-1">Payments</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform duration-150 active:scale-95 w-16" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-sm text-label-sm mt-1">Notices</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-transform duration-150 active:scale-95 w-16" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduFlow Parent Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-fixed-variant": "#454749",
+                        "surface-container-highest": "#e0e2e8",
+                        "on-primary-fixed-variant": "#33495b",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed": "#041d2e",
+                        "on-secondary-container": "#626361",
+                        "surface-tint": "#4b6174",
+                        "error": "#ba1a1a",
+                        "on-surface": "#181c20",
+                        "on-background": "#181c20",
+                        "tertiary-fixed-dim": "#c6c6c9",
+                        "secondary-fixed-dim": "#c7c6c4",
+                        "surface-bright": "#f7f9ff",
+                        "outline-variant": "#c3c7cc",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e0e2e8",
+                        "inverse-primary": "#b2c9df",
+                        "on-primary-container": "#c3daf0",
+                        "surface": "#f7f9ff",
+                        "tertiary": "#454649",
+                        "surface-container-high": "#e6e8ee",
+                        "on-tertiary-fixed": "#1a1c1e",
+                        "surface-container": "#eceef3",
+                        "on-surface-variant": "#43474c",
+                        "primary-container": "#4a6073",
+                        "inverse-surface": "#2d3135",
+                        "outline": "#73777d",
+                        "secondary": "#5e5f5d",
+                        "tertiary-container": "#5c5e60",
+                        "primary": "#32485a",
+                        "background": "#f7f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#cee5fc",
+                        "surface-container-low": "#f1f4f9",
+                        "secondary-fixed": "#e3e2e0",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#eef1f6",
+                        "on-tertiary-container": "#d7d7da",
+                        "secondary-container": "#e0e0dd",
+                        "on-secondary-fixed": "#1a1c1a",
+                        "primary-fixed-dim": "#b2c9df",
+                        "tertiary-fixed": "#e2e2e5",
+                        "on-secondary-fixed-variant": "#464745",
+                        "surface-dim": "#d8dadf",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "margin_mobile": "16px",
+                        "xxl": "80px",
+                        "container_max": "1280px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "xl": "48px",
+                        "gutter": "24px",
+                        "base_unit": "4px",
+                        "md": "16px",
+                        "lg": "24px"
+                    },
+                    fontFamily: {
+                        "display-lg": ["\"Source Serif 4\""],
+                        "headline-lg-mobile": ["\"Source Serif 4\""],
+                        "label-md": ["Inter"],
+                        "headline-md": ["\"Source Serif 4\""],
+                        "headline-lg": ["\"Source Serif 4\""],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    fontSize: {
+                        "display-lg": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "600" }],
+                        "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "600" }],
+                        "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "500" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "500" }],
+                        "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "600" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .ambient-shadow-1 { box-shadow: 0px 2px 4px rgba(0,0,0,0.02); }
+        .ambient-shadow-2 { box-shadow: 0px 2px 4px rgba(0,0,0,0.02), 0px 8px 16px rgba(0,0,0,0.04); }
+        .card-border { border: 1px solid rgba(26, 28, 30, 0.06); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-screen pt-[72px] pb-[80px] md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface shadow-[0px_2px_4px_rgba(0,0,0,0.02),0px_8px_16px_rgba(0,0,0,0.04)]">
+<div class="flex justify-between items-center px-lg py-sm max-w-container_max mx-auto">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-[28px]" data-icon="school">school</span>
+<span class="font-display-lg text-headline-md text-primary tracking-tight">EduFlow Parent</span>
+</div>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-primary font-semibold hover:bg-secondary-container/50 transition-colors duration-200 px-md py-xs rounded-full" href="#">Dashboard</a>
+<a class="text-on-surface-variant font-medium hover:bg-secondary-container/50 transition-colors duration-200 px-md py-xs rounded-full" href="#">Finances</a>
+<a class="text-on-surface-variant font-medium hover:bg-secondary-container/50 transition-colors duration-200 px-md py-xs rounded-full" href="#">Academics</a>
+<a class="text-on-surface-variant font-medium hover:bg-secondary-container/50 transition-colors duration-200 px-md py-xs rounded-full" href="#">Support</a>
+</nav>
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant flex-shrink-0 cursor-pointer">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A sophisticated professional portrait of an adult male in a minimalist setting. Soft, high-key studio lighting creates a warm, approachable atmosphere. The color palette features neutral grays and subtle navy tones, aligning with a premium educational aesthetic. The image exudes quiet confidence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_fHZqpN7EF_gen0FvBb9NcI2Gxd1ehRihS4_sNbM_nopaTYOiQuRyOQQxi7qaf6gNrDERzbnFkQaNmnSVcvAfxxl_OhqgnfTOn4HkR4IuepzXAkUhudB8OpvQYqQh4YUm-JSH_SPAKeqHH5YV6Tiydf8pH5B2lLLS31KB-ZAorteWHf_idUHAOl2M7chrdZGUQ6cVkWLnoA-hP2nOft3V70bs7C4oIQELn1aL6ytNzsRpw5RMCoB-Gw"/>
+</div>
+</div>
+</header>
+<main class="max-w-container_max mx-auto px-margin_mobile md:px-lg py-xl">
+<!-- Welcome Section -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-md mb-xl">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-xs md:text-[40px] md:leading-[48px] text-[32px] leading-[40px]">Good morning, Marcus</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Here is the latest update on your children's progress.</p>
+</div>
+<button class="bg-primary-container text-on-primary font-label-md text-label-md py-[12px] px-lg rounded-full flex items-center justify-center gap-xs hover:bg-primary-container/90 transition-colors active:scale-95 w-full md:w-auto shadow-sm">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+                Make a Payment
+            </button>
+</section>
+<!-- Main Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Finances & Notices -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<!-- Financial Summary Bento -->
+<div class="bg-surface-container-lowest rounded-xl p-lg card-border ambient-shadow-2">
+<div class="flex items-center justify-between mb-md border-b border-on-surface/5 pb-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="payments">payments</span>
+                            Financial Summary
+                        </h2>
+<a class="text-primary font-label-md text-label-md hover:underline" href="#">View Details</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-xl items-center mt-md">
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-xs">Total Balance Due</p>
+<p class="font-display-lg text-[48px] leading-[56px] text-primary mb-md">$4,250.00</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Due by Oct 15, 2023</p>
+</div>
+<div class="flex flex-col gap-sm">
+<!-- Visual Bar 1 -->
+<div class="flex flex-col gap-xs">
+<div class="flex justify-between font-body-md text-body-md">
+<span class="text-on-surface font-medium">Kwame Evans</span>
+<span class="text-on-surface-variant">$2,400.00</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 56%;"></div>
+</div>
+</div>
+<!-- Visual Bar 2 -->
+<div class="flex flex-col gap-xs mt-sm">
+<div class="flex justify-between font-body-md text-body-md">
+<span class="text-on-surface font-medium">Zara Evans</span>
+<span class="text-on-surface-variant">$1,850.00</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-inverse-primary rounded-full" style="width: 44%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Updates -->
+<div class="bg-surface-container-lowest rounded-xl p-lg card-border ambient-shadow-1">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-sm border-b border-on-surface/5 pb-sm">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+                        Recent Updates
+                    </h2>
+<div class="flex flex-col">
+<div class="py-md border-b border-on-surface/5 flex gap-md items-start">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 flex items-center justify-center text-primary flex-shrink-0 mt-xs">
+<span class="material-symbols-outlined" data-icon="event" style="font-variation-settings: 'FILL' 1;">event</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-medium text-on-surface">Parent-Teacher Conference</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Kwame's homeroom teacher requested a brief meeting to discuss upcoming math projects.</p>
+<div class="mt-sm flex gap-sm">
+<span class="bg-surface-container-high px-2 py-1 rounded font-label-sm text-label-sm text-on-surface-variant">Tomorrow, 3:00 PM</span>
+</div>
+</div>
+</div>
+<div class="py-md flex gap-md items-start">
+<div class="w-10 h-10 rounded-full bg-inverse-primary/20 flex items-center justify-center text-primary flex-shrink-0 mt-xs">
+<span class="material-symbols-outlined" data-icon="assignment" style="font-variation-settings: 'FILL' 1;">assignment</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-medium text-on-surface">New Report Card Available</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Zara's mid-term grades have been finalized and are now ready for review.</p>
+<div class="mt-sm flex gap-sm">
+<span class="bg-surface-container-high px-2 py-1 rounded font-label-sm text-label-sm text-on-surface-variant">Today</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Student Links -->
+<div class="lg:col-span-4 flex flex-col gap-gutter">
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-sm mb-xs">
+<span class="material-symbols-outlined text-primary" data-icon="face">face</span>
+                    My Students
+                </h2>
+<!-- Student Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-md card-border ambient-shadow-1 hover:ambient-shadow-2 transition-shadow group cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+<div class="flex items-center gap-md mb-md">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-outline-variant flex-shrink-0">
+<img alt="Kwame Evans" class="w-full h-full object-cover" data-alt="A portrait of a confident high school boy, Grade 10, in a clean academic setting. He wears a simple, tidy polo shirt. The lighting is bright and natural, reflecting an optimistic and focused mood. The aesthetic is clean and modern, adhering to a high-end educational brand palette with subtle whites and soft shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAyQV_hQ9mntrMSUy6upezqN5aBSHw9H3fJSo9ZynALFRTxrK89zA2J_EMYSeoQEJvl5LS4CWavYfzT2Igs-_RUks8xeozM9QCXBHD1j3Nt_Q__kXprAIugN3Cf80_K7gfntf4y3_thISBqJMRHIFe5KVcufVQLCDd51vX5Q_OrM5lHnj45RO4ElEQTdT0Aqy9F8exyxnvjL_PFd7a4VmP7TYX3OAbRTJtQay2cIPh4lUgiffu0UCHQg"/>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] leading-[28px] text-on-surface">Kwame Evans</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Grade 10</p>
+</div>
+</div>
+<div class="flex gap-sm">
+<button class="flex-1 border border-primary-container/20 text-on-surface hover:bg-secondary-container/5 bg-transparent font-label-md text-label-md py-sm rounded-lg flex items-center justify-center gap-xs transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_month">calendar_month</span> Timetable
+                        </button>
+<button class="flex-1 border border-primary-container/20 text-on-surface hover:bg-secondary-container/5 bg-transparent font-label-md text-label-md py-sm rounded-lg flex items-center justify-center gap-xs transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="analytics">analytics</span> Reports
+                        </button>
+</div>
+</div>
+<!-- Student Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-md card-border ambient-shadow-1 hover:ambient-shadow-2 transition-shadow group cursor-pointer relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-inverse-primary"></div>
+<div class="flex items-center gap-md mb-md">
+<div class="w-12 h-12 rounded-full overflow-hidden border border-outline-variant flex-shrink-0">
+<img alt="Zara Evans" class="w-full h-full object-cover" data-alt="A portrait of a bright middle school girl, Grade 7, in a sophisticated, minimalist learning environment. She looks engaged and attentive, softly lit by daylight. The surrounding palette is composed of off-whites and pale blues, creating a serene, trusting atmosphere consistent with premium editorial design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDZe-AHmMcUkRXnJp5WQ2PoXgvOymWWzQkwDd18kPFP_TmRIgsNS0LNsNqxADM6E12JQaPaCGJfYze0bMS6tMmv-ufHVyzjVI79PZMM_ffoEwGgFoBxv80yT8PQAqCYsrGu77TiwJNFbWNLANqrxJHcOJxIVUr9BQOwE7JTkbrWZPPe8JlXTosxrx4ApFOthOlJi9wBMz1xr5byXAcymQ4r06aKR8z2veD3rzU95IHPwWIqwaf5JmGKQ"/>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] leading-[28px] text-on-surface">Zara Evans</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Grade 7</p>
+</div>
+</div>
+<div class="flex gap-sm">
+<button class="flex-1 border border-primary-container/20 text-on-surface hover:bg-secondary-container/5 bg-transparent font-label-md text-label-md py-sm rounded-lg flex items-center justify-center gap-xs transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_month">calendar_month</span> Timetable
+                        </button>
+<button class="flex-1 border border-primary-container/20 text-on-surface hover:bg-secondary-container/5 bg-transparent font-label-md text-label-md py-sm rounded-lg flex items-center justify-center gap-xs transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="analytics">analytics</span> Reports
+                        </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-margin_mobile py-sm border-t border-on-surface/5 bg-surface-container-lowest shadow-[0px_-2px_10px_rgba(0,0,0,0.04)] z-50 rounded-t-xl">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-lg py-xs active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-label-sm text-label-sm-mobile mt-xs">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all rounded-full px-sm py-xs active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-sm text-label-sm-mobile mt-xs">Finances</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all rounded-full px-sm py-xs active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span>
+<span class="font-label-sm text-label-sm-mobile mt-xs">Academics</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all rounded-full px-sm py-xs active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span class="font-label-sm text-label-sm-mobile mt-xs">Support</span>
+</a>
+</nav>
+</body></html>

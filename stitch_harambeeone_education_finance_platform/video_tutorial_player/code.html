@@ -1,0 +1,306 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Video Tutorial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Mobile reflow utility */
+        .mobile-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 16px; /* stack-md */
+        }
+        @media (min-width: 768px) {
+            .mobile-stack {
+                flex-direction: row;
+                gap: 24px;
+            }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed": "#410002",
+                        "on-background": "#191c20",
+                        "inverse-surface": "#2e3135",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#d6e3ff",
+                        "secondary-fixed": "#9cf5c0",
+                        "status-warning": "#d97706",
+                        "primary-container": "#002b5b",
+                        "on-surface": "#191c20",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#0a7147",
+                        "secondary-container": "#99f2bd",
+                        "secondary": "#006d43",
+                        "on-tertiary-container": "#ff5a4e",
+                        "inverse-on-surface": "#eff0f6",
+                        "on-surface-subtle": "#43474f",
+                        "status-success": "#006d43",
+                        "surface-container-low": "#f2f3f9",
+                        "on-secondary-fixed": "#002111",
+                        "surface-tint": "#405f91",
+                        "on-primary-fixed": "#001b3d",
+                        "surface-container": "#eceef3",
+                        "error-container": "#ffdad6",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#ffdad5",
+                        "outline-variant": "#c4c6d0",
+                        "surface-dim": "#d8dae0",
+                        "tertiary": "#390001",
+                        "on-primary-container": "#7594ca",
+                        "on-secondary-fixed-variant": "#005231",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#930009",
+                        "outline": "#747780",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "surface-container-high": "#e7e8ee",
+                        "on-primary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#600004",
+                        "surface-container-highest": "#e1e2e8",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#001736",
+                        "surface-bright": "#f8f9ff",
+                        "secondary-fixed-dim": "#80d8a5",
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "on-surface-variant": "#43474f",
+                        "on-primary-fixed-variant": "#264778",
+                        "surface-variant": "#e1e2e8",
+                        "inverse-primary": "#a9c7ff",
+                        "background": "#f8f9ff",
+                        "surface-card": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "status-error": "#ba1a1a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "margin-desktop": "24px",
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "stack-lg": "32px",
+                        "gutter": "16px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "label-sm": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-20 md:pb-0 pt-12 md:pt-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-margin-mobile h-12 bg-surface border-b border-outline-variant md:hidden">
+<button aria-label="Go back" class="flex items-center justify-center p-2 text-primary hover:bg-surface-container-low transition-colors active:scale-95 duration-100 rounded-full">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary">Help Center</h1>
+<button aria-label="Search" class="flex items-center justify-center p-2 text-primary hover:bg-surface-container-low transition-colors active:scale-95 duration-100 rounded-full">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<!-- Main Desktop Layout Wrapper -->
+<div class="md:flex md:h-screen md:overflow-hidden">
+<!-- Sidebar Navigation (Desktop) -->
+<aside class="hidden md:flex flex-col h-full py-stack-md bg-surface shadow-md h-full w-80 rounded-r-xl z-40 relative flex-shrink-0">
+<div class="px-margin-desktop mb-stack-lg flex flex-col gap-unit">
+<div class="flex items-center gap-stack-sm">
+<img alt="Parent Profile Picture" class="w-10 h-10 rounded-full object-cover bg-surface-container-high" data-alt="A small circular avatar placeholder image showing a generic profile icon or a plain colored background to represent a user profile picture in a professional light mode UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtV8fgfc4xMPRaxhzrnitH35AizRHEMo-2eGTLgXQjSxEt9CML68qdnk_aQKx7HiVxphIBS6TeByDp9hRCBmR7RAYgOt9Bnd9US4SD4OYn15DXPjUDjSNCSpzuISJEcks4G1JLvnFkT-3rExexmDzFtompR0lslYfe4JVaZNCxzaC4OzxSM3kFyb_TxK6Ifn9D1xsyTU2ycgXEdwYsf8FC88vlWy5zenp9xCs8g2C01n3xx95QNnxKIQ">
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">Parent Name</h2>
+<p class="font-body-md text-body-md text-on-surface-subtle">Guardian ID: 88210</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 overflow-y-auto font-body-md text-body-md text-primary">
+<a class="flex items-center gap-stack-sm text-on-surface-variant mx-2 px-4 py-3 hover:bg-surface-container-highest rounded-full transition-all tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-stack-sm text-on-surface-variant mx-2 px-4 py-3 hover:bg-surface-container-highest rounded-full transition-all tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+                    My Children
+                </a>
+<a class="flex items-center gap-stack-sm text-on-surface-variant mx-2 px-4 py-3 hover:bg-surface-container-highest rounded-full transition-all tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+                    Payment History
+                </a>
+<!-- Help/Support is conceptually active here based on user intent -->
+<a aria-current="page" class="flex items-center gap-stack-sm bg-secondary-container text-on-secondary-container rounded-full mx-2 px-4 py-3 hover:bg-surface-container-highest transition-all tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined filled" data-icon="help">help</span>
+                    Support Tickets
+                </a>
+<a class="flex items-center gap-stack-sm text-on-surface-variant mx-2 px-4 py-3 hover:bg-surface-container-highest rounded-full transition-all tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:overflow-y-auto p-margin-mobile md:p-margin-desktop bg-surface-bright pb-stack-lg max-w-4xl mx-auto">
+<!-- Video Player Section -->
+<section class="mb-stack-lg w-full bg-black rounded-lg overflow-hidden shadow-sm relative group">
+<!-- Video Thumbnail -->
+<div class="relative w-full aspect-video bg-surface-container-high">
+<img alt="Video thumbnail" class="w-full h-full object-cover" data-alt="A thumbnail for a video tutorial titled 'How to Pay Tuition Online'. It should feature a clean, professional modern UI of a mobile payment screen, perhaps with a subtle overlay of a play button. The overall tone is trustworthy, utilizing the primary navy blue and emerald green brand colors. The lighting should be bright and clear, fitting a light mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChpK8pSpJ1fI_-vEacXvljZ4KDpT0vRqJ1TVx39MM1DW5-0mxKixeuJMGxtHtfiH-f6xCnYx-HABh4fT5GhQCf6dPwI4vw3pCbYVC0h16Wg_vSktBknNm4gBBwqifNssT1GuVFDCWY1qKDjpGc2BxsBvl94rwfgNInaRKXq_K9ZlGaq1cmX8wU0tTJOHETNHj-aGppu727acYlnJkDfLTXckCcCuFXtU6EVIk5ASYxNZ_8-aRL3Q_8MA">
+<!-- Fake Video Controls Overlay -->
+<div class="absolute inset-0 bg-black/40 flex flex-col justify-end opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+<!-- Big Play Button Center -->
+<button class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-primary/80 hover:bg-primary text-on-primary rounded-full flex items-center justify-center transition-transform hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined filled text-4xl" data-icon="play_arrow">play_arrow</span>
+</button>
+<!-- Bottom Control Bar -->
+<div class="p-stack-sm bg-gradient-to-t from-black/80 to-transparent flex items-center gap-stack-sm text-white">
+<button aria-label="Play" class="p-1 hover:text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
+</button>
+<span class="font-data-mono text-data-mono text-xs">0:00 / 3:45</span>
+<!-- Seek Bar -->
+<div class="flex-1 h-1 bg-white/30 rounded-full cursor-pointer relative mx-2">
+<div class="absolute top-0 left-0 h-full w-1/4 bg-secondary rounded-full"></div>
+<div class="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-secondary rounded-full shadow"></div>
+</div>
+<button aria-label="Volume" class="p-1 hover:text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="volume_up">volume_up</span>
+</button>
+<button aria-label="Fullscreen" class="p-1 hover:text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="fullscreen">fullscreen</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Video Details & Actions -->
+<section class="mb-stack-lg">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary mb-stack-sm">How to Pay Tuition Online</h1>
+<div class="flex items-center gap-stack-sm text-on-surface-subtle font-body-md text-body-md mb-stack-md">
+<span class="">1.2K views</span>
+<span class="">•</span>
+<span class="">Updated 2 weeks ago</span>
+</div>
+<div class="flex flex-wrap gap-stack-sm mb-stack-md">
+<button class="flex items-center justify-center gap-unit px-4 py-2 bg-surface-container-low hover:bg-surface-container text-primary font-label-sm text-label-sm rounded-full border border-outline-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="share" style="font-size: 18px;">share</span>
+                        Share
+                    </button>
+<button class="flex items-center justify-center gap-unit px-4 py-2 bg-surface-container-low hover:bg-surface-container text-primary font-label-sm text-label-sm rounded-full border border-outline-variant transition-colors">
+<span class="material-symbols-outlined" data-icon="bookmark" style="font-size: 18px;">bookmark</span>
+                        Save
+                    </button>
+</div>
+<div class="bg-surface-container-lowest p-stack-md rounded-lg border border-outline-variant shadow-sm">
+<p class="font-body-lg text-body-lg text-on-surface">
+                        Learn how to quickly and securely pay your child's tuition fees using the HarambeeOne portal. This step-by-step tutorial covers selecting payment methods, verifying amounts, and confirming transactions via mobile money or bank transfer.
+                    </p>
+</div><div class="mt-stack-lg bg-surface-container-low p-stack-md rounded-lg border border-outline-variant shadow-sm">
+    <div class="flex items-center justify-between mb-stack-sm cursor-pointer">
+        <h2 class="font-headline-sm text-headline-sm text-primary">Video Transcript</h2>
+        <span class="material-symbols-outlined text-primary">expand_more</span>
+    </div><div class="relative mb-stack-md">
+    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-size: 20px;">search</span>
+    <input type="text" placeholder="Search transcript..." class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-on-surface placeholder:text-on-surface-subtle focus:outline-none focus:border-primary transition-colors">
+</div>
+    <div class="space-y-2 font-body-md text-body-md text-on-surface">
+        <p class=""><span class="font-data-mono text-secondary mr-2">[0:00]</span> Introduction to the tuition payment portal.</p>
+        <p class=""><span class="font-data-mono text-secondary mr-2">[0:45]</span> Selecting your child's profile from the dashboard.</p>
+        <p class=""><span class="font-data-mono text-secondary mr-2">[1:15]</span> Reviewing the outstanding balance and selecting an invoice.</p>
+        <p class=""><span class="font-data-mono text-secondary mr-2">[2:00]</span> Choosing a payment method (Mobile Money or Bank Transfer).</p>
+        <p class=""><span class="font-data-mono text-secondary mr-2">[3:00]</span> Confirming the transaction and downloading the receipt.</p>
+    </div>
+    <button class="mt-stack-md text-secondary font-label-sm text-label-sm hover:underline flex items-center gap-unit">
+        Read full transcript
+    </button>
+</div>
+</section>
+<!-- Related Tutorials -->
+<section>
+<h2 class="font-headline-md text-headline-md text-primary mb-stack-md">Related Tutorials</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<!-- Related Video 1 -->
+<a class="flex flex-col gap-stack-sm group" href="#">
+<div class="w-full aspect-video rounded-lg overflow-hidden relative">
+<img alt="Understanding Your Child's Ledger" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Thumbnail for a video tutorial titled 'Understanding Your Child's Ledger'. It should show a digital ledger interface with clear charts and tables. Professional and trustworthy financial theme. 16:9 aspect ratio." src="https://lh3.googleusercontent.com/aida/AEtjO1Unsaro5_vH8fufjivp0b0itpYetyRvaZlyr9-RQK1Na80ukYGaTvKUX91RGmJvLE94D5q5OsYGH6lNJaPB2SRgx_JKxjqLkmMjp4oycT9iZ5DAN5vPLE8IYMrPj9llfeOc3jpmsfTeq8duH_kmZMrwcWqrxcG3oUBz22djxNOfiqrvolP1jnWEoFNSrV7AfvvKlNG3g_ZN3AHoB5HN7U3BpAem5WPUsIFiG98AGXqHYO1hWf4QqJwzQZZS">
+<div class="absolute bottom-2 right-2 bg-black/70 text-white font-data-mono text-xs px-1 rounded">2:15</div>
+<div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors line-clamp-2">Understanding Your Child's Ledger</h3>
+<p class="font-body-md text-body-md text-on-surface-subtle mt-unit">Learn to read payment history and outstanding balances.</p>
+</div>
+</a>
+<!-- Related Video 2 -->
+<a class="flex flex-col gap-stack-sm group" href="#">
+<div class="w-full aspect-video rounded-lg overflow-hidden relative">
+<img alt="Managing Notification Settings" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Thumbnail for a video tutorial titled 'Managing Notification Settings'. It should show a mobile phone screen with notification toggles and icons. Modern and clean UI style. 16:9 aspect ratio." src="https://lh3.googleusercontent.com/aida/AEtjO1UGGZI8V7Hc5jSiJaProheL6_japPROj1eefzcZCaKoS-BtvDvfAjecIPOQvzI_K1Xb_xWCoh8zN7Pmvnp4Ed9SXY5OxZsK1oHXpEKlAbWmY92JQG-j11uV9o9BJpZe9L0PSF3x_Yq5Dz4ABSNWoS9QT3RB-RPOcICGvBoTbr6ivDDectVZp6WInROOJcJjG36moWcFR92h8ZzjMiJsRIbd6mFDQsfOfYn01L1RbDlLg_eBJkE3BCf9xv45">
+<div class="absolute bottom-2 right-2 bg-black/70 text-white font-data-mono text-xs px-1 rounded">1:40</div>
+<div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary group-hover:text-secondary transition-colors line-clamp-2">Managing Notification Settings</h3>
+<p class="font-body-md text-body-md text-on-surface-subtle mt-unit">Customize alerts for fee reminders and school notices.</p>
+</div>
+</a>
+</div>
+</section>
+</main>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-margin-mobile py-2 bg-surface border-t border-outline-variant md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-sm text-label-sm hover:bg-surface-container-low transition-colors active:scale-90 duration-150 p-2 rounded-lg tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+            Home
+        </a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-sm text-label-sm hover:bg-surface-container-low transition-colors active:scale-90 duration-150 p-2 rounded-lg tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="payments">payments</span>
+            Payments
+        </a>
+<!-- Active State for Help -->
+<a aria-current="page" class="flex flex-col items-center justify-center text-secondary font-bold font-label-sm text-label-sm hover:bg-surface-container-low transition-colors active:scale-90 duration-150 p-2 rounded-lg tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined filled mb-1" data-icon="help">help</span>
+            Help
+        </a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-label-sm text-label-sm hover:bg-surface-container-low transition-colors active:scale-90 duration-150 p-2 rounded-lg tap-highlight-transparent" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+            Profile
+        </a>
+</nav>
+
+
+</body></html>

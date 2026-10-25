@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EduFinance Portal - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#0a7147",
+                        "secondary-fixed": "#9cf5c0",
+                        "on-background": "#191c20",
+                        "surface": "#f8f9ff",
+                        "background": "#f8f9ff",
+                        "on-primary-fixed": "#001b3d",
+                        "status-error": "#ba1a1a",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "tertiary": "#390001",
+                        "primary-fixed": "#d6e3ff",
+                        "on-secondary-fixed": "#002111",
+                        "on-primary": "#ffffff",
+                        "outline": "#747780",
+                        "on-tertiary-fixed-variant": "#930009",
+                        "surface-container-high": "#e7e8ee",
+                        "on-secondary-fixed-variant": "#005231",
+                        "primary": "#001736",
+                        "inverse-surface": "#2e3135",
+                        "surface-container": "#eceef3",
+                        "surface-dim": "#d8dae0",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#410002",
+                        "surface-container-low": "#f2f3f9",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e1e2e8",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#600004",
+                        "on-secondary": "#ffffff",
+                        "secondary-fixed-dim": "#80d8a5",
+                        "on-primary-container": "#7594ca",
+                        "surface-container-highest": "#e1e2e8",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#eff0f6",
+                        "surface-card": "#ffffff",
+                        "on-surface-subtle": "#43474f",
+                        "surface-tint": "#405f91",
+                        "on-surface-variant": "#43474f",
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "inverse-primary": "#a9c7ff",
+                        "on-primary-fixed-variant": "#264778",
+                        "secondary-container": "#99f2bd",
+                        "secondary": "#006d43",
+                        "error": "#ba1a1a",
+                        "on-surface": "#191c20",
+                        "outline-variant": "#c4c6d0",
+                        "on-error-container": "#93000a",
+                        "status-success": "#006d43",
+                        "primary-container": "#002b5b",
+                        "status-warning": "#d97706",
+                        "on-tertiary-container": "#ff5a4e",
+                        "tertiary-fixed": "#ffdad5",
+                        "surface-bright": "#f8f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "32px",
+                        "stack-sm": "8px",
+                        "margin-mobile": "16px",
+                        "gutter": "16px",
+                        "stack-md": "16px",
+                        "margin-desktop": "24px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "headline-md": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "headline-lg": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Public Sans', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased pb-24 md:pb-0 pt-16">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16 w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="school">school</span>
+<span class="font-headline-sm text-headline-sm-mobile md:text-headline-sm font-headline-md text-headline-md text-primary dark:text-primary-fixed-dim">EduFinance Portal</span>
+</div>
+<div class="flex items-center">
+<img class="w-8 h-8 rounded-full object-cover border border-outline-variant" data-alt="A professional headshot of an African woman smiling warmly, representing a parent profile avatar, with a solid soft blue background for a clean, corporate yet approachable aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6O3xNdvwg_yF9kZPaKne2pGYHLc6qqq7aD09FanuMemZUG_l8w7dOUNcavNmg-1hR5aXvuvNp79aSTCP2yz02ceB3vayRX8TtmmL2mpyArOxKXSvu30-xmK5kDvVFV7qKlMlJlovAJUlNdgSvxOpWB0P-Yis9tvWv9SbSVBbowRLyBoYln0zLv9yQuMrrTKoJuQsFDZekWncIMqtuULrCmm6BELFcH8MKs_W56SD-qvE4CgcdR_6bbA"/>
+</div>
+</div>
+</header>
+<main class="px-margin-mobile md:px-margin-desktop max-w-[1200px] mx-auto md:mt-8 space-y-stack-md pt-4">
+<!-- Welcome & Summary Card -->
+<section class="space-y-stack-sm">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Hello, Namono</h1>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-col gap-4">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block mb-1">Total Outstanding</span>
+<span class="font-data-mono text-headline-lg-mobile text-primary">UGX 450,000</span>
+</div>
+<button class="bg-primary text-on-primary w-full py-3 rounded-lg font-label-sm text-label-sm hover:bg-primary-container transition-colors h-12 flex items-center justify-center">
+                    Pay Now
+                </button>
+</div>
+</section>
+<!-- Sponsorship Insight Banner -->
+<div class="bg-secondary-container rounded-lg p-3 flex items-start gap-3">
+<span class="material-symbols-outlined text-on-secondary-container mt-0.5" data-icon="verifiedUser">verified_user</span>
+<div>
+<p class="font-body-md text-body-md text-on-secondary-container font-semibold">Sarah: NGO Scholarship Active</p>
+<p class="font-label-sm text-label-sm text-on-secondary-container opacity-90 mt-1">Sponsorship covering Term II tuition fees.</p>
+</div>
+</div>
+<!-- Child List -->
+<section class="space-y-stack-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Linked Children</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Child Card 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A portrait of a young African girl in a neat blue school uniform smiling slightly, representing Sarah Namono, against a neutral white background emphasizing clarity and institutional trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtvbgc4BlHLTRAsaVAsJvIwG-kBGpsre0fzoJlPARaxwYq_wr6_dqmepJot6DdYwWmIf8AQaJOLlqKL09DPohulZiLFX7f6nOscCdgUGrnhYIJvECzzmBF1ztHSZGLhmw9it3h-MHY8TYNZztVzkQcePcceShmk3-VGoecSADrmiOIsm9sEWXLFncuQwxEGfu0rSmDearpa6E7V_4yb-GD5E8cNgrZSs2UX-YqPYDELBtlIDsPHPJk6g"/>
+<div>
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">Sarah Namono</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">P5 Blue</p>
+</div>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Up to date</span>
+</div>
+<div class="border-t border-outline-variant pt-3 flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Current Balance</span>
+<span class="font-data-mono text-data-mono text-on-surface">UGX 0</span>
+</div>
+</div>
+<!-- Child Card 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="A portrait of a young African boy in a neat white school shirt smiling brightly, representing John Namono, set against a simple white background for a clean, trustworthy dashboard visual." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBry7YlkyhbdLcvrGwMEyvftiiDi6SOhvVWiu2vktw2BGufXWzZQ_oBTxc59AwY9An9DeQDkih1hXxb89rHFwsWEZktVvVMvSm7gZGTBvy_DxhL1huPt1fJXN-oUAi9fdqiVEHokvNSDjpWo70GX2bUdGaXyI1p8eLOdQqFVY5laEbqdOodtJuPymj7if9voIex9MgqLqN3sIm9rJJF2C7oo_sHpYcxmcJ7LiSVjfeXxhHjmZtTM4IdVw"/>
+<div>
+<h3 class="font-body-lg text-body-lg font-semibold text-on-surface">John Namono</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant">P2</p>
+</div>
+</div>
+<span class="bg-error-container text-on-error-container px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider">Due in 14 days</span>
+</div>
+<div class="border-t border-outline-variant pt-3 flex justify-between items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Current Balance</span>
+<span class="font-data-mono text-data-mono text-status-error font-semibold">UGX 450,000</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Activity -->
+<section class="space-y-stack-sm pb-8">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Recent Activity</h2>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<!-- Activity Item 1 -->
+<div class="p-4 border-b border-outline-variant flex justify-between items-center hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-sm" data-icon="receipt">receipt</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Receipt #8834</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">2 days ago • Sarah</p>
+</div>
+</div>
+<span class="font-data-mono text-data-mono text-status-success">- UGX 400,000</span>
+</div>
+<!-- Activity Item 2 -->
+<div class="p-4 border-b border-outline-variant flex justify-between items-center hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="school">school</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Term II Fee Charged</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">5 days ago • John</p>
+</div>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface">+ UGX 450,000</span>
+</div>
+<!-- Activity Item 3 -->
+<div class="p-4 flex justify-between items-center hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-sm" data-icon="receipt">receipt</span>
+</div>
+<div>
+<p class="font-body-md text-body-md font-semibold text-on-surface">Receipt #8721</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">1 month ago • John</p>
+</div>
+</div>
+<span class="font-data-mono text-data-mono text-status-success">- UGX 300,000</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface dark:bg-surface-dim rounded-t-xl">
+<div class="flex justify-around items-center h-20 w-full px-4 pb-2 border-t border-outline-variant dark:border-outline">
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full px-5 py-1 active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-5 py-1 hover:text-primary dark:hover:text-primary-fixed transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="family_restroom">family_restroom</span>
+<span class="font-label-sm text-label-sm mt-1">Children</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-5 py-1 hover:text-primary dark:hover:text-primary-fixed transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-sm text-label-sm mt-1">Payments</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-5 py-1 hover:text-primary dark:hover:text-primary-fixed transition-all active:scale-90 duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-sm text-label-sm mt-1">Notifications</span>
+</button>
+</div>
+</nav>
+</body></html>

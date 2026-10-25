@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Uganda MoES - Sponsor &amp; Donor Program Management | HarambeeOne</title>
+<!-- Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-container": "#4069f2",
+            "error": "#ba1a1a",
+            "on-tertiary-container": "#069669",
+            "on-primary-fixed": "#131b2e",
+            "surface-dim": "#cbdbf5",
+            "secondary-fixed-dim": "#b7c4ff",
+            "on-error-container": "#93000a",
+            "primary-fixed-dim": "#bec6e0",
+            "surface-container-highest": "#d3e4fe",
+            "secondary": "#1d4ed8",
+            "on-surface-variant": "#45464d",
+            "outline": "#76777d",
+            "on-primary-fixed-variant": "#3f465c",
+            "on-tertiary-fixed-variant": "#005137",
+            "surface-container": "#e5eeff",
+            "surface-variant": "#d3e4fe",
+            "on-secondary-container": "#fffbff",
+            "secondary-fixed": "#dce1ff",
+            "primary-container": "#131b2e",
+            "on-secondary-fixed": "#001551",
+            "primary": "#000000",
+            "on-secondary": "#ffffff",
+            "error-container": "#ffdad6",
+            "surface-container-low": "#eff4ff",
+            "on-tertiary-fixed": "#002114",
+            "on-background": "#0b1c30",
+            "tertiary-container": "#002114",
+            "primary-fixed": "#dae2fd",
+            "inverse-primary": "#bec6e0",
+            "inverse-surface": "#213145",
+            "on-error": "#ffffff",
+            "on-primary-container": "#7c839b",
+            "on-secondary-fixed-variant": "#0039b5",
+            "surface-container-high": "#dce9ff",
+            "tertiary-fixed": "#85f8c4",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-tint": "#565e74",
+            "on-surface": "#0b1c30",
+            "surface-bright": "#f8f9ff",
+            "on-tertiary": "#ffffff",
+            "tertiary-fixed-dim": "#68dba9",
+            "surface": "#f8f9ff",
+            "background": "#f8f9ff",
+            "on-primary": "#ffffff",
+            "outline-variant": "#c6c6cd",
+            "tertiary": "#000000",
+            "surface-container-lowest": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "gutter-mobile": "1rem",
+            "space-lg": "1.5rem",
+            "gutter": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "margin": "2rem",
+            "space-xl": "2.5rem",
+            "margin-mobile": "1rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "display-sm": ["Public Sans"],
+            "headline-lg": ["Public Sans"],
+            "tabular-numeric": ["Inter"],
+            "label-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-sm": ["Public Sans"],
+            "body-sm": ["Inter"],
+            "display-sm-mobile": ["Public Sans"],
+            "body-md": ["Inter"],
+            "headline-md": ["Public Sans"],
+            "display-lg": ["Public Sans"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "display-sm": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "tabular-numeric": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "display-sm-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased h-full flex flex-col overflow-hidden">
+<!-- TOP APP BAR -->
+<header class="bg-surface-container-lowest text-primary flex justify-between items-center w-full px-6 h-16 border-b border-outline-variant shadow-sm z-40 shrink-0">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-primary-container text-white flex items-center justify-center font-headline-md font-bold tracking-tight shadow-sm">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+</div>
+<div>
+<span class="text-headline-sm font-headline-sm font-bold text-on-surface tracking-tight block">Uganda MoES - Integrated Bursar Portal</span>
+<span class="text-label-sm font-label-sm text-outline tracking-wider uppercase block">HarambeeOne Institutional Node #EBD-78</span>
+</div>
+</div>
+<div class="h-6 w-px bg-outline-variant mx-1 hidden lg:block"></div>
+<!-- Search Bar -->
+<div class="relative w-72 hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-outline text-[18px]">search</span>
+<input class="w-full bg-surface-bright pl-9 pr-4 py-1.5 rounded-lg border border-outline-variant text-body-sm font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors" placeholder="Search LIN, Grant, Soroban TxID..." type="text"/>
+</div>
+</div>
+<!-- Navigation context & Trailing Actions -->
+<div class="flex items-center gap-4">
+<nav class="hidden xl:flex items-center gap-5 mr-2">
+<span class="text-secondary border-b-2 border-secondary font-headline-sm pb-1 text-body-sm font-headline-sm cursor-pointer">FY 2024/25 Term II</span>
+<span class="text-on-surface-variant hover:text-on-surface pb-1 text-body-sm font-body-md cursor-pointer transition-colors duration-150">Audit Logs</span>
+</nav>
+<div class="flex items-center gap-2">
+<button class="px-3.5 py-1.5 bg-surface-bright border border-outline-variant text-on-surface hover:bg-surface-container rounded-lg text-label-md font-label-md transition duration-150 ease-in-out active:opacity-90 flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+<span>Export Ledger</span>
+</button>
+<button class="px-3.5 py-1.5 bg-primary text-white hover:bg-primary-container rounded-lg text-label-md font-label-md transition duration-150 ease-in-out active:opacity-90 flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span>Execute Reconciliation</span>
+</button>
+</div>
+<div class="h-6 w-px bg-outline-variant mx-1"></div>
+<!-- Trailing Icon Actions -->
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container text-on-surface-variant transition-colors" title="Notifications">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container text-on-surface-variant transition-colors" title="Help Center">
+<span class="material-symbols-outlined text-[20px]">help_center</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-container text-on-surface-variant transition-colors" title="Tune Settings">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+<div class="flex items-center gap-2.5 pl-2">
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="Official portrait photograph of a senior Ugandan female education bursar dressed in authoritative navy blue professional attire, smiling with poise inside an administrative ministry office with soft daylight and national credentials framed on clean walls." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSnCgWLSm4JhwILgvoHNXN7UXM9H9mswZaUeVflT2wej8ca6QqDcsFrO4Ye1lDrYo7K4ad-RDfGgu5GocWEnbrkfQDFkFeQ8Q0dGaLLOClDv0tAKN8cJY1hLPw3OUW8z4u0Py-oUn3h6edjtwwtyE_-V52-bpoadW2XAPClZWQxF_nElwoD0vlChZ5H038aVLGZog7vKKeA2IBNm_zVZaLxZ2RmlN_uPrQSKG_X1nnxh_x58blv6uJzw"/>
+<div class="hidden 2xl:block text-left">
+<p class="text-label-md font-label-md leading-tight text-on-surface">Hon. K. Namubiru</p>
+<p class="text-label-sm font-label-sm text-outline leading-none">Senior Bursar</p>
+</div>
+</div>
+</div>
+</header>
+<!-- MAIN WRAPPER: SIDE NAV + CONTENT CANVAS -->
+<div class="flex flex-1 overflow-hidden relative">
+<!-- SIDE NAVIGATION RAIL -->
+<aside class="w-72 bg-surface text-primary border-r border-outline-variant flex flex-col justify-between shrink-0 h-full p-4 select-none">
+<div class="flex flex-col gap-6">
+<!-- Brand Crest Header -->
+<div class="flex items-center gap-3 px-2 pt-1 pb-2">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-secondary text-[24px]">verified</span>
+</div>
+<div>
+<h2 class="text-label-md font-headline-sm font-bold text-primary leading-tight">Ministry of Education &amp; Sports</h2>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Department of Financial Oversight</p>
+</div>
+</div>
+<!-- Navigation Tab Clusters -->
+<nav class="flex flex-col gap-1">
+<a class="text-on-surface-variant font-body-md rounded-lg px-3 py-2.5 flex items-center gap-3 hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span>Bursar Command</span>
+</a>
+<a class="text-on-surface-variant font-body-md rounded-lg px-3 py-2.5 flex items-center gap-3 hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">sync_alt</span>
+<span>Live Reconciliation</span>
+</a>
+<a class="text-on-surface-variant font-body-md rounded-lg px-3 py-2.5 flex items-center gap-3 hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+<span>Student Ledgers</span>
+</a>
+<!-- ACTIVE NAVIGATION: Sponsor Programs -->
+<a class="bg-surface-container text-secondary font-headline-sm rounded-lg px-3 py-2.5 flex items-center gap-3 border border-secondary/20 shadow-xs" href="#">
+<span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+<span class="font-semibold">Sponsor Programs</span>
+<span class="ml-auto bg-secondary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">6</span>
+</a>
+<a class="text-on-surface-variant font-body-md rounded-lg px-3 py-2.5 flex items-center gap-3 hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">school</span>
+<span>Registrar Desk</span>
+</a>
+<a class="text-on-surface-variant font-body-md rounded-lg px-3 py-2.5 flex items-center gap-3 hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">policy</span>
+<span>Statutory DEO Reports</span>
+</a>
+</nav>
+<!-- CTA Widget in Sidebar -->
+<div class="mx-1 p-3 bg-surface-container-lowest rounded-lg border border-outline-variant shadow-sm flex flex-col gap-2.5">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-label-sm font-label-sm text-on-surface font-semibold uppercase">Soroban Smart Escrow</span>
+</div>
+<p class="text-label-sm font-body-sm text-outline leading-tight">2 of 3 cryptographic multisig signers online for Term II release.</p>
+<button class="w-full py-2 bg-primary text-white hover:bg-primary-container text-label-md font-label-md rounded-lg transition duration-150 ease-in-out active:scale-[0.99] flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span>Submit Monthly Filing</span>
+</button>
+</div>
+</div>
+<!-- Footer Action Links -->
+<div class="flex flex-col gap-1 pt-4 border-t border-outline-variant">
+<a class="text-on-surface-variant font-body-md rounded-lg px-3 py-2 flex items-center gap-3 hover:bg-surface-container-low transition-colors duration-150 text-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+<span>Treasury Settings</span>
+</a>
+<a class="text-on-surface-variant font-body-md rounded-lg px-3 py-2 flex items-center gap-3 hover:bg-surface-container-low transition-colors duration-150 text-body-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">security</span>
+<span>Audit Trails</span>
+</a>
+</div>
+</aside>
+<!-- CONTENT CANVAS (EDITORIAL FINTECH WORKSPACE) -->
+<main class="flex-1 overflow-y-auto custom-scrollbar bg-background p-6 lg:p-8 flex flex-col gap-6">
+<!-- HERO EXECUTIVE BANNER -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 lg:p-7 shadow-sm relative overflow-hidden">
+<div class="absolute right-0 top-0 w-96 h-full bg-gradient-to-l from-surface-container to-transparent pointer-events-none opacity-60"></div>
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
+<div class="space-y-1.5 max-w-3xl">
+<div class="flex flex-wrap items-center gap-3">
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">Sponsor &amp; Donor Program Management</h1>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-label-sm font-label-md">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+<span>Stellar Network Sync: 100% Verified</span>
+</div>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant">
+              Stellar USDC &amp; Fiat Education Funding Vaults • Matching Grants &amp; Automated Beneficiary Allocation
+            </p>
+</div>
+<!-- Quick Actions -->
+<div class="flex flex-wrap items-center gap-2.5">
+<button class="px-4 py-2 bg-surface-bright text-on-surface border border-outline-variant hover:bg-surface-container rounded-lg text-label-md font-label-md transition duration-150 ease-in-out flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary">assignment_turned_in</span>
+<span>Export Statutory Donor Audit</span>
+</button>
+<button class="px-4 py-2 bg-secondary text-white hover:bg-secondary-container rounded-lg text-label-md font-label-md transition duration-150 ease-in-out flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">send_time_extension</span>
+<span>Disburse Matching Tranche</span>
+</button>
+<button class="px-4 py-2 bg-primary text-white hover:bg-primary-container rounded-lg text-label-md font-label-md transition duration-150 ease-in-out flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>New Sponsor Program</span>
+</button>
+</div>
+</div>
+</section>
+<!-- TOP 4 KPI METRIC CARDS -->
+<section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+<!-- Metric 1 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-5 shadow-sm flex flex-col justify-between relative group hover:border-secondary/50 transition-colors">
+<div class="flex items-start justify-between mb-3">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Total Committed Donor Capital</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+</div>
+</div>
+<div>
+<div class="text-display-sm font-display-sm text-on-surface tracking-tight">UGX 850,000,000</div>
+<div class="flex items-center gap-1.5 mt-1 text-label-sm font-label-sm">
+<span class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +18.4% YoY
+              </span>
+<span class="text-on-surface-variant font-tabular-numeric">USDC $225,000 equiv.</span>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/60 flex items-center justify-between text-label-sm text-outline">
+<span>Portfolio Reach</span>
+<span class="font-semibold text-on-surface">14 Institutional Foundations</span>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-5 shadow-sm flex flex-col justify-between relative group hover:border-secondary/50 transition-colors">
+<div class="flex items-start justify-between mb-3">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Disbursed Term II Allocations</span>
+<div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-700">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+</div>
+<div>
+<div class="text-display-sm font-display-sm text-on-surface tracking-tight">UGX 540,200,000</div>
+<div class="flex items-center gap-1.5 mt-1 text-label-sm font-label-sm">
+<span class="text-on-surface-variant font-tabular-numeric">63.5% of annual commitment released</span>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/60 flex items-center justify-between text-label-sm text-outline">
+<span>Beneficiaries</span>
+<span class="font-semibold text-on-surface">342 Verified Learners</span>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-5 shadow-sm flex flex-col justify-between relative group hover:border-secondary/50 transition-colors">
+<div class="flex items-start justify-between mb-3">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Active Matching Escrow</span>
+<div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">lock_clock</span>
+</div>
+</div>
+<div>
+<div class="text-display-sm font-display-sm text-on-surface tracking-tight">UGX 185,000,000</div>
+<div class="flex items-center gap-1.5 mt-1 text-label-sm font-label-sm">
+<span class="text-secondary bg-blue-50 px-1.5 py-0.5 rounded font-bold">Soroban Vault Locked</span>
+<span class="text-on-surface-variant">1:1 Parental Match</span>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/60 flex items-center justify-between text-label-sm text-outline">
+<span>Target Tranche</span>
+<span class="font-semibold text-on-surface">August 15 Midterms</span>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-5 shadow-sm flex flex-col justify-between relative group hover:border-secondary/50 transition-colors">
+<div class="flex items-start justify-between mb-3">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider">Pending Verification</span>
+<div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center text-amber-700">
+<span class="material-symbols-outlined text-[20px]">shield_person</span>
+</div>
+</div>
+<div>
+<div class="text-display-sm font-display-sm text-on-surface tracking-tight">UGX 24,800,000</div>
+<div class="flex items-center gap-1.5 mt-1 text-label-sm font-label-sm">
+<span class="text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded font-semibold">Action Required</span>
+<span class="text-on-surface-variant">Needs Clearance</span>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-outline-variant/60 flex items-center justify-between text-label-sm text-outline">
+<span>Compliance Queue</span>
+<span class="font-semibold text-amber-900">18 Awaiting Guardian KYC</span>
+</div>
+</div>
+</section>
+<!-- MAIN WORKSPACE: TABLE & RIGHT-RAIL BENTO SECTION -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- LEFT 8-COL: TABS & SPONSOR PROGRAM DIRECTORY -->
+<div class="lg:col-span-8 flex flex-col gap-4">
+<!-- Filter Tabs & Quick Search Container -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-2.5 shadow-sm flex flex-wrap items-center justify-between gap-3">
+<div class="flex items-center gap-1 border-b border-transparent">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-secondary text-label-md font-headline-sm font-semibold flex items-center gap-1.5">
+<span>Active Programs</span>
+<span class="bg-secondary text-white text-[10px] px-1.5 py-0.2 rounded-full">6</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-bright text-label-md font-body-md transition-colors">
+                Beneficiary Learner Allocations
+              </button>
+<button class="px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-bright text-label-md font-body-md transition-colors">
+                Stellar On-Chain Vaults
+              </button>
+<button class="px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-bright text-label-md font-body-md transition-colors">
+                Compliance &amp; Audit Trail
+              </button>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-2.5 top-2 text-outline text-[16px]">filter_list</span>
+<input class="bg-surface-bright border border-outline-variant rounded-lg pl-8 pr-3 py-1 text-body-sm font-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-secondary w-44" placeholder="Filter cohort or fund..." type="text"/>
+</div>
+<button class="p-1.5 border border-outline-variant rounded-lg hover:bg-surface-bright text-outline" title="Refresh Feed">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+</button>
+</div>
+</div>
+<!-- Institutional Program Table -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant flex items-center justify-between bg-surface-bright">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Verified Sponsor &amp; Grant Programs</h3>
+<p class="text-label-sm font-body-sm text-on-surface-variant">Live escrow balances, scholar headcounts, and cryptographic disbursal statuses</p>
+</div>
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider font-semibold">Active Cycle: Term II 2024/25</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant text-label-sm font-label-sm text-outline tracking-wider uppercase">
+<th class="py-3.5 px-5 font-semibold">Program &amp; Grant Entity</th>
+<th class="py-3.5 px-4 font-semibold">Target Cohort</th>
+<th class="py-3.5 px-4 font-semibold text-right">Committed Capital</th>
+<th class="py-3.5 px-4 font-semibold text-center">Beneficiaries</th>
+<th class="py-3.5 px-4 font-semibold">Allocation Terms</th>
+<th class="py-3.5 px-4 font-semibold text-center">Status</th>
+<th class="py-3.5 px-4 font-semibold text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant text-body-sm">
+<!-- Row 1: Mastercard Foundation -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-orange-50 border border-orange-200 flex items-center justify-center text-orange-600 shrink-0 font-bold text-xs">
+                          MC
+                        </div>
+<div>
+<div class="font-headline-sm text-on-surface font-semibold group-hover:text-secondary transition-colors">
+                            Mastercard Foundation STEM Girls Initiative
+                          </div>
+<div class="text-label-sm text-outline flex items-center gap-1 font-mono">
+<span>ID: MCF-UGA-2024-09</span> • <span>MoES Approved</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-on-surface font-medium">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface text-label-sm">P.5–P.7 Cohort</span>
+</td>
+<td class="py-4 px-4 text-right font-tabular-numeric">
+<div class="font-semibold text-on-surface text-body-md">UGX 320,000,000</div>
+<div class="text-label-sm text-outline">$84,700 USDC</div>
+</td>
+<td class="py-4 px-4 text-center">
+<span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface font-semibold text-label-sm font-tabular-numeric">
+                        120 Scholars
+                      </span>
+</td>
+<td class="py-4 px-4">
+<div class="text-on-surface font-medium text-label-md">100% Tuition + Uniforms</div>
+<div class="text-label-sm text-outline">Direct School Account</div>
+</td>
+<td class="py-4 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                        Active / Fully Disbursed
+                      </span>
+</td>
+<td class="py-4 px-4 text-right">
+<button class="p-1.5 rounded hover:bg-surface-container text-outline hover:text-on-surface transition-colors" title="Inspect Ledger">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Stellar Lumens Global EdFund -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-700 shrink-0 font-bold text-xs">
+<span class="material-symbols-outlined text-[18px]">token</span>
+</div>
+<div>
+<div class="font-headline-sm text-on-surface font-semibold group-hover:text-secondary transition-colors">
+                            Stellar Lumens Global EdFund (USDC Vault)
+                          </div>
+<div class="text-label-sm text-outline flex items-center gap-1 font-mono">
+<span>Contract: 0x8a92...e491</span> • <span>Mainnet Soroban</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-on-surface font-medium">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface text-label-sm">Secondary Bridge</span>
+</td>
+<td class="py-4 px-4 text-right font-tabular-numeric">
+<div class="font-semibold text-secondary text-body-md">UGX 250,000,000</div>
+<div class="text-label-sm text-secondary font-medium">66,000 USDC Vault</div>
+</td>
+<td class="py-4 px-4 text-center">
+<span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface font-semibold text-label-sm font-tabular-numeric">
+                        84 Scholars
+                      </span>
+</td>
+<td class="py-4 px-4">
+<div class="text-on-surface font-medium text-label-md">Direct Smart Contract Fee Mapping</div>
+<div class="text-label-sm text-outline">Instant settlement</div>
+</td>
+<td class="py-4 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span>
+                        Active / Real-Time
+                      </span>
+</td>
+<td class="py-4 px-4 text-right">
+<button class="p-1.5 rounded hover:bg-surface-container text-outline hover:text-on-surface transition-colors" title="Inspect Ledger">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Kampala Rotary Club -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 shrink-0 font-bold text-xs">
+                          RC
+                        </div>
+<div>
+<div class="font-headline-sm text-on-surface font-semibold group-hover:text-secondary transition-colors">
+                            Kampala Rotary Club Need-Based Bursaries
+                          </div>
+<div class="text-label-sm text-outline flex items-center gap-1 font-mono">
+<span>ID: KRC-BURS-24B</span> • <span>Community Tranche</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-on-surface font-medium">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface text-label-sm">P.1–P.4 Cohort</span>
+</td>
+<td class="py-4 px-4 text-right font-tabular-numeric">
+<div class="font-semibold text-on-surface text-body-md">UGX 140,000,000</div>
+<div class="text-label-sm text-outline">Tranche 2 pending release</div>
+</td>
+<td class="py-4 px-4 text-center">
+<span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface font-semibold text-label-sm font-tabular-numeric">
+                        55 Scholars
+                      </span>
+</td>
+<td class="py-4 px-4">
+<div class="text-on-surface font-medium text-label-md">50% Sibling Matching Grant</div>
+<div class="text-label-sm text-outline">Guardian co-pay verified</div>
+</td>
+<td class="py-4 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200 text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+                        Review &amp; Tranche Release
+                      </span>
+</td>
+<td class="py-4 px-4 text-right">
+<button class="p-1.5 rounded hover:bg-surface-container text-outline hover:text-on-surface transition-colors" title="Inspect Ledger">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Uganda Ministry Capitation Subsidy -->
+<tr class="hover:bg-surface-container-low/60 transition-colors group">
+<td class="py-4 px-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-800 shrink-0 font-bold text-xs">
+                          UG
+                        </div>
+<div>
+<div class="font-headline-sm text-on-surface font-semibold group-hover:text-secondary transition-colors">
+                            Uganda Ministry of Education Capitation Subsidy
+                          </div>
+<div class="text-label-sm text-outline flex items-center gap-1 font-mono">
+<span>Statutory Vote: 013-MoES</span> • <span>Treasury Direct</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-4 text-on-surface font-medium">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface text-label-sm">Universal Primary</span>
+</td>
+<td class="py-4 px-4 text-right font-tabular-numeric">
+<div class="font-semibold text-on-surface text-body-md">UGX 140,000,000</div>
+<div class="text-label-sm text-emerald-700 font-medium">100% Cleared by DEO</div>
+</td>
+<td class="py-4 px-4 text-center">
+<span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface font-semibold text-label-sm font-tabular-numeric">
+                        83 Scholars
+                      </span>
+</td>
+<td class="py-4 px-4">
+<div class="text-on-surface font-medium text-label-md">Statutory MoES Capitation Scheme</div>
+<div class="text-label-sm text-outline">State Treasury Allocation</div>
+</td>
+<td class="py-4 px-4 text-center">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200 text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
+                        Government Audited
+                      </span>
+</td>
+<td class="py-4 px-4 text-right">
+<button class="p-1.5 rounded hover:bg-surface-container text-outline hover:text-on-surface transition-colors" title="Inspect Ledger">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer Pagination/Status -->
+<div class="p-4 border-t border-outline-variant bg-surface-bright flex flex-col sm:flex-row items-center justify-between gap-3 text-label-sm text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span>Showing 4 of 6 active institutional foundations</span>
+<span class="text-outline">•</span>
+<span class="text-emerald-700 font-medium">Zero discrepancy detected on chain</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 rounded border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-on-surface disabled:opacity-50" disabled="">Previous</button>
+<button class="px-2.5 py-1 rounded bg-secondary text-white font-semibold">1</button>
+<button class="px-2.5 py-1 rounded border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-on-surface">2</button>
+<button class="px-2.5 py-1 rounded border border-outline-variant bg-surface-container-lowest hover:bg-surface-container text-on-surface">Next</button>
+</div>
+</div>
+</div>
+<!-- ALLOCATION VISUALIZER / BENEFICIARY POOL SUMMARY -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-5 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface">Learner Capitation by Category</h4>
+<p class="text-label-sm text-outline">Real-time breakdown of sponsored student categories across primary &amp; lower secondary levels</p>
+</div>
+<span class="text-label-md font-label-md text-secondary cursor-pointer hover:underline">Download Master Roster</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="p-3.5 rounded-lg border border-outline-variant/80 bg-surface-bright">
+<div class="flex justify-between items-center mb-1">
+<span class="text-label-sm text-outline">Full Tuition Grants</span>
+<span class="text-label-sm font-bold text-on-surface font-tabular-numeric">185 Pupils (54%)</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden mb-2">
+<div class="bg-secondary h-full rounded-full" style="width: 54%"></div>
+</div>
+<div class="text-label-sm text-outline">UGX 458.8M Disbursed</div>
+</div>
+<div class="p-3.5 rounded-lg border border-outline-variant/80 bg-surface-bright">
+<div class="flex justify-between items-center mb-1">
+<span class="text-label-sm text-outline">50% Matching Subsidies</span>
+<span class="text-label-sm font-bold text-on-surface font-tabular-numeric">102 Pupils (30%)</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden mb-2">
+<div class="bg-emerald-600 h-full rounded-full" style="width: 30%"></div>
+</div>
+<div class="text-label-sm text-outline">UGX 61.2M Matched with Parents</div>
+</div>
+<div class="p-3.5 rounded-lg border border-outline-variant/80 bg-surface-bright">
+<div class="flex justify-between items-center mb-1">
+<span class="text-label-sm text-outline">Special Needs &amp; Boarding</span>
+<span class="text-label-sm font-bold text-on-surface font-tabular-numeric">55 Pupils (16%)</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden mb-2">
+<div class="bg-purple-600 h-full rounded-full" style="width: 16%"></div>
+</div>
+<div class="text-label-sm text-outline">UGX 20.2M Special Facilities</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT 4-COL: BENTO PANELS (SOROBAN POLICY, DISBURSAL AUDIT & SHA-256 SEAL) -->
+<div class="lg:col-span-4 flex flex-col gap-4">
+<!-- Panel 1: Programmable Soroban Policy & Smart Contract Escrow -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-5 shadow-sm flex flex-col gap-4">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-md bg-secondary text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-[16px]">code</span>
+</div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface">Soroban Escrow Policy</h4>
+</div>
+<span class="px-2 py-0.5 text-[11px] font-bold rounded bg-blue-50 text-secondary border border-blue-200">
+                Mainnet Protocol 20
+              </span>
+</div>
+<div class="space-y-3">
+<div class="p-3 rounded-lg bg-surface-bright border border-outline-variant/80 space-y-2">
+<div class="flex items-center justify-between text-label-sm">
+<span class="text-outline font-medium">Multisig Quorum Status</span>
+<span class="text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.2 rounded">2 of 3 Threshold Met</span>
+</div>
+<div class="grid grid-cols-3 gap-1.5 pt-1 text-center text-label-sm font-mono">
+<div class="bg-surface-container-lowest p-1.5 rounded border border-emerald-300 text-emerald-800">
+<span class="block font-bold">Bursar</span>
+<span class="text-[10px] text-emerald-600">✓ Signed</span>
+</div>
+<div class="bg-surface-container-lowest p-1.5 rounded border border-emerald-300 text-emerald-800">
+<span class="block font-bold">Principal</span>
+<span class="text-[10px] text-emerald-600">✓ Signed</span>
+</div>
+<div class="bg-surface-container-lowest p-1.5 rounded border border-outline-variant text-outline">
+<span class="block font-bold">Sponsor</span>
+<span class="text-[10px] text-amber-700">Awaiting</span>
+</div>
+</div>
+</div>
+<!-- Automated Release Rules -->
+<div class="text-body-sm space-y-2">
+<span class="text-label-sm font-label-sm text-outline uppercase tracking-wider block">Escrow Release Condition</span>
+<div class="flex items-start gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">rule</span>
+<span class="text-body-sm leading-snug">
+<strong class="text-on-surface">Terminal Exam Attendance &gt; 85%</strong>: Verified by Biometric Registrar Node automatically before Tranche 2 unlock.
+                  </span>
+</div>
+<div class="flex items-start gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">account_tree</span>
+<span class="text-body-sm leading-snug">
+<strong class="text-on-surface">Atomic Split</strong>: 80% tuition routed to School Centenary Bank IBAN; 20% reserved for scholastic supplies voucher.
+                  </span>
+</div>
+</div>
+<div class="pt-2">
+<button class="w-full py-2 bg-surface-container hover:bg-surface-container-high text-secondary font-headline-sm text-label-md rounded-lg transition-colors flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>View Contract Soroban WASM</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Panel 2: Recent Disbursal Audit Log -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-5 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between pb-2 border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-md bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200">
+<span class="material-symbols-outlined text-[16px]">history_edu</span>
+</div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface">Live Disbursal Audit Log</h4>
+</div>
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping" title="Streaming On-Chain Events"></span>
+</div>
+<div class="space-y-2.5 custom-scrollbar max-h-60 overflow-y-auto pr-1">
+<!-- Item 1: Namaganda Sarah -->
+<div class="p-2.5 rounded-lg bg-surface-bright border border-outline-variant/60 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="text-body-sm font-bold text-on-surface">Namaganda Sarah (P.4 Blue)</span>
+<span class="text-label-sm font-bold text-emerald-700 font-tabular-numeric">+UGX 600,000</span>
+</div>
+<div class="text-label-sm text-outline flex items-center justify-between font-mono">
+<span>LIN: 2024-UGA-88412</span>
+<span class="text-secondary">MCF STEM Grant</span>
+</div>
+<div class="text-[11px] text-outline font-mono truncate flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">link</span>
+<span>tx: 4f9b2d...881c (Ledger #481920)</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-2.5 rounded-lg bg-surface-bright border border-outline-variant/60 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="text-body-sm font-bold text-on-surface">Ocen Emmanuel (P.6 Amber)</span>
+<span class="text-label-sm font-bold text-emerald-700 font-tabular-numeric">+UGX 450,000</span>
+</div>
+<div class="text-label-sm text-outline flex items-center justify-between font-mono">
+<span>LIN: 2024-UGA-12903</span>
+<span class="text-secondary">Stellar EdFund</span>
+</div>
+<div class="text-[11px] text-outline font-mono truncate flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">link</span>
+<span>tx: 77a0c1...93dd (Ledger #481914)</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-2.5 rounded-lg bg-surface-bright border border-outline-variant/60 flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="text-body-sm font-bold text-on-surface">Kato Brian (P.2 Red)</span>
+<span class="text-label-sm font-bold text-emerald-700 font-tabular-numeric">+UGX 220,000</span>
+</div>
+<div class="text-label-sm text-outline flex items-center justify-between font-mono">
+<span>LIN: 2024-UGA-99184</span>
+<span class="text-secondary">Rotary Need-Based</span>
+</div>
+<div class="text-[11px] text-outline font-mono truncate flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">link</span>
+<span>tx: c18a09...ef32 (Ledger #481890)</span>
+</div>
+</div>
+</div>
+<div class="pt-1 text-center">
+<span class="text-label-sm text-outline hover:text-secondary cursor-pointer font-medium">View Full Immutable Ledger (342 Entries) →</span>
+</div>
+</div>
+<!-- Panel 3: Donor KYC & Statutory DEO Transparency Certificate -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-5 shadow-sm flex flex-col gap-3 relative">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container text-secondary flex items-center justify-center border border-outline-variant shrink-0">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+<div>
+<h4 class="text-headline-sm font-headline-sm text-on-surface leading-tight">Statutory DEO Certificate</h4>
+<p class="text-label-sm text-outline">District Education Office Compliance Seal</p>
+</div>
+</div>
+<div class="p-3 bg-surface-bright rounded-lg border border-outline-variant/70 space-y-2">
+<div class="flex items-center justify-between text-label-sm">
+<span class="text-outline">Anti-Money Laundering &amp; KYC</span>
+<span class="text-emerald-700 font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Compliant
+                </span>
+</div>
+<div class="flex items-center justify-between text-label-sm">
+<span class="text-outline">DEO Inspection Ref:</span>
+<span class="font-mono text-on-surface font-medium">KCCA/EDUC/2024/0488</span>
+</div>
+<div class="pt-1 border-t border-outline-variant/60">
+<span class="text-[10px] text-outline uppercase tracking-wider block">Cryptographic SHA-256 Seal</span>
+<div class="font-mono text-[10px] text-on-surface-variant bg-surface-container-lowest p-1.5 rounded border border-outline-variant break-all mt-0.5 select-all">
+                  e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+                </div>
+</div>
+</div>
+<button class="w-full py-2 bg-surface-bright hover:bg-surface-container text-on-surface border border-outline-variant rounded-lg text-label-md font-label-md transition-colors flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Download Verified DEO Warrant (PDF)</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

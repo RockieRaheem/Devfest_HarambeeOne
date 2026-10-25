@@ -1,0 +1,398 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Payment Reminders &amp; Templates - HarambeeOne</title>
+<!-- Google Fonts: Source Serif 4 & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error-container": "#93000a",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#c3daf0",
+            "primary-fixed-dim": "#b2c9df",
+            "tertiary-fixed-dim": "#c6c6c9",
+            "inverse-primary": "#b2c9df",
+            "secondary-fixed-dim": "#c7c6c4",
+            "tertiary": "#454649",
+            "primary-container": "#4a6073",
+            "tertiary-container": "#5c5e60",
+            "on-tertiary-container": "#d7d7da",
+            "surface-container-lowest": "#ffffff",
+            "on-background": "#181c20",
+            "on-error": "#ffffff",
+            "surface-dim": "#d8dadf",
+            "tertiary-fixed": "#e2e2e5",
+            "surface-container": "#eceef3",
+            "error": "#ba1a1a",
+            "on-secondary-fixed": "#1a1c1a",
+            "on-tertiary-fixed-variant": "#454749",
+            "surface": "#f7f9ff",
+            "surface-container-low": "#f1f4f9",
+            "outline-variant": "#c3c7cc",
+            "on-tertiary": "#ffffff",
+            "surface-tint": "#4b6174",
+            "surface-container-highest": "#e0e2e8",
+            "surface-variant": "#e0e2e8",
+            "on-secondary-container": "#626361",
+            "outline": "#73777d",
+            "on-tertiary-fixed": "#1a1c1e",
+            "primary": "#32485a",
+            "secondary-fixed": "#e3e2e0",
+            "error-container": "#ffdad6",
+            "surface-container-high": "#e6e8ee",
+            "on-surface": "#181c20",
+            "background": "#f7f9ff",
+            "surface-bright": "#f7f9ff",
+            "on-primary-fixed": "#041d2e",
+            "on-secondary": "#ffffff",
+            "secondary-container": "#e0e0dd",
+            "on-primary-fixed-variant": "#33495b",
+            "inverse-on-surface": "#eef1f6",
+            "inverse-surface": "#2d3135",
+            "on-secondary-fixed-variant": "#464745",
+            "secondary": "#5e5f5d",
+            "on-surface-variant": "#43474c",
+            "primary-fixed": "#cee5fc"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin_mobile": "16px",
+            "sm": "8px",
+            "md": "16px",
+            "xs": "4px",
+            "xl": "48px",
+            "lg": "24px",
+            "gutter": "24px",
+            "base_unit": "4px",
+            "container_max": "1280px",
+            "xxl": "80px"
+          },
+          "fontFamily": {
+            "headline-lg": [
+              "\"Source Serif 4\""
+            ],
+            "headline-lg-mobile": [
+              "\"Source Serif 4\""
+            ],
+            "label-sm": [
+              "Inter"
+            ],
+            "label-md": [
+              "Inter"
+            ],
+            "body-lg": [
+              "Inter"
+            ],
+            "display-lg": [
+              "\"Source Serif 4\""
+            ],
+            "headline-md": [
+              "\"Source Serif 4\""
+            ],
+            "body-md": [
+              "Inter"
+            ]
+          },
+          "fontSize": {
+            "headline-lg": [
+              "32px",
+              {
+                "lineHeight": "40px",
+                "fontWeight": "600"
+              }
+            ],
+            "headline-lg-mobile": [
+              "28px",
+              {
+                "lineHeight": "36px",
+                "fontWeight": "600"
+              }
+            ],
+            "label-sm": [
+              "12px",
+              {
+                "lineHeight": "16px",
+                "letterSpacing": "0.05em",
+                "fontWeight": "600"
+              }
+            ],
+            "label-md": [
+              "14px",
+              {
+                "lineHeight": "20px",
+                "letterSpacing": "0.01em",
+                "fontWeight": "500"
+              }
+            ],
+            "body-lg": [
+              "18px",
+              {
+                "lineHeight": "28px",
+                "fontWeight": "400"
+              }
+            ],
+            "display-lg": [
+              "48px",
+              {
+                "lineHeight": "56px",
+                "letterSpacing": "-0.02em",
+                "fontWeight": "600"
+              }
+            ],
+            "headline-md": [
+              "24px",
+              {
+                "lineHeight": "32px",
+                "fontWeight": "500"
+              }
+            ],
+            "body-md": [
+              "16px",
+              {
+                "lineHeight": "24px",
+                "fontWeight": "400"
+              }
+            ]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Soft stack shadow token */
+    .shadow-soft-stack {
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.02), 0px 8px 16px rgba(0, 0, 0, 0.04);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased selection:bg-primary-fixed min-h-screen flex flex-col justify-between">
+<!-- Top App Bar (Shared Component Anchor) -->
+<header class="fixed top-0 left-0 w-full z-50 flex items-center justify-between px-margin_mobile h-16 bg-surface shadow-sm">
+<div class="flex items-center space-x-3">
+<button aria-label="Go back" class="p-2 -ml-2 rounded-full hover:bg-surface-container-low active:scale-95 transition-transform duration-150 text-primary">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Payment Reminders</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant -mt-0.5">Bursar Desk • St. Mary's Academy</p>
+</div>
+</div>
+<div class="flex items-center space-x-1">
+<button aria-label="Notifications" class="p-2 rounded-full hover:bg-surface-container-low active:scale-95 transition-transform duration-150 text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button aria-label="Template Settings" class="p-2 rounded-full hover:bg-surface-container-low active:scale-95 transition-transform duration-150 text-on-surface-variant">
+<span class="material-symbols-outlined">tune</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-[480px] mx-auto pt-20 pb-28 px-margin_mobile space-y-6">
+<!-- Editorial Intro & Context Badge -->
+<div class="pt-2">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-primary/10 text-primary mb-2.5">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-label-sm">Official Ugandan MoES Certified Dispatch</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-primary tracking-tight">Parent Dispatch Templates</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+        Transparent, considerate tuition notices tailored for Ugandan families with seamless MTN MoMo &amp; Airtel Money integration.
+      </p>
+</div>
+<!-- Interactive Channel Selector Tabs -->
+<div class="flex p-1 bg-surface-container rounded-xl gap-1">
+<button class="flex-1 py-2 px-3 rounded-lg text-center font-label-md text-label-md transition-all duration-200 text-on-surface-variant hover:text-primary flex items-center justify-center gap-1.5" id="tab-whatsapp" onclick="switchChannel('whatsapp')"><span class="material-symbols-outlined text-[18px]">chat</span>WhatsApp Template</button>
+<button class="flex-1 py-2 px-3 rounded-lg text-center font-label-md text-label-md transition-all duration-200 bg-surface-container-lowest text-primary shadow-sm font-semibold flex items-center justify-center gap-1.5" id="tab-sms" onclick="switchChannel('sms')"><span class="material-symbols-outlined text-[18px] text-primary">sms</span>SMS / USSD Push</button>
+</div>
+<!-- WHATSAPP PREVIEW SECTION -->
+<div class="space-y-3 transition-opacity duration-300" id="section-sms-active"><div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex items-start gap-2.5"><span class="material-symbols-outlined text-emerald-600 text-[20px] mt-0.5" style="font-variation-settings: 'FILL' 1;">verified</span><div class="flex-1 min-w-0"><div class="flex items-center justify-between"><h4 class="font-label-md text-label-md font-semibold text-emerald-900">USSD Payment Completed &amp; Verified ✓</h4><span class="font-label-sm text-[11px] text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full font-medium">Instant MoMo ACK • 10:36 AM</span></div><p class="font-body-md text-[13px] text-emerald-800 mt-0.5 leading-snug">PIN validated successfully on handset <strong>+256 772 491 802</strong>. UGX 700,000 settled into St Mary's Academy Account (TxID: <strong>MM-20241115-88291</strong>).</p></div></div><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Official Telco Push • MTN MoMo &amp; Airtel Money Verified</span><div class="flex items-center gap-1.5"><span class="px-2 py-0.5 rounded-full font-label-sm text-[11px] font-semibold bg-primary/10 text-primary">MTN Uganda</span><span class="px-2 py-0.5 rounded-full font-label-sm text-[11px] font-semibold bg-red-100 text-red-700">Airtel Money</span></div></div><div class="bg-surface-container-lowest rounded-2xl border border-black/[0.06] shadow-soft-stack overflow-hidden"><div class="bg-primary px-4 py-3 border-b border-black/[0.05] flex items-center justify-between text-white"><div class="flex items-center space-x-3"><div class="w-9 h-9 rounded-full bg-surface-container-lowest text-primary flex items-center justify-center font-bold text-[14px]"><span class="material-symbols-outlined text-primary text-[20px]">sms</span></div><div><div class="flex items-center gap-1.5"><h3 class="font-label-md text-label-md text-white font-bold leading-tight">StMarys-Bursar</h3><span class="font-mono text-[10px] bg-white/20 px-1.5 py-0.2 rounded text-white font-semibold">6115</span></div><p class="font-label-sm text-label-sm text-white/80 text-[11px] leading-tight">Uganda Telco Licensed SMS Gateway</p></div></div><div class="flex items-center space-x-1 text-white/90"><span class="material-symbols-outlined text-[20px]">signal_cellular_alt</span><span class="material-symbols-outlined text-[20px]">more_vert</span></div></div><div class="p-4 bg-surface-container-low space-y-3"><div class="text-center"><span class="inline-block bg-white/80 text-emerald-700 font-medium px-2.5 py-0.5 rounded-md font-label-sm text-[11px] shadow-xs">Payment Settled • 10:36 AM (MTN &amp; Airtel MoMo)</span></div><div class="bg-white rounded-2xl p-4 shadow-sm border border-black/[0.03] space-y-2.5"><p class="font-body-md text-[13px] text-on-surface leading-relaxed">Dear <strong class="text-primary font-semibold">Marcus Evans</strong>, Kwame Evans (Senior 3) Term 3 tuition installment of <strong class="text-primary font-semibold">UGX 700,000</strong> is due on 15 Nov 2024 (Ref: <span class="font-mono font-medium text-on-surface">#HB-2024-88291-K</span>). Pay zero-fee via MTN MoMo (*165*4*4#) or Airtel Money (*185*4#). Direct link: <span class="text-primary font-medium underline">pay.harambeeone.ug/88291</span></p><div class="flex items-center justify-between border-t border-black/[0.04] pt-2"><span class="font-label-sm text-[11px] text-on-surface-variant font-mono">158 / 160 chars (1 SMS)</span><span class="font-label-sm text-[11px] text-emerald-700 font-medium flex items-center gap-1"><span class="material-symbols-outlined text-[13px] text-emerald-600">done_all</span> Delivered to Telco</span></div></div><div class="mt-3 rounded-xl bg-inverse-surface text-inverse-on-surface p-3.5 space-y-2 shadow-md"><div class="flex items-center justify-between pb-1.5 border-b border-white/10"><div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-emerald-400 text-[16px]">task_alt</span><span class="font-label-sm text-[11px] uppercase tracking-wider text-white/90 font-semibold">USSD Transaction Approved ✓</span></div><span class="font-label-sm text-[10px] text-emerald-300 font-medium bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-600/30">PIN Entered • Succeeded</span></div><div class="p-2.5 rounded-lg bg-black/30 font-mono text-[12px] space-y-2 text-white/90 leading-snug"><div class="flex items-center justify-between border-b border-white/10 pb-1.5"><span class="text-white/70">Mobile Money PIN:</span><span class="tracking-widest font-bold text-emerald-400 bg-white/10 px-2 py-0.5 rounded">••••</span></div><div class="space-y-1"><p class="text-emerald-400 font-semibold flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">check_circle</span> Approved. Payment Completed.</p><p class="text-white/90">UGX 700,000 transferred to St Mary's Academy Bursary.</p><p class="text-white/70 text-[11px]">Fee: UGX 0 • TxID: MM-20241115-88291</p><p class="text-emerald-300 text-[11px]">New Balance: UGX 1,420,000</p></div></div><div class="flex items-center justify-between text-[11px] text-white/70 font-label-sm pt-0.5"><span class="">Session Closed (Success)</span><span class="text-emerald-400 font-medium">MTN MoMo &amp; Airtel Confirmed</span></div></div><div class="bg-emerald-50 rounded-2xl p-3.5 shadow-sm border border-emerald-200 space-y-1.5"><div class="flex items-center justify-between"><span class="font-label-sm text-[11px] font-semibold text-emerald-900 flex items-center gap-1"><span class="material-symbols-outlined text-[13px] text-emerald-700">receipt_long</span> Telco MoMo Receipt SMS</span><span class="font-mono text-[10px] text-emerald-700 bg-emerald-100/80 px-1.5 py-0.2 rounded">10:36 AM</span></div><p class="font-body-md text-[12px] text-emerald-900 leading-relaxed">MTN MoMo / Airtel Money: You have sent <strong class="text-emerald-950 font-semibold">UGX 700,000</strong> to St Mary's Academy. Fee: UGX 0. Reference: <span class="font-mono font-medium">#HB-2024-88291-K</span>. Financial clearance issued.</p></div></div></div></div>
+<!-- SMS PREVIEW SECTION -->
+
+<!-- Student & Guardian Information Tile -->
+<div class="bg-surface-container-lowest rounded-2xl p-4 border border-black/[0.06] shadow-soft-stack space-y-3">
+<div class="flex items-center justify-between"><div class="flex items-center space-x-2"><span class="material-symbols-outlined text-primary text-[20px]">badge</span><span class="font-label-md text-label-md font-semibold text-primary">Target Recipient Information</span></div><div class="flex items-center gap-2"><span class="font-label-sm text-[11px] font-medium text-emerald-700 bg-emerald-100/60 px-2 py-0.5 rounded-full flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-emerald-600">check_circle</span> Test Received • 10:32 AM</span><button class="font-label-sm text-label-sm text-primary underline">Change</button></div></div>
+<div class="grid grid-cols-2 gap-3 pt-1">
+<div class="p-2.5 rounded-xl bg-surface-container-low border border-black/[0.03]">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Guardian</span>
+<span class="font-body-md text-body-md font-medium text-on-surface">Marcus Evans</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[12px] block">+256 772 491 802</span>
+</div>
+<div class="p-2.5 rounded-xl bg-surface-container-low border border-black/[0.03]">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Student</span>
+<span class="font-body-md text-body-md font-medium text-on-surface">Kwame Evans</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant text-[12px] block">Senior 3 • Form A</span>
+</div>
+</div>
+</div>
+<!-- Reminder Dispatch Rules & Timing -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 border border-black/[0.06] shadow-soft-stack space-y-4">
+<div class="flex items-center justify-between">
+<div>
+<h4 class="font-headline-md text-[18px] text-primary font-semibold">Reminder Cadence</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Automated timeline configured by the Bursar</p>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">schedule</span>
+</div>
+<!-- Schedule Step Sequence -->
+<div class="space-y-2.5">
+<label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low border border-black/[0.03] cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center space-x-3">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary border-outline-variant" type="checkbox">
+<div>
+<span class="font-label-md text-label-md font-medium text-on-surface block">Early Courtesy Notice</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">7 days before due date (8 Nov)</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-medium text-emerald-700 bg-emerald-100/60 px-2 py-0.5 rounded">Sent</span>
+</label>
+<label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low border border-black/[0.03] cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center space-x-3">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary border-outline-variant" type="checkbox">
+<div>
+<span class="font-label-md text-label-md font-medium text-on-surface block">Primary Reminder (Active)</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">3 days before due date (12 Nov)</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-medium text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">Cleared</span>
+</label>
+<label class="flex items-center justify-between p-2.5 rounded-xl bg-surface-container-low border border-black/[0.03] cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center space-x-3">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-primary border-outline-variant" type="checkbox">
+<div>
+<span class="font-label-md text-label-md font-medium text-on-surface block">Final Due Date Push</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">On Due Date 8:00 AM (15 Nov)</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-medium text-on-surface-variant bg-surface-container-highest px-2 py-0.5 rounded">Scheduled</span>
+</label>
+</div>
+<!-- Delivery Method Channels Switchers -->
+<div class="pt-3 border-t border-black/[0.06] space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px] text-emerald-600">chat</span>
+<div>
+<span class="font-label-md text-label-md font-medium text-on-surface block">WhatsApp Channel</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Primary high-engagement touchpoint</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px] text-primary">sms</span>
+<div>
+<span class="font-label-md text-label-md font-medium text-on-surface block">SMS Fallback Delivery</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Trigger if WhatsApp message is unread after 4h</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Action Buttons Panel -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 border border-primary/20 shadow-soft-stack space-y-4" id="template-editor-panel"><div class="flex items-center justify-between border-b border-black/[0.06] pb-3"><div class="flex items-center space-x-2"><span class="material-symbols-outlined text-primary text-[22px]">sms</span><div><h4 class="font-headline-md text-[18px] text-primary font-semibold leading-tight">Edit SMS &amp; USSD Template</h4><p class="font-label-sm text-label-sm text-on-surface-variant">Uganda UCC &amp; Telco Certified Shortcode (6115)</p></div></div><span class="font-label-sm text-[11px] font-semibold text-emerald-700 bg-emerald-100/60 px-2.5 py-1 rounded-full flex items-center gap-1"><span class="material-symbols-outlined text-[13px] text-emerald-600">verified</span> Approved by Telco</span></div><div class="space-y-2"><label class="font-label-sm text-label-sm font-semibold text-primary block">Template Greeting &amp; Salutation</label><div class="flex items-center bg-surface-container-low border border-black/[0.05] rounded-xl px-3 py-2"><span class="font-label-md text-label-md text-on-surface flex-1">Warm greetings {{guardian_name}},</span><span class="font-label-sm text-[11px] bg-primary/10 text-primary px-2 py-0.5 rounded font-mono">158 / 160 chars (1 SMS)</span></div></div><div class="space-y-2"><div class="flex items-center justify-between"><label class="font-label-sm text-label-sm font-semibold text-primary">Message Body Copy</label><span class="font-label-sm text-[11px] text-on-surface-variant font-mono">158 / 160 chars (1 SMS)</span></div><div class="p-3 bg-surface-container-low rounded-xl border border-black/[0.06] text-on-surface font-body-md text-[13px] leading-relaxed space-y-2"><p class="text-on-surface">Dear {{guardian_name}}, {{student_name}} ({{student_class}}) Term 3 tuition installment of {{installment_amount}} is due on {{due_date}} (Ref: {{ref_no}}). Pay zero-fee via MTN MoMo (*165*4*4#) or Airtel Money (*185*4#). Direct link: pay.harambeeone.ug/{{ref_no}}</p></div></div><div class="space-y-1.5"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm font-medium text-on-surface-variant">Insert Variable:</span><span class="font-label-sm text-[11px] text-primary hover:underline cursor-pointer">View all tokens</span></div><div class="flex flex-wrap gap-1.5"><button class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-[11px] font-medium flex items-center gap-1 border border-black/[0.04] transition-colors"><span class="material-symbols-outlined text-[13px]">add</span> Guardian Name</button><button class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-[11px] font-medium flex items-center gap-1 border border-black/[0.04] transition-colors"><span class="material-symbols-outlined text-[13px]">add</span> Student Name</button><button class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-[11px] font-medium flex items-center gap-1 border border-black/[0.04] transition-colors"><span class="material-symbols-outlined text-[13px]">add</span> Due Amount</button><button class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-[11px] font-medium flex items-center gap-1 border border-black/[0.04] transition-colors"><span class="material-symbols-outlined text-[13px]">add</span> Due Date</button><button class="px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-sm text-[11px] font-medium flex items-center gap-1 border border-black/[0.04] transition-colors"><span class="material-symbols-outlined text-[13px]">add</span> Payment Link</button></div></div><div class="pt-3 border-t border-black/[0.06] flex items-center gap-2"><button class="flex-1 py-2.5 px-4 rounded-xl bg-primary text-white font-label-md text-label-md font-medium flex items-center justify-center gap-1.5 shadow-sm hover:opacity-95 active:scale-95 transition-all"><span class="material-symbols-outlined text-[16px]">save</span> Save Template Changes</button><button class="py-2.5 px-3.5 rounded-xl border border-outline-variant bg-transparent text-on-surface-variant font-label-md text-label-md font-medium hover:bg-surface-container transition-colors flex items-center justify-center gap-1"><span class="material-symbols-outlined text-[16px]">restart_alt</span> Reset to Default</button></div></div><div class="space-y-2.5 pt-2"><div class="p-3 rounded-xl bg-emerald-100/80 border border-emerald-600/30 flex items-center justify-between"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-emerald-700 text-[20px]" style="font-variation-settings: 'FILL' 1;">verified_user</span><div><p class="font-label-md text-label-md font-semibold text-emerald-900">Payment Completed via USSD ✓</p><p class="font-label-sm text-[11px] text-emerald-800">TxID: MM-20241115-88291 • UGX 700,000 Received</p></div></div><button class="py-1.5 px-3 rounded-lg bg-emerald-700 text-white font-label-sm text-xs font-semibold hover:bg-emerald-800 active:scale-95 transition-all shadow-xs flex items-center gap-1" onclick="triggerTestAlert()"><span class="material-symbols-outlined text-[14px]">receipt</span> Receipt</button></div><button class="w-full py-3 px-4 rounded-xl bg-emerald-700 text-white font-label-md text-label-md font-semibold flex items-center justify-center gap-2 shadow-sm hover:opacity-95 active:scale-95 transition-all cursor-default"><span class="material-symbols-outlined text-[18px] text-emerald-300" style="font-variation-settings: 'FILL' 1;">task_alt</span> <span class="">Tuition Installment Settled via USSD ✓</span> <span class="text-[11px] font-normal text-emerald-200 ml-1">(Reconciled)</span></button><div class="grid grid-cols-2 gap-2"><button class="py-2.5 px-4 rounded-xl bg-primary-fixed text-primary font-label-md text-label-md font-semibold hover:bg-surface-container transition-colors flex items-center justify-center gap-1.5 border border-primary/20"><span class="material-symbols-outlined text-[16px]">download</span> Bursar Receipt PDF</button><button class="py-2.5 px-4 rounded-xl border border-primary/20 bg-transparent text-primary font-label-md text-label-md font-medium hover:bg-surface-container transition-colors flex items-center justify-center gap-1.5"><span class="material-symbols-outlined text-[16px]">history</span> MoMo Gateway Audit</button></div></div>
+<!-- Editorial Note footer on HarambeeOne policy -->
+<div class="text-center pt-2 pb-4">
+<p class="font-label-sm text-label-sm text-on-surface-variant leading-relaxed">
+        HarambeeOne adheres to the Uganda Data Protection and Privacy Act (2019). Messages are only sent during verified bursary business hours (08:00 - 18:00 EAT).
+      </p>
+</div>
+</main>
+<!-- Bottom Nav Bar (Shared Component Anchor) -->
+<!-- Mapped active tab: "Finances" (since this screen is Payment Reminders & Bursar fees) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin_mobile py-2 bg-surface shadow-sm md:hidden">
+<!-- Overview -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 hover:text-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-label-sm mt-0.5">Overview</span>
+</button>
+<!-- Finances (Active Destination) -->
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1.5 active:scale-95 transition-transform duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm font-semibold mt-0.5 text-white">Finances</span>
+</button>
+<!-- Academics -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 hover:text-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label-sm text-label-sm mt-0.5">Academics</span>
+</button>
+<!-- Support -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1.5 hover:text-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-label-sm text-label-sm mt-0.5">Support</span>
+</button>
+</nav>
+<!-- Toast Notification Modal for Microinteraction -->
+<div class="fixed bottom-20 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-4 py-2.5 rounded-full text-sm font-label-md shadow-lg flex items-center gap-2 transform pointer-events-none transition-all duration-300 z-50" id="toast"><span class="material-symbols-outlined text-[18px] text-emerald-400" style="font-variation-settings: &quot;FILL&quot; 1;">verified</span><span class="">✓ Payment Confirmed via USSD (TxID: MM-20241115-88291 • UGX 700,000)</span></div>
+<script>
+    function switchChannel(channel) {
+      const whatsappSec = document.getElementById('section-whatsapp');
+      const smsSec = document.getElementById('section-sms');
+      const tabWhatsapp = document.getElementById('tab-whatsapp');
+      const tabSms = document.getElementById('tab-sms');
+
+      if (channel === 'whatsapp') {
+        whatsappSec.classList.remove('hidden');
+        smsSec.classList.add('hidden');
+        tabWhatsapp.className = 'flex-1 py-2 px-3 rounded-lg text-center font-label-md text-label-md transition-all duration-200 bg-surface-container-lowest text-primary shadow-sm font-semibold flex items-center justify-center gap-1.5';
+        tabSms.className = 'flex-1 py-2 px-3 rounded-lg text-center font-label-md text-label-md transition-all duration-200 text-on-surface-variant hover:text-primary flex items-center justify-center gap-1.5';
+      } else {
+        smsSec.classList.remove('hidden');
+        whatsappSec.classList.add('hidden');
+        tabSms.className = 'flex-1 py-2 px-3 rounded-lg text-center font-label-md text-label-md transition-all duration-200 bg-surface-container-lowest text-primary shadow-sm font-semibold flex items-center justify-center gap-1.5';
+        tabWhatsapp.className = 'flex-1 py-2 px-3 rounded-lg text-center font-label-md text-label-md transition-all duration-200 text-on-surface-variant hover:text-primary flex items-center justify-center gap-1.5';
+      }
+    }
+
+    function triggerTestAlert() {
+      const toast = document.getElementById('toast');
+      toast.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+      }, 3500);
+    }
+  </script>
+
+
+</body></html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>School Events</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001736",
+                        "tertiary": "#390001",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#001b3d",
+                        "surface-card": "#ffffff",
+                        "surface-dim": "#d8dae0",
+                        "status-error": "#ba1a1a",
+                        "surface-container-high": "#e7e8ee",
+                        "on-tertiary-container": "#ff5a4e",
+                        "tertiary-container": "#600004",
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "error": "#ba1a1a",
+                        "inverse-surface": "#2e3135",
+                        "primary-fixed": "#d6e3ff",
+                        "secondary-fixed-dim": "#80d8a5",
+                        "surface-bright": "#f8f9ff",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#191c20",
+                        "on-primary-container": "#7594ca",
+                        "outline": "#747780",
+                        "on-surface-variant": "#43474f",
+                        "on-secondary-container": "#0a7147",
+                        "surface-container": "#eceef3",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#006d43",
+                        "on-surface-subtle": "#43474f",
+                        "on-primary-fixed-variant": "#264778",
+                        "secondary-fixed": "#9cf5c0",
+                        "surface": "#f8f9ff",
+                        "inverse-on-surface": "#eff0f6",
+                        "tertiary-fixed": "#ffdad5",
+                        "on-primary": "#ffffff",
+                        "status-warning": "#d97706",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#005231",
+                        "surface-variant": "#e1e2e8",
+                        "status-success": "#006d43",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#410002",
+                        "surface-container-low": "#f2f3f9",
+                        "surface-container-highest": "#e1e2e8",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "inverse-primary": "#a9c7ff",
+                        "secondary-container": "#99f2bd",
+                        "primary-container": "#002b5b",
+                        "background": "#f8f9ff",
+                        "on-tertiary-fixed-variant": "#930009",
+                        "on-background": "#191c20",
+                        "outline-variant": "#c4c6d0",
+                        "surface-tint": "#405f91",
+                        "on-secondary-fixed": "#002111",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "24px",
+                        "stack-sm": "8px",
+                        "margin-mobile": "16px",
+                        "gutter": "16px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Public Sans"],
+                        "data-mono": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "label-sm": ["Public Sans"],
+                        "headline-md": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased pb-20 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile h-14 bg-surface dark:bg-surface-container-high border-b border-outline-variant dark:border-outline flat no shadows">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden bg-surface-variant flex items-center justify-center">
+<img alt="Student Profile" class="object-cover w-full h-full" data-alt="A small, professional headshot of a female student in a clean, high-key lighting environment. The portrait is minimalist, matching a corporate/educational platform aesthetic with a bright, neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6q_6nwZPSOp0fbLRPn_-FEw1wT97lGjMZG10SZ2Jn4TLkIauL0-Vhhpmjkyqhzyzvy9mwa_9VisWikElupfQUlT8Rf-I-pDvF0VX6BOijQcpmfivgbCX8YKO3rTbZeCYKn6CCEFdNCPVbBuecWZPe_v15b8x8HxOe5c8llHf9vhVq6SB723HWNx3tyydC4OzjJijihkQV_LeyZFqPO0uXaLF5t26_bamwHh_HOatK31_CS6ZiEWJC4Q"/>
+</div>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary-fixed">School Events</h1>
+</div>
+<button class="w-10 h-10 flex flex-col items-center justify-center rounded-full text-primary dark:text-primary-fixed hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors active:scale-95 duration-150 ease-in-out">
+<span class="material-symbols-outlined">swap_horiz</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 px-margin-mobile md:px-margin-desktop md:max-w-[1200px] md:mx-auto">
+<!-- Search and Filter Section -->
+<section class="mb-stack-lg">
+<div class="relative mb-stack-md">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-12 pr-4 py-3 rounded-lg bg-surface-container-lowest border border-outline-variant focus:border-primary focus:border-2 focus:ring-0 font-body-md text-on-surface transition-all placeholder:text-on-surface-subtle" placeholder="Search events..." type="text"/>
+</div>
+<!-- Filter Chips - Scrollable on mobile -->
+<div class="flex gap-2 overflow-x-auto pb-2 -mx-margin-mobile px-margin-mobile md:mx-0 md:px-0 scrollbar-hide">
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-primary text-on-primary font-label-sm transition-colors border border-primary">All Events</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm border border-outline-variant hover:bg-surface-container-low transition-colors">Academic</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm border border-outline-variant hover:bg-surface-container-low transition-colors">Sports</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm border border-outline-variant hover:bg-surface-container-low transition-colors">Holiday</button>
+<button class="whitespace-nowrap px-4 py-2 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm border border-outline-variant hover:bg-surface-container-low transition-colors">Extracurricular</button>
+</div>
+</section>
+<!-- Events List -->
+<section class="flex flex-col gap-stack-md">
+<!-- Event Group: October -->
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary mb-stack-sm sticky top-14 bg-background/90 backdrop-blur py-2 z-10">October</h2>
+<div class="flex flex-col gap-3">
+<!-- Event Card 1 -->
+<article class="bg-surface-card rounded-lg border border-outline-variant p-4 flex gap-4 items-start shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group cursor-pointer">
+<!-- Date Block -->
+<div class="flex flex-col items-center justify-center min-w-[60px] p-2 bg-surface-container rounded-md">
+<span class="font-label-sm text-on-surface-variant uppercase">Oct</span>
+<span class="font-headline-md text-primary">12</span>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0">
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded-full bg-[#0a7147]/10 text-on-secondary-container font-label-sm border border-[#0a7147]/20">Academic</span>
+<span class="font-data-mono text-on-surface-variant text-sm flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">schedule</span> 09:00 AM</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate mb-1">Parent-Teacher Conference</h3>
+<div class="flex items-center gap-2 mt-2">
+<div class="w-6 h-6 rounded-full overflow-hidden bg-surface-variant shrink-0">
+<img alt="Student" class="object-cover w-full h-full" data-alt="A tiny profile picture of a young male student in a bright educational setting, optimized for a minimal UI layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz7K2xNNvw1OzwURrFFdZOyZj8FJEnnOeUNFz2JtwTERJ8466Y79Mg5rIr2vYT40E6OTXM0H-4WqxDLveLy-ZM2iTnyHcI86-5oaWDmXk7Jdl7KxmXvuKr8pwim89KbX4dYZHa41lmKYvwAg0EH1VLnOOMJ4NTe76JI1ZDVHXAMoHaRrj2mtSkWDjOWWCfBAtfadetdHCLs5DF8JG8itPYkeH8p4LedAFO9dmx7Rm8SN-3uuqeMK6sXA"/>
+</div>
+<span class="font-body-md text-on-surface-variant truncate">Applies to: Alex Johnson</span>
+</div>
+</div>
+</article>
+<!-- Event Card 2 -->
+<article class="bg-surface-card rounded-lg border border-outline-variant p-4 flex gap-4 items-start shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group cursor-pointer">
+<div class="flex flex-col items-center justify-center min-w-[60px] p-2 bg-surface-container rounded-md">
+<span class="font-label-sm text-on-surface-variant uppercase">Oct</span>
+<span class="font-headline-md text-primary">15</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded-full bg-[#d97706]/10 text-status-warning font-label-sm border border-[#d97706]/20">Sports</span>
+<span class="font-data-mono text-on-surface-variant text-sm flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">schedule</span> 14:00 PM</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate mb-1">Inter-school Sports Day</h3>
+<div class="flex items-center gap-2 mt-2">
+<div class="w-6 h-6 rounded-full overflow-hidden bg-surface-variant shrink-0">
+<img alt="Student" class="object-cover w-full h-full" data-alt="A tiny profile picture of a young male student in a bright educational setting, optimized for a minimal UI layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlHOUbgCUCzABPMA2u8KpLJdTqFxZhNz4Y8Gh1HTBcjNTT27h1gGrRZ17MQI1wgwqXqinCB5RrIqo3sD1ldbUxQLsYwV9M2vWfbAOExKluwH3qhUNJB0AUUw8P4UNT6UjT9v70g9r_6-zeyHNZsonzyb50hrCplo0D2kN1i1yTzl5_ftrPA5OrcNggxZaPdGOnPV1BrM3fv8qUpm-bphNARrM2L7lBWxoCBV8nVQV1u2m99skxyw-sHQ"/>
+</div>
+<span class="font-body-md text-on-surface-variant truncate">Applies to: Alex Johnson</span>
+</div>
+</div>
+</article>
+</div>
+</div>
+<!-- Event Group: November -->
+<div class="mt-stack-sm">
+<h2 class="font-headline-sm text-headline-sm text-primary mb-stack-sm sticky top-14 bg-background/90 backdrop-blur py-2 z-10">November</h2>
+<div class="flex flex-col gap-3">
+<!-- Event Card 3 -->
+<article class="bg-surface-card rounded-lg border border-outline-variant p-4 flex gap-4 items-start shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group cursor-pointer">
+<div class="flex flex-col items-center justify-center min-w-[60px] p-2 bg-surface-container rounded-md">
+<span class="font-label-sm text-on-surface-variant uppercase">Nov</span>
+<span class="font-headline-md text-primary">02</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex flex-wrap items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded-full bg-primary-container/10 text-primary font-label-sm border border-primary-container/20">Holiday</span>
+<span class="font-data-mono text-on-surface-variant text-sm flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">schedule</span> All Day</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate mb-1">Mid-Term Break Starts</h3>
+<div class="flex items-center gap-2 mt-2">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full overflow-hidden bg-surface-variant border border-surface-card shrink-0">
+<img alt="Student 1" class="object-cover w-full h-full" data-alt="A tiny profile picture of a young male student in a bright educational setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_H7LK_NK22LFMBgEn2yXwY2VZalJ9_F1rkrOPwLVZkx8hAVID5w6V2xsfda35oVP1L25vZcwlofHRDdjPNPP2w0pGHxDCOWJSo0P6IjOIubj2q8FB_8kyMapGehO5MHlDHFmK7SwlorTAIgv8kJXJjFNGhRLRikGSZHQn_5UVb-mV1kq-OnXuaet7Kcr36AbPW-bUj0xqgi0s-lDKAwdeHasi0ebdQgl5in5_Eq-iempdhsQsi2Oyow"/>
+</div>
+<div class="w-6 h-6 rounded-full overflow-hidden bg-surface-variant border border-surface-card shrink-0 flex items-center justify-center text-[10px] font-bold text-on-surface-variant bg-surface-container-high">
+                                        +1
+                                    </div>
+</div>
+<span class="font-body-md text-on-surface-variant truncate">Applies to: All Students</span>
+</div>
+</div>
+</article>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface dark:bg-surface-container border-t border-outline-variant dark:border-outline docked full-width rounded-t-xl flat no shadows">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-3 py-1 hover:bg-surface-container-high dark:hover:bg-inverse-surface active:scale-95 duration-100 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<!-- Fees -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-3 py-1 hover:bg-surface-container-high dark:hover:bg-inverse-surface active:scale-95 duration-100 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">payments</span>
+<span class="font-label-sm text-label-sm">Fees</span>
+</a>
+<!-- Events (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl px-3 py-1 hover:bg-surface-container-high dark:hover:bg-inverse-surface active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="font-label-sm text-label-sm">Events</span>
+</a>
+<!-- Notices -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-3 py-1 hover:bg-surface-container-high dark:hover:bg-inverse-surface active:scale-95 duration-100 rounded-xl" href="#">
+<span class="material-symbols-outlined mb-1">notifications</span>
+<span class="font-label-sm text-label-sm">Notices</span>
+</a>
+</nav>
+</body></html>

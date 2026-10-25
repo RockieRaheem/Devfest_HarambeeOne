@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Child Detail &amp; Ledger - HarambeeOne</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Public+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "surface-container-lowest": "#ffffff",
+          "on-error": "#ffffff",
+          "on-secondary": "#ffffff",
+          "surface-bright": "#f8f9ff",
+          "on-tertiary-container": "#069669",
+          "on-secondary-fixed-variant": "#0039b5",
+          "surface-tint": "#565e74",
+          "inverse-surface": "#213145",
+          "on-primary-fixed-variant": "#3f465c",
+          "surface-variant": "#d3e4fe",
+          "tertiary-fixed-dim": "#68dba9",
+          "secondary": "#1d4ed8",
+          "on-tertiary-fixed": "#002114",
+          "on-tertiary-fixed-variant": "#005137",
+          "surface-container-high": "#dce9ff",
+          "secondary-fixed-dim": "#b7c4ff",
+          "secondary-fixed": "#dce1ff",
+          "on-surface": "#0b1c30",
+          "tertiary-container": "#002114",
+          "surface-container": "#e5eeff",
+          "inverse-primary": "#bec6e0",
+          "error-container": "#ffdad6",
+          "on-secondary-fixed": "#001551",
+          "surface-container-highest": "#d3e4fe",
+          "on-primary-container": "#7c839b",
+          "primary-fixed-dim": "#bec6e0",
+          "primary-container": "#131b2e",
+          "surface": "#f8f9ff",
+          "surface-container-low": "#eff4ff",
+          "inverse-on-surface": "#eaf1ff",
+          "on-primary-fixed": "#131b2e",
+          "primary": "#000000",
+          "background": "#f8f9ff",
+          "on-surface-variant": "#45464d",
+          "outline-variant": "#c6c6cd",
+          "secondary-container": "#4069f2",
+          "error": "#ba1a1a",
+          "on-error-container": "#93000a",
+          "primary-fixed": "#dae2fd",
+          "on-background": "#0b1c30",
+          "outline": "#76777d",
+          "on-tertiary": "#ffffff",
+          "tertiary-fixed": "#85f8c4",
+          "tertiary": "#000000",
+          "on-primary": "#ffffff",
+          "surface-dim": "#cbdbf5",
+          "on-secondary-container": "#fffbff"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+        "spacing": {
+          "space-xs": "0.25rem",
+          "space-sm": "0.5rem",
+          "space-md": "1rem",
+          "margin": "2rem",
+          "margin-mobile": "1rem",
+          "space-xl": "2.5rem",
+          "gutter-mobile": "1rem",
+          "gutter": "1.5rem",
+          "space-lg": "1.5rem"
+        },
+        "fontFamily": {
+          "body-md": [
+            "Inter"
+          ],
+          "headline-md": [
+            "Public Sans"
+          ],
+          "body-lg": [
+            "Inter"
+          ],
+          "label-sm": [
+            "Inter"
+          ],
+          "display-sm": [
+            "Public Sans"
+          ],
+          "display-lg": [
+            "Public Sans"
+          ],
+          "headline-sm": [
+            "Public Sans"
+          ],
+          "tabular-numeric": [
+            "Inter"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "display-sm-mobile": [
+            "Public Sans"
+          ],
+          "label-md": [
+            "Inter"
+          ],
+          "headline-lg": [
+            "Public Sans"
+          ]
+        },
+        "fontSize": {
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "headline-md": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.005em",
+              "fontWeight": "400"
+            }
+          ],
+          "label-sm": [
+            "11px",
+            {
+              "lineHeight": "14px",
+              "letterSpacing": "0.04em",
+              "fontWeight": "600"
+            }
+          ],
+          "display-sm": [
+            "32px",
+            {
+              "lineHeight": "40px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "display-lg": [
+            "40px",
+            {
+              "lineHeight": "48px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "700"
+            }
+          ],
+          "headline-sm": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "letterSpacing": "-0.005em",
+              "fontWeight": "600"
+            }
+          ],
+          "tabular-numeric": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-sm": [
+            "13px",
+            {
+              "lineHeight": "18px",
+              "letterSpacing": "0em",
+              "fontWeight": "400"
+            }
+          ],
+          "display-sm-mobile": [
+            "26px",
+            {
+              "lineHeight": "34px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ],
+          "label-md": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.02em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-lg": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "600"
+            }
+          ]
+        }
+      },
+    },
+  }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased min-h-screen flex justify-center selection:bg-surface-variant selection:text-on-surface">
+<!-- Mobile Viewport Shell (Max Clamp for High-Density Executive Clarity) -->
+<div class="w-full max-w-md bg-background min-h-screen flex flex-col relative pb-28">
+<!-- Top App Bar (Shared Components Schema aligned) -->
+<header class="sticky top-0 z-40 w-full h-14 bg-surface-container-lowest shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] px-margin-mobile flex items-center justify-between transition-colors duration-150">
+<div class="flex items-center gap-space-sm min-w-0">
+<button aria-label="Go back" class="p-1.5 -ml-1 text-on-surface hover:bg-surface-container-low rounded-xl transition-colors duration-150 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[22px]">arrow_back</span>
+</button>
+<div class="flex flex-col min-w-0">
+<h1 class="font-headline-sm text-headline-sm text-on-surface truncate leading-tight">Sarah Namaganda</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant truncate">P.4 Blue • LIN: UGX-2024-99812401</p>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<button aria-label="Download Official Statement" class="p-2 text-on-surface-variant hover:text-secondary hover:bg-surface-container-low rounded-xl transition-colors duration-150 active:scale-[0.98]" title="Download Statement" type="button">
+<span class="material-symbols-outlined text-[22px]">receipt_long</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-margin-mobile pt-space-md space-y-space-md">
+<!-- Student Header Card (Executive Profile Anchor) -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_1px_3px_0_rgba(15,23,42,0.04),0_1px_2px_-1px_rgba(15,23,42,0.02)] border border-outline-variant/40">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<div class="w-13 h-13 rounded-full bg-primary-container text-surface-container-lowest font-headline-md text-headline-md flex items-center justify-center font-bold tracking-tight shadow-sm shrink-0">
+              SN
+            </div>
+<div>
+<div class="flex items-center gap-1.5">
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">Namaganda Sarah</h2>
+<span class="material-symbols-outlined text-secondary text-[18px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">St. Kizito Boarding Primary School</p>
+</div>
+</div>
+</div>
+<!-- Meta Badges & Registration Tokens -->
+<div class="mt-space-md flex flex-wrap gap-1.5">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-surface-container-low text-secondary font-label-sm text-label-sm border border-secondary/20">
+<span class="material-symbols-outlined text-[14px]">school</span>
+            Primary 4 Blue
+          </span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm border border-outline-variant/30">
+<span class="material-symbols-outlined text-[14px]">wb_sunny</span>
+            Regular Day Scholar
+          </span>
+</div>
+<!-- Architectural Micro-Grid for Administrative Identity -->
+<div class="mt-space-md pt-space-sm border-t border-outline-variant/20 grid grid-cols-2 gap-space-sm font-tabular-numeric text-tabular-numeric">
+<div>
+<span class="block font-label-sm text-label-sm text-on-surface-variant">UNEB Index Number</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">UNEB/002/P7/041</span>
+</div>
+<div class="text-right">
+<span class="block font-label-sm text-label-sm text-on-surface-variant">Family Ledger Identifier</span>
+<span class="font-body-md text-body-md text-on-surface font-medium">#H1-8492</span>
+</div>
+</div>
+</section>
+<!-- Financial Summary Card (Computational Executive Core) -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md shadow-[0_1px_3px_0_rgba(15,23,42,0.04),0_1px_2px_-1px_rgba(15,23,42,0.02)] border border-outline-variant/40 space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant/20">
+<div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant block">Term 1 2025 Account</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Ledger Balance Status</span>
+</div>
+<!-- Reconciled Pill -->
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-bright text-on-tertiary-container font-label-sm text-label-sm border border-tertiary-fixed-dim/40 shadow-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-container"></span>
+            100% Settled
+          </span>
+</div>
+<!-- Net Outstanding Large Metric Block -->
+<div class="bg-surface rounded-xl p-space-md border border-outline-variant/30 flex items-baseline justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Total Outstanding Payable</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-label-md text-label-md text-on-surface-variant font-semibold">UGX</span>
+<span class="font-display-sm-mobile text-display-sm-mobile font-headline-md font-bold text-on-surface tracking-tight">0</span>
+</div>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center gap-1 text-on-tertiary-container font-label-sm text-label-sm bg-surface-container-lowest px-2 py-1 rounded border border-outline-variant/30">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+              Zero Variance
+            </span>
+</div>
+</div>
+<!-- Secondary Breakdown Grid -->
+<div class="grid grid-cols-2 gap-space-sm pt-1">
+<div class="p-2.5 rounded-lg bg-surface-bright border border-outline-variant/20">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Total Billed Fees</span>
+<span class="font-body-lg text-body-lg font-bold text-on-surface font-headline-md tracking-tight">UGX 1,450,000</span>
+<span class="block font-label-sm text-label-sm text-on-surface-variant mt-0.5">Statutory &amp; PTA Assessment</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-bright border border-outline-variant/20">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Cleared &amp; Posted</span>
+<span class="font-body-lg text-body-lg font-bold text-on-surface font-headline-md tracking-tight">UGX 1,450,000</span>
+<span class="block font-label-sm text-label-sm text-on-tertiary-container mt-0.5 flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">done_all</span> Fully Reconciled
+            </span>
+</div>
+</div>
+<!-- Matching Donor Subsidy Callout Block -->
+<div class="p-3 rounded-lg bg-surface-container-low border border-secondary/20 flex items-start gap-space-sm">
+<div class="p-1.5 bg-surface-container-lowest rounded text-secondary shadow-xs shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-secondary">Matching Donor Subsidy</span>
+<span class="font-tabular-numeric text-tabular-numeric text-secondary font-bold">UGX 600,000</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 leading-snug">
+              Mastercard STEM Girls Initiative credited directly via automated escrow.
+            </p>
+</div>
+</div>
+<!-- Primary Actions Group -->
+<div class="space-y-2 pt-1">
+<button class="w-full h-10 px-4 rounded-xl bg-primary-container hover:bg-primary-container/90 text-on-primary font-label-md text-label-md flex items-center justify-center gap-2 shadow-sm transition-transform duration-150 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px]">picture_as_pdf</span>
+            Download Official Term Statement (PDF)
+          </button>
+<button class="w-full h-9 px-4 rounded-xl bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-label-md text-label-md border border-outline-variant/40 flex items-center justify-center gap-2 transition-colors duration-150 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">folder_open</span>
+            View SchoolPay Receipt Vault
+          </button>
+</div>
+</section>
+<!-- Linked Sibling Quick-Nav Card -->
+<section class="bg-surface-container-lowest rounded-xl p-3 shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] border border-outline-variant/40 hover:border-secondary/30 transition-all duration-150">
+<a class="flex items-center justify-between gap-2 group" href="#sibling-link">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-9 h-9 rounded-full bg-surface-container-high text-secondary flex items-center justify-center font-headline-sm text-headline-sm font-bold shrink-0">
+              JN
+            </div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate group-hover:text-secondary transition-colors">Joshua Namaganda</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">(P.1 Green)</span>
+</div>
+<p class="font-body-sm text-body-sm text-error font-medium">Balance: UGX 350,000 Due</p>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0 text-on-surface-variant group-hover:text-secondary transition-colors">
+<span class="font-label-sm text-label-sm font-semibold">Switch</span>
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</div>
+</a>
+</section>
+<!-- Itemized Ledger Entries (Audit Chronological Stream) -->
+<section class="space-y-space-sm pt-space-xs">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Itemized Ledger</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface font-semibold">5 Records</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">verified</span> Audit Verified
+          </span>
+</div>
+<div class="space-y-2.5">
+<!-- Item 1: Term 1 Statutory Tuition (Debit) -->
+<article class="bg-surface-container-lowest rounded-xl p-3.5 shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] border border-outline-variant/30 flex flex-col gap-2">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">request_quote</span>
+</div>
+<div class="min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate leading-tight">Term 1 Statutory Tuition</h3>
+<div class="flex items-center gap-1.5 mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>10 Jan 2025</span>
+<span>•</span>
+<span>Bursar Invoiced</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-tabular-numeric text-tabular-numeric font-bold text-on-surface block">UGX 1,050,000</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Debit</span>
+</div>
+</div>
+<div class="pt-1.5 border-t border-outline-variant/20 flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Ref: #INV-2025-0144</span>
+<span class="text-on-surface-variant">Statutory Assessment</span>
+</div>
+</article>
+<!-- Item 2: Science Lab Kit & PTA Levy (Debit) -->
+<article class="bg-surface-container-lowest rounded-xl p-3.5 shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] border border-outline-variant/30 flex flex-col gap-2">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">science</span>
+</div>
+<div class="min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate leading-tight">Science Lab Kit &amp; PTA Levy</h3>
+<div class="flex items-center gap-1.5 mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>10 Jan 2025</span>
+<span>•</span>
+<span>Bursar Invoiced</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-tabular-numeric text-tabular-numeric font-bold text-on-surface block">UGX 400,000</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Debit</span>
+</div>
+</div>
+<div class="pt-1.5 border-t border-outline-variant/20 flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
+<span>Ref: #INV-2025-0145</span>
+<span class="text-on-surface-variant">School Operations</span>
+</div>
+</article>
+<!-- Item 3: Mastercard STEM Subsidy Credit (Credit) -->
+<article class="bg-surface-container-lowest rounded-xl p-3.5 shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] border border-secondary/25 flex flex-col gap-2 bg-gradient-to-r from-surface-container-lowest to-surface-bright">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">workspace_premium</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate leading-tight">Mastercard STEM Subsidy</h3>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-high text-secondary font-label-sm text-[10px] font-bold">Subsidized</span>
+</div>
+<div class="flex items-center gap-1.5 mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>22 Jan 2025</span>
+<span>•</span>
+<span class="truncate">Stellar Lumens Escrow Disbursal</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-tabular-numeric text-tabular-numeric font-bold text-on-tertiary-container block">+UGX 600,000</span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container font-medium">Credit</span>
+</div>
+</div>
+<div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Ref: ESCROW-STEM-9921</span>
+<button class="h-7 px-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-secondary border border-secondary/30 font-label-sm text-label-sm flex items-center gap-1 font-semibold transition-colors duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[14px]">download</span>
+                Receipt
+              </button>
+</div>
+</article>
+<!-- Item 4: Stanbic Sibling Split Allocation (Credit) -->
+<article class="bg-surface-container-lowest rounded-xl p-3.5 shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] border border-outline-variant/30 flex flex-col gap-2">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">account_balance</span>
+</div>
+<div class="min-w-0">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate leading-tight">Stanbic Sibling Split</h3>
+<div class="flex items-center gap-1.5 mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>04 Feb 2025</span>
+<span>•</span>
+<span class="truncate">Split: Prossy Nalubega Payroll</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-tabular-numeric text-tabular-numeric font-bold text-on-tertiary-container block">+UGX 450,000</span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container font-medium">Credit</span>
+</div>
+</div>
+<div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Ref: STB-SPLIT-5510</span>
+<button class="h-7 px-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container-low text-on-surface border border-outline-variant/40 font-label-sm text-label-sm flex items-center gap-1 font-medium transition-colors duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[14px]">receipt</span>
+                Receipt
+              </button>
+</div>
+</article>
+<!-- Item 5: MTN MoMo Final Clearance (Credit) -->
+<article class="bg-surface-container-lowest rounded-xl p-3.5 shadow-[0_1px_3px_0_rgba(15,23,42,0.04)] border border-outline-variant/30 flex flex-col gap-2">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">contactless</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate leading-tight">MTN MoMo Final Clearance</h3>
+<span class="px-1.5 py-0.2 rounded bg-surface-bright text-on-tertiary-container border border-tertiary-fixed-dim/30 font-label-sm text-[10px] font-bold">Cleared</span>
+</div>
+<div class="flex items-center gap-1.5 mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>18 Feb 2025</span>
+<span>•</span>
+<span class="truncate">Direct Push #RCP-SCHPAY-304</span>
+</div>
+</div>
+</div>
+<div class="text-right shrink-0">
+<span class="font-tabular-numeric text-tabular-numeric font-bold text-on-tertiary-container block">+UGX 400,000</span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container font-medium">Credit</span>
+</div>
+</div>
+<div class="pt-2 border-t border-outline-variant/20 flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">TxID: MOMO-UG-8830114</span>
+<button class="h-7 px-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container-low text-on-surface border border-outline-variant/40 font-label-sm text-label-sm flex items-center gap-1 font-medium transition-colors duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[14px]">receipt</span>
+                Receipt
+              </button>
+</div>
+</article>
+</div>
+</section>
+<!-- Institutional Regulatory Compliance Attestation -->
+<footer class="pt-space-md pb-space-md text-center">
+<div class="inline-flex items-center justify-center gap-1.5 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">gavel</span>
+<span>MoES EMIS Verified Ledger</span>
+<span>•</span>
+<span>BoU Sandbox Act 2020</span>
+</div>
+<p class="font-body-sm text-[11px] text-on-surface-variant/80 mt-1 max-w-xs mx-auto leading-relaxed">
+          Cryptographically signed audit receipts issued under Uganda Ministry of Education &amp; Sports National Integration Standard.
+        </p>
+</footer>
+</main>
+<!-- Bottom Navigation Bar (Mandatory Shared Component Schema) -->
+<nav aria-label="Bottom Navigation" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile py-space-xs bg-surface-container-lowest shadow-[0_-1px_3px_0_rgba(15,23,42,0.04)]">
+<!-- Destination 1: Overview -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-space-xs px-space-sm gap-0.5 hover:text-secondary transition-colors duration-150 active:scale-95" href="#overview">
+<span class="material-symbols-outlined text-[22px]">dashboard</span>
+<span class="font-label-sm text-label-sm tracking-wide">Overview</span>
+</a>
+<!-- Destination 2: Finances (ACTIVE LOCK) -->
+<a aria-current="page" class="flex flex-col items-center justify-center text-secondary font-semibold py-space-xs px-space-sm gap-0.5 active:scale-95" href="#finances">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm tracking-wide">Finances</span>
+</a>
+<!-- Destination 3: Academics -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-space-xs px-space-sm gap-0.5 hover:text-secondary transition-colors duration-150 active:scale-95" href="#academics">
+<span class="material-symbols-outlined text-[22px]">school</span>
+<span class="font-label-sm text-label-sm tracking-wide">Academics</span>
+</a>
+<!-- Destination 4: Support -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant py-space-xs px-space-sm gap-0.5 hover:text-secondary transition-colors duration-150 active:scale-95" href="#support">
+<span class="material-symbols-outlined text-[22px]">contact_support</span>
+<span class="font-label-sm text-label-sm tracking-wide">Support</span>
+</a>
+</nav>
+</div>
+</body></html>

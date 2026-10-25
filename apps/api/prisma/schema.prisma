@@ -1,0 +1,517 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum UserRole {
+  PLATFORM_ADMIN
+  SCHOOL_ADMIN
+  REGISTRAR
+  BURSAR
+  ACCOUNTANT
+  HEAD_TEACHER
+  OWNER
+  BOARD_MEMBER
+  AUDITOR
+  SPONSOR_USER
+  PARENT
+  STUDENT
+  READ_ONLY_REGULATOR
+}
+
+enum StudentStatus {
+  ACTIVE
+  TRANSFERRED
+  WITHDRAWN
+  SUSPENDED
+  COMPLETED
+  ARCHIVED
+}
+
+enum PaymentStatus {
+  RECEIVED
+  UNMATCHED
+  MATCH_SUGGESTED
+  MATCHED
+  RECONCILED
+  SETTLED
+  DISPUTED
+  REVERSED
+  REFUNDED
+}
+
+enum StatementImportStatus {
+  RECEIVED
+  VALIDATING
+  READY_FOR_REVIEW
+  PARTIALLY_RECONCILED
+  RECONCILED
+  FAILED
+}
+
+enum PaymentChannel {
+  SCHOOLPAY
+  BANK
+  MOBILE_MONEY
+  CASH
+  CARD
+  SPONSOR_SETTLEMENT
+  OTHER
+}
+
+enum LedgerEntryType {
+  CHARGE
+  PAYMENT
+  BURSARY
+  WAIVER
+  ADJUSTMENT
+  REVERSAL
+  REFUND
+  SPONSOR_SETTLEMENT
+}
+
+enum ProgrammeStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  CLOSED
+  CANCELLED
+}
+
+enum AllocationStatus {
+  CREATED
+  ELIGIBLE
+  AUTHORISED
+  DISBURSEMENT_SUBMITTED
+  ONCHAIN_SENT
+  OFFRAMP_PROCESSING
+  FIAT_SETTLED
+  RECONCILED
+  SUSPENDED
+  CANCELLED
+  FAILED
+  RETURNED
+  UNDER_REVIEW
+}
+
+enum ProposalStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  VOTING
+  APPROVED
+  REJECTED
+  EXECUTED
+  CANCELLED
+}
+
+model Organization {
+  id        String    @id @default(cuid())
+  name      String
+  legalName String?
+  type      String
+  country   String    @default("UG")
+  createdAt DateTime  @default(now())
+  schools   School[]
+  users     User[]
+  sponsors  Sponsor[]
+}
+
+model School {
+  id               String             @id @default(cuid())
+  organizationId   String
+  organization     Organization       @relation(fields: [organizationId], references: [id])
+  name             String
+  emisCode         String?            @unique
+  unebCentreNo     String?
+  district         String?
+  status           String             @default("ACTIVE")
+  campuses         Campus[]
+  students         Student[]
+  feeStructures    FeeStructure[]
+  programmes       FundingProgramme[]
+  payments         Payment[]
+  statementImports StatementImport[]
+  createdAt        DateTime           @default(now())
+}
+
+model Campus {
+  id       String            @id @default(cuid())
+  schoolId String
+  school   School            @relation(fields: [schoolId], references: [id])
+  name     String
+  location String?
+  sections AcademicSection[]
+}
+
+model AcademicSection {
+  id         String  @id @default(cuid())
+  campusId   String
+  campus     Campus  @relation(fields: [campusId], references: [id])
+  name       String
+  levelGroup String?
+  classes    Class[]
+}
+
+model Class {
+  id            String          @id @default(cuid())
+  sectionId     String
+  section       AcademicSection @relation(fields: [sectionId], references: [id])
+  name          String
+  levelCode     String
+  streams       Stream[]
+  enrollments   Enrollment[]
+  feeStructures FeeStructure[]
+}
+
+model Stream {
+  id          String       @id @default(cuid())
+  classId     String
+  class       Class        @relation(fields: [classId], references: [id])
+  name        String
+  enrollments Enrollment[]
+}
+
+model AcademicYear {
+  id            String           @id @default(cuid())
+  label         String
+  startDate     DateTime
+  endDate       DateTime
+  periods       AcademicPeriod[]
+  enrollments   Enrollment[]
+  feeStructures FeeStructure[]
+}
+
+model AcademicPeriod {
+  id             String                @id @default(cuid())
+  academicYearId String
+  academicYear   AcademicYear          @relation(fields: [academicYearId], references: [id])
+  name           String
+  startDate      DateTime
+  endDate        DateTime
+  enrollments    Enrollment[]
+  feeStructures  FeeStructure[]
+  allocations    ProgrammeAllocation[]
+}
+
+model Person {
+  id            String         @id @default(cuid())
+  firstName     String
+  middleName    String?
+  lastName      String
+  phone         String?
+  email         String?
+  dateOfBirth   DateTime?
+  user          User?
+  student       Student?
+  guardianLinks GuardianLink[]
+}
+
+model User {
+  id               String            @id @default(cuid())
+  organizationId   String?
+  organization     Organization?     @relation(fields: [organizationId], references: [id])
+  personId         String            @unique
+  person           Person            @relation(fields: [personId], references: [id])
+  role             UserRole
+  passwordHash     String?
+  isActive         Boolean           @default(true)
+  auditEvents      AuditEvent[]
+  approvals        Approval[]
+  recordedPayments Payment[]         @relation("PaymentRecordedBy")
+  statementImports StatementImport[] @relation("StatementImportedBy")
+  createdAt        DateTime          @default(now())
+}
+
+model Student {
+  id                 String                @id @default(cuid())
+  schoolId           String
+  school             School                @relation(fields: [schoolId], references: [id])
+  personId           String                @unique
+  person             Person                @relation(fields: [personId], references: [id])
+  admissionNo        String
+  emisLearnerId      String?
+  status             StudentStatus         @default(ACTIVE)
+  enrollments        Enrollment[]
+  guardians          GuardianLink[]
+  ledgerEntries      LedgerEntry[]
+  paymentAllocations PaymentAllocation[]
+  allocations        ProgrammeAllocation[]
+  documents          Document[]
+  createdAt          DateTime              @default(now())
+
+  @@unique([schoolId, admissionNo])
+}
+
+model GuardianLink {
+  id                      String  @id @default(cuid())
+  studentId               String
+  student                 Student @relation(fields: [studentId], references: [id])
+  personId                String
+  person                  Person  @relation(fields: [personId], references: [id])
+  relationship            String
+  isPrimary               Boolean @default(false)
+  financialResponsibility Boolean @default(false)
+
+  @@unique([studentId, personId])
+}
+
+model Enrollment {
+  id             String          @id @default(cuid())
+  studentId      String
+  student        Student         @relation(fields: [studentId], references: [id])
+  classId        String
+  class          Class           @relation(fields: [classId], references: [id])
+  streamId       String?
+  stream         Stream?         @relation(fields: [streamId], references: [id])
+  academicYearId String
+  academicYear   AcademicYear    @relation(fields: [academicYearId], references: [id])
+  periodId       String?
+  period         AcademicPeriod? @relation(fields: [periodId], references: [id])
+  boardingStatus String?
+  status         String          @default("ACTIVE")
+  enrolledAt     DateTime        @default(now())
+}
+
+model FeeStructure {
+  id             String         @id @default(cuid())
+  schoolId       String
+  school         School         @relation(fields: [schoolId], references: [id])
+  classId        String
+  class          Class          @relation(fields: [classId], references: [id])
+  academicYearId String
+  academicYear   AcademicYear   @relation(fields: [academicYearId], references: [id])
+  periodId       String
+  period         AcademicPeriod @relation(fields: [periodId], references: [id])
+  name           String
+  items          FeeItem[]
+}
+
+model FeeItem {
+  id             String       @id @default(cuid())
+  feeStructureId String
+  feeStructure   FeeStructure @relation(fields: [feeStructureId], references: [id])
+  name           String
+  amount         Decimal      @db.Decimal(18, 2)
+  mandatory      Boolean      @default(true)
+}
+
+model LedgerEntry {
+  id                String             @id @default(cuid())
+  studentId         String
+  student           Student            @relation(fields: [studentId], references: [id])
+  type              LedgerEntryType
+  amount            Decimal            @db.Decimal(18, 2)
+  currency          String             @default("UGX")
+  description       String
+  reference         String?
+  paymentAllocation PaymentAllocation?
+  createdAt         DateTime           @default(now())
+}
+
+model Payment {
+  id                String              @id @default(cuid())
+  schoolId          String
+  school            School              @relation(fields: [schoolId], references: [id])
+  recordedById      String?
+  recordedBy        User?               @relation("PaymentRecordedBy", fields: [recordedById], references: [id])
+  idempotencyKey    String?
+  externalReference String?
+  channel           PaymentChannel
+  amount            Decimal             @db.Decimal(18, 2)
+  currency          String              @default("UGX")
+  payerName         String?
+  payerPhone        String?
+  status            PaymentStatus       @default(RECEIVED)
+  sourcePayload     Json?
+  allocations       PaymentAllocation[]
+  receipt           Receipt?
+  createdAt         DateTime            @default(now())
+
+  @@unique([channel, externalReference])
+  @@unique([schoolId, idempotencyKey])
+  @@index([schoolId, status, createdAt])
+}
+
+model StatementImport {
+  id            String                @id @default(cuid())
+  schoolId      String
+  school        School                @relation(fields: [schoolId], references: [id])
+  importedById  String
+  importedBy    User                  @relation("StatementImportedBy", fields: [importedById], references: [id])
+  fileName      String
+  storageKey    String?
+  contentHash   String
+  rowCount      Int
+  status        StatementImportStatus @default(RECEIVED)
+  failureReason String?
+  createdAt     DateTime              @default(now())
+  completedAt   DateTime?
+
+  @@unique([schoolId, contentHash])
+  @@index([schoolId, status, createdAt])
+}
+
+model PaymentAllocation {
+  id            String      @id @default(cuid())
+  paymentId     String
+  payment       Payment     @relation(fields: [paymentId], references: [id])
+  studentId     String
+  student       Student     @relation(fields: [studentId], references: [id])
+  amount        Decimal     @db.Decimal(18, 2)
+  ledgerEntryId String      @unique
+  ledgerEntry   LedgerEntry @relation(fields: [ledgerEntryId], references: [id])
+  createdAt     DateTime    @default(now())
+}
+
+model Receipt {
+  id        String   @id @default(cuid())
+  paymentId String   @unique
+  payment   Payment  @relation(fields: [paymentId], references: [id])
+  receiptNo String   @unique
+  issuedAt  DateTime @default(now())
+}
+
+model Sponsor {
+  id                 String             @id @default(cuid())
+  organizationId     String?
+  organization       Organization?      @relation(fields: [organizationId], references: [id])
+  name               String
+  type               String
+  country            String?
+  verificationStatus String             @default("PENDING")
+  programmes         FundingProgramme[]
+}
+
+model FundingProgramme {
+  id                 String                @id @default(cuid())
+  sponsorId          String
+  sponsor            Sponsor               @relation(fields: [sponsorId], references: [id])
+  schoolId           String?
+  school             School?               @relation(fields: [schoolId], references: [id])
+  name               String
+  description        String?
+  obligationCurrency String                @default("UGX")
+  treasuryAsset      String? // e.g. USDC
+  budget             Decimal               @db.Decimal(18, 2)
+  status             ProgrammeStatus       @default(DRAFT)
+  stellarContractId  String?
+  allocations        ProgrammeAllocation[]
+  settlements        Settlement[]
+  createdAt          DateTime              @default(now())
+}
+
+model ProgrammeAllocation {
+  id                  String           @id @default(cuid())
+  programmeId         String
+  programme           FundingProgramme @relation(fields: [programmeId], references: [id])
+  studentId           String
+  student             Student          @relation(fields: [studentId], references: [id])
+  periodId            String?
+  period              AcademicPeriod?  @relation(fields: [periodId], references: [id])
+  beneficiaryRef      String           @unique
+  obligationAmount    Decimal          @db.Decimal(18, 2)
+  obligationCurrency  String           @default("UGX")
+  treasuryAssetAmount Decimal?         @db.Decimal(18, 7)
+  status              AllocationStatus @default(CREATED)
+  settlements         Settlement[]
+  createdAt           DateTime         @default(now())
+}
+
+model Settlement {
+  id                String               @id @default(cuid())
+  programmeId       String
+  programme         FundingProgramme     @relation(fields: [programmeId], references: [id])
+  allocationId      String?
+  allocation        ProgrammeAllocation? @relation(fields: [allocationId], references: [id])
+  originalCurrency  String
+  originalAmount    Decimal              @db.Decimal(18, 2)
+  stellarAsset      String?
+  stellarAmount     Decimal?             @db.Decimal(18, 7)
+  stellarTxHash     String?
+  fxRate            Decimal?             @db.Decimal(18, 8)
+  fees              Decimal?             @db.Decimal(18, 2)
+  payoutCurrency    String               @default("UGX")
+  payoutAmount      Decimal?             @db.Decimal(18, 2)
+  providerReference String?
+  status            AllocationStatus
+  settledAt         DateTime?
+  createdAt         DateTime             @default(now())
+}
+
+model ApprovalPolicy {
+  id             String               @id @default(cuid())
+  organizationId String
+  actionType     String
+  thresholdType  String
+  thresholdValue Decimal?             @db.Decimal(18, 4)
+  rules          Json
+  proposals      GovernanceProposal[]
+}
+
+model GovernanceProposal {
+  id         String         @id @default(cuid())
+  policyId   String
+  policy     ApprovalPolicy @relation(fields: [policyId], references: [id])
+  actionType String
+  payload    Json
+  status     ProposalStatus @default(DRAFT)
+  approvals  Approval[]
+  createdAt  DateTime       @default(now())
+}
+
+model Approval {
+  id         String             @id @default(cuid())
+  proposalId String
+  proposal   GovernanceProposal @relation(fields: [proposalId], references: [id])
+  userId     String
+  user       User               @relation(fields: [userId], references: [id])
+  decision   String
+  note       String?
+  createdAt  DateTime           @default(now())
+
+  @@unique([proposalId, userId])
+}
+
+model AuditEvent {
+  id         String   @id @default(cuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id])
+  tenantId   String?
+  action     String
+  entityType String
+  entityId   String?
+  beforeHash String?
+  afterHash  String?
+  metadata   Json?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+}
+
+model Document {
+  id          String   @id @default(cuid())
+  studentId   String?
+  student     Student? @relation(fields: [studentId], references: [id])
+  category    String
+  storageKey  String
+  contentHash String?
+  uploadedBy  String?
+  createdAt   DateTime @default(now())
+}
+
+model SupportCase {
+  id         String    @id @default(cuid())
+  tenantId   String
+  subject    String
+  type       String
+  status     String    @default("OPEN")
+  reference  String?
+  details    Json?
+  createdAt  DateTime  @default(now())
+  resolvedAt DateTime?
+}

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customize Payment Plan &amp; Installments - EduFlow Parent</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed-dim": "#b2c9df",
+            "surface-variant": "#e0e2e8",
+            "surface-container-low": "#f1f4f9",
+            "on-surface": "#181c20",
+            "on-secondary-fixed": "#1a1c1a",
+            "primary-container": "#4a6073",
+            "error": "#ba1a1a",
+            "surface-tint": "#4b6174",
+            "background": "#f7f9ff",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-fixed-variant": "#464745",
+            "surface-container": "#eceef3",
+            "on-tertiary-container": "#d7d7da",
+            "on-error": "#ffffff",
+            "outline-variant": "#c3c7cc",
+            "on-primary-fixed-variant": "#33495b",
+            "secondary-container": "#e0e0dd",
+            "on-surface-variant": "#43474c",
+            "surface-dim": "#d8dadf",
+            "tertiary-container": "#5c5e60",
+            "tertiary-fixed": "#e2e2e5",
+            "on-primary-fixed": "#041d2e",
+            "on-tertiary-fixed": "#1a1c1e",
+            "secondary-fixed-dim": "#c7c6c4",
+            "surface-container-highest": "#e0e2e8",
+            "outline": "#73777d",
+            "primary": "#32485a",
+            "inverse-surface": "#2d3135",
+            "on-primary-container": "#c3daf0",
+            "on-tertiary-fixed-variant": "#454749",
+            "secondary": "#5e5f5d",
+            "tertiary-fixed-dim": "#c6c6c9",
+            "tertiary": "#454649",
+            "on-secondary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-background": "#181c20",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#e3e2e0",
+            "inverse-primary": "#b2c9df",
+            "surface-container-high": "#e6e8ee",
+            "primary-fixed": "#cee5fc",
+            "inverse-on-surface": "#eef1f6",
+            "surface-bright": "#f7f9ff",
+            "on-tertiary": "#ffffff",
+            "on-secondary-container": "#626361",
+            "on-error-container": "#93000a",
+            "surface": "#f7f9ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "lg": "24px",
+            "xs": "4px",
+            "xl": "48px",
+            "md": "16px",
+            "margin_mobile": "16px",
+            "gutter": "24px",
+            "container_max": "1280px",
+            "base_unit": "4px",
+            "xxl": "80px",
+            "sm": "8px"
+          },
+          "fontFamily": {
+            "headline-md": ["\"Source Serif 4\""],
+            "headline-lg-mobile": ["\"Source Serif 4\""],
+            "body-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "display-lg": ["\"Source Serif 4\""],
+            "body-md": ["Inter"],
+            "headline-lg": ["\"Source Serif 4\""]
+          },
+          "fontSize": {
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+            "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+            "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col justify-between selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top App Bar (Shared Component Anchor) -->
+<header class="fixed top-0 w-full z-50 bg-surface-container-low shadow-[0px_2px_4px_rgba(0,0,0,0.02),0px_8px_16px_rgba(0,0,0,0.04)]">
+<div class="flex justify-between items-center px-lg py-sm max-w-container_max mx-auto">
+<div class="flex items-center space-x-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">school</span>
+<span class="font-display-lg text-headline-md text-primary tracking-tight font-bold">EduFlow Parent</span>
+</div>
+<div class="flex items-center space-x-md">
+<div class="h-8 w-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-label-md text-label-md">
+          ME
+        </div>
+</div>
+</div>
+</header>
+<!-- Backdrop / Underlying Page Mock -->
+<div class="pt-xxl px-margin_mobile pb-24 max-w-md mx-auto w-full opacity-30 select-none pointer-events-none">
+<div class="bg-surface-container-lowest rounded-xl p-lg border border-on-surface/5 shadow-sm mb-md">
+<div class="h-4 w-28 bg-surface-container-high rounded mb-2"></div>
+<div class="h-6 w-48 bg-surface-container-high rounded"></div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-lg border border-on-surface/5 shadow-sm h-48"></div>
+</div>
+<!-- Mobile Bottom Sheet / Modal View -->
+<div class="fixed inset-0 z-50 flex flex-col justify-end bg-on-surface/40 backdrop-blur-[2px] transition-opacity">
+<div class="bg-surface-container-lowest rounded-t-xl max-h-[813px] flex flex-col shadow-[0px_-4px_24px_rgba(0,0,0,0.08)] max-w-md mx-auto w-full border-t border-on-surface/5">
+<!-- Drag Indicator Handle -->
+<div class="pt-sm pb-xs flex justify-center items-center cursor-grab active:cursor-grabbing">
+<div class="w-12 h-1.5 rounded-full bg-surface-variant"></div>
+</div>
+<!-- Modal Header -->
+<div class="px-margin_mobile py-sm border-b border-on-surface/5 flex items-start justify-between">
+<div>
+<div class="flex items-center space-x-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">tune</span>
+<span class="font-label-sm text-label-sm text-primary tracking-wide">CUSTOMIZE INSTALLMENTS</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mt-xs tracking-tight">Payment Flexibility</h1>
+<p class="font-body-md text-label-md text-on-surface-variant mt-0.5 leading-snug">
+            Customize installment frequency and amounts for <span class="font-semibold text-on-surface">Kwame Evans</span> (Term 3 Fees - UGX 2,100,000)
+          </p>
+</div>
+<button aria-label="Close modal" class="p-1 rounded-full text-on-surface-variant hover:bg-secondary-container/50 active:scale-95 transition-all text-sm ml-2">
+<span class="material-symbols-outlined text-[22px]">close</span>
+</button>
+</div>
+<!-- Scrollable Content Canvas -->
+<div class="overflow-y-auto px-margin_mobile py-md space-y-lg flex-1">
+<!-- 1. Outstanding Fee Summary Card -->
+<section class="bg-surface-container-low rounded-xl p-md border border-on-surface/5 relative overflow-hidden">
+<div class="flex justify-between items-start mb-sm">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">TERM 3 TOTAL FEES</span>
+<span class="font-headline-md text-headline-md text-primary font-semibold">UGX 2,100,000</span>
+</div>
+<span class="bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm px-2.5 py-1 rounded-full">
+              St. Mary's Academy
+            </span>
+</div>
+<div class="pt-sm border-t border-on-surface/5 grid grid-cols-2 gap-sm">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Required Initial Deposit</span>
+<span class="font-body-md text-label-md font-medium text-on-surface">UGX 500,000</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Remaining Balance</span>
+<span class="font-body-md text-label-md font-semibold text-primary" id="remainingBalanceText">UGX 1,400,000</span>
+</div>
+</div>
+</section>
+<!-- 2. Custom Payment Amount Selector -->
+<section class="space-y-sm">
+<label class="font-label-md text-label-md text-on-surface font-medium block">
+            Select Installment Schedule
+          </label>
+<!-- Segmented Options -->
+<div class="grid grid-cols-3 gap-xs bg-surface-container p-1 rounded-xl">
+<button class="plan-tab py-2 px-1 text-center rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-lowest/50 transition-all" type="button">
+              2 Payments
+              <span class="block text-[10px] font-normal opacity-80">UGX 1.05M/mo</span>
+</button>
+<button class="plan-tab active py-2 px-1 text-center rounded-lg font-label-sm text-label-sm bg-surface-container-lowest text-primary shadow-sm font-semibold transition-all" type="button">
+              3 Payments
+              <span class="block text-[10px] font-normal text-on-surface-variant">UGX 700k/mo</span>
+</button>
+<button class="plan-tab py-2 px-1 text-center rounded-lg font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-lowest/50 transition-all" type="button">
+              Custom Plan
+              <span class="block text-[10px] font-normal opacity-80">Flexible</span>
+</button>
+</div>
+<!-- Amount Input Field -->
+<div class="mt-sm">
+<label class="font-label-md text-label-md text-on-surface font-medium block mb-1" for="installmentInput">
+              Initial Payment Today
+            </label>
+<div class="relative flex items-center rounded-xl border border-on-surface/10 bg-surface-container-lowest focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/10 transition-all">
+<span class="px-md py-3 font-label-md text-label-md font-semibold text-on-surface-variant bg-surface-container-low rounded-l-xl border-r border-on-surface/10">
+                UGX
+              </span>
+<input class="w-full bg-transparent border-none px-md py-3 font-body-lg text-body-lg text-on-surface font-medium focus:ring-0" id="installmentInput" type="text" value="700,000"/>
+<span class="material-symbols-outlined text-outline-variant pr-md">edit</span>
+</div>
+</div>
+<!-- Quick Percentage Pills -->
+<div class="flex items-center space-x-xs pt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant mr-1">Presets:</span>
+<button class="px-2.5 py-1 bg-surface-container hover:bg-secondary-container/50 text-on-surface font-label-sm text-label-sm rounded-full active:scale-95 transition-all" type="button">
+              +25%
+            </button>
+<button class="px-2.5 py-1 bg-surface-container hover:bg-secondary-container/50 text-on-surface font-label-sm text-label-sm rounded-full active:scale-95 transition-all" type="button">
+              +50%
+            </button>
+<button class="px-2.5 py-1 bg-surface-container hover:bg-secondary-container/50 text-on-surface font-label-sm text-label-sm rounded-full active:scale-95 transition-all" type="button">
+              Pay Full
+            </button>
+</div>
+<!-- Zero Interest Guarantee -->
+<div class="flex items-center space-x-xs text-secondary pt-1">
+<span class="material-symbols-outlined text-[16px] text-primary">verified</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant">
+              Zero interest or late penalties applied by Harambee Bursary.
+            </p>
+</div>
+</section>
+<!-- 3. Projected Schedule Timeline -->
+<section class="space-y-sm">
+<div class="flex justify-between items-center">
+<h2 class="font-label-md text-label-md text-on-surface font-semibold">
+              Projected Payment Timeline (3 Terms)
+            </h2>
+<span class="font-label-sm text-label-sm text-primary font-medium">Bursar Synchronized</span>
+</div>
+<div class="relative pl-6 space-y-md before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-[2px] before:bg-surface-variant">
+<!-- Installment 1 -->
+<div class="relative flex items-start justify-between">
+<span class="absolute -left-6 top-1 h-5 w-5 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[12px] material-symbols-fill">check</span>
+</span>
+<div>
+<span class="font-body-md text-label-md font-semibold text-on-surface block">Installment 1 • Pay Today</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Nov 4, 2024</span>
+</div>
+<div class="text-right">
+<span class="font-body-md text-label-md font-bold text-primary block">UGX 700,000</span>
+<span class="inline-block bg-primary-fixed text-on-primary-fixed font-label-sm text-[10px] px-1.5 py-0.5 rounded">Due Now</span>
+</div>
+</div>
+<!-- Installment 2 -->
+<div class="relative flex items-start justify-between">
+<span class="absolute -left-6 top-1 h-5 w-5 rounded-full bg-surface-variant border-2 border-surface-container-lowest flex items-center justify-center">
+<span class="h-2 w-2 rounded-full bg-primary"></span>
+</span>
+<div>
+<span class="font-body-md text-label-md font-semibold text-on-surface block">Installment 2</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Nov 30, 2024 • MTN MoMo</span>
+</div>
+<div class="text-right">
+<span class="font-body-md text-label-md font-medium text-on-surface block">UGX 700,000</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Scheduled</span>
+</div>
+</div>
+<!-- Installment 3 -->
+<div class="relative flex items-start justify-between">
+<span class="absolute -left-6 top-1 h-5 w-5 rounded-full bg-surface-variant border-2 border-surface-container-lowest flex items-center justify-center">
+<span class="h-2 w-2 rounded-full bg-outline"></span>
+</span>
+<div>
+<span class="font-body-md text-label-md font-semibold text-on-surface block">Installment 3 • Exam Clearance</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Dec 30, 2024 • Final Balance</span>
+</div>
+<div class="text-right">
+<span class="font-body-md text-label-md font-medium text-on-surface block">UGX 700,000</span>
+<span class="font-label-sm text-[10px] text-secondary">Final Card</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. Payment Method & Reminders -->
+<section class="space-y-sm">
+<label class="font-label-md text-label-md text-on-surface font-semibold block">
+            Payment Method &amp; Automation
+          </label>
+<div class="space-y-xs">
+<!-- MTN MoMo Selector Card -->
+<div class="flex items-center justify-between p-sm rounded-xl border border-primary/40 bg-surface-container-low cursor-pointer">
+<div class="flex items-center space-x-sm">
+<div class="h-8 w-8 rounded-lg bg-surface-container-highest flex items-center justify-center font-bold text-xs text-primary">
+<span class="material-symbols-outlined text-[18px]">phone_android</span>
+</div>
+<div>
+<span class="font-body-md text-label-md font-medium text-on-surface block">MTN Mobile Money</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">+256 772 491 802 (Marcus Evans)</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px] material-symbols-fill">radio_button_checked</span>
+</div>
+<!-- Airtel Option -->
+<div class="flex items-center justify-between p-sm rounded-xl border border-on-surface/10 hover:border-on-surface/20 bg-surface-container-lowest cursor-pointer transition-all">
+<div class="flex items-center space-x-sm">
+<div class="h-8 w-8 rounded-lg bg-surface-container-high flex items-center justify-center font-bold text-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">cell_tower</span>
+</div>
+<div>
+<span class="font-body-md text-label-md font-medium text-on-surface block">Airtel Money</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Link secondary account</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[20px]">radio_button_unchecked</span>
+</div>
+</div>
+<!-- Notification Switch -->
+<div class="flex items-center justify-between pt-xs px-1">
+<div class="flex items-center space-x-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">notifications_active</span>
+<span class="font-body-md text-label-md text-on-surface">SMS &amp; WhatsApp Reminders</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-10 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</section>
+<!-- 5. Agreement & Bursary Approval Notice -->
+<section class="bg-surface-container-low/70 rounded-xl p-sm border border-on-surface/5 flex space-x-sm items-start">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">policy</span>
+<p class="font-body-md text-label-sm text-on-surface-variant leading-relaxed">
+            Flexible schedules are logged synchronously with <span class="font-semibold text-on-surface">St. Mary's Academy</span> bursary registry. Exam permits are automatically provisioned upon successfully clearing Installment 2.
+          </p>
+</section>
+</div>
+<!-- Docked Actions Area -->
+<div class="p-margin_mobile bg-surface-container-lowest border-t border-on-surface/5 space-y-sm shadow-[0px_-4px_16px_rgba(0,0,0,0.02)]">
+<button class="w-full py-3 px-lg bg-primary-container text-on-primary rounded-xl font-label-md text-label-md font-semibold flex items-center justify-center space-x-xs hover:opacity-95 active:scale-[0.98] transition-all shadow-sm">
+<span>Confirm Plan &amp; Pay UGX 700,000</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+<button class="w-full py-2 text-center text-primary hover:text-on-surface font-label-md text-label-md transition-colors">
+          Request Custom Bursar Extension
+        </button>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar (Shared Component Anchor) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-margin_mobile py-sm border-t border-on-surface/5 bg-surface-container-lowest dark:bg-inverse-surface shadow-lg z-40 rounded-t-xl">
+<!-- Dashboard -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-150 p-1 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+<span class="font-label-sm text-label-sm-mobile mt-0.5">Dashboard</span>
+</a>
+<!-- Finances (Active Destination for Payment Modal) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-lg py-xs active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined text-[24px] material-symbols-fill">payments</span>
+<span class="font-label-sm text-label-sm-mobile font-semibold mt-0.5">Finances</span>
+</a>
+<!-- Academics -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-150 p-1 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[24px]">auto_stories</span>
+<span class="font-label-sm text-label-sm-mobile mt-0.5">Academics</span>
+</a>
+<!-- Support -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-150 p-1 rounded-lg" href="#">
+<span class="material-symbols-outlined text-[24px]">contact_support</span>
+<span class="font-label-sm text-label-sm-mobile mt-0.5">Support</span>
+</a>
+</nav>
+<script>
+    // Tab toggle interaction
+    const planTabs = document.querySelectorAll('.plan-tab');
+    planTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        planTabs.forEach(t => {
+          t.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm', 'font-semibold');
+          t.classList.add('text-on-surface-variant');
+        });
+        tab.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm', 'font-semibold');
+        tab.classList.remove('text-on-surface-variant');
+      });
+    });
+  </script>
+</body></html>

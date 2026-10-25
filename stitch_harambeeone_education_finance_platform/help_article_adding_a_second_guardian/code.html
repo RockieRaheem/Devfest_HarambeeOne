@@ -1,0 +1,344 @@
+<!DOCTYPE html><html class="light" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>How to add a second guardian - Help</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#747780",
+                        "tertiary-fixed": "#ffdad5",
+                        "primary": "#001736",
+                        "primary-container": "#002b5b",
+                        "on-secondary-fixed-variant": "#005231",
+                        "secondary": "#006d43",
+                        "secondary-fixed-dim": "#80d8a5",
+                        "error": "#ba1a1a",
+                        "on-background": "#191c20",
+                        "surface-container-low": "#f2f3f9",
+                        "surface-container": "#eceef3",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2e3135",
+                        "secondary-container": "#99f2bd",
+                        "status-error": "#ba1a1a",
+                        "surface-card": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb4ab",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c4c6d0",
+                        "tertiary": "#390001",
+                        "background": "#f8f9ff",
+                        "error-container": "#ffdad6",
+                        "status-warning": "#d97706",
+                        "surface-container-high": "#e7e8ee",
+                        "inverse-on-surface": "#eff0f6",
+                        "on-surface": "#191c20",
+                        "surface-variant": "#e1e2e8",
+                        "status-success": "#006d43",
+                        "on-primary-container": "#7594ca",
+                        "on-tertiary-fixed": "#410002",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#a9c7ff",
+                        "on-tertiary-container": "#ff5a4e",
+                        "on-surface-subtle": "#43474f",
+                        "surface-dim": "#d8dae0",
+                        "primary-fixed": "#d6e3ff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#264778",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed": "#9cf5c0",
+                        "tertiary-container": "#600004",
+                        "surface-bright": "#f8f9ff",
+                        "surface": "#f8f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-highest": "#e1e2e8",
+                        "on-surface-variant": "#43474f",
+                        "surface-tint": "#405f91",
+                        "on-secondary-fixed": "#002111",
+                        "on-tertiary-fixed-variant": "#930009",
+                        "on-primary-fixed": "#001b3d",
+                        "on-secondary-container": "#0a7147",
+                        "primary-fixed-dim": "#a9c7ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "stack-lg": "32px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "stack-sm": "8px",
+                        "margin-desktop": "24px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Public Sans"],
+                        "headline-lg-mobile": ["Public Sans"],
+                        "body-md": ["Public Sans"],
+                        "headline-md": ["Public Sans"],
+                        "headline-sm": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "body-lg": ["Public Sans"],
+                        "data-mono": ["Public Sans"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased pb-24 pt-14">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-background fixed top-0 w-full z-50 border-b border-outline-variant dark:border-on-surface-subtle flex items-center justify-between px-margin-mobile md:px-margin-desktop h-14 w-full">
+<button class="text-primary dark:text-primary-fixed-dim hover:bg-surface-container-low dark:hover:bg-inverse-surface transition-colors active:scale-95 transition-transform p-2 -ml-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm-mobile md:text-headline-sm text-primary dark:text-primary-fixed-dim font-bold">Article Details</h1>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</header>
+<main class="max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg">
+<!-- Category Badge -->
+<div class="mb-stack-md">
+<span class="inline-flex items-center px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm uppercase">
+<span class="material-symbols-outlined mr-1" style="font-size: 16px;">face</span>
+                Child Profile
+            </span>
+</div>
+<!-- Article Title & Lead -->
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-stack-md">How to add a second guardian</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg leading-relaxed">
+            Adding a second guardian allows another trusted adult to securely view your child's academic progress, receive important school notices, and share responsibilities such as fee payments. Both guardians will have equal access to the portal's core features.
+        </p>
+<!-- Bento Grid Layout for Content -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Main Content Area (Steps) -->
+<div class="md:col-span-2 space-y-stack-md">
+<!-- What you'll need Card -->
+<div class="bg-surface-card border border-outline-variant rounded-lg p-stack-md">
+<h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2 mb-stack-sm">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">checklist</span>
+                        What you'll need
+                    </h3>
+<p class="text-on-surface-variant mb-4">Before starting, ensure you have the following information for the new guardian:</p>
+<ul class="space-y-2">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-outline mt-0.5" style="font-size: 20px;">check_circle</span>
+<span class="">Full Legal Name</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-outline mt-0.5" style="font-size: 20px;">check_circle</span>
+<span class="">Relationship to Child</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-outline mt-0.5" style="font-size: 20px;">check_circle</span>
+<span class="">National ID Number</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-outline mt-0.5" style="font-size: 20px;">check_circle</span>
+<span class="">Active Phone Number</span>
+</li>
+</ul>
+</div><div class="bg-surface-card border border-outline-variant rounded-lg p-stack-md">
+    <h3 class="font-headline-sm text-headline-sm text-primary flex items-center gap-2 mb-stack-sm">
+        <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+        Guardian Permissions
+    </h3>
+    <p class="text-on-surface-variant mb-4">Choose the level of access for the new guardian:</p>
+    <ul class="space-y-3">
+        <li class="flex items-start gap-2">
+            <span class="material-symbols-outlined text-secondary mt-0.5" style="font-size: 20px;">check_circle</span>
+            <div>
+                <p class="font-body-md text-on-surface font-semibold">Full Access (Co-Guardian)</p>
+                <p class="text-body-md text-on-surface-variant">Can view all records, receive all notices, and make payments.</p>
+            </div>
+        </li>
+        <li class="flex items-start gap-2">
+            <span class="material-symbols-outlined text-secondary mt-0.5" style="font-size: 20px;">check_circle</span>
+            <div>
+                <p class="font-body-md text-on-surface font-semibold">View Only</p>
+                <p class="text-body-md text-on-surface-variant">Can view academic progress and notices but cannot initiate financial transactions.</p>
+            </div>
+        </li>
+    </ul>
+</div>
+<!-- Step-by-step Guide -->
+<div class="bg-surface-card border border-outline-variant rounded-lg p-stack-md">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-stack-md">Step-by-step Instructions</h3>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-primary">1</div>
+<div>
+<p class="font-body-md text-on-surface font-semibold">Navigate to the Children section</p>
+<p class="text-on-surface-variant">Tap on the 'Children' tab located in the main navigation menu.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-primary">2</div>
+<div>
+<p class="font-body-md text-on-surface font-semibold">Select the specific profile</p>
+<p class="text-on-surface-variant">Tap on the child's profile to which you wish to add a guardian.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-primary">3</div>
+<div>
+<p class="font-body-md text-on-surface font-semibold">Initiate addition</p>
+<p class="text-on-surface-variant">Scroll down to the 'Guardians' section and tap the 'Add Guardian' button.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-primary">4</div>
+<div>
+<p class="font-body-md text-on-surface font-semibold">Provide details</p>
+<p class="text-on-surface-variant">Enter the required details (gathered in the previous step) and securely upload a clear copy of their national ID.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0 w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-primary">5</div>
+<div>
+<p class="font-body-md text-on-surface font-semibold">Submit for verification</p>
+<p class="text-on-surface-variant">Review the information and tap 'Submit'. The request will be sent to administration for review.</p>
+</div>
+</div>
+</div>
+</div><div class="bg-surface-card border border-outline-variant rounded-lg p-stack-md">
+    <h3 class="font-headline-sm text-headline-sm text-primary mb-stack-md">Updating Guardian Information</h3>
+    <p class="text-on-surface-variant mb-4">If you need to update a guardian's contact details or legal name, follow these steps:</p>
+    <div class="space-y-6">
+        <div class="flex gap-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-primary">1</div>
+            <div>
+                <p class="font-body-md text-on-surface font-semibold">Go to the Child Profile</p>
+                <p class="text-on-surface-variant">Select the child's profile and scroll to the Guardians section.</p>
+            </div>
+        </div>
+        <div class="flex gap-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-primary">2</div>
+            <div>
+                <p class="font-body-md text-on-surface font-semibold">Select Edit</p>
+                <p class="text-on-surface-variant">Tap the pencil icon next to the name of the guardian you wish to update.</p>
+            </div>
+        </div>
+        <div class="flex gap-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-primary">3</div>
+            <div>
+                <p class="font-body-md text-on-surface font-semibold">Submit Changes</p>
+                <p class="text-on-surface-variant">Make the necessary edits and tap Save. Updates to legal names or national ID numbers may require administrative re-verification and typically take 24-48 hours to process.</p>
+            </div>
+        </div>
+    </div>
+</div><div class="bg-surface-card border border-outline-variant rounded-lg p-stack-md">
+    <h3 class="font-headline-sm text-headline-sm text-primary mb-stack-md">Removing a Guardian</h3>
+    <p class="text-on-surface-variant mb-4">If you need to revoke access for an existing guardian, follow these steps:</p>
+    <div class="space-y-6 mb-4">
+        <div class="flex gap-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-primary">1</div>
+            <div>
+                <p class="font-body-md text-on-surface font-semibold">Navigate to the child's profile</p>
+                <p class="text-on-surface-variant">Go to the 'Children' section and select the specific child.</p>
+            </div>
+        </div>
+        <div class="flex gap-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-primary">2</div>
+            <div>
+                <p class="font-body-md text-on-surface font-semibold">Locate the guardian</p>
+                <p class="text-on-surface-variant">Scroll to the 'Guardians' list and tap the 'Edit' icon next to the guardian's name.</p>
+            </div>
+        </div>
+        <div class="flex gap-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-surface-container flex items-center justify-center font-headline-sm text-primary">3</div>
+            <div>
+                <p class="font-body-md text-on-surface font-semibold">Confirm removal</p>
+                <p class="text-on-surface-variant">Select 'Remove Guardian' and confirm the action.</p>
+            </div>
+        </div>
+    </div>
+    <div class="flex items-start gap-2 p-2 bg-surface-container-low rounded-lg">
+        <span class="material-symbols-outlined text-outline" style="font-size: 20px;">info</span>
+        <p class="text-body-md text-on-surface-variant">Removing a guardian is effective immediately and they will lose all access to the child's information.</p>
+    </div>
+</div>
+</div>
+<!-- Sidebar Area (Callouts & Related) -->
+<div class="space-y-stack-md">
+<!-- Important Note Callout -->
+<div class="bg-tertiary-fixed rounded-lg p-stack-md border border-tertiary-fixed-dim">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-on-tertiary-fixed" style="font-variation-settings: 'FILL' 1;">info</span>
+<h4 class="font-headline-sm text-headline-sm text-on-tertiary-fixed">Important Note</h4>
+</div>
+<p class="text-on-tertiary-fixed font-body-md">
+                        To ensure the security of student data, all new guardian additions require administrative approval. Verification typically takes <strong>24-48 hours</strong> during standard business days.
+                    </p>
+</div>
+<!-- Related Articles -->
+<div class="bg-surface-card border border-outline-variant rounded-lg p-stack-md">
+<h3 class="font-headline-sm text-headline-sm text-primary mb-stack-sm">Related Articles</h3>
+<ul class="space-y-3">
+<li class="">
+<a class="flex items-center justify-between group" href="#">
+<span class="font-body-md text-primary group-hover:underline">Understanding permissions</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+</li>
+<li class="h-px bg-outline-variant w-full"></li>
+<li class="">
+<a class="flex items-center justify-between group" href="#">
+<span class="font-body-md text-primary group-hover:underline">Removing a guardian</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+</li>
+<li class="h-px bg-outline-variant w-full"></li>
+<li class="">
+<a class="flex items-center justify-between group" href="#">
+<span class="font-body-md text-primary group-hover:underline">Updating ID documents</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface dark:bg-on-background fixed bottom-0 w-full z-50 border-t border-outline-variant dark:border-on-surface-subtle md:hidden">
+<div class="fixed bottom-0 left-0 w-full flex justify-around items-center py-2 bg-surface dark:bg-on-background">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-4 py-1 hover:bg-surface-container-high dark:hover:bg-inverse-surface active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-4 py-1 hover:bg-surface-container-high dark:hover:bg-inverse-surface active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-sm text-label-sm mt-1">Payments</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-subtle px-4 py-1 hover:bg-surface-container-high dark:hover:bg-inverse-surface active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-sm text-label-sm mt-1">Notices</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-on-secondary-fixed-variant text-on-secondary-container dark:text-secondary-fixed rounded-full px-4 py-1 hover:bg-surface-container-high dark:hover:bg-inverse-surface active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="help_center" style="font-variation-settings: 'FILL' 1;">help_center</span>
+<span class="font-label-sm text-label-sm mt-1">Support</span>
+</a>
+</div>
+</nav>
+
+
+</body></html>
