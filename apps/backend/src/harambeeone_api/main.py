@@ -19,7 +19,7 @@ from harambeeone_api.accounts import router as accounts_router
 from harambeeone_api.audit import router as audit_router
 from harambeeone_api.billing import router as billing_router
 from harambeeone_api.dashboard import router as dashboard_router
-from harambeeone_api.database import database_is_ready
+from harambeeone_api.database import close_database, database_is_ready
 from harambeeone_api.finance import router as finance_router
 from harambeeone_api.integrations import router as integrations_router
 from harambeeone_api.learner_transfers import router as learner_transfers_router
@@ -48,7 +48,10 @@ async def lifespan(_app: FastAPI):
         await run_in_threadpool(database_is_ready)
     except SQLAlchemyError:
         logger.warning("Database warm-up failed; readiness will report unavailable")
-    yield
+    try:
+        yield
+    finally:
+        await run_in_threadpool(close_database)
 
 
 app = FastAPI(title="HarambeeOne API", version="0.1.0", lifespan=lifespan)

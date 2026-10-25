@@ -5,6 +5,7 @@ description = "HarambeeOne FastAPI backend"
 requires-python = ">=3.12,<3.13"
 dependencies = [
   "alembic==1.16.5",
+  "cloud-sql-python-connector[psycopg]==1.23.0",
   "email-validator==2.2.0",
   "fastapi==0.116.1",
   "firebase-admin==7.7.0",

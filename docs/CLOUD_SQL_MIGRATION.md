@@ -9,43 +9,45 @@ so it cannot bypass FastAPI authorization or financial posting workflows.
 - The existing `edu-pay-ledger` Firebase project on the no-cost Spark plan, without a billing
   account. Starting its one-per-project SQL Connect trial requires explicit user approval because
   the 90-day lifetime begins immediately.
-- The trial PostgreSQL 15 database and SQL Connect service in the same `europe-west1` location.
+- The trial PostgreSQL database and SQL Connect service in the same `europe-west1` location. The
+  provisioned Firebase-managed instance currently reports PostgreSQL 18.6.
 - Separate least-privilege migration and runtime identities. The runtime identity must not own the
   schema and must have only the table/sequence privileges required by FastAPI.
-- PostgreSQL 15 client tools (`psql`, `pg_dump`, and `pg_restore`) from the same or newer minor
-  release than the source.
 - A fresh Supabase backup and protected Auth export before rehearsal or cutover.
 
-Do not put database URLs in shell history or commit them. Set `SOURCE_DATABASE_URL` and
-`TARGET_DATABASE_URL` in the process environment from a secret manager. Generated `.pgdump` and
-`migration-evidence/` files are ignored but still contain sensitive operational evidence and must
-be encrypted, access-controlled, and destroyed according to the retention decision.
+Do not put database URLs in shell history or commit them. The IAM migration commands read the
+source URL from the ignored `.env` file and obtain a short-lived target credential through the
+Firebase CLI login; they never require a target password. `migration-evidence/` is ignored but
+still contains sensitive operational evidence and must be access-controlled and destroyed
+according to the retention decision.
 
 ## Empty-target rehearsal
 
-1. Create a disposable empty database, then run `apps/backend/cloudsql/bootstrap.sql` as its
-   database administrator. It creates only `NOLOGIN` compatibility roles and a locked empty
-   `auth` surface needed to replay historical Supabase-era revisions.
-2. Point `MIGRATION_DATABASE_URL` at the target and run `pnpm db:migrate`. All revisions must reach
-   the single repository head. Never stamp an unexecuted revision.
+1. Explicitly grant the reviewed operator the Firebase SQL owner role for the migration window.
+2. Apply the locked compatibility bootstrap and complete Alembic chain through the IAM connector:
+
+   ```text
+   pnpm firebase:sql:schema -- --instance PROJECT:REGION:INSTANCE --database DATABASE --user OPERATOR_EMAIL --owner-role FIREBASE_OWNER_ROLE --runtime-role FIREBASE_WRITER_ROLE
+   ```
+
+   The runner refuses a non-empty target, maps historical Supabase-only roles and auth helpers to
+   locked compatibility objects, enables the built-in `pgcrypto` extension, and verifies the
+   single executed Alembic head. It never stamps an unexecuted revision.
 3. Upgrade the source to the same reviewed revision during a controlled migration window.
-4. Run a read-only protected dump first:
+4. Confirm that the target contains no application rows, then copy and verify in one target
+   transaction:
 
    ```text
-   pnpm --filter @harambeeone/backend db:transfer -- --dump <protected-path>.pgdump
+   pnpm firebase:sql:data -- --instance PROJECT:REGION:INSTANCE --database DATABASE --user OPERATOR_EMAIL --owner-role FIREBASE_OWNER_ROLE --evidence-dir migration-evidence/REHEARSAL
    ```
 
-5. Confirm that the target contains no application rows. Then explicitly restore and verify:
-
-   ```text
-   pnpm --filter @harambeeone/backend db:transfer -- --dump <protected-path>.pgdump --overwrite --restore
-   ```
-
-The transfer is data-only, excludes `alembic_version`, preserves sequence state, uses one target
-transaction, stops on the first restore error, and never puts a password in the child process
-arguments. It refuses mismatched revisions and a non-empty target. After restore it writes source
-and target evidence and fails unless table sets, row counts, canonical SHA-256 row hashes, every
-numeric-column total, and dynamic foreign-key checks agree.
+The transfer is data-only, excludes `alembic_version`, follows foreign-key dependency order, uses
+one repeatable-read source snapshot and one target transaction, and stops on the first error. It refuses mismatched revisions, table drift,
+and a non-empty target. It disables only user triggers during the snapshot load, restores them
+before commit, and leaves foreign-key constraint triggers active. After commit it writes source and
+target evidence and fails unless table sets, row counts, canonical SHA-256 row hashes, and every
+numeric-column total agree. The existing PostgreSQL-client transfer tool remains available as a
+second rehearsal path where matching `pg_dump` and `pg_restore` binaries are installed.
 
 ## SQL Connect boundary
 
@@ -76,7 +78,16 @@ the instance as the SQL Connect no-cost trial, linked the permanent instance, an
 empty compatible schema has no required SQL changes. The 90-day trial reaches its scheduled end
 around 2027-01-23; no paid upgrade is authorized.
 
-This workstation still has no PostgreSQL client tools. F3 remains incomplete until the complete
-Alembic chain, protected source snapshot, parity evidence, financial equations, authorization
-tests, and rollback rehearsal pass against the new target. Supabase Free remains the active system
-of record until that gate passes.
+The empty-target Alembic rehearsal reached `f15a2c9e7b41`. The Supabase source was upgraded to the
+same additive revision, and the IAM transfer proved exact parity for 77 application tables and 166
+rows using ordered row hashes and numeric totals. A post-migration SQL Connect diff reported the
+database compatible. FastAPI now has a passwordless Cloud SQL Python Connector path using
+automatic IAM database authentication, while the URL path remains the rollback default.
+
+F3 remains incomplete until a least-privilege runtime identity and local ADC are configured, the
+full multi-role API and PostgreSQL verification suites pass against Cloud SQL, a protected source
+backup and Auth export exist, and rollback is rehearsed. Supabase Free therefore remains the active
+system of record; no Cloud SQL application writes are open.
+
+After the rehearsal, the operator's temporary schema-owner membership was explicitly revoked and
+verified absent; writer membership remains only for the outstanding controlled verification work.

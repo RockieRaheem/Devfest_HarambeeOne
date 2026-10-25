@@ -211,9 +211,19 @@ Progress (F3 remains incomplete):
   Firebase created service `harambeeone`, instance `harambeeone-fdc`, and database `harambeeone`
   in `europe-west1`; billing remained disabled and `dataconnect:sql:diff` reported the empty target
   compatible with the committed schema. The trial is expected to end around 2027-01-23.
-- Live completion remains blocked on PostgreSQL client tools and the full schema/data rehearsal.
-  Supabase Free stays the authoritative database until parity, financial, authorization, and
-  rollback gates pass, and remains the durable fallback before trial archival.
+- Replayed the complete Alembic chain on the Firebase-managed PostgreSQL 18.6 target and reached
+  `f15a2c9e7b41`. Upgraded the Supabase source to the same additive revision, transactionally
+  copied all 166 rows across 77 application tables, and proved matching ordered row hashes and
+  numeric totals. The post-migration SQL Connect diff remained compatible.
+- Revoked and verified removal of the operator's temporary schema-owner membership after the
+  rehearsal; writer access remains only for controlled verification.
+- Added a passwordless FastAPI runtime path through the official Cloud SQL Python Connector with
+  automatic IAM database authentication; the source URL path remains the rollback default.
+  Repository regression evidence is 125 backend tests plus Ruff.
+- Live completion remains blocked on least-privilege runtime IAM/ADC, the full multi-role and
+  PostgreSQL-specific Cloud SQL verification suites, protected source/Auth backups, and rollback
+  rehearsal. Supabase Free stays authoritative until every gate passes and remains the durable
+  fallback before trial archival.
 
 Planned commit: `Move data to Firebase SQL Connect`
 

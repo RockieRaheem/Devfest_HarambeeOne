@@ -57,9 +57,10 @@ The authoritative FastAPI service and PostgreSQL migration project.
 - `migrations/versions/` contains ordered schema, RLS, constraint, index, trigger, and data-transition changes.
 - `tests/` covers business rules, authorization, tenant isolation, retry safety, and rollback.
 - `scripts/verify_*.py` checks PostgreSQL-specific guarantees against the configured Supabase database.
-- `cloudsql/bootstrap.sql` supplies locked compatibility objects so the complete historical
-  Alembic chain can be rehearsed on empty Cloud SQL, while `scripts/migrate_cloudsql_data.py`
-  performs an explicit data-only transfer and deterministic parity proof.
+- `cloudsql/bootstrap.sql` supplies locked compatibility objects for the historical Alembic chain.
+  Root `scripts/apply-cloudsql-schema.mjs` and `scripts/migrate-cloudsql-data.mjs` use Firebase IAM
+  credentials for guarded schema rehearsal, transactional transfer, and deterministic parity proof;
+  `scripts/migrate_cloudsql_data.py` remains the PostgreSQL-client fallback.
 
 Money is represented with `Decimal` in Python and `numeric(18,2)` in PostgreSQL. Posted financial history is corrected through compensating entries rather than mutation or deletion.
 

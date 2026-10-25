@@ -17,8 +17,12 @@ class Settings(BaseSettings):
 
     app_name: str = "HarambeeOne API"
     app_environment: str = Field(default="development", alias="NODE_ENV")
-    database_url: str
-    migration_database_url: str
+    database_provider: Literal["url", "cloud_sql"] = "url"
+    database_url: str | None = None
+    migration_database_url: str | None = None
+    cloud_sql_instance: str | None = None
+    cloud_sql_database: str | None = None
+    cloud_sql_user: str | None = None
     supabase_url: AnyHttpUrl
     supabase_publishable_key: str = Field(alias="NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY")
     firebase_project_id: str = Field(default="demo-harambeeone", alias="FIREBASE_PROJECT_ID")
@@ -33,6 +37,14 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def reject_supabase_auth_in_production(self) -> "Settings":
+        if self.database_provider == "url" and not self.database_url:
+            raise ValueError("DATABASE_URL is required when DATABASE_PROVIDER=url")
+        if self.database_provider == "cloud_sql" and not all(
+            (self.cloud_sql_instance, self.cloud_sql_database, self.cloud_sql_user)
+        ):
+            raise ValueError(
+                "CLOUD_SQL_INSTANCE, CLOUD_SQL_DATABASE, and CLOUD_SQL_USER are required"
+            )
         if self.app_environment == "production" and self.auth_provider != "firebase":
             raise ValueError("Production authentication must use Firebase")
         if self.app_environment == "production" and self.firebase_auth_emulator_host:

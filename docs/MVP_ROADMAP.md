@@ -443,11 +443,11 @@ Sponsor administration may resume only when all eight slices are marked **COMPLE
 
 ### Active priority override - Firebase and Gemini migration
 
-Status: **IN PROGRESS — SLICE F1 COMPLETE; SLICE F2 IS NEXT**
+Status: **IN PROGRESS — SLICES F1-F2 COMPLETE; SLICE F3 ACTIVE**
 
 The user explicitly authorized replacement of Supabase Authentication and PostgreSQL hosting with Firebase Authentication and Firebase SQL Connect, replacement of Gemma with a current Gemini model, and addition of Firebase Cloud Messaging. The ordered architecture, cutover, rollback, security, verification, and commit gates are defined in `docs/FIREBASE_GEMINI_MIGRATION_PLAN.md`. That plan is mandatory reading before every change while the override is active.
 
-The migration uses Firebase SQL Connect backed by Cloud SQL for PostgreSQL rather than Firestore so the verified relational ledger, exact-decimal arithmetic, database constraints, atomic workflows, immutable history, and closing evidence remain intact. Slice F1 established the verified Firebase project, environment, dependency, and emulator foundation without changing a runtime path. Slice F2, Firebase Authentication and the identity bridge, is now the first incomplete implementation priority. No further product expansion may interrupt it without another explicit user priority change.
+The migration uses Firebase SQL Connect backed by Cloud SQL for PostgreSQL rather than Firestore so the verified relational ledger, exact-decimal arithmetic, database constraints, atomic workflows, immutable history, and closing evidence remain intact. Slices F1 and F2 established the Firebase foundation, Firebase Authentication, and the stable identity bridge. Slice F3, the guarded relational migration and Cloud SQL runtime boundary, is now the first incomplete implementation priority. No further product expansion may interrupt it without another explicit user priority change.
 
 ## Deferred roadmap
 
