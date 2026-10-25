@@ -33,3 +33,5 @@ application_default_credentials.json
 *firebase-users*.json
 dataconnect-generated/
 dataconnect/.dataconnect/
+migration-evidence/
+*.pgdump

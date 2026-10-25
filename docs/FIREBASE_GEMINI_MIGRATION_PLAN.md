@@ -190,6 +190,19 @@ Completion gate:
 - Tenant, role, guardian, donor, public-data, duplicate, retry, rollback, and database-constraint tests pass on Cloud SQL.
 - SQL Connect schema diff reports no unexpected destructive change and connector security review passes.
 
+Progress (F3 remains incomplete):
+
+- Added a locked Cloud SQL bootstrap for the historical Alembic chain and a rehearsal-only,
+  data-only transfer tool that refuses revision drift, non-empty targets, exposed database
+  passwords, and partial restores. Deterministic evidence compares table sets, row counts,
+  canonical SHA-256 hashes, every numeric-column total, and foreign-key integrity.
+- Passed all 122 backend tests, Ruff, root ESLint, and backend compilation for the repository-side
+  migration tooling. The configured source is at revision `a72d5e8c19f4`; the new F2 revision has
+  not been applied to live Supabase.
+- Live completion is blocked on a verified billable Firebase project, Cloud SQL/SQL Connect target,
+  PostgreSQL client tools, and a disposable PostgreSQL rehearsal. The local production alias is a
+  `demo-*` placeholder, so no billable resource was provisioned implicitly.
+
 Planned commit: `Move data to Firebase SQL Connect`
 
 ### Slice F4 - Gemini model and API upgrade

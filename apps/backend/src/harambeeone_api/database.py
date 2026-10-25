@@ -23,9 +23,9 @@ def get_engine() -> Engine:
         pool_size=5,
         max_overflow=5,
         pool_timeout=10,
-        # Supabase is a remote database; pre-ping doubles the network round trips
-        # for every request. Short recycling keeps pooled connections fresh without
-        # putting an extra query on the critical path.
+        # The managed PostgreSQL service is remote; pre-ping doubles the network
+        # round trips for every request. Short recycling keeps pooled connections
+        # fresh without putting an extra query on the critical path.
         pool_pre_ping=False,
         pool_recycle=120,
     )
