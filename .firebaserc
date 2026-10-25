@@ -2,6 +2,6 @@
   "projects": {
     "default": "demo-harambeeone",
     "development": "demo-harambeeone",
-    "production": "demo-harambeeone-production"
+    "production": "edu-pay-ledger"
   }
 }

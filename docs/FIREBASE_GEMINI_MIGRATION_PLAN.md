@@ -207,10 +207,13 @@ Progress (F3 remains incomplete):
 - Passed all 122 backend tests, Ruff, root ESLint, and backend compilation for the repository-side
   migration tooling. The configured source is at revision `a72d5e8c19f4`; the new F2 revision has
   not been applied to live Supabase.
-- Live completion is blocked on explicit approval to consume the existing `edu-pay-ledger`
-  project's one-time 90-day Spark SQL Connect trial, PostgreSQL client tools, and a disposable
-  PostgreSQL rehearsal. No billing account or paid resource may be attached. Supabase Free remains
-  the durable fallback before trial archival.
+- On 2026-10-25, explicit approval started the `edu-pay-ledger` project's one-time Spark trial.
+  Firebase created service `harambeeone`, instance `harambeeone-fdc`, and database `harambeeone`
+  in `europe-west1`; billing remained disabled and `dataconnect:sql:diff` reported the empty target
+  compatible with the committed schema. The trial is expected to end around 2027-01-23.
+- Live completion remains blocked on PostgreSQL client tools and the full schema/data rehearsal.
+  Supabase Free stays the authoritative database until parity, financial, authorization, and
+  rollback gates pass, and remains the durable fallback before trial archival.
 
 Planned commit: `Move data to Firebase SQL Connect`
 

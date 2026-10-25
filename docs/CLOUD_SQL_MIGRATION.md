@@ -69,8 +69,14 @@ recoverable as the durable fallback, and a return migration must be rehearsed be
 
 ## Current external blockers
 
-As of 2026-10-25, the authenticated Firebase account owns the active `edu-pay-ledger` (`eBursar`)
-project and it has no SQL Connect service. This workstation has no Google Cloud CLI, PostgreSQL
-client tools, or reachable disposable PostgreSQL target. No trial has been started. F3 remains
-incomplete until the user explicitly approves starting the one-time trial, required tools are
-available, and the full rehearsal evidence passes. A billing account must not be linked.
+On 2026-10-25 the user explicitly approved starting the free trial. Firebase created SQL Connect
+service `harambeeone`, Cloud SQL instance `harambeeone-fdc`, and database `harambeeone` in
+`europe-west1` under project `edu-pay-ledger`. The CLI confirmed `billingEnabled: false`, identified
+the instance as the SQL Connect no-cost trial, linked the permanent instance, and reported the
+empty compatible schema has no required SQL changes. The 90-day trial reaches its scheduled end
+around 2027-01-23; no paid upgrade is authorized.
+
+This workstation still has no PostgreSQL client tools. F3 remains incomplete until the complete
+Alembic chain, protected source snapshot, parity evidence, financial equations, authorization
+tests, and rollback rehearsal pass against the new target. Supabase Free remains the active system
+of record until that gate passes.
