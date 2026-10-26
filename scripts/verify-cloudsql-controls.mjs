@@ -99,7 +99,7 @@ async function main() {
   try {
     client = await pool.connect();
     const revision = (await client.query("select version_num from alembic_version")).rows[0]?.version_num;
-    assert(revision === "f15a2c9e7b41", `Unexpected Alembic revision: ${revision}`);
+    assert(revision === "f7a2d41e6c93", `Unexpected Alembic revision: ${revision}`);
 
     const access = (await client.query(
       "select pg_has_role($1, $2, 'member') as owner, pg_has_role($1, $3, 'member') as writer",

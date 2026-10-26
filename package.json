@@ -16,6 +16,7 @@
     "firebase:emulators:verify": "firebase emulators:exec --project demo-harambeeone --config firebase.json --only auth,dataconnect \"node scripts/verify-firebase-emulators.mjs\"",
     "firebase:auth:verify": "firebase emulators:exec --project demo-harambeeone --config firebase.json --only auth \"node scripts/verify-firebase-auth-flows.mjs\"",
     "firebase:sql:schema": "node scripts/apply-cloudsql-schema.mjs",
+    "firebase:sql:upgrade": "node scripts/upgrade-cloudsql-schema.mjs",
     "firebase:sql:data": "node scripts/migrate-cloudsql-data.mjs",
     "firebase:sql:revoke-owner": "node scripts/revoke-cloudsql-owner.mjs",
     "firebase:sql:verify": "node scripts/verify-cloudsql-controls.mjs",

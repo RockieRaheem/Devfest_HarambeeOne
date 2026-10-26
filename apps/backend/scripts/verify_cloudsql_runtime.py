@@ -1,13 +1,17 @@
 from __future__ import annotations
 
 import uuid
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
 
+from fastapi.testclient import TestClient
 from sqlalchemy import text
 from sqlalchemy.exc import DBAPIError
+from sqlalchemy.orm import Session
 
+from harambeeone_api.auth import AuthenticatedUser, get_current_user
 from harambeeone_api.config import get_settings
-from harambeeone_api.database import close_database, get_engine
+from harambeeone_api.database import close_database, get_engine, get_session
+from harambeeone_api.main import app
 
 
 def _assert(condition: bool, message: str) -> None:
@@ -23,6 +27,167 @@ def _subject(connection, user_id: uuid.UUID) -> None:
     )
 
 
+def _response(response, status_code: int, label: str) -> dict | list:
+    if response.status_code != status_code:
+        raise RuntimeError(
+            f"{label} returned {response.status_code}: {response.text[:300]}"
+        )
+    return response.json() if response.content else {}
+
+
+def _api_matrix(
+    connection,
+    *,
+    role_users: dict[str, uuid.UUID],
+    school_a: uuid.UUID,
+    school_b: uuid.UUID,
+    student: uuid.UUID,
+    period: uuid.UUID,
+    guardian_user: uuid.UUID,
+    donor_user: uuid.UUID,
+    marker: str,
+) -> None:
+    probe_suffix = marker.rsplit(" ", 1)[-1][:8]
+    current = {
+        "user": AuthenticatedUser(id=role_users["owner"], email="owner@probe.invalid")
+    }
+
+    def session_override():
+        with Session(
+            bind=connection,
+            expire_on_commit=False,
+            join_transaction_mode="create_savepoint",
+            info={"database_user_id": str(current["user"].id)},
+        ) as session:
+            yield session
+
+    app.dependency_overrides[get_session] = session_override
+    app.dependency_overrides[get_current_user] = lambda: current["user"]
+    client = TestClient(app)
+    try:
+        owner_schools = _response(client.get("/api/v1/schools"), 200, "owner school list")
+        _assert(
+            [row["id"] for row in owner_schools] == [str(school_a)],
+            "Owner API tenant visibility failed",
+        )
+        _response(
+            client.get(f"/api/v1/schools/{school_b}/classes"),
+            403,
+            "cross-tenant class list",
+        )
+        _response(
+            client.post(
+                f"/api/v1/schools/{school_a}/classes",
+                json={
+                    "name": f"Probe owner {probe_suffix}",
+                    "level": "primary",
+                    "canonical_code": "P1",
+                    "sort_order": 1,
+                    "streams": [],
+                },
+            ),
+            201,
+            "owner class write",
+        )
+
+        current["user"] = AuthenticatedUser(
+            id=role_users["bursar"], email="bursar@probe.invalid"
+        )
+        _response(
+            client.post(
+                f"/api/v1/schools/{school_a}/classes",
+                json={
+                    "name": f"Probe bursar {probe_suffix}",
+                    "level": "primary",
+                    "canonical_code": "P2",
+                    "sort_order": 2,
+                    "streams": [],
+                },
+            ),
+            201,
+            "bursar class write",
+        )
+
+        current["user"] = AuthenticatedUser(
+            id=role_users["cashier"], email="cashier@probe.invalid"
+        )
+        payment = _response(
+            client.post(
+                "/api/v1/payments",
+                json={
+                    "school_id": str(school_a),
+                    "student_id": str(student),
+                    "period_id": str(period),
+                    "external_reference": f"PROBE-{uuid.uuid4().hex[:16]}",
+                    "payer_name": "Cloud SQL probe",
+                    "channel": "cash",
+                    "amount": "50000.00",
+                },
+            ),
+            201,
+            "cashier payment write",
+        )
+        _assert(payment["amount"] == "50000.00", "Cashier payment amount changed")
+        _response(
+            client.post(
+                "/api/v1/fee-categories",
+                json={
+                    "school_id": str(school_a),
+                    "name": "Forbidden cashier fee",
+                    "code": "NOPE",
+                    "category_type": "other",
+                    "priority": 1,
+                },
+            ),
+            403,
+            "cashier fee denial",
+        )
+
+        current["user"] = AuthenticatedUser(
+            id=role_users["auditor"], email="auditor@probe.invalid"
+        )
+        payments = _response(
+            client.get(f"/api/v1/payments?school_id={school_a}&period_id={period}"),
+            200,
+            "auditor payment read",
+        )
+        _assert(len(payments) == 1, "Auditor API did not see the cashier payment")
+        _response(
+            client.post(
+                "/api/v1/fee-categories",
+                json={
+                    "school_id": str(school_a),
+                    "name": "Forbidden auditor fee",
+                    "code": "NOAUDIT",
+                    "category_type": "other",
+                    "priority": 1,
+                },
+            ),
+            403,
+            "auditor write denial",
+        )
+
+        current["user"] = AuthenticatedUser(
+            id=guardian_user, email="guardian@probe.invalid"
+        )
+        learners = _response(
+            client.get("/api/v1/guardian/learners"), 200, "guardian learner list"
+        )
+        _assert(
+            [row["student_id"] for row in learners] == [str(student)],
+            "Guardian API isolation failed",
+        )
+
+        current["user"] = AuthenticatedUser(id=donor_user, email="donor@probe.invalid")
+        donor = _response(client.get("/api/v1/donor/profile"), 200, "donor profile")
+        _assert(donor["display_name"] == "Probe donor", "Donor API isolation failed")
+
+        current["user"] = AuthenticatedUser(id=uuid.uuid4(), email="unknown@probe.invalid")
+        _response(client.get("/api/v1/schools"), 403, "unknown-user denial")
+    finally:
+        app.dependency_overrides.clear()
+
+
 def main() -> None:
     settings = get_settings()
     if settings.database_provider != "cloud_sql":
@@ -31,6 +196,7 @@ def main() -> None:
     organization_a, organization_b = uuid.uuid4(), uuid.uuid4()
     learner_identity_a, learner_identity_b = uuid.uuid4(), uuid.uuid4()
     school_a, school_b = uuid.uuid4(), uuid.uuid4()
+    academic_year, academic_period = uuid.uuid4(), uuid.uuid4()
     role_users = {role: uuid.uuid4() for role in ("owner", "bursar", "cashier", "auditor")}
     other_owner = uuid.uuid4()
     guardian_user, other_guardian_user = uuid.uuid4(), uuid.uuid4()
@@ -111,6 +277,36 @@ def main() -> None:
                         "values (:id, :school, :user, null, :role)"
                     ),
                     memberships,
+                )
+                connection.execute(
+                    text(
+                        "insert into academic_years "
+                        "(id, school_id, name, year, start_date, end_date, status) "
+                        "values (:id, :school, :name, 2027, :start, :end, 'open')"
+                    ),
+                    {
+                        "id": academic_year,
+                        "school": school_a,
+                        "name": marker + " academic year",
+                        "start": date(2027, 1, 1),
+                        "end": date(2027, 12, 31),
+                    },
+                )
+                connection.execute(
+                    text(
+                        "insert into academic_periods "
+                        "(id, academic_year_id, school_id, name, sequence, opening_date, "
+                        "due_date, closing_date, status) values "
+                        "(:id, :year, :school, 'Term 1', 1, :opening, :due, :closing, 'open')"
+                    ),
+                    {
+                        "id": academic_period,
+                        "year": academic_year,
+                        "school": school_a,
+                        "opening": date(2027, 1, 1),
+                        "due": date(2027, 2, 1),
+                        "closing": date(2027, 4, 30),
+                    },
                 )
                 people = (
                     (learner_person, "Probe", "Learner"),
@@ -270,6 +466,18 @@ def main() -> None:
                     "Unknown user saw tenant data",
                 )
 
+                _api_matrix(
+                    connection,
+                    role_users=role_users,
+                    school_a=school_a,
+                    school_b=school_b,
+                    student=student,
+                    period=academic_period,
+                    guardian_user=guardian_user,
+                    donor_user=donor_user,
+                    marker=marker,
+                )
+
                 connection.execute(text(f'SET LOCAL ROLE "{settings.cloud_sql_server_role}"'))
                 _assert(
                     connection.execute(
@@ -309,8 +517,9 @@ def main() -> None:
                 ).scalar_one()
                 _assert(remaining == 0, "Rollback left synthetic Cloud SQL rows behind")
         print(
-            "Cloud SQL runtime controls passed: owner, bursar, cashier, auditor, guardian, "
-            "donor, unknown-user, server-only access, duplicate rejection, and rollback."
+            "Cloud SQL runtime and API controls passed: owner, bursar, cashier, auditor, "
+            "guardian, donor, tenant isolation, unknown-user denial, server-only access, "
+            "duplicate rejection, and rollback."
         )
     finally:
         close_database()

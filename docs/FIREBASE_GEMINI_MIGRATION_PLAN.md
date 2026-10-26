@@ -175,7 +175,7 @@ Planned commit: `Migrate authentication to Firebase`
 
 ### Slice F3 - Cloud SQL and Firebase SQL Connect migration
 
-Status: **IN PROGRESS**
+Status: **COMPLETE**
 
 Deliver:
 
@@ -198,7 +198,7 @@ Completion gate:
 - Tenant, role, guardian, donor, public-data, duplicate, retry, rollback, and database-constraint tests pass on Cloud SQL.
 - SQL Connect schema diff reports no unexpected destructive change and connector security review passes.
 
-Progress (F3 remains incomplete):
+Completion evidence:
 
 - Added a locked Cloud SQL bootstrap for the historical Alembic chain and a rehearsal-only,
   data-only transfer tool that refuses revision drift, non-empty targets, exposed database
@@ -231,22 +231,30 @@ Progress (F3 remains incomplete):
   remains disabled. The operator has Token Creator only on that service account for local testing;
   impersonated ADC contains no private key and the FastAPI Cloud SQL readiness path passed as the
   runtime identity. The ignored local environment records the target but retains the URL provider.
-- Passed a rollback-only live runtime matrix using synthetic owner, bursar, cashier, auditor,
-  guardian, and donor identities. It proved tenant isolation, role-specific school writes,
-  unknown-user denial, explicit server-only access, duplicate rejection, and zero persisted probe
-  rows after rollback.
+- Passed a rollback-only live FastAPI and database matrix using synthetic owner, bursar, cashier,
+  auditor, guardian, and donor identities. It proved API permissions, cashier payment posting,
+  tenant and portal isolation, unknown-user denial, explicit server-only access, duplicate
+  rejection, and zero persisted probe rows. The live journey exposed and fixed an owner-only
+  receipt-sequence policy, a cross-table trigger field reference, and missing consented guardian
+  join policies; all fixes are additive Alembic revisions on both databases.
 - Created and independently verified an AES-256-GCM source backup from one repeatable-read
   transaction. It contains all 78 public tables including `alembic_version` (167 total rows), one
   Supabase Auth user, and one Auth identity. The ignored authenticated artifact and manifest are
   separated from a 256-bit key stored outside the repository with a user-only Windows ACL; no
   database credential, plaintext identity, or encryption key entered Git.
-- Passed the read-only configuration rollback rehearsal through the real FastAPI engine factory:
-  source URL (5.56s), Cloud SQL (7.51s), then source URL (3.69s). Every transition reached Alembic
-  `f15a2c9e7b41`, disposed its pool and connector, left `.env` unchanged, and opened no writes.
-- Live completion remains blocked only on remaining API-level Cloud SQL tests. Supabase Free stays
-  authoritative until every gate passes and remains the durable fallback before trial archival.
+- Upgraded both databases through additive head `f7a2d41e6c93`; each Cloud SQL migration used a
+  Firebase-managed owner window and verified its immediate revocation. The final live IAM suite
+  passed revision, role, RLS, constraint, immutability, financial-equation, audit, index, public-
+  grant, runtime-role, and no-context-denial controls. SQL Connect reported the schema compatible.
+- Refreshed and independently verified the encrypted source/Auth snapshot at the final head, then
+  passed the read-only rollback rehearsal through the real FastAPI engine factory: source URL
+  (4.01s), Cloud SQL (7.27s), then source URL (3.52s), with `.env` unchanged and no writes opened.
+- Passed all 127 backend tests using a repository-local pytest temp directory, Ruff, ESLint,
+  TypeScript, backend compilation, and the optimized 50-route Next.js build. Supabase Free remains
+  authoritative and the durable fallback until the later cutover slice deliberately opens Cloud
+  SQL application writes.
 
-Planned commit: `Move data to Firebase SQL Connect`
+Commit: `Complete Cloud SQL migration rehearsal`
 
 ### Slice F4 - Gemini model and API upgrade
 

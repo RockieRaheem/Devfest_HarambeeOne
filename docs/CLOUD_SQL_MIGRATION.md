@@ -63,6 +63,20 @@ target evidence and fails unless table sets, row counts, canonical SHA-256 row h
 numeric-column total agree. The existing PostgreSQL-client transfer tool remains available as a
 second rehearsal path where matching `pg_dump` and `pg_restore` binaries are installed.
 
+For a reviewed additive migration after the initial rehearsal, use the incremental IAM upgrader:
+
+```text
+firebase dataconnect:sql:grant --role owner --email OPERATOR_EMAIL --service SERVICE --location REGION --project PROJECT
+pnpm firebase:sql:upgrade -- --instance PROJECT:REGION:INSTANCE --database DATABASE --user OPERATOR_EMAIL --runtime-role FIREBASE_WRITER_ROLE
+```
+
+First grant the operator the owner role through Firebase's managed command for the named service;
+then run the upgrader immediately. It detects the single Firebase owner role, renders only the
+current-revision-to-head Alembic SQL, maps the Supabase runtime role to the named Firebase writer,
+and always treats owner membership as temporary, revoking it on success or failure. It verifies
+both the new revision and owner revocation afterward and refuses an empty migration, ambiguous
+owner role, unsafe identifier, or unreviewed role reference.
+
 ## SQL Connect boundary
 
 The current `connectorDirs: []` setting is intentional. Direct client queries or mutations would
@@ -146,23 +160,26 @@ operator has Token Creator on this service account only; ADC targets the runtime
 identity through short-lived impersonation, contains no private key, and passed the FastAPI Cloud
 SQL connector readiness check. Revoke the operator binding when local verification is complete.
 
-The protected AES-256-GCM source snapshot now exists and has passed a separate decrypt-and-manifest
-verification. It contains all 78 public tables including `alembic_version` (167 total rows), one
-Supabase Auth user, and one Auth identity. Its ignored artifact is separated from the 256-bit key,
-which is outside the repository and restricted to the current Windows user.
+The protected AES-256-GCM source snapshot was refreshed at final head `f7a2d41e6c93` and passed a
+separate decrypt-and-manifest verification. It contains all 78 public tables including
+`alembic_version` (167 total rows), one Supabase Auth user, and one Auth identity. Its ignored
+artifact is separated from the 256-bit key, which is outside the repository and restricted to the
+current Windows user.
 
-The read-only configuration rollback rehearsal passed through the real FastAPI engine factory in
-`URL -> Cloud SQL -> URL` order in 5.56s, 7.51s, and 3.69s respectively. All three connections
-reported Alembic `f15a2c9e7b41`; each pool and connector was disposed, `.env` remained unchanged,
-and neither database accepted a write.
+The final read-only configuration rollback rehearsal passed through the real FastAPI engine
+factory in `URL -> Cloud SQL -> URL` order in 4.01s, 7.27s, and 3.52s respectively. All three
+connections reported Alembic `f7a2d41e6c93`; each pool and connector was disposed, `.env` remained
+unchanged, and neither database accepted a write.
 
-F3 remains incomplete until the full multi-role API suites pass against Cloud SQL. Supabase Free
-therefore remains the active system of record; no Cloud SQL application writes are open.
+The keyless runtime FastAPI and database matrix passed for owner, bursar, cashier, auditor,
+guardian, donor, tenant isolation, unknown-user denial, server-only access, duplicate rejection,
+and rollback behavior using synthetic transaction-only data. Zero probe rows remained. The final
+IAM control suite and SQL Connect compatibility diff also passed.
 
-The keyless runtime database matrix passed for owner, bursar, cashier, auditor, guardian, donor,
-unknown-user, server-only, duplicate, and rollback behavior using synthetic transaction-only data.
+F3 is complete. Supabase Free remains the active system of record and durable rollback until the
+later cutover slice; no Cloud SQL application writes are open yet.
 
 After the rehearsal, the operator's temporary schema-owner membership was explicitly revoked and
-verified absent; writer membership remains only for the outstanding controlled verification work.
+verified absent; writer membership remains for the keyless runtime service and controlled checks.
 The live IAM control suite passed with the unprivileged login unable to read tenant or ledger rows
 without request context, and with immutable ledger enforcement still active under the writer role.
