@@ -235,9 +235,14 @@ Progress (F3 remains incomplete):
   guardian, and donor identities. It proved tenant isolation, role-specific school writes,
   unknown-user denial, explicit server-only access, duplicate rejection, and zero persisted probe
   rows after rollback.
-- Live completion remains blocked on remaining API-level Cloud SQL tests, protected source/Auth
-  backups, and the configuration rollback rehearsal. Supabase Free stays authoritative until every
-  gate passes and remains the durable fallback before trial archival.
+- Created and independently verified an AES-256-GCM source backup from one repeatable-read
+  transaction. It contains all 78 public tables including `alembic_version` (167 total rows), one
+  Supabase Auth user, and one Auth identity. The ignored authenticated artifact and manifest are
+  separated from a 256-bit key stored outside the repository with a user-only Windows ACL; no
+  database credential, plaintext identity, or encryption key entered Git.
+- Live completion remains blocked on remaining API-level Cloud SQL tests and the configuration
+  rollback rehearsal. Supabase Free stays authoritative until every gate passes and remains the
+  durable fallback before trial archival.
 
 Planned commit: `Move data to Firebase SQL Connect`
 

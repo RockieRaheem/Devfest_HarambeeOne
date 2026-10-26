@@ -21,6 +21,20 @@ Firebase CLI login; they never require a target password. `migration-evidence/` 
 still contains sensitive operational evidence and must be access-controlled and destroyed
 according to the retention decision.
 
+Create the required encrypted source and Auth snapshot before cutover. The key path must be
+outside the repository and backed up separately; never commit or share it with the artifact:
+
+```text
+pnpm firebase:source:backup -- create --artifact migration-evidence/source-auth.backup --key-file ABSOLUTE_EXTERNAL_KEY_PATH
+pnpm firebase:source:backup -- verify --artifact migration-evidence/source-auth.backup --key-file ABSOLUTE_EXTERNAL_KEY_PATH
+```
+
+The command takes one repeatable-read snapshot, includes every public application table plus
+Supabase Auth users and identities, compresses it, and encrypts it with an independently generated
+256-bit key using AES-256-GCM. It refuses to overwrite an artifact or place the key anywhere in the
+repository. Restrict the external key file to the current operating-system user and retain the
+ignored manifest with the encrypted artifact so restore verification can authenticate both.
+
 ## Empty-target rehearsal
 
 1. Explicitly grant the reviewed operator the Firebase SQL owner role for the migration window.
@@ -120,9 +134,14 @@ operator has Token Creator on this service account only; ADC targets the runtime
 identity through short-lived impersonation, contains no private key, and passed the FastAPI Cloud
 SQL connector readiness check. Revoke the operator binding when local verification is complete.
 
-F3 remains incomplete until the full multi-role API suites pass against Cloud SQL, a protected
-source backup and Auth export exist, and rollback is rehearsed. Supabase Free therefore remains
-the active system of record; no Cloud SQL application writes are open.
+The protected AES-256-GCM source snapshot now exists and has passed a separate decrypt-and-manifest
+verification. It contains all 78 public tables including `alembic_version` (167 total rows), one
+Supabase Auth user, and one Auth identity. Its ignored artifact is separated from the 256-bit key,
+which is outside the repository and restricted to the current Windows user.
+
+F3 remains incomplete until the full multi-role API suites pass against Cloud SQL and configuration
+rollback is rehearsed. Supabase Free therefore remains the active system of record; no Cloud SQL
+application writes are open.
 
 The keyless runtime database matrix passed for owner, bursar, cashier, auditor, guardian, donor,
 unknown-user, server-only, duplicate, and rollback behavior using synthetic transaction-only data.
