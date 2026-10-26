@@ -12,7 +12,7 @@
 
 HarambeeOne is a tenant-isolated school finance platform designed around the work of a Ugandan school bursar. Its financial ledger is the source of truth for what each learner was charged, what was paid, how a payment was allocated, what remains outstanding, and how those figures were reconciled and reported.
 
-The application also contains Harambee Support, a privacy-preserving assistance workflow. A verified learner obligation can become an anonymous public support campaign after guardian consent, appropriate learner assent, optional Gemma review, and human approval. Contributions are not counted as funded until the school verifies settlement and posts the value to the learner's account.
+The application also contains Harambee Support, a privacy-preserving assistance workflow. A verified learner obligation can become an anonymous public support campaign after guardian consent, appropriate learner assent, optional Gemini review, and human approval. Contributions are not counted as funded until the school verifies settlement and posts the value to the learner's account.
 
 HarambeeOne is not a general school-management system. Academic grading, attendance, teaching, payroll, procurement, and broad school administration are outside its current boundary.
 
@@ -42,7 +42,7 @@ Supabase Auth
   -> FastAPI resolves operational access from school membership
 
 Gemini API
-  -> optional Gemma 4 assistance and case review
+  -> optional Gemini 4 assistance and case review
   -> consented, privacy-minimized, structured, and always subordinate to human decisions
 ```
 
@@ -150,7 +150,7 @@ Do not add new operational features to `apps/api`; it is a legacy NestJS/Prisma 
 - Guest and authenticated-donor pledges, independent settlement verification, learner-ledger posting, school receipts, reversals, and reissues.
 - Guardian, donor, and school notifications with read state, deep links, deduplication, and an outbox.
 - Private guardian acknowledgements and owner-approved anonymous outcomes for donors.
-- Guardian and donor Gemma assistants with explicit consent, minimal role-scoped facts, structured responses, prompt-injection and identity-leak checks, no retained conversation content, and rate limiting.
+- Guardian and donor Gemini assistants with explicit consent, minimal role-scoped facts, structured responses, prompt-injection and identity-leak checks, no retained conversation content, and rate limiting.
 
 ### Enterprise interoperability
 
@@ -249,7 +249,7 @@ Passing the roadmap does not by itself authorize production use with real learne
 - Python 3.12.
 - `uv`.
 - A configured Supabase project.
-- A Google AI Studio key only for optional Gemma features.
+- A Google AI Studio key only for optional Gemini features.
 
 ### Environment
 
@@ -258,7 +258,7 @@ Copy `.env.example` to `.env` and configure the values documented there. The imp
 - `DATABASE_URL` and `MIGRATION_DATABASE_URL` for PostgreSQL.
 - `SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, and the Supabase publishable key.
 - `API_URL` for the web-to-API path.
-- `GEMINI_API_KEY` and `GEMMA_MODEL` for optional AI features.
+- `GEMINI_API_KEY` and `GEMINI_MODEL` for optional AI features.
 
 Never commit `.env` or print its secrets in terminal output, logs, screenshots, tests, or documentation.
 

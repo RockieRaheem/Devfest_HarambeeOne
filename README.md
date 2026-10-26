@@ -37,7 +37,7 @@ The active product serves the school bursar and the minimum learner, guardian, a
 - Immutable ledger controls, tenant-aware row-level security, and financial audit events.
 - Anonymous Harambee Support campaigns backed by verified learner obligations.
 - Guardian invitations, scoped consent, learner-assent handling, and consent withdrawal.
-- Optional privacy-minimized Gemma review with mandatory human publication approval.
+- Optional privacy-minimized Gemini review with mandatory human publication approval.
 - Public campaign discovery, pledge tracking, verified settlement posting, and redacted outcomes.
 
 ### In progress
@@ -114,7 +114,7 @@ Campaign money must never be sent to a guardian or learner. A target cannot exce
                                                        +----------------------+
 
 Signed-out donors -> restricted public gateway -> anonymous Support endpoints
-Gemma review      -> server-only Google API call -> validated, redacted response
+Gemini review      -> server-only Google API call -> validated, redacted response
 ```
 
 ### Financial invariants
@@ -138,7 +138,7 @@ Gemma review      -> server-only Google API call -> validated, redacted response
 | API | FastAPI, Pydantic, SQLAlchemy | Active business workflows and authorization |
 | Database | Supabase PostgreSQL | Financial ledger, tenant data, RLS, triggers, and audit evidence |
 | Migrations | Alembic | Versioned database changes and security policies |
-| AI | Gemma 4 through the Gemini API | Optional, consented, privacy-minimized case review |
+| AI | Gemini 3.8 Flash through the Gemini API | Optional, consented, privacy-minimized case review |
 | Tooling | pnpm, uv, Ruff, Pytest, ESLint | Reproducible development and verification |
 | Deferred protocol | Rust and Soroban SDK | Experimental post-bursar education-funding contract |
 
@@ -169,7 +169,7 @@ HarambeeOne/
 - Python 3.12.
 - [uv](https://docs.astral.sh/uv/).
 - A Supabase project for authentication and the PostgreSQL database.
-- A Google AI Studio API key only when testing the optional Gemma integration.
+- A Google AI Studio API key only when testing the optional Gemini integration.
 
 Redis and RabbitMQ are present in the local Compose file for planned background work, but they are not required by the current request path.
 
@@ -205,11 +205,11 @@ Redis and RabbitMQ are present in the local Compose file for planned background 
    MIGRATION_DATABASE_URL=postgresql+psycopg://postgres.PROJECT_REF:PASSWORD@POOLER_HOST:5432/postgres
    ```
 
-   Optional Gemma configuration:
+   Optional Gemini configuration:
 
    ```dotenv
    GEMINI_API_KEY=replace-with-a-server-only-key
-   GEMMA_MODEL=gemma-4-26b-a4b-it
+   GEMINI_MODEL=gemini-3.8-flash
    ```
 
    Never expose database credentials, service-role keys, or `GEMINI_API_KEY` through a `NEXT_PUBLIC_*` variable.
@@ -277,7 +277,7 @@ pnpm db:migrate
 pnpm db:seed
 ```
 
-The backend suite covers the complete bursar journey: tenant authorization, school structure, period lifecycle, learner and guardian registration, controlled billing, targeted requirements, payments and receipts, reconciliation and cash-up, arrears follow-up, reports and exports, closing, carry-forward, rollover, controlled reopening, Support privacy boundaries, Gemma validation, duplicate prevention, and rollback behavior.
+The backend suite covers the complete bursar journey: tenant authorization, school structure, period lifecycle, learner and guardian registration, controlled billing, targeted requirements, payments and receipts, reconciliation and cash-up, arrears follow-up, reports and exports, closing, carry-forward, rollover, controlled reopening, Support privacy boundaries, Gemini validation, duplicate prevention, and rollback behavior.
 
 ## Database verification
 
@@ -307,7 +307,7 @@ HarambeeOne handles financial records and children's personal data. Security and
 - Sensitive tables use PostgreSQL RLS and restricted Data API grants.
 - Guardian portal access is created through expiring, hashed, single-use invitations.
 - Support publication requires anonymous-publication consent and an acceptable learner-assent state.
-- Gemma and cross-border processing require separate consent.
+- Gemini and cross-border processing require separate consent.
 - Public campaign text and model output are checked for learner identifiers.
 - Withdrawal stops new fundraising while preserving required financial and audit history.
 - Production use requires MFA, secrets management, backup restoration exercises, incident procedures, provider webhook verification, and independent security testing.

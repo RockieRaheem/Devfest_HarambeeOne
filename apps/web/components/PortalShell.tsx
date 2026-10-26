@@ -30,7 +30,7 @@ export default function PortalShell({
   return <div className="portal-page">
     <header className="portal-header">
       <Link href="/workspace" className="portal-brand"><Image src="/harambeeone-logo.png" width={38} height={38} alt=""/><span><strong>HarambeeOne</strong><small>{label}</small></span></Link>
-      <nav>{label === 'Guardian workspace' && <><Link href="/guardian/outcomes">Outcome updates</Link><Link href="/guardian/assistant"><Bot size={16}/>Gemma assistant</Link></>}{label === 'Donor workspace' && <><Link href="/donor/timeline">Campaign timeline</Link><Link href="/donor/assistant"><Bot size={16}/>Gemma assistant</Link></>}<Link href="/workspace"><PanelsTopLeft size={16}/>Workspaces</Link><button onClick={signOut}><LogOut size={16}/>Sign out</button></nav>
+      <nav>{label === 'Guardian workspace' && <><Link href="/guardian/outcomes">Outcome updates</Link><Link href="/guardian/assistant"><Bot size={16}/>Gemini assistant</Link></>}{label === 'Donor workspace' && <><Link href="/donor/timeline">Campaign timeline</Link><Link href="/donor/assistant"><Bot size={16}/>Gemini assistant</Link></>}<Link href="/workspace"><PanelsTopLeft size={16}/>Workspaces</Link><button onClick={signOut}><LogOut size={16}/>Sign out</button></nav>
     </header>
     <main className="portal-main"><NotificationCenter compact/>{children}</main>
   </div>;

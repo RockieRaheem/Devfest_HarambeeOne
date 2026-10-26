@@ -99,7 +99,7 @@ Commit messages must contain one subject line only, with no body. Planned subjec
 - Active API: FastAPI, Pydantic, SQLAlchemy, and Alembic.
 - Current identity: Supabase Auth with email/password and Google OAuth.
 - Current database: Supabase PostgreSQL with RLS, grants, constraints, triggers, and 34 operational tables.
-- Current AI: Gemma integration behind consent, minimization, structured validation, human review, rate limits, and safe failure.
+- Current AI: Gemini integration behind consent, minimization, structured validation, human review, rate limits, and safe failure.
 - Current notifications: durable in-app notifications and a provider-neutral delivery outbox.
 - Baseline verification on 2026-10-25: all 111 backend tests passed. Frontend lint/build could not start because the local pnpm dependency links were incomplete; dependency restoration is a gate in Slice F1.
 - Initial repository baseline commit: `8c65fab`.
@@ -258,7 +258,7 @@ Commit: `Complete Cloud SQL migration rehearsal`
 
 ### Slice F4 - Gemini model and API upgrade
 
-Status: **PENDING**
+Status: **COMPLETE**
 
 Deliver:
 
@@ -279,7 +279,14 @@ Completion gate:
 - Consent, privacy notice, retention statement, and cross-border-processing language match the actual Gemini flow.
 - Automated tests cover model success, refusal, malformed output, timeout, unavailable service, and safe fallback.
 
-Planned commit: `Upgrade assistants to Gemini`
+Completion evidence:
+
+- The pinned Google GenAI SDK now uses the Interactions API with `store=false`, exact Pydantic response schemas, bounded input/output, a 20-second timeout, SDK retries disabled, metadata-only audit, and explicit non-blocking fallbacks for quota and provider failure.
+- The versioned AI Studio evaluation set and model decision record select free-tier `gemini-3.8-flash`; `gemini-4-argon` was excluded because it is not available on the free tier. Guardian, donor, and school-review assistants share the same privacy, grounding, authority, and identifier-leakage controls.
+- Reversible migration `a8c4e2f19b70` renamed consent data on both Supabase and Cloud SQL. Cloud SQL passed revision, least-privilege, RLS, immutable-history, financial-equation, audit, index, runtime-role, and public-grant checks; Firebase confirmed SQL Connect compatibility and the temporary owner grant was revoked.
+- All 131 backend tests, Ruff, TypeScript, ESLint, Python compilation, and the optimized 50-route Next.js build passed. A live synthetic call reached Gemini and failed safely during provider `503` and timeout responses; automated tests prove valid output, refusal, malformed output, timeout, unavailable service, quota fallback, and disabled retries.
+
+Commit: `Upgrade assistants to Gemini`
 
 ### Slice F5 - Firebase Cloud Messaging
 

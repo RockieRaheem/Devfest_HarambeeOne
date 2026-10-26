@@ -926,7 +926,7 @@ class SupportConsentCreate(BaseModel):
     method: str = Field(pattern="^(otp|signed_form|witnessed_in_person)$")
     scope_version: str = Field(default="2026-10", min_length=4, max_length=24)
     anonymous_publication: bool = True
-    gemma_processing: bool
+    gemini_processing: bool
     cross_border_processing: bool
     child_assent_status: str = Field(pattern="^(agreed|declined|not_applicable|unable_to_express)$")
 
@@ -1022,13 +1022,13 @@ class GuardianAcknowledgementCreate(BaseModel):
 class GuardianAssistantRequest(BaseModel):
     task: str = Field(pattern="^(explain_consent|draft_campaign|navigate)$")
     question: str = Field(min_length=3, max_length=600)
-    consent_to_gemma: bool
+    consent_to_gemini: bool
     consent_to_cross_border: bool
 
     @model_validator(mode="after")
     def validate_assistant_consent(self):
-        if not self.consent_to_gemma or not self.consent_to_cross_border:
-            raise ValueError("Confirm both Gemma and cross-border processing for this request")
+        if not self.consent_to_gemini or not self.consent_to_cross_border:
+            raise ValueError("Confirm both Gemini and cross-border processing for this request")
         return self
 
 
@@ -1037,13 +1037,13 @@ class DonorAssistantRequest(BaseModel):
     question: str = Field(min_length=3, max_length=600)
     campaign_code: str | None = Field(default=None, min_length=4, max_length=32)
     contribution_id: uuid.UUID | None = None
-    consent_to_gemma: bool
+    consent_to_gemini: bool
     consent_to_cross_border: bool
 
     @model_validator(mode="after")
     def validate_assistant_consent(self):
-        if not self.consent_to_gemma or not self.consent_to_cross_border:
-            raise ValueError("Confirm both Gemma and cross-border processing for this request")
+        if not self.consent_to_gemini or not self.consent_to_cross_border:
+            raise ValueError("Confirm both Gemini and cross-border processing for this request")
         if self.task == "track_contribution" and self.contribution_id is None:
             raise ValueError("Choose one of your contributions to track")
         return self
@@ -1095,7 +1095,7 @@ class SupportReferralConsent(BaseModel):
         pattern="^(school_record|birth_certificate|guardian_declaration|national_id|other)$"
     )
     anonymous_publication: bool = False
-    gemma_processing: bool = False
+    gemini_processing: bool = False
     cross_border_processing: bool = False
     child_assent_status: str = Field(pattern="^(agreed|declined|not_applicable|unable_to_express)$")
     child_assent_reason: str | None = Field(default=None, max_length=240)
@@ -1111,8 +1111,8 @@ class SupportReferralConsent(BaseModel):
             and not (self.child_assent_reason or "").strip()
         ):
             raise ValueError("Explain why learner assent was not applicable or unavailable")
-        if self.gemma_processing and not self.cross_border_processing:
-            raise ValueError("Gemma processing requires separate cross-border consent")
+        if self.gemini_processing and not self.cross_border_processing:
+            raise ValueError("Gemini processing requires separate cross-border consent")
         return self
 
 

@@ -5,11 +5,10 @@ import json
 import uuid
 from datetime import UTC, datetime
 from decimal import Decimal
-from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode
-from urllib.request import Request
+from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -20,8 +19,14 @@ from harambeeone_api.auth import (
     get_current_user,
     require_permission,
 )
-from harambeeone_api.config import get_settings
 from harambeeone_api.database import get_server_session, get_session
+from harambeeone_api.gemini_client import (
+    MAX_IMAGE_BYTES,
+    GeminiQuotaError,
+    GeminiResponseError,
+    GeminiUnavailableError,
+    request_structured_gemini,
+)
 from harambeeone_api.models import (
     AuditEvent,
     DonorProfile,
@@ -66,10 +71,9 @@ from harambeeone_api.schemas import (
     SupportReferralCreate,
 )
 from harambeeone_api.support_assistants import (
+    assert_safe_model_output,
     finish_assistant_usage,
-    gemma_response_text,
-    parse_gemma_json,
-    request_gemma_json,
+    private_terms_for_student,
     start_assistant_usage,
 )
 from harambeeone_api.support_notifications import emit_support_notification
@@ -81,8 +85,23 @@ PRIVACY_NOTICE = (
     "The school will use the learner's private identity only to verify eligibility and post "
     "support to the school account. Donors see an anonymous campaign code, need category, "
     "target, verified totals and redacted outcomes—not the learner or guardian identity. "
-    "Gemma and processing outside Uganda are optional. Consent may be withdrawn at any time."
+    "Gemini and processing outside Uganda are optional. Consent may be withdrawn at any time."
 )
+
+
+ShortReviewItem = Annotated[str, Field(min_length=1, max_length=180)]
+
+
+class SupportReviewResult(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    summary: str = Field(min_length=10, max_length=700)
+    risk_level: Literal["low", "medium", "high", "review"]
+    observed_factors: list[ShortReviewItem] = Field(max_length=8)
+    missing_information: list[ShortReviewItem] = Field(max_length=8)
+    consistency_flags: list[ShortReviewItem] = Field(max_length=8)
+    recommended_action: str = Field(min_length=5, max_length=500)
+    safe_public_summary: str = Field(min_length=20, max_length=500)
 
 
 def _guardian_referral(session: Session, referral_id: uuid.UUID, user_id: uuid.UUID):
@@ -120,7 +139,7 @@ def _referral_payload(session: Session, referral: SupportReferral) -> dict:
         "privacy_notice_version": PRIVACY_NOTICE_VERSION,
         "privacy_notice": PRIVACY_NOTICE,
         "anonymous_publication": referral.anonymous_publication,
-        "gemma_processing": referral.gemma_processing,
+        "gemini_processing": referral.gemini_processing,
         "cross_border_processing": referral.cross_border_processing,
         "child_assent_status": referral.child_assent_status,
         "child_assent_reason": referral.child_assent_reason,
@@ -670,19 +689,13 @@ def _receipt_payload(
     }
 
 
-def _call_gemma(
+def _call_gemini(
     *,
     case_payload: dict,
     evidence_image_base64: str | None,
     evidence_mime_type: str | None,
 ) -> tuple[str, dict]:
-    settings = get_settings()
-    if not settings.gemini_api_key:
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="Gemma review is not configured. Add GEMINI_API_KEY to the server environment.",
-        )
-    prompt = (
+    system_instruction = (
         "You are the privacy-safe review assistant for a Ugandan school support programme. "
         "Use only the supplied anonymous financial facts and optional redacted evidence image. "
         "Do not infer identity, health, disability, gender, pregnancy, abuse, ethnicity "
@@ -691,81 +704,47 @@ def _call_gemma(
         "Return JSON with exactly these keys: summary, risk_level, observed_factors, "
         "missing_information, consistency_flags, recommended_action, safe_public_summary. "
         "risk_level must be low, medium, high or review; list fields must contain short strings; "
-        "safe_public_summary must be 20-500 characters and contain no invented facts.\n\n"
-        f"Anonymous case facts: {json.dumps(case_payload, separators=(',', ':'))}"
+        "safe_public_summary must be 20-500 characters and contain no invented facts."
     )
-    parts: list[dict] = [{"text": prompt}]
     if evidence_image_base64 and evidence_mime_type:
         try:
-            base64.b64decode(evidence_image_base64, validate=True)
+            decoded_image = base64.b64decode(evidence_image_base64, validate=True)
         except (ValueError, binascii.Error) as error:
             raise HTTPException(
                 status_code=422, detail="Evidence image is not valid base64"
             ) from error
-        parts.append(
-            {
-                "inline_data": {
-                    "mime_type": evidence_mime_type,
-                    "data": evidence_image_base64,
-                }
-            }
-        )
-    body = json.dumps(
-        {
-            "contents": [{"role": "user", "parts": parts}],
-            "generationConfig": {"responseMimeType": "application/json", "temperature": 0.1},
-        }
-    ).encode()
-    query = urlencode({"key": settings.gemini_api_key})
-    request = Request(
-        f"https://generativelanguage.googleapis.com/v1beta/models/{settings.gemma_model}:generateContent?{query}",
-        data=body,
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
+        if len(decoded_image) > MAX_IMAGE_BYTES:
+            raise HTTPException(status_code=422, detail="Evidence image exceeds the 2 MB limit")
     try:
-        api_result = request_gemma_json(request, timeout=35)
-        text = gemma_response_text(api_result)
-        result = parse_gemma_json(text)
-    except (
-        HTTPError,
-        URLError,
-        TimeoutError,
-        KeyError,
-        IndexError,
-        TypeError,
-        ValueError,
-    ) as error:
+        model, result = request_structured_gemini(
+            system_instruction=system_instruction,
+            text_input=(
+                "ANONYMOUS_CASE_FACTS="
+                f"{json.dumps(case_payload, separators=(',', ':'), sort_keys=True)}"
+            ),
+            response_model=SupportReviewResult,
+            image_base64=evidence_image_base64,
+            image_mime_type=evidence_mime_type,
+        )
+    except GeminiQuotaError as error:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=(
+                "The free Gemini quota is temporarily exhausted. "
+                "Continue with the school's manual review."
+            ),
+        ) from error
+    except GeminiUnavailableError as error:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Gemini is temporarily unavailable. Continue with the school's manual review.",
+        ) from error
+    except GeminiResponseError as error:
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
-            detail="Gemma could not complete the support review",
+            detail="Gemini returned an invalid review structure",
         ) from error
-    required = {
-        "summary",
-        "risk_level",
-        "observed_factors",
-        "missing_information",
-        "consistency_flags",
-        "recommended_action",
-        "safe_public_summary",
-    }
-    if not required.issubset(result) or result["risk_level"] not in {
-        "low",
-        "medium",
-        "high",
-        "review",
-    }:
-        raise HTTPException(status_code=502, detail="Gemma returned an invalid review structure")
-    for key in ("observed_factors", "missing_information", "consistency_flags"):
-        if not isinstance(result[key], list) or not all(
-            isinstance(item, str) for item in result[key]
-        ):
-            raise HTTPException(
-                status_code=502, detail="Gemma returned an invalid review structure"
-            )
-    if not 20 <= len(str(result["safe_public_summary"])) <= 500:
-        raise HTTPException(status_code=502, detail="Gemma returned an invalid public summary")
-    return settings.gemma_model, result
+    return model, result.model_dump()
 
 
 @router.get("/referral-candidates")
@@ -1100,7 +1079,7 @@ def save_guardian_support_case(
             method="guardian_portal",
             scope_version=referral.privacy_notice_version or PRIVACY_NOTICE_VERSION,
             anonymous_publication=True,
-            gemma_processing=referral.gemma_processing,
+            gemini_processing=referral.gemini_processing,
             cross_border_processing=referral.cross_border_processing,
             child_assent_status=referral.child_assent_status,
             recorded_by=user.email or str(user.id),
@@ -1193,7 +1172,7 @@ def decide_referral_consent(
     referral.guardian_authority_confirmed = payload.guardian_authority_confirmed
     referral.age_verification_method = payload.age_verification_method
     referral.anonymous_publication = payload.anonymous_publication
-    referral.gemma_processing = payload.gemma_processing
+    referral.gemini_processing = payload.gemini_processing
     referral.cross_border_processing = payload.cross_border_processing
     referral.child_assent_status = payload.child_assent_status
     referral.child_assent_reason = (payload.child_assent_reason or "").strip() or None
@@ -1239,7 +1218,7 @@ def withdraw_referral_consent(
     referral.status = "withdrawn"
     referral.withdrawn_at = datetime.now(UTC)
     referral.anonymous_publication = False
-    referral.gemma_processing = False
+    referral.gemini_processing = False
     referral.cross_border_processing = False
     open_cases = session.scalars(
         select(SupportCase).where(
@@ -1713,7 +1692,7 @@ def get_support_case(
         "consent": (
             {
                 "method": consent.method,
-                "gemma_processing": consent.gemma_processing,
+                "gemini_processing": consent.gemini_processing,
                 "cross_border_processing": consent.cross_border_processing,
                 "child_assent_status": consent.child_assent_status,
                 "recorded_at": consent.recorded_at,
@@ -1871,7 +1850,7 @@ def record_support_consent(
     consent.method = payload.method
     consent.scope_version = payload.scope_version
     consent.anonymous_publication = True
-    consent.gemma_processing = payload.gemma_processing
+    consent.gemini_processing = payload.gemini_processing
     consent.cross_border_processing = payload.cross_border_processing
     consent.child_assent_status = payload.child_assent_status
     consent.status = "active"
@@ -1901,10 +1880,10 @@ def review_support_case(
 ):
     support_case = _private_case(session, case_id, context.school_id)
     consent = _active_consent(session, case_id)
-    if consent is None or not consent.gemma_processing or not consent.cross_border_processing:
+    if consent is None or not consent.gemini_processing or not consent.cross_border_processing:
         raise HTTPException(
             status_code=409,
-            detail="Guardian consent for Gemma and cross-border processing is required",
+            detail="Guardian consent for Gemini and cross-border processing is required",
         )
     facts = {
         "campaign_code": support_case.public_code,
@@ -1928,21 +1907,25 @@ def review_support_case(
         scope_id=support_case.id,
     )
     try:
-        model_name, result = _call_gemma(
+        model_name, result = _call_gemini(
             case_payload=facts,
             evidence_image_base64=payload.evidence_image_base64,
             evidence_mime_type=payload.evidence_mime_type,
         )
+        assert_safe_model_output(
+            json.dumps(result, sort_keys=True),
+            private_terms=private_terms_for_student(session, support_case.student_id),
+        )
+        student = session.get(Student, support_case.student_id)
+        person = session.get(Person, student.person_id) if student else None
+        if student is None or person is None:
+            raise HTTPException(status_code=409, detail="Learner record is incomplete")
+        safe_summary = str(result["safe_public_summary"]).strip()
+        _assert_public_text(support_case, student, person, safe_summary)
     except HTTPException:
         finish_assistant_usage(session, usage, "failed")
         session.commit()
         raise
-    student = session.get(Student, support_case.student_id)
-    person = session.get(Person, student.person_id) if student else None
-    if student is None or person is None:
-        raise HTTPException(status_code=409, detail="Learner record is incomplete")
-    safe_summary = str(result["safe_public_summary"]).strip()
-    _assert_public_text(support_case, student, person, safe_summary)
     support_case.public_summary = safe_summary
     support_case.risk_level = result["risk_level"]
     review = SupportAiReview(
@@ -1963,7 +1946,7 @@ def review_support_case(
             entity_id=review.id,
             action="created",
             actor=context.actor,
-            summary=f"Gemma reviewed anonymous support case {support_case.public_code}",
+            summary=f"Gemini reviewed anonymous support case {support_case.public_code}",
         )
     )
     session.commit()
@@ -1995,10 +1978,10 @@ def decide_support_case_review(
                 status_code=403,
                 detail="Only an institution owner can approve a support case",
             )
-        if referral.gemma_processing and _latest_review(session, case_id) is None:
+        if referral.gemini_processing and _latest_review(session, case_id) is None:
             raise HTTPException(
                 status_code=409,
-                detail="Complete the consented Gemma review before owner approval",
+                detail="Complete the consented Gemini review before owner approval",
             )
         support_case.status = "approved"
         support_case.approved_by = context.actor
@@ -2075,8 +2058,8 @@ def publish_support_case(
             status_code=409,
             detail="Active guardian portal consent and an acceptable learner view are required",
         )
-    if consent.gemma_processing and _latest_review(session, case_id) is None:
-        raise HTTPException(status_code=409, detail="Complete the Gemma review before publication")
+    if consent.gemini_processing and _latest_review(session, case_id) is None:
+        raise HTTPException(status_code=409, detail="Complete the Gemini review before publication")
     support_case.status = "published"
     support_case.approved_by = support_case.approved_by or context.actor
     support_case.published_at = datetime.now(UTC)

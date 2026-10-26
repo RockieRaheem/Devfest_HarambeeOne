@@ -14,7 +14,7 @@ type Student = { id:string; admission_no:string; full_name:string };
 type Requirement = { id:string; requirement_name:string; requirement_type:string; outstanding_amount:string };
 type Eligibility = { general_outstanding:string; eligible:boolean };
 type Case = { id:string; public_code:string; student_name:string; admission_no:string; title:string; target_amount:string; verified_amount:string; pending_amount:string; status:string; has_ai_review:boolean; guardian_authored:boolean; review_notes:string|null };
-type Detail = { id:string; public_code:string; student:{name:string;admission_no:string}; title:string; public_summary:string; private_context:string|null; status:string; guardian_authored:boolean; review_notes:string|null; guardians:{id:string;name:string;relationship:string}[]; consent:null|{method:string;gemma_processing:boolean}; ai_review:null|{consistency_flags:string[];recommended_action:string} };
+type Detail = { id:string; public_code:string; student:{name:string;admission_no:string}; title:string; public_summary:string; private_context:string|null; status:string; guardian_authored:boolean; review_notes:string|null; guardians:{id:string;name:string;relationship:string}[]; consent:null|{method:string;gemini_processing:boolean}; ai_review:null|{consistency_flags:string[];recommended_action:string} };
 type Pledge = { id:string; public_reference:string; external_reference:string; donor_display_name:string; amount:string; status:string };
 type Destination = { id:string; channel:string; label:string; provider_name:string; account_name:string; account_reference:string; instructions:string; verification_status:string };
 type Candidate = {student_id:string;student_name:string;admission_no:string;class_name:string;overdue_amount:string;days_overdue:number;priority_band:string;guardian_link_id:string|null;guardian_email:string|null;guardian_portal_linked:boolean;referral_id:string|null;referral_status:string|null};
@@ -166,14 +166,14 @@ export default function SupportAdmin() {
     const form = new FormData(event.currentTarget);
     await mutate(`/api/v1/support/cases/${selected.id}/consent`, {
       guardian_link_id:form.get('guardian_link_id'), method:form.get('method'), anonymous_publication:true,
-      gemma_processing:true, cross_border_processing:true, child_assent_status:form.get('child_assent_status'),
+      gemini_processing:true, cross_border_processing:true, child_assent_status:form.get('child_assent_status'),
     }, 'Guardian consent recorded.');
   }
 
   async function review() {
     if (!selected) return;
-    const run = (image:string|null=null, mime:string|null=null) => mutate(`/api/v1/support/cases/${selected.id}/ai-review`, { evidence_image_base64:image, evidence_mime_type:mime, evidence_redacted:Boolean(image) }, image ? 'Gemma completed the anonymous multimodal case review.' : 'Gemma completed the anonymous case review.');
-    if (!window.confirm('Add a redacted evidence image for Gemma to review? Select Cancel for a text-only review.')) return void run();
+    const run = (image:string|null=null, mime:string|null=null) => mutate(`/api/v1/support/cases/${selected.id}/ai-review`, { evidence_image_base64:image, evidence_mime_type:mime, evidence_redacted:Boolean(image) }, image ? 'Gemini completed the anonymous multimodal case review.' : 'Gemini completed the anonymous case review.');
+    if (!window.confirm('Add a redacted evidence image for Gemini to review? Select Cancel for a text-only review.')) return void run();
     const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/jpeg,image/png,image/webp';
     input.onchange = async () => {
       const file = input.files?.[0];
@@ -275,7 +275,7 @@ export default function SupportAdmin() {
       <MetricCard icon={HandHeart} label="Verified support" value={money(verified)} note={`${cases.length} controlled cases`} tone="green"/>
       <MetricCard icon={ShieldCheck} label="Campaign targets" value={money(target)} note="Backed by learner obligations"/>
       <MetricCard icon={CheckCircle2} label="Pending settlement" value={money(pending)} note="Excluded until verified" tone="amber"/>
-      <MetricCard icon={Bot} label="Gemma reviewed" value={String(cases.filter(item => item.has_ai_review).length)} note="Human approval remains required" tone="blue"/>
+      <MetricCard icon={Bot} label="Gemini reviewed" value={String(cases.filter(item => item.has_ai_review).length)} note="Human approval remains required" tone="blue"/>
     </section>
 
     <section className="panel referral-register">
@@ -298,21 +298,21 @@ export default function SupportAdmin() {
       <aside className="panel support-case-detail">
         <SectionHeader title={selected?.title ?? 'Case workflow'} subtitle={selected ? `${selected.student.name} · ${selected.student.admission_no}` : 'Select a case to continue'}/>
         {selected && <div className="support-admin-body">
-          <div className="support-admin-progress"><span>1. Consent <b>{selected.consent ? 'Complete' : 'Required'}</b></span><span>2. Submission <b>{selected.guardian_authored ? selected.status : 'Staff assisted'}</b></span><span>3. Safety review <b>{selected.ai_review ? 'Gemma complete' : selected.consent?.gemma_processing ? 'Gemma pending' : 'Manual'}</b></span><span>4. Publication <b>{selected.status}</b></span></div>
+          <div className="support-admin-progress"><span>1. Consent <b>{selected.consent ? 'Complete' : 'Required'}</b></span><span>2. Submission <b>{selected.guardian_authored ? selected.status : 'Staff assisted'}</b></span><span>3. Safety review <b>{selected.ai_review ? 'Gemini complete' : selected.consent?.gemini_processing ? 'Gemini pending' : 'Manual'}</b></span><span>4. Publication <b>{selected.status}</b></span></div>
           <p>{selected.public_summary}</p>
           {selected.private_context && <div className="support-private-context"><strong>Private guardian context</strong><p>{selected.private_context}</p><small>Never shown on the public donor portal.</small></div>}
           <div className="support-case-actions">
             {!selected.consent && <button className="btn" onClick={() => { setModalError(''); setModal('consent'); }}>Record consent</button>}
             {selected.guardian_authored && selected.status === 'submitted' && ['owner','bursar'].includes(school?.role ?? '') && <button className="btn" disabled={busy} onClick={() => reviewDecision('request_changes')}>Request changes</button>}
-            {selected.consent?.gemma_processing && !selected.ai_review && selected.status === 'submitted' && ['owner','bursar'].includes(school?.role ?? '') && <button className="btn" disabled={busy} onClick={review}>Run consented Gemma review</button>}
-            {selected.guardian_authored && selected.status === 'submitted' && school?.role === 'owner' && (!selected.consent?.gemma_processing || selected.ai_review) && <button className="btn primary" disabled={busy} onClick={() => reviewDecision('approve')}>Approve case</button>}
+            {selected.consent?.gemini_processing && !selected.ai_review && selected.status === 'submitted' && ['owner','bursar'].includes(school?.role ?? '') && <button className="btn" disabled={busy} onClick={review}>Run consented Gemini review</button>}
+            {selected.guardian_authored && selected.status === 'submitted' && school?.role === 'owner' && (!selected.consent?.gemini_processing || selected.ai_review) && <button className="btn primary" disabled={busy} onClick={() => reviewDecision('approve')}>Approve case</button>}
             {selected.guardian_authored && selected.status === 'approved' && school?.role === 'owner' && <button className="btn primary" disabled={busy} onClick={publish}>Publish campaign</button>}
-            {!selected.guardian_authored && selected.consent && !selected.ai_review && <button className="btn primary" disabled={busy} onClick={review}>Run Gemma review</button>}
+            {!selected.guardian_authored && selected.consent && !selected.ai_review && <button className="btn primary" disabled={busy} onClick={review}>Run Gemini review</button>}
             {!selected.guardian_authored && selected.ai_review && selected.status === 'review' && school?.role === 'owner' && <button className="btn primary" disabled={busy} onClick={publish}>Approve & publish</button>}
             {selected.status === 'submitted' && school?.role !== 'owner' && <span className="support-owner-note">An institution owner must give final approval.</span>}
             {['published','funded','closed'].includes(selected.status) && <><Link className="btn" href={`/support/${selected.public_code}`} target="_blank">Public record <ExternalLink size={14}/></Link><button className="btn" onClick={() => { setModalError(''); setModal('proof'); }}>Add proof update</button></>}
           </div>
-          {selected.ai_review && <div className="support-review"><strong>Gemma recommendation</strong><p>{selected.ai_review.recommended_action}</p>{selected.ai_review.consistency_flags.length > 0 && <small>Flags: {selected.ai_review.consistency_flags.join(' · ')}</small>}</div>}
+          {selected.ai_review && <div className="support-review"><strong>Gemini recommendation</strong><p>{selected.ai_review.recommended_action}</p>{selected.ai_review.consistency_flags.length > 0 && <small>Flags: {selected.ai_review.consistency_flags.join(' · ')}</small>}</div>}
           <h3>Guardian portal access</h3>
           <p className="muted-action">Invitations expire after 72 hours, work once, and require the guardian&apos;s registered email.</p>
           {selected.guardians.map(guardian => <div className="guardian-access-row" key={guardian.id}><div><strong>{guardian.name}</strong><small>{guardian.relationship}</small></div><button className="btn compact" disabled={busy} onClick={() => inviteGuardian(guardian.id)}><UserRoundPlus size={14}/>Create invite</button></div>)}
@@ -341,7 +341,7 @@ export default function SupportAdmin() {
       <label>Consent evidence<select name="method"><option value="signed_form">Signed form</option><option value="witnessed_in_person">Witnessed in person</option><option value="otp">Verified OTP</option></select></label>
       <label>Learner assent<select name="child_assent_status"><option value="agreed">Learner agreed</option><option value="not_applicable">Not applicable</option><option value="unable_to_express">Unable to express</option><option value="declined">Learner declined</option></select></label>
       {modalError && <div className="form-error modal-error" role="alert">{modalError}</div>}
-      <div className="notice">Consent covers anonymous publication and privacy-safe Gemma processing, never public identity or photographs.</div>
+      <div className="notice">Consent covers anonymous publication and privacy-safe Gemini processing, never public identity or photographs.</div>
       <footer><button type="button" className="btn" onClick={() => setModal(null)}>Cancel</button><button className="btn primary" disabled={busy}>Record consent</button></footer>
     </form></Modal>}
 

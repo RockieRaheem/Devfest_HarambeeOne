@@ -28,7 +28,7 @@ The platform must never send campaign money to a guardian or learner. Campaign t
 These are engineering safeguards, not a substitute for review by Ugandan counsel or the Personal Data Protection Office before production fundraising.
 
 - Treat every learner under 18 as a child. Record the basis used to determine age and the authority of the consenting guardian.
-- Obtain specific, informed guardian consent before processing a child's campaign data. Consent to anonymous publication, Gemma processing and processing outside Uganda remain separate choices.
+- Obtain specific, informed guardian consent before processing a child's campaign data. Consent to anonymous publication, Gemini processing and processing outside Uganda remain separate choices.
 - Record the views of a child who is capable of expressing them. A decline blocks publication. `Not applicable` or `unable to express` requires a reason and school review.
 - Show a versioned, plain-language privacy notice before consent and preserve the exact version accepted.
 - Allow consent withdrawal. Withdrawal immediately unpublishes an open campaign, prevents new contributions and preserves the minimum financial/audit history required for accountability.
@@ -112,7 +112,7 @@ Verification evidence:
 
 - The school Support workspace now lists referral candidates produced by the canonical arrears calculation, including exact overdue amount, oldest unpaid installment age and deterministic watch/high/urgent reasons; it makes no AI dropout claim.
 - A referral can be created only for a live overdue account, the selected learner's guardian and a previously verified guardian portal link. Duplicate learner-period referrals are rejected.
-- The guardian workspace shows the versioned plain-language notice and separately records guardian authority, age-verification basis, anonymous publication, Gemma, cross-border processing and the capable learner's view. Decline and withdrawal are first-class audited states.
+- The guardian workspace shows the versioned plain-language notice and separately records guardian authority, age-verification basis, anonymous publication, Gemini, cross-border processing and the capable learner's view. Decline and withdrawal are first-class audited states.
 - Withdrawing consent marks matching draft, review or published cases withdrawn, which immediately prevents new public pledges while leaving posted financial records untouched.
 - Live Supabase reached Alembic head `e30afe762c9b`; referral RLS, revoked Data API grants and audit triggers pass verification, and the original Support financial workflow still passes its rolled-back live check.
 - Ruff, web lint, all 48 backend tests, focused arrears/referral/consent/cross-guardian/withdrawal tests and the optimized 36-route Next.js build pass.
@@ -140,7 +140,7 @@ Completion gate:
 Verification evidence:
 
 - The guardian workspace now shows exact live school-fee and monetary-requirement balances, keeps learner identity private inside the linked account, separates the private school narrative from the anonymous public preview, and supports draft, submit, school change request and revision states.
-- The school workspace exposes the private narrative only to authorized staff, permits bursar change requests, reserves final approval and publication for the institution owner, and runs Gemma only when the guardian separately consented to it.
+- The school workspace exposes the private narrative only to authorized staff, permits bursar change requests, reserves final approval and publication for the institution owner, and runs Gemini only when the guardian separately consented to it.
 - Partial unique indexes prevent concurrent active campaigns for the same general or requirement obligation, and case targets automatically reduce when other ledger payments reduce the live balance.
 - Public campaign responses exclude learner, guardian, account and private-narrative identifiers; identity-bearing public text and cross-guardian access are rejected.
 - Ruff, all 53 backend tests, web lint and the optimized 38-route build pass. Supabase reached Alembic head `f42c8e910ab7`; schema, partial-unique-index, RLS, policy and revoked-grant verification passed, followed by the rolled-back end-to-end Support financial verification.
@@ -199,7 +199,7 @@ Verification evidence:
 - Ruff and all 77 backend tests pass, including notification deduplication, outbox creation, read isolation, mandatory human outcome review, settlement retry and the pre-existing atomic financial journey. Web lint and the optimized 46-route production build pass.
 - Live Supabase reached Alembic head `f6a91c42d7e0`; `verify_support_notifications.py` passed RLS, revoked Data API grants, owner policies, delivery indexes and legacy outcome backfill checks.
 
-## Slice S6 - Gemma assistants and release verification
+## Slice S6 - Gemini assistants and release verification
 
 Status: **COMPLETE**
 
@@ -221,10 +221,10 @@ Completion gate:
 
 Verification evidence:
 
-- Guardian and donor workspaces now expose dedicated Gemma 4 assistants for only the three documented tasks per role. Guardian use requires stored referral consent plus fresh request consent; donor grounding is limited to public campaign facts or a contribution owned by the signed-in donor.
+- Guardian and donor workspaces now expose dedicated Gemini 4 assistants for only the three documented tasks per role. Guardian use requires stored referral consent plus fresh request consent; donor grounding is limited to public campaign facts or a contribution owned by the signed-in donor.
 - Every assistant is stateless and read-only. HarambeeOne retains only user, persona, task, scope, model, outcome and timestamps for rate limiting and operational audit; questions and answers are never stored. Structured responses must explicitly deny mutation authority and are rejected if they contain private identifiers or financial-action claims.
-- Prompt-injection phrases, submitted identity and contact data, cross-guardian access, cross-donor contribution access, malformed model output, privacy leakage, unsafe authority claims and more than eight requests in ten minutes fail safely. Gemma timeouts or API failures leave the manual guardian, donor and school workflows available.
-- The existing school review remains human decision support, now under the same database-backed rate limit and metadata-only operational record. Gemma cannot consent, determine eligibility, allege fraud, approve publication, verify settlement, issue receipts or write to the ledger.
+- Prompt-injection phrases, submitted identity and contact data, cross-guardian access, cross-donor contribution access, malformed model output, privacy leakage, unsafe authority claims and more than eight requests in ten minutes fail safely. Gemini timeouts or API failures leave the manual guardian, donor and school workflows available.
+- The existing school review remains human decision support, now under the same database-backed rate limit and metadata-only operational record. Gemini cannot consent, determine eligibility, allege fraud, approve publication, verify settlement, issue receipts or write to the ledger.
 - Ruff and all 81 backend tests pass, including the complete referral, consent, case, publication, contribution, settlement, receipt, notification and outcome journey plus the new adversarial assistant tests. Web lint and the optimized 48-route production build pass.
 - Live Supabase reached Alembic head `a91d38c7e5f2`; `verify_support_assistants.py` passed metadata-only schema, RLS, revoked Data API grants, owner policy, constraints and rate-limit index verification.
 

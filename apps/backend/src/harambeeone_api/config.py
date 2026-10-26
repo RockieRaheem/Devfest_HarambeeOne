@@ -35,7 +35,7 @@ class Settings(BaseSettings):
         default="firebase", alias="AUTH_PROVIDER"
     )
     gemini_api_key: str | None = Field(default=None, alias="GEMINI_API_KEY")
-    gemma_model: str = Field(default="gemma-4-26b-a4b-it", alias="GEMMA_MODEL")
+    gemini_model: str = Field(default="gemini-3.8-flash", alias="GEMINI_MODEL")
 
     @model_validator(mode="after")
     def reject_supabase_auth_in_production(self) -> "Settings":

@@ -99,7 +99,23 @@ async function main() {
   try {
     client = await pool.connect();
     const revision = (await client.query("select version_num from alembic_version")).rows[0]?.version_num;
-    assert(revision === "f7a2d41e6c93", `Unexpected Alembic revision: ${revision}`);
+    assert(revision === "a8c4e2f19b70", `Unexpected Alembic revision: ${revision}`);
+
+    const aiConsentColumns = (await client.query(
+      `select table_name, column_name from information_schema.columns
+       where table_schema = 'public'
+         and table_name = any($1::text[])
+         and column_name = any($2::text[])
+       order by table_name, column_name`,
+      [["support_consents", "support_referrals"], ["gemini_processing", "gemma_processing"]],
+    )).rows;
+    assert(
+      JSON.stringify(aiConsentColumns) === JSON.stringify([
+        { table_name: "support_consents", column_name: "gemini_processing" },
+        { table_name: "support_referrals", column_name: "gemini_processing" },
+      ]),
+      "Gemini consent columns do not match the reviewed schema",
+    );
 
     const access = (await client.query(
       "select pg_has_role($1, $2, 'member') as owner, pg_has_role($1, $3, 'member') as writer",

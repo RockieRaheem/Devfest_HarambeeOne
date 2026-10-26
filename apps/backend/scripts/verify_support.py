@@ -44,9 +44,9 @@ TABLES = (
 )
 
 
-def _gemma_review(**_kwargs) -> tuple[str, dict]:
+def _gemini_review(**_kwargs) -> tuple[str, dict]:
     return (
-        "gemma-4-26b-a4b-it",
+        "gemini-3.8-flash",
         {
             "summary": "The anonymous school obligation is internally consistent.",
             "risk_level": "high",
@@ -64,10 +64,10 @@ def _gemma_review(**_kwargs) -> tuple[str, dict]:
 def verify_live_workflow(connection) -> None:
     """Exercise the complete service workflow in a rolled-back Supabase transaction."""
     transaction = connection.begin()
-    original_gemma = support._call_gemma
+    original_gemini = support._call_gemini
     verification_name = f"Support verification {uuid.uuid4().hex[:8]}"
     try:
-        support._call_gemma = _gemma_review
+        support._call_gemini = _gemini_review
         with Session(
             bind=connection,
             expire_on_commit=False,
@@ -170,7 +170,7 @@ def verify_live_workflow(connection) -> None:
                     guardian_link_id=guardian.id,
                     method="signed_form",
                     anonymous_publication=True,
-                    gemma_processing=True,
+                    gemini_processing=True,
                     cross_border_processing=True,
                     child_assent_status="agreed",
                 ),
@@ -244,7 +244,7 @@ def verify_live_workflow(connection) -> None:
             assert support_case.status == "funded"
             assert balance == Decimal("-300000")
     finally:
-        support._call_gemma = original_gemma
+        support._call_gemini = original_gemini
         transaction.rollback()
     remaining = connection.execute(
         select(School.id).where(School.name == verification_name)
