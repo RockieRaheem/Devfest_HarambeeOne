@@ -99,6 +99,18 @@ This verifier creates synthetic owner, bursar, cashier, auditor, guardian, and d
 one transaction; proves tenant isolation, role writes, unknown-user denial, explicit server-only
 access, duplicate rejection, and then rolls the entire probe back and confirms no rows remain.
 
+Rehearse the pre-write configuration rollback without editing `.env` or opening either database to
+writes:
+
+```text
+pnpm firebase:sql:rollback
+```
+
+The verifier uses the real FastAPI engine factory in `URL -> Cloud SQL -> URL` order, disposes each
+pool and connector between transitions, and fails unless all three readiness checks return the same
+Alembic revision. This rehearsal is valid only before Cloud SQL accepts application writes; after
+that point both systems must be frozen and the target delta reconciled before rollback.
+
 ## Cutover and rollback
 
 Rehearsal does not authorize production cutover. For cutover, enable maintenance mode before the
@@ -139,9 +151,13 @@ verification. It contains all 78 public tables including `alembic_version` (167 
 Supabase Auth user, and one Auth identity. Its ignored artifact is separated from the 256-bit key,
 which is outside the repository and restricted to the current Windows user.
 
-F3 remains incomplete until the full multi-role API suites pass against Cloud SQL and configuration
-rollback is rehearsed. Supabase Free therefore remains the active system of record; no Cloud SQL
-application writes are open.
+The read-only configuration rollback rehearsal passed through the real FastAPI engine factory in
+`URL -> Cloud SQL -> URL` order in 5.56s, 7.51s, and 3.69s respectively. All three connections
+reported Alembic `f15a2c9e7b41`; each pool and connector was disposed, `.env` remained unchanged,
+and neither database accepted a write.
+
+F3 remains incomplete until the full multi-role API suites pass against Cloud SQL. Supabase Free
+therefore remains the active system of record; no Cloud SQL application writes are open.
 
 The keyless runtime database matrix passed for owner, bursar, cashier, auditor, guardian, donor,
 unknown-user, server-only, duplicate, and rollback behavior using synthetic transaction-only data.

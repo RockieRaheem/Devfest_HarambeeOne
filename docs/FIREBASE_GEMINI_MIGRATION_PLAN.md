@@ -240,9 +240,11 @@ Progress (F3 remains incomplete):
   Supabase Auth user, and one Auth identity. The ignored authenticated artifact and manifest are
   separated from a 256-bit key stored outside the repository with a user-only Windows ACL; no
   database credential, plaintext identity, or encryption key entered Git.
-- Live completion remains blocked on remaining API-level Cloud SQL tests and the configuration
-  rollback rehearsal. Supabase Free stays authoritative until every gate passes and remains the
-  durable fallback before trial archival.
+- Passed the read-only configuration rollback rehearsal through the real FastAPI engine factory:
+  source URL (5.56s), Cloud SQL (7.51s), then source URL (3.69s). Every transition reached Alembic
+  `f15a2c9e7b41`, disposed its pool and connector, left `.env` unchanged, and opened no writes.
+- Live completion remains blocked only on remaining API-level Cloud SQL tests. Supabase Free stays
+  authoritative until every gate passes and remains the durable fallback before trial archival.
 
 Planned commit: `Move data to Firebase SQL Connect`
 
