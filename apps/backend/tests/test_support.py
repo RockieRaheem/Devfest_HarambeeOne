@@ -509,18 +509,24 @@ def test_guardian_referral_consent_is_scoped_and_withdrawable(support_workspace)
         id=guardian_user_id, email="guardian@example.com"
     )
 
+    consent_payload = {
+        "action": "grant",
+        "privacy_notice_version": "2026-10-v2",
+        "guardian_authority_confirmed": True,
+        "age_verification_method": "school_record",
+        "anonymous_publication": True,
+        "gemini_processing": False,
+        "cross_border_processing": False,
+        "child_assent_status": "agreed",
+    }
+    missing_public_profile_consent = client.post(
+        f"/api/v1/support/guardian/referrals/{referral_id}/consent",
+        json=consent_payload,
+    )
+    assert missing_public_profile_consent.status_code == 422
     consent = client.post(
         f"/api/v1/support/guardian/referrals/{referral_id}/consent",
-        json={
-            "action": "grant",
-            "privacy_notice_version": "2026-10-v1",
-            "guardian_authority_confirmed": True,
-            "age_verification_method": "school_record",
-            "anonymous_publication": True,
-            "gemini_processing": False,
-            "cross_border_processing": False,
-            "child_assent_status": "agreed",
-        },
+        json={**consent_payload, "public_media_consent": True},
     )
     assert consent.status_code == 200, consent.text
     assert consent.json()["status"] == "consented"
@@ -739,10 +745,11 @@ def test_guardian_authors_case_school_requests_changes_and_owner_publishes(
             priority_band="high",
             priority_reasons='["Verified overdue balance"]',
             status="consented",
-            privacy_notice_version="2026-10-v1",
+            privacy_notice_version="2026-10-v2",
             guardian_authority_confirmed=True,
             age_verification_method="school_record",
             anonymous_publication=True,
+            public_media_consent=True,
             child_assent_status="agreed",
             consented_by_user_id=guardian_user_id,
             consented_at=datetime.now(UTC),
@@ -838,10 +845,34 @@ def test_guardian_authors_case_school_requests_changes_and_owner_publishes(
     assert approved.json()["status"] == "approved"
     detail = client.get(f"/api/v1/support/cases/{case_id}").json()
     assert Decimal(str(detail["target_amount"])) == Decimal("250000")
+    missing_image = client.post(f"/api/v1/support/cases/{case_id}/publish")
+    assert missing_image.status_code == 409
+    assert "photograph" in missing_image.json()["detail"]
+    media = client.post(
+        f"/api/v1/support/cases/{case_id}/media",
+        json={
+            "image_base64": campaign_image_base64(),
+            "image_mime_type": "image/jpeg",
+            "alt_text": "Learner holding school books outdoors",
+            "guardian_media_consent_confirmed": True,
+            "safeguarding_review_confirmed": True,
+        },
+    )
+    assert media.status_code == 200, media.text
     published = client.post(f"/api/v1/support/cases/{case_id}/publish")
     assert published.status_code == 200, published.text
     public = client.get(f"/api/v1/support/public/campaigns/{published.json()['public_code']}")
     assert public.status_code == 200
+    assert public.json()["beneficiary"] == {
+        "display_name": "Amina K.",
+        "registration_verified": True,
+        "verification_label": "School registration verified",
+        "record_protection": (
+            "Admission number and registration documents verified privately by the school"
+        ),
+    }
+    assert public.json()["image_url"] is not None
+    assert "TA-001" not in public.text
     assert "seasonal work" not in public.text
     assert "guardian@example.com" not in public.text
     with Session(engine) as session:

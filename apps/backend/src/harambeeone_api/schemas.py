@@ -1177,7 +1177,7 @@ class GuardianSupportReferralCreate(BaseModel):
 
 class SupportReferralConsent(BaseModel):
     action: str = Field(pattern="^(grant|decline)$")
-    privacy_notice_version: str = Field(default="2026-10-v1", max_length=24)
+    privacy_notice_version: str = Field(default="2026-10-v2", max_length=24)
     guardian_authority_confirmed: bool
     age_verification_method: str = Field(
         pattern="^(school_record|birth_certificate|guardian_declaration|national_id|other)$"
@@ -1194,7 +1194,9 @@ class SupportReferralConsent(BaseModel):
         if self.action == "grant" and not self.guardian_authority_confirmed:
             raise ValueError("Confirm guardian authority before giving consent")
         if self.action == "grant" and not self.anonymous_publication:
-            raise ValueError("Anonymous publication consent is required to participate")
+            raise ValueError("Campaign publication consent is required to participate")
+        if self.action == "grant" and not self.public_media_consent:
+            raise ValueError("Public beneficiary identity and image consent is required")
         if (
             self.child_assent_status in {"not_applicable", "unable_to_express"}
             and not (self.child_assent_reason or "").strip()

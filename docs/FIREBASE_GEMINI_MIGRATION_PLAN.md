@@ -63,7 +63,11 @@ Every slice must preserve these conditions:
 4. Duplicate and retried requests remain idempotent.
 5. Cross-school, cross-guardian, cross-donor, and unauthenticated access fails.
 6. Every consequential action retains an authenticated internal actor and audit evidence.
-7. Public responses contain no learner or guardian identity.
+7. Public responses contain no learner or guardian identity except a guardian-authorized limited
+   beneficiary profile after learner assent and school safeguarding approval. That profile may
+   contain only the consented photograph, limited display name, and school-registration
+   verification badge; admission numbers, raw documents, contacts, exact class, guardian
+   identity, private narrative, and on-chain identity remain prohibited.
 8. Guardian consent, learner assent, withdrawal, and human publication approval remain enforceable.
 9. Gemini failure never blocks a manual workflow and never grants authority.
 10. Pending contributions never count as received; only verified school settlement updates the learner ledger.

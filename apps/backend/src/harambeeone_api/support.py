@@ -101,13 +101,13 @@ from harambeeone_api.support_notifications import emit_support_notification
 
 router = APIRouter(prefix="/api/v1/support", tags=["learner support"])
 
-PRIVACY_NOTICE_VERSION = "2026-10-v1"
+PRIVACY_NOTICE_VERSION = "2026-10-v2"
 PRIVACY_NOTICE = (
-    "The school will use the learner's private identity only to verify eligibility and post "
-    "support to the school account. Donors see an anonymous campaign code, need category, "
-    "target, verified totals and redacted outcomes—not the learner or guardian name. A learner "
-    "image is optional and requires separate guardian permission, safeguarding review and an "
-    "acceptable learner assent status. "
+    "The school uses the learner's private identity to verify eligibility and post support to "
+    "the school account. The public profile shows a limited display name, a separately consented "
+    "photograph and a school-verified registration badge. Admission numbers, contacts, raw "
+    "registration documents, exact class and private family context remain protected. "
+    "Publication requires guardian permission, learner assent and school safeguarding review. "
     "Gemini and processing outside Uganda are optional. Consent may be withdrawn at any time."
 )
 
@@ -434,6 +434,20 @@ def _public_payload(session: Session, support_case: SupportCase, *, detail: bool
     )
     consent = _active_consent(session, support_case.id)
     media_is_public = bool(media and consent and consent.public_media_consent)
+    beneficiary = None
+    if media_is_public and support_case.guardian_auth_user_id is not None:
+        student = session.get(Student, support_case.student_id)
+        person = session.get(Person, student.person_id) if student else None
+        if student and person:
+            last_initial = f" {person.last_name[0]}." if person.last_name else ""
+            beneficiary = {
+                "display_name": f"{person.first_name}{last_initial}",
+                "registration_verified": True,
+                "verification_label": "School registration verified",
+                "record_protection": (
+                    "Admission number and registration documents verified privately by the school"
+                ),
+            }
     supporter_count = (
         session.scalar(
             select(func.count(SupportPledge.id)).where(
@@ -474,9 +488,10 @@ def _public_payload(session: Session, support_case: SupportCase, *, detail: bool
             else None
         ),
         "image_alt": media.alt_text if media_is_public else None,
+        "beneficiary": beneficiary,
         "privacy": (
-            "This image was separately consented to and approved by the school; names and school "
-            "account identity remain private."
+            "The limited display name and image were separately consented to and approved by the "
+            "school; admission numbers, documents, contacts and family context remain private."
             if media_is_public
             else "Learner identity is held privately by the school and is never published."
         ),
@@ -2680,7 +2695,7 @@ def decide_support_case_review(
         action,
         "Support case approved" if action == "approved" else "The school requested changes",
         (
-            "An institution owner approved the anonymous case for publication."
+            "An institution owner approved the consented case for publication."
             if action == "approved"
             else support_case.review_notes or "Review the school's note and resubmit the case."
         ),
@@ -2707,10 +2722,25 @@ def publish_support_case(
     consent = _active_consent(session, case_id)
     if consent is None or not consent.anonymous_publication:
         raise HTTPException(
-            status_code=409, detail="Active anonymous publication consent is required"
+            status_code=409, detail="Active campaign publication consent is required"
         )
     if consent.child_assent_status == "declined":
         raise HTTPException(status_code=409, detail="The learner declined publication")
+    if support_case.guardian_auth_user_id is not None:
+        media = session.scalar(
+            select(SupportCampaignMedia).where(
+                SupportCampaignMedia.case_id == case_id,
+                SupportCampaignMedia.status == "approved",
+            )
+        )
+        if not consent.public_media_consent or media is None:
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    "Upload and safeguard-approve the consented learner photograph before "
+                    "publishing this guardian-authored campaign"
+                ),
+            )
     referral = session.scalar(
         select(SupportReferral).where(
             SupportReferral.student_id == support_case.student_id,
@@ -2720,6 +2750,7 @@ def publish_support_case(
     if referral and (
         referral.status not in {"consented", "case_submitted"}
         or not referral.anonymous_publication
+        or not referral.public_media_consent
         or referral.child_assent_status == "declined"
     ):
         raise HTTPException(
@@ -2738,15 +2769,18 @@ def publish_support_case(
             entity_id=support_case.id,
             action="published",
             actor=context.actor,
-            summary=f"Published anonymous support campaign {support_case.public_code}",
+            summary=f"Published consented support campaign {support_case.public_code}",
         )
     )
     _notify_guardian(
         session,
         support_case,
         "campaign_published",
-        "The anonymous campaign is now public",
-        "Donors can now support the verified school obligation without seeing learner identity.",
+        "The consented campaign is now public",
+        (
+            "Donors can see the limited consented profile and verified school obligation; "
+            "protected registration records remain private."
+        ),
     )
     session.commit()
     return {"public_code": support_case.public_code, "status": support_case.status}

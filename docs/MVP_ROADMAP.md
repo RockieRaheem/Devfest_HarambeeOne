@@ -346,6 +346,31 @@ The user explicitly authorized this role and workflow repair on 2026-10-28. A gu
 - Web lint, TypeScript validation, and the optimized 50-route Next.js production build pass.
 - Firebase F6 remains the next incomplete migration slice.
 
+### Priority override - Verified beneficiary transparency
+
+Status: **COMPLETE**
+
+The user explicitly authorized this Support refinement on 2026-10-28. Guardian-authored
+campaigns now require explicit campaign and public-profile consent, an acceptable learner assent
+state, an approved safeguarded photograph, and institution-owner publication. Public campaign
+cards and details show a limited beneficiary name and a school-derived registration-verification
+badge alongside the consented image. Admission numbers, raw registration documents, contacts,
+exact class, guardian identity and private family context remain restricted to authorized school
+workflows and never enter Stellar records.
+
+Completion evidence:
+
+- The guardian consent form now obtains the clicked decision reliably, so a valid grant no longer
+  fails with “Input should be a valid string”; decline remains available without accepting
+  publication.
+- Server validation rejects a grant without public-profile consent and rejects publication of a
+  guardian-authored campaign until its consented photograph is sanitized and safeguard-approved.
+- Public API regression coverage proves the limited name, registration badge and image are
+  returned while the admission number, private narrative and guardian email remain absent.
+- Ruff, all 158 backend tests, web lint, TypeScript validation, and the optimized 50-route Next.js
+  production build pass. No schema migration or paid service is required; Firebase F6 remains
+  next.
+
 ### Slice 5 - Payment desk and official receipts
 
 Status: **COMPLETE**
@@ -557,6 +582,7 @@ Add a dated entry only when a slice changes status. Include the verification com
 - 2026-10-28: Completed the unified class billing standard refinement. One atomic draft now combines whole-class fees, installments and requirements; class cards expose period-aware learner rosters and direct billing setup; controlled publication covers current learners; and future registrations inherit the published standard exactly once while movements with prior billing remain review-only. Ruff, all 155 backend tests, web lint, TypeScript validation, and the optimized 50-route build passed. Firebase F6 remains next.
 - 2026-10-28: Completed professional Support campaign management. Institution owners can safely edit public campaign details, preview and replace consented images, remove media immediately, and withdraw unused campaigns from public access while donor activity and financial history remain protected. Ruff, all 157 backend tests, web lint, TypeScript validation, and the optimized 50-route build passed. Firebase F6 remains next.
 - 2026-10-28: Completed the guardian support access repair. Linked guardians can initiate an audited, idempotent private request from the verified current-period balance while consent and owner publication gates remain intact; guardian-only accounts cannot render the school shell; and campaign managers automatically open an accessible campaign's protected controls. Ruff, all 158 backend tests, web lint, TypeScript validation, and the optimized 50-route build passed. Firebase F6 remains next.
+- 2026-10-28: Completed verified beneficiary transparency. Guardian consent decisions now submit reliably; guardian-authored campaigns require explicit public-profile consent plus a safeguard-approved photograph; and donors see only the consented limited name, image and school registration badge while admission numbers, documents, contacts and private context remain protected. Ruff, all 158 backend tests, web lint, TypeScript validation, and the optimized 50-route build passed. Firebase F6 remains next.
 
 - 2026-10-24: Started Slice 8 and completed Phase 1. A shared exact-decimal financial calculation now makes learner statements, official receipts, dashboard metrics, and collection-report control totals agree across prior balances, charges, credits, receipts, refunds, reversals, payment corrections, and future carried balances. Ruff, all 97 backend tests, web lint, TypeScript validation, and the optimized 49-route production build passed. Phase 2, the complete bursar report centre, is next.
 - 2026-10-24: Completed Slice 8 Phase 2. Sixteen tenant-scoped bursar reports now cover collections, balances, aging, billing, requirements, adjustments, corrections, reconciliation, unidentified funds, cash-up, deposits, and billing-versus-collection with shared filters, print layouts, and server-generated CSV. Ruff, all 98 backend tests, web lint, TypeScript validation, and the optimized 49-route production build passed. Phase 3, the pre-close control checklist, is next.
