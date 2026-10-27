@@ -840,13 +840,9 @@ class ArrearsFollowUpCreate(BaseModel):
     school_id: uuid.UUID
     period_id: uuid.UUID
     student_id: uuid.UUID
-    contact_method: str = Field(
-        pattern="^(call|in_person|email|sms|whatsapp|letter|other)$"
-    )
+    contact_method: str = Field(pattern="^(call|in_person|email|sms|whatsapp|letter|other)$")
     contacted_person: str = Field(min_length=2, max_length=120)
-    outcome: str = Field(
-        pattern="^(contacted|no_answer|commitment|dispute|statement_sent|other)$"
-    )
+    outcome: str = Field(pattern="^(contacted|no_answer|commitment|dispute|statement_sent|other)$")
     note: str = Field(min_length=3, max_length=1000)
     next_action: str | None = Field(default=None, max_length=240)
     next_action_date: date | None = None
@@ -1173,6 +1169,10 @@ class SupportReferralCreate(BaseModel):
     period_id: uuid.UUID
     student_id: uuid.UUID
     guardian_link_id: uuid.UUID
+
+
+class GuardianSupportReferralCreate(BaseModel):
+    student_id: uuid.UUID
 
 
 class SupportReferralConsent(BaseModel):

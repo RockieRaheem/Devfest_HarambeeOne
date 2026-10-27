@@ -227,9 +227,7 @@ def test_campaign_image_requires_separate_consent_and_is_sanitized(
     support_workspace,
 ) -> None:
     _engine, _user_id, ids, client = support_workspace
-    case_id, public_code = create_reviewed_campaign(
-        client, ids, public_media_consent=True
-    )
+    case_id, public_code = create_reviewed_campaign(client, ids, public_media_consent=True)
     payload = {
         "image_base64": campaign_image_base64(),
         "image_mime_type": "image/jpeg",
@@ -238,9 +236,9 @@ def test_campaign_image_requires_separate_consent_and_is_sanitized(
         "safeguarding_review_confirmed": True,
     }
     identifying = {**payload, "alt_text": "Learner Amina holding school books"}
-    assert client.post(
-        f"/api/v1/support/cases/{case_id}/media", json=identifying
-    ).status_code == 422
+    assert (
+        client.post(f"/api/v1/support/cases/{case_id}/media", json=identifying).status_code == 422
+    )
     approved = client.post(f"/api/v1/support/cases/{case_id}/media", json=payload)
     assert approved.status_code == 200, approved.text
     assert approved.json()["width"] == 640
@@ -297,11 +295,12 @@ def test_owner_edits_campaign_without_exposing_learner_identity(support_workspac
         "target",
     }
     with Session(engine) as session:
-        assert session.scalar(
-            select(SupportAiReview.status).where(
-                SupportAiReview.case_id == uuid.UUID(case_id)
+        assert (
+            session.scalar(
+                select(SupportAiReview.status).where(SupportAiReview.case_id == uuid.UUID(case_id))
             )
-        ) == "superseded"
+            == "superseded"
+        )
     public = client.get(f"/api/v1/support/public/campaigns/{public_code}")
     assert public.status_code == 200
     assert public.json()["title"] == payload["title"]
@@ -323,12 +322,15 @@ def test_owner_edits_campaign_without_exposing_learner_identity(support_workspac
     denied = client.patch(f"/api/v1/support/cases/{case_id}", json=payload)
     assert denied.status_code == 403
     with Session(engine) as session:
-        assert session.scalar(
-            select(func.count(AuditEvent.id)).where(
-                AuditEvent.entity_id == uuid.UUID(case_id),
-                AuditEvent.action == "edited",
+        assert (
+            session.scalar(
+                select(func.count(AuditEvent.id)).where(
+                    AuditEvent.entity_id == uuid.UUID(case_id),
+                    AuditEvent.action == "edited",
+                )
             )
-        ) == 1
+            == 1
+        )
 
 
 def test_owner_deletes_only_campaigns_without_donor_activity(support_workspace) -> None:
@@ -340,12 +342,15 @@ def test_owner_deletes_only_campaigns_without_donor_activity(support_workspace) 
     assert client.get(f"/api/v1/support/public/campaigns/{public_code}").status_code == 404
     with Session(engine) as session:
         assert session.get(SupportCase, uuid.UUID(case_id)).status == "withdrawn"
-        assert session.scalar(
-            select(func.count(AuditEvent.id)).where(
-                AuditEvent.entity_id == uuid.UUID(case_id),
-                AuditEvent.action == "withdrawn",
+        assert (
+            session.scalar(
+                select(func.count(AuditEvent.id)).where(
+                    AuditEvent.entity_id == uuid.UUID(case_id),
+                    AuditEvent.action == "withdrawn",
+                )
             )
-        ) == 1
+            == 1
+        )
 
     second_case_id, second_code = create_reviewed_campaign(client, ids)
     pledge = client.post(
@@ -431,9 +436,7 @@ def test_stellar_testnet_contribution_is_verified_before_posting(
             select(SupportPledge).where(SupportPledge.public_reference == reference)
         )
         payment = session.get(Payment, pledge.payment_id)
-        anchor = session.scalar(
-            select(StellarAnchor).where(StellarAnchor.payment_id == payment.id)
-        )
+        anchor = session.scalar(select(StellarAnchor).where(StellarAnchor.payment_id == payment.id))
         assert payment.channel == "stellar_testnet"
         assert anchor.status == "confirmed"
         assert anchor.transaction_hash == transaction_hash
@@ -642,6 +645,60 @@ def test_school_creates_referral_only_from_live_arrears(support_workspace) -> No
     assert created.status_code == 201, created.text
     assert created.json()["status"] == "awaiting_consent"
     assert duplicate.status_code == 409
+
+
+def test_linked_guardian_starts_idempotent_private_support_request(
+    support_workspace,
+) -> None:
+    engine, _owner_user_id, ids, client = support_workspace
+    guardian_user_id = uuid.uuid4()
+    with Session(engine) as session:
+        invitation = GuardianInvitation(
+            school_id=ids["school"],
+            guardian_link_id=ids["guardian"],
+            token_hash="g" * 64,
+            invited_email="guardian@example.com",
+            status="accepted",
+            expires_at=datetime.now(UTC) + timedelta(days=1),
+            created_by="owner@example.com",
+            accepted_by_user_id=guardian_user_id,
+            accepted_at=datetime.now(UTC),
+        )
+        session.add(invitation)
+        session.flush()
+        session.add(
+            GuardianAccountLink(
+                auth_user_id=guardian_user_id,
+                school_id=ids["school"],
+                guardian_link_id=ids["guardian"],
+                invitation_id=invitation.id,
+            )
+        )
+        session.commit()
+
+    payload = {"student_id": str(ids["student"])}
+    denied = client.post("/api/v1/support/guardian/referrals", json=payload)
+    assert denied.status_code == 404
+
+    app.dependency_overrides[get_current_user] = lambda: AuthenticatedUser(
+        id=guardian_user_id, email="guardian@example.com"
+    )
+    created = client.post("/api/v1/support/guardian/referrals", json=payload)
+    repeated = client.post("/api/v1/support/guardian/referrals", json=payload)
+    assert created.status_code == 201, created.text
+    assert created.json()["status"] == "awaiting_consent"
+    assert Decimal(str(created.json()["outstanding_snapshot"])) == Decimal("500000")
+    assert repeated.status_code == 201
+    assert repeated.json()["id"] == created.json()["id"]
+    with Session(engine) as session:
+        assert session.scalar(select(func.count(SupportReferral.id))) == 1
+        audit = session.scalar(
+            select(AuditEvent).where(
+                AuditEvent.entity_id == uuid.UUID(created.json()["id"]),
+                AuditEvent.action == "guardian_requested",
+            )
+        )
+        assert audit is not None
 
 
 def test_guardian_authors_case_school_requests_changes_and_owner_publishes(
@@ -1387,9 +1444,7 @@ def test_donor_gemini_assistant_enforces_ownership_privacy_and_rate_limit(
     assert limited.headers["retry-after"] == "600"
 
 
-def test_donor_gemini_blocks_identity_and_authority_claims(
-    support_workspace, monkeypatch
-) -> None:
+def test_donor_gemini_blocks_identity_and_authority_claims(support_workspace, monkeypatch) -> None:
     engine, _owner_user_id, ids, client = support_workspace
     _case_id, code = create_reviewed_campaign(client, ids)
     donor_id = uuid.uuid4()

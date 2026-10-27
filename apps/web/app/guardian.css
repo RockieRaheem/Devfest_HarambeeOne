@@ -1,4 +1,5 @@
 .guardian-referrals > h2 { margin-bottom: 18px; }
+.guardian-learner-grid footer{justify-content:space-between}.guardian-learner-grid footer span{display:flex;align-items:center;gap:7px}.guardian-learner-grid footer .btn{min-height:34px;padding:0 12px;font-size:10px}
 .guardian-referral { margin-top: 12px; border: 1px solid #d7d5cc; background: #fff; }
 .guardian-referral > header { padding: 18px; display: flex; justify-content: space-between; gap: 15px; border-bottom: 1px solid #e3e1da; }
 .guardian-referral header span { color: #687069; font-size: 9px; text-transform: uppercase; letter-spacing: .07em; }

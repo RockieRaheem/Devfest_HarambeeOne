@@ -62,8 +62,31 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const [periods, setPeriods] = useState<AcademicPeriod[]>([]);
   const [periodId, setPeriodId] = useState('');
   const [workspaceRevision, setWorkspaceRevision] = useState(0);
+  const [schoolAccess, setSchoolAccess] = useState<'checking'|'allowed'|'denied'>('checking');
   useEffect(() => {
-    if (authRoute || publicRoute || portalRoute) return;
+    if (authRoute || publicRoute || portalRoute) { setSchoolAccess('allowed'); return; }
+    setSchoolAccess('checking');
+    let cancelled = false;
+    fetch('/api/backend/api/v1/me/portals', { cache: 'no-store' })
+      .then(async response => {
+        if (response.status === 401) { router.replace('/login?error=session_expired'); return null; }
+        if (!response.ok) throw new Error('Workspace access could not be verified');
+        return response.json();
+      })
+      .then((context:{preferred_workspace:string|null;portals:{type:string;href:string}[]} | null) => {
+        if (!context || cancelled) return;
+        if (context.portals.some(portal => portal.type === 'school')) { setSchoolAccess('allowed'); return; }
+        setSchoolAccess('denied');
+        const destination = context.portals.find(portal => portal.type === context.preferred_workspace)
+          ?? context.portals.find(portal => portal.type === 'guardian')
+          ?? context.portals.find(portal => portal.type === 'donor');
+        router.replace(destination?.href ?? '/workspace');
+      })
+      .catch(() => { if (!cancelled) { setSchoolAccess('denied'); router.replace('/workspace'); } });
+    return () => { cancelled = true; };
+  }, [authRoute, portalRoute, publicRoute, router]);
+  useEffect(() => {
+    if (authRoute || publicRoute || portalRoute || schoolAccess !== 'allowed') return;
     const workspace = dashboardRoute
       ? getDashboardBootstrap().then(result => [result.school, result.periods] as const)
       : Promise.all([getPrimarySchool(), getAcademicPeriods()]);
@@ -77,7 +100,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         clearPeriods();
         router.replace('/login?error=session_expired');
       } else if (reason instanceof SchoolLoadError && (reason.status === 403 || reason.status === 404) && !periodsRoute) {
-        router.replace('/onboarding');
+        router.replace('/workspace');
       }
     });
     void fetch('/auth/session', { cache: 'no-store' })
@@ -88,10 +111,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         setUserName(profile.displayName || email.split('@')[0] || 'Bursar');
         setUserEmail(email);
       });
-  }, [authRoute, dashboardRoute, periodsRoute, portalRoute, publicRoute, router]);
+  }, [authRoute, dashboardRoute, periodsRoute, portalRoute, publicRoute, router, schoolAccess]);
 
   useEffect(() => {
-    if (authRoute || publicRoute || portalRoute) return;
+    if (authRoute || publicRoute || portalRoute || schoolAccess !== 'allowed') return;
     const prefetch = () => navGroups.forEach(group => group.items.forEach(item => router.prefetch(item.href)));
     const idleWindow = window as Window & { requestIdleCallback?: (callback: () => void) => number; cancelIdleCallback?: (id: number) => void };
     if (idleWindow.requestIdleCallback) {
@@ -100,7 +123,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     }
     const id = window.setTimeout(prefetch, 250);
     return () => window.clearTimeout(id);
-  }, [authRoute, portalRoute, publicRoute, router]);
+  }, [authRoute, portalRoute, publicRoute, router, schoolAccess]);
 
   async function signOut() {
     clearPrimarySchool();
@@ -117,8 +140,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   if (authRoute || publicRoute || portalRoute) return <>{children}</>;
+  if (schoolAccess !== 'allowed') return <div className="portal-state" role="status">Verifying school workspace access...</div>;
   const initials = userName.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || 'BU';
-  return <div className="app-shell">
+  return <div className="app-shell" data-school-workspace>
     {open && <button className="nav-scrim" aria-label="Close navigation" onClick={() => setOpen(false)} />}
     <aside className={`sidebar ${open ? 'is-open' : ''}`}>
       <div className="institution">

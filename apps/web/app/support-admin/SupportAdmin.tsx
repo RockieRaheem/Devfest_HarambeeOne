@@ -90,7 +90,7 @@ export default function SupportAdmin() {
     return () => { cancelled = true; };
   }, [caseStudentId, periodId, school]);
 
-  async function openCase(id:string) {
+  const openCase = useCallback(async (id:string) => {
     setError('');
     const [caseResponse, pledgeResponse] = await Promise.all([
       fetch(`${API}/api/v1/support/cases/${id}`),
@@ -100,7 +100,11 @@ export default function SupportAdmin() {
     if (!caseResponse.ok) return setError(body.detail ?? 'Case could not be loaded.');
     setSelected(body);
     setPledges(pledgeResponse.ok ? await apiBody<Pledge[]>(pledgeResponse) : []);
-  }
+  }, []);
+
+  useEffect(() => {
+    if (!selected && cases.length) void openCase(cases[0].id);
+  }, [cases, openCase, selected]);
 
   async function mutate(path:string, body:unknown, success:string, method:'POST'|'PATCH'='POST') {
     if (!school) return;

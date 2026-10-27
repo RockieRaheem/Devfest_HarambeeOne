@@ -3,7 +3,7 @@ import binascii
 import hashlib
 import json
 import uuid
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime
 from decimal import Decimal
 from typing import Annotated, Literal
 
@@ -58,6 +58,7 @@ from harambeeone_api.periods import resolve_period
 from harambeeone_api.schemas import (
     GuardianAcknowledgementCreate,
     GuardianSupportCaseSave,
+    GuardianSupportReferralCreate,
     SupportAiReviewCreate,
     SupportAttestationCreate,
     SupportAttestationReview,
@@ -433,19 +434,25 @@ def _public_payload(session: Session, support_case: SupportCase, *, detail: bool
     )
     consent = _active_consent(session, support_case.id)
     media_is_public = bool(media and consent and consent.public_media_consent)
-    supporter_count = session.scalar(
-        select(func.count(SupportPledge.id)).where(
-            SupportPledge.case_id == support_case.id,
-            SupportPledge.status == "verified",
+    supporter_count = (
+        session.scalar(
+            select(func.count(SupportPledge.id)).where(
+                SupportPledge.case_id == support_case.id,
+                SupportPledge.status == "verified",
+            )
         )
-    ) or 0
-    update_count = session.scalar(
-        select(func.count(SupportAttestation.id)).where(
-            SupportAttestation.case_id == support_case.id,
-            SupportAttestation.status == "approved",
-            SupportAttestation.is_public.is_(True),
+        or 0
+    )
+    update_count = (
+        session.scalar(
+            select(func.count(SupportAttestation.id)).where(
+                SupportAttestation.case_id == support_case.id,
+                SupportAttestation.status == "approved",
+                SupportAttestation.is_public.is_(True),
+            )
         )
-    ) or 0
+        or 0
+    )
     payload = {
         "public_code": support_case.public_code,
         "title": support_case.title,
@@ -597,8 +604,7 @@ def _stellar_payment_payload(
             "horizon_url": settings.stellar_horizon_url,
             "demo_rate": f"UGX {settings.stellar_demo_ugx_per_xlm:,.0f} = 1 testnet XLM",
             "demo_faucet_available": (
-                settings.stellar_demo_faucet_enabled
-                and settings.app_environment != "production"
+                settings.stellar_demo_faucet_enabled and settings.app_environment != "production"
             ),
             "disclaimer": "TESTNET ONLY — testnet XLM has no real monetary value.",
         },
@@ -758,9 +764,7 @@ def _receipt_payload(
         raise HTTPException(
             status_code=409, detail="Receipt is not available for this contribution"
         )
-    anchor = session.scalar(
-        select(StellarAnchor).where(StellarAnchor.payment_id == payment.id)
-    )
+    anchor = session.scalar(select(StellarAnchor).where(StellarAnchor.payment_id == payment.id))
     return {
         "receipt_no": payment.receipt_no,
         "issued_at": pledge.verified_at,
@@ -1036,6 +1040,77 @@ def list_school_referrals(
         .order_by(SupportReferral.created_at.desc())
     ).all()
     return [_referral_payload(session, item) for item in rows]
+
+
+@router.post("/guardian/referrals", status_code=status.HTTP_201_CREATED)
+def create_guardian_support_referral(
+    payload: GuardianSupportReferralCreate,
+    user: AuthenticatedUser = Depends(get_current_user),
+    session: Session = Depends(get_session),
+):
+    linked = session.execute(
+        select(GuardianLink, Student)
+        .join(GuardianAccountLink, GuardianAccountLink.guardian_link_id == GuardianLink.id)
+        .join(Student, Student.id == GuardianLink.student_id)
+        .where(
+            GuardianAccountLink.auth_user_id == user.id,
+            Student.id == payload.student_id,
+            Student.school_id == GuardianAccountLink.school_id,
+        )
+    ).one_or_none()
+    if linked is None:
+        raise HTTPException(status_code=404, detail="Linked learner account not found")
+    guardian, student = linked
+    period = resolve_period(session, school_id=student.school_id, writable=True)
+    existing = session.scalar(
+        select(SupportReferral).where(
+            SupportReferral.student_id == student.id,
+            SupportReferral.period_id == period.id,
+        )
+    )
+    if existing:
+        if existing.guardian_link_id != guardian.id:
+            raise HTTPException(status_code=409, detail="Support is already under review")
+        return _referral_payload(session, existing)
+    outstanding, _ = _obligation_balance(
+        session,
+        school_id=student.school_id,
+        period_id=period.id,
+        student_id=student.id,
+        requirement_assignment_id=None,
+    )
+    if outstanding <= 0:
+        raise HTTPException(
+            status_code=422,
+            detail="This learner has no verified balance in the current period",
+        )
+    days_due = max((date.today() - period.due_date).days, 0)
+    referral = SupportReferral(
+        school_id=student.school_id,
+        period_id=period.id,
+        student_id=student.id,
+        guardian_link_id=guardian.id,
+        outstanding_snapshot=outstanding,
+        overdue_since=period.due_date,
+        days_overdue_snapshot=days_due,
+        priority_band="urgent" if days_due >= 60 else "high" if days_due >= 30 else "watch",
+        priority_reasons=json.dumps(["Guardian requested support for a verified balance"]),
+        created_by=user.email or str(user.id),
+    )
+    session.add(referral)
+    session.flush()
+    session.add(
+        AuditEvent(
+            school_id=student.school_id,
+            entity_type="support_referral",
+            entity_id=referral.id,
+            action="guardian_requested",
+            actor=user.email or str(user.id),
+            summary="Guardian started a private request from a verified learner balance",
+        )
+    )
+    session.commit()
+    return _referral_payload(session, referral)
 
 
 @router.get("/guardian/referrals")
@@ -1390,9 +1465,7 @@ def get_public_campaign(public_code: str, session: Session = Depends(get_server_
 
 
 @router.get("/public/campaigns/{public_code}/image")
-def get_public_campaign_image(
-    public_code: str, session: Session = Depends(get_server_session)
-):
+def get_public_campaign_image(public_code: str, session: Session = Depends(get_server_session)):
     support_case = _public_campaign(session, public_code)
     consent = _active_consent(session, support_case.id)
     media = session.scalar(
@@ -1451,9 +1524,7 @@ def create_authenticated_donor_pledge(
     )
 
 
-@router.post(
-    "/public/campaigns/{public_code}/stellar/pledges", status_code=status.HTTP_201_CREATED
-)
+@router.post("/public/campaigns/{public_code}/stellar/pledges", status_code=status.HTTP_201_CREATED)
 def create_public_stellar_pledge(
     public_code: str,
     payload: SupportStellarPledgeCreate,
@@ -1558,9 +1629,7 @@ def _confirm_stellar_pledge(
     return _tracking_payload(session, support_case, refreshed or pledge)
 
 
-@router.post(
-    "/public/campaigns/{public_code}/stellar/pledges/{public_reference}/confirm"
-)
+@router.post("/public/campaigns/{public_code}/stellar/pledges/{public_reference}/confirm")
 def confirm_public_stellar_pledge(
     public_code: str,
     public_reference: str,
@@ -1575,9 +1644,7 @@ def confirm_public_stellar_pledge(
     )
 
 
-@router.post(
-    "/public/campaigns/{public_code}/stellar/pledges/{public_reference}/demo-pay"
-)
+@router.post("/public/campaigns/{public_code}/stellar/pledges/{public_reference}/demo-pay")
 def demo_pay_public_stellar_pledge(
     public_code: str,
     public_reference: str,
@@ -1609,9 +1676,7 @@ def demo_pay_public_stellar_pledge(
     )
 
 
-def _tracking_payload(
-    session: Session, support_case: SupportCase, pledge: SupportPledge
-) -> dict:
+def _tracking_payload(session: Session, support_case: SupportCase, pledge: SupportPledge) -> dict:
     payment = session.get(Payment, pledge.payment_id) if pledge.payment_id else None
     anchor = (
         session.scalar(select(StellarAnchor).where(StellarAnchor.payment_id == payment.id))
@@ -2069,9 +2134,10 @@ def update_support_campaign(
             status_code=422,
             detail=f"Campaign target exceeds the verified balance of UGX {live_limit:,.0f}",
         )
-    pledge_count = session.scalar(
-        select(func.count(SupportPledge.id)).where(SupportPledge.case_id == case_id)
-    ) or 0
+    pledge_count = (
+        session.scalar(select(func.count(SupportPledge.id)).where(SupportPledge.case_id == case_id))
+        or 0
+    )
     if pledge_count and payload.target_amount != support_case.target_amount:
         raise HTTPException(
             status_code=409,
@@ -2135,9 +2201,10 @@ def withdraw_support_campaign(
             status_code=409,
             detail="Funded or closed campaigns must remain available as financial evidence",
         )
-    pledge_count = session.scalar(
-        select(func.count(SupportPledge.id)).where(SupportPledge.case_id == case_id)
-    ) or 0
+    pledge_count = (
+        session.scalar(select(func.count(SupportPledge.id)).where(SupportPledge.case_id == case_id))
+        or 0
+    )
     if pledge_count:
         raise HTTPException(
             status_code=409,
@@ -2853,9 +2920,7 @@ def _decide_support_pledge(
         payment_id=payment.id,
         student_id=student.id,
         requirement_assignment_id=support_case.requirement_assignment_id,
-        allocation_type=(
-            "requirement" if support_case.requirement_assignment_id else "fees"
-        ),
+        allocation_type=("requirement" if support_case.requirement_assignment_id else "fees"),
         amount=pledge.amount,
     )
     ledger = LedgerEntry(
