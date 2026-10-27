@@ -25,12 +25,12 @@ const tenantTables = [
   "period_closes", "period_close_learners", "balance_carry_forwards",
   "balance_carry_forward_lines", "learner_rollovers", "learner_rollover_lines",
   "period_reopenings", "period_reopening_corrections", "period_reopening_learners",
-  "audit_events",
+  "push_installations", "push_deliveries", "audit_events",
 ];
 const retryConstraints = [
   "uq_billing_publication_key", "uq_payment_correction_key", "uq_statement_import_key",
   "uq_period_closes_key", "uq_balance_carry_key", "uq_learner_rollovers_key",
-  "uq_period_reopenings_key",
+  "uq_period_reopenings_key", "uq_push_delivery_outbox_installation",
 ];
 const immutableTriggers = [
   "ledger_entries_immutable", "statement_import_source_immutable",
@@ -99,7 +99,7 @@ async function main() {
   try {
     client = await pool.connect();
     const revision = (await client.query("select version_num from alembic_version")).rows[0]?.version_num;
-    assert(revision === "a8c4e2f19b70", `Unexpected Alembic revision: ${revision}`);
+    assert(revision === "c4f8a1d29e60", `Unexpected Alembic revision: ${revision}`);
 
     const aiConsentColumns = (await client.query(
       `select table_name, column_name from information_schema.columns

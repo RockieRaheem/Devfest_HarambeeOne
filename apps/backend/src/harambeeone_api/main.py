@@ -5,6 +5,7 @@ their routers, performs a best-effort database warm-up, and exposes liveness
 and readiness endpoints for operators.
 """
 
+import asyncio
 import logging
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime
@@ -18,6 +19,7 @@ from starlette.concurrency import run_in_threadpool
 from harambeeone_api.accounts import router as accounts_router
 from harambeeone_api.audit import router as audit_router
 from harambeeone_api.billing import router as billing_router
+from harambeeone_api.config import get_settings
 from harambeeone_api.dashboard import router as dashboard_router
 from harambeeone_api.database import close_database, database_is_ready
 from harambeeone_api.finance import router as finance_router
@@ -26,6 +28,12 @@ from harambeeone_api.learner_transfers import router as learner_transfers_router
 from harambeeone_api.onboarding import router as onboarding_router
 from harambeeone_api.periods import router as periods_router
 from harambeeone_api.portals import router as portals_router
+from harambeeone_api.push_notifications import (
+    router as push_notifications_router,
+)
+from harambeeone_api.push_notifications import (
+    run_push_delivery_once,
+)
 from harambeeone_api.reconciliation import router as reconciliation_router
 from harambeeone_api.reopening import router as reopening_router
 from harambeeone_api.reports import router as reports_router
@@ -48,9 +56,28 @@ async def lifespan(_app: FastAPI):
         await run_in_threadpool(database_is_ready)
     except SQLAlchemyError:
         logger.warning("Database warm-up failed; readiness will report unavailable")
+    delivery_task = None
+    if get_settings().fcm_delivery_enabled:
+        async def deliver_push() -> None:
+            while True:
+                try:
+                    await run_in_threadpool(run_push_delivery_once)
+                except Exception:
+                    logger.exception(
+                        "Bounded FCM delivery failed; durable notifications remain available"
+                    )
+                await asyncio.sleep(get_settings().fcm_delivery_interval_seconds)
+
+        delivery_task = asyncio.create_task(deliver_push())
     try:
         yield
     finally:
+        if delivery_task:
+            delivery_task.cancel()
+            try:
+                await delivery_task
+            except asyncio.CancelledError:
+                pass
         await run_in_threadpool(close_database)
 
 
@@ -67,6 +94,7 @@ app.include_router(accounts_router)
 app.include_router(onboarding_router)
 app.include_router(periods_router)
 app.include_router(portals_router)
+app.include_router(push_notifications_router)
 app.include_router(audit_router)
 app.include_router(billing_router)
 app.include_router(finance_router)

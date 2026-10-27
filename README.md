@@ -139,6 +139,7 @@ Gemini review      -> server-only Google API call -> validated, redacted respons
 | Database | Supabase PostgreSQL | Financial ledger, tenant data, RLS, triggers, and audit evidence |
 | Migrations | Alembic | Versioned database changes and security policies |
 | AI | Gemini 3.8 Flash through the Gemini API | Optional, consented, privacy-minimized case review |
+| Push | Firebase Cloud Messaging | Explicitly consented, generic web-push delivery; in-app records remain authoritative |
 | Tooling | pnpm, uv, Ruff, Pytest, ESLint | Reproducible development and verification |
 | Deferred protocol | Rust and Soroban SDK | Experimental post-bursar education-funding contract |
 
@@ -214,6 +215,16 @@ Redis and RabbitMQ are present in the local Compose file for planned background 
 
    Never expose database credentials, service-role keys, or `GEMINI_API_KEY` through a `NEXT_PUBLIC_*` variable.
 
+   Optional Firebase web push configuration uses the public VAPID key generated under Firebase
+   Console > Project settings > Cloud Messaging. FCM is free; no Cloud Function or paid worker is
+   required. Set `FCM_DELIVERY_ENABLED=true` only for one FastAPI worker in local/demo operation:
+
+   ```dotenv
+   NEXT_PUBLIC_FIREBASE_VAPID_KEY=replace-with-the-public-vapid-key
+   FCM_DELIVERY_ENABLED=true
+   FCM_DELIVERY_INTERVAL_SECONDS=30
+   ```
+
 4. Install the JavaScript and Python dependencies.
 
    ```bash
@@ -247,6 +258,15 @@ Redis and RabbitMQ are present in the local Compose file for planned background 
 Firebase Authentication now owns email/password and Google sign-in. The server exchanges a recently issued Firebase ID token for a Secure, HttpOnly, SameSite session cookie, and both Next.js and FastAPI verify the session. Authorization still comes from database relationships such as `school_memberships` and verified guardian links; it never trusts editable profile fields or custom claims as the sole authority.
 
 Use [the Firebase authentication migration guide](docs/FIREBASE_AUTH_MIGRATION.md) for console setup, emulator verification, the protected user-export workflow, password-hash compatibility, rollback boundaries, and production checks. Supabase PostgreSQL remains the active database until the later SQL Connect migration slice.
+
+## Firebase push notifications
+
+Push is optional and is never requested on page load. A signed-in user selects **Enable push**, the
+browser requests permission, and the Firebase Installation ID is bound to that internal user.
+Background and foreground messages contain only a generic event category, an authenticated relative
+link, and the durable notification ID. Learner identity, narratives, amounts, payment references,
+and receipt identifiers remain in the authenticated in-app notification. Denied or unsupported
+browsers retain the complete in-app experience.
 
 ## Useful commands
 
@@ -293,6 +313,7 @@ uv run --directory apps/backend python scripts/verify_learner_accounts.py
 uv run --directory apps/backend python scripts/verify_portal_roles.py
 uv run --directory apps/backend python scripts/verify_support.py
 uv run --directory apps/backend python scripts/verify_bursar_completion.py
+uv run --directory apps/backend python scripts/verify_fcm_migration.py
 ```
 
 Operational verification scripts may require `SUPABASE_TEST_ACCESS_TOKEN` for a dedicated signed-in test user. Verification scripts use rollback transactions where documented; inspect a script before running it against any shared environment.

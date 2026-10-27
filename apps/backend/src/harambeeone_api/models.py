@@ -2183,6 +2183,54 @@ class SupportNotificationOutbox(Base):
     last_error: Mapped[str | None] = mapped_column(String(500))
 
 
+class PushInstallation(Base):
+    __tablename__ = "push_installations"
+    __table_args__ = (
+        CheckConstraint(
+            "target_kind in ('fid','token')", name="ck_push_installations_target_kind"
+        ),
+        Index("ix_push_installations_user_active", "auth_user_id", "revoked_at"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    auth_user_id: Mapped[uuid.UUID] = mapped_column(index=True)
+    installation_id: Mapped[str] = mapped_column(String(512), unique=True)
+    target_kind: Mapped[str] = mapped_column(String(16), default="fid")
+    device_label: Mapped[str] = mapped_column(String(100))
+    consented_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    last_seen_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class PushDelivery(Base):
+    __tablename__ = "push_deliveries"
+    __table_args__ = (
+        UniqueConstraint(
+            "outbox_id", "installation_id", name="uq_push_delivery_outbox_installation"
+        ),
+        CheckConstraint(
+            "status in ('pending','delivered','retry','invalid','failed')",
+            name="ck_push_deliveries_status",
+        ),
+        Index("ix_push_deliveries_status_time", "status", "next_attempt_at"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    outbox_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("support_notification_outbox.id", ondelete="CASCADE"), index=True
+    )
+    installation_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("push_installations.id", ondelete="RESTRICT"), index=True
+    )
+    status: Mapped[str] = mapped_column(String(16), default="pending")
+    attempt_count: Mapped[int] = mapped_column(default=0)
+    next_attempt_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    delivered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    provider_message_id: Mapped[str | None] = mapped_column(String(300))
+    last_error_code: Mapped[str | None] = mapped_column(String(80))
+
+
 class SupportAssistantUsage(Base):
     __tablename__ = "support_assistant_usage"
     __table_args__ = (

@@ -60,14 +60,7 @@ def emit_support_notification(
             payload_json=json.dumps(
                 {
                     "notification_id": str(notification.id),
-                    "recipient_type": recipient_type,
-                    "recipient_user_id": (
-                        str(recipient_auth_user_id) if recipient_auth_user_id else None
-                    ),
-                    "recipient_email": notification.recipient_email,
                     "event_type": event_type,
-                    "title": title,
-                    "body": body,
                     "href": href,
                 }
             ),

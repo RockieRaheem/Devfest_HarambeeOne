@@ -14,8 +14,12 @@ import { firebaseAuthEmulatorUrl, getFirebaseClientConfig } from './config';
 let emulatorConnected = false;
 let persistenceReady: Promise<void> | undefined;
 
+export function getFirebaseClientApp() {
+  return getApps().length ? getApp() : initializeApp(getFirebaseClientConfig());
+}
+
 export function getFirebaseAuth() {
-  const app = getApps().length ? getApp() : initializeApp(getFirebaseClientConfig());
+  const app = getFirebaseClientApp();
   const auth = getAuth(app);
   const emulatorUrl = firebaseAuthEmulatorUrl();
   if (emulatorUrl && !emulatorConnected) {
@@ -56,6 +60,9 @@ export async function establishServerSession(user: User) {
 }
 
 export async function clearServerSession(revokeAll = false) {
+  await import('./messaging')
+    .then(({ disablePush }) => disablePush())
+    .catch(() => undefined);
   await fetch('/auth/session', {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },

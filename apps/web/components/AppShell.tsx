@@ -10,6 +10,7 @@ import { clearPrimarySchool, getPrimarySchool, SchoolLoadError } from '@/lib/sch
 import { AcademicPeriod, clearPeriods, getAcademicPeriods, getSelectedPeriod, selectPeriod } from '@/lib/period';
 import { getDashboardBootstrap } from '@/lib/dashboard';
 import { clearServerSession } from '@/lib/firebase/client';
+import PushNotificationControl from '@/components/PushNotificationControl';
 
 const navGroups = [
   { label: 'Overview', items: [
@@ -142,8 +143,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <button className="menu-button" onClick={() => setOpen(true)} aria-label="Open navigation"><Menu size={22} /></button>
         <div className="mobile-brand"><GraduationCap size={20} /><strong>HarambeeOne</strong></div>
         <div className="workspace-label"><span>School finance</span><strong>Bursar workspace</strong></div>
-        {periods.length ? <label className="term-selector"><span>Academic period</span><select aria-label="Selected academic period" value={periodId} onChange={event => changePeriod(event.target.value)}>{periods.map(period => <option value={period.id} key={period.id}>{period.name} · {period.academic_year_name}{period.is_operational ? ' · Current' : ''}</option>)}</select><ChevronDown size={15} /></label> : <Link className="term-selector period-setup" href="/periods"><span>Academic period</span><strong>Set up calendar</strong><ChevronDown size={15}/></Link>}
+        {periods.length ? <label className="term-selector" htmlFor="active-academic-period"><span>Academic period</span><select id="active-academic-period" name="active_academic_period" aria-label="Selected academic period" value={periodId} onChange={event => changePeriod(event.target.value)}>{periods.map(period => <option value={period.id} key={period.id}>{period.name} · {period.academic_year_name}{period.is_operational ? ' · Current' : ''}</option>)}</select><ChevronDown size={15} /></label> : <Link className="term-selector period-setup" href="/periods"><span>Academic period</span><strong>Set up calendar</strong><ChevronDown size={15}/></Link>}
         <Link className="quick-action" href="/payments"><ReceiptText size={17} /> Record payment</Link>
+        <div className="header-push"><PushNotificationControl /></div>
         <div className="user-area"><button className="user-menu" onClick={() => setUserOpen(value => !value)} aria-expanded={userOpen}><span>{initials}</span><div><strong>{userName}</strong><small>{userEmail || `${userRole} · Active`}</small></div><ChevronDown size={14} /></button>{userOpen && <div className="user-dropdown"><div><strong>{userName}</strong><span>{userEmail || userRole}</span></div><button onClick={signOut}><LogOut size={16}/>Sign out</button></div>}</div>
       </header>
       <main className="page-canvas" key={workspaceRevision}>{children}</main>

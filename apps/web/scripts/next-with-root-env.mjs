@@ -15,6 +15,7 @@ const allowedVariables = new Set([
   'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET',
   'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID',
   'NEXT_PUBLIC_FIREBASE_APP_ID',
+  'NEXT_PUBLIC_FIREBASE_VAPID_KEY',
   'NEXT_PUBLIC_FIREBASE_AUTH_EMULATOR_HOST',
 ]);
 const rootEnvPath = fileURLToPath(new URL('../../../.env', import.meta.url));

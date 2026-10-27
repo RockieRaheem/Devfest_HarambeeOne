@@ -149,6 +149,9 @@ Do not add new operational features to `apps/api`; it is a legacy NestJS/Prisma 
 - Institution-owned SchoolPay, bank, and Mobile Money payment destinations; parent accounts are not donation destinations.
 - Guest and authenticated-donor pledges, independent settlement verification, learner-ledger posting, school receipts, reversals, and reissues.
 - Guardian, donor, and school notifications with read state, deep links, deduplication, and an outbox.
+- Explicitly consented Firebase web push with user-owned installations, generic data-only payloads,
+  foreground/background handling, bounded FastAPI delivery, backoff, invalid-device revocation, and
+  complete in-app fallback when permission is denied, unsupported, or unavailable.
 - Private guardian acknowledgements and owner-approved anonymous outcomes for donors.
 - Guardian and donor Gemini assistants with explicit consent, minimal role-scoped facts, structured responses, prompt-injection and identity-leak checks, no retained conversation content, and rate limiting.
 

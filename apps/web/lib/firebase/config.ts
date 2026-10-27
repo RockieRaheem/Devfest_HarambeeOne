@@ -47,3 +47,10 @@ export function firebaseAuthEmulatorUrl() {
   }
   return url.origin;
 }
+
+export function getFirebaseVapidKey() {
+  return required(
+    'NEXT_PUBLIC_FIREBASE_VAPID_KEY',
+    process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+  );
+}
