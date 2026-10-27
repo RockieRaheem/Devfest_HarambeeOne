@@ -21,6 +21,7 @@ from harambeeone_api.models import (
     Enrollment,
     FeeStructure,
     GuardianLink,
+    LearnerIdentity,
     LedgerEntry,
     Payment,
     PaymentAllocation,
@@ -907,6 +908,15 @@ def _register_student(payload: StudentCreate, session: Session) -> StudentSummar
             detail="Fees are assigned through billing preview and publication, not registration",
         )
 
+    school = session.get(School, payload.school_id)
+    if school is None or school.organization_id is None:
+        raise HTTPException(
+            status_code=409,
+            detail="Complete the institution setup before registering learners",
+        )
+    learner_identity = LearnerIdentity(organization_id=school.organization_id)
+    session.add(learner_identity)
+
     person = Person(
         first_name=payload.first_name.strip(),
         middle_name=payload.middle_name,
@@ -919,6 +929,7 @@ def _register_student(payload: StudentCreate, session: Session) -> StudentSummar
     student = Student(
         id=student_id,
         school_id=payload.school_id,
+        learner_identity_id=learner_identity.id,
         person_id=person.id,
         admission_no=f"H1-{period.academic_year.year}-{str(student_id)[:8].upper()}",
         learner_identification_number=payload.learner_identification_number,
@@ -982,38 +993,45 @@ def register_student(
     context: SchoolContext = Depends(require_permission("students:write")),
 ) -> StudentSummary:
     context.assert_school(payload.school_id)
-    result = _register_student(payload, session)
-    fee_assignment = None
-    if payload.class_id is not None:
-        period = resolve_period(
-            session,
-            school_id=context.school_id,
-            period_id=payload.period_id,
-            academic_year=payload.academic_year,
-            term=payload.term,
+    try:
+        result = _register_student(payload, session)
+        fee_assignment = None
+        if payload.class_id is not None:
+            period = resolve_period(
+                session,
+                school_id=context.school_id,
+                period_id=payload.period_id,
+                academic_year=payload.academic_year,
+                term=payload.term,
+            )
+            fee_assignment = assign_published_general_fee(
+                session,
+                school_id=context.school_id,
+                period_id=period.id,
+                student_id=result.id,
+                class_id=payload.class_id,
+                actor=context.actor,
+            )
+        session.add(
+            AuditEvent(
+                school_id=context.school_id,
+                entity_type="student",
+                entity_id=result.id,
+                action="created",
+                actor=context.actor,
+                summary=(
+                    f"Registered learner {result.admission_no}; general fee status "
+                    f"{fee_assignment['status'] if fee_assignment else 'not_applicable'}"
+                ),
+            )
         )
-        fee_assignment = assign_published_general_fee(
-            session,
-            school_id=context.school_id,
-            period_id=period.id,
-            student_id=result.id,
-            class_id=payload.class_id,
-            actor=context.actor,
-        )
-    session.add(
-        AuditEvent(
-            school_id=context.school_id,
-            entity_type="student",
-            entity_id=result.id,
-            action="created",
-            actor=context.actor,
-            summary=(
-                f"Registered learner {result.admission_no}; general fee status "
-                f"{fee_assignment['status'] if fee_assignment else 'not_applicable'}"
-            ),
-        )
-    )
-    session.commit()
+        session.commit()
+    except IntegrityError as error:
+        session.rollback()
+        raise HTTPException(
+            status_code=409,
+            detail="A learner with this identification number already exists in this school",
+        ) from error
     return result
 
 

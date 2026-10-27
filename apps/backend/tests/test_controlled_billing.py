@@ -23,6 +23,7 @@ from harambeeone_api.models import (
     Requirement,
     School,
     SchoolMembership,
+    SchoolOrganization,
     Stream,
     Student,
     StudentFeeAssignment,
@@ -40,8 +41,12 @@ def billing_workspace():
     Base.metadata.create_all(engine)
     user_id = uuid.uuid4()
     with Session(engine) as session:
-        school = School(name="Billing School")
-        other_school = School(name="Other School")
+        school = School(
+            name="Billing School", organization=SchoolOrganization(name="Billing School")
+        )
+        other_school = School(
+            name="Other School", organization=SchoolOrganization(name="Other School")
+        )
         session.add_all([school, other_school])
         session.flush()
         academic_year = AcademicYear(
@@ -525,6 +530,7 @@ def test_published_general_fee_follows_new_placement_and_scholarship_is_bounded(
             "first_name": "New",
             "last_name": "Learner",
             "gender": "female",
+            "learner_identification_number": "LIN-NEW-001",
             "class_id": str(ids["primary"]),
             "stream_id": str(ids["east"]),
             "academic_year": 2027,
@@ -545,7 +551,39 @@ def test_published_general_fee_follows_new_placement_and_scholarship_is_bounded(
     assert registration.status_code == 201, registration.text
     student_id = uuid.UUID(registration.json()["id"])
 
+    duplicate_registration = client.post(
+        "/api/v1/students",
+        json={
+            "school_id": str(ids["school"]),
+            "period_id": str(ids["period"]),
+            "first_name": "Duplicate",
+            "last_name": "Identification",
+            "gender": "female",
+            "learner_identification_number": "LIN-NEW-001",
+            "class_id": str(ids["primary"]),
+            "stream_id": str(ids["east"]),
+            "academic_year": 2027,
+            "term": 1,
+            "boarding_status": "day",
+            "nationality": "Ugandan",
+            "guardians": [
+                {
+                    "first_name": "Another",
+                    "last_name": "Guardian",
+                    "relationship": "guardian",
+                    "phone": "+256700000002",
+                    "is_primary": True,
+                }
+            ],
+        },
+    )
+    assert duplicate_registration.status_code == 409
+    assert "identification number already exists" in duplicate_registration.json()["detail"]
+
     with Session(engine) as session:
+        registered_student = session.get(Student, student_id)
+        assert registered_student is not None
+        assert registered_student.learner_identity_id is not None
         assignment = session.scalar(
             select(StudentFeeAssignment).where(
                 StudentFeeAssignment.student_id == student_id,
