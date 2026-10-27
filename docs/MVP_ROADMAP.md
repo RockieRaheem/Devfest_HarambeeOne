@@ -323,6 +323,18 @@ Completion evidence:
 - A fresh live Friendbot-funded transfer was independently verified through Horizon as transaction `e266d1756d3bbb00ed91b9462dade4f727995e5cb29a6f617321bcc7185fb283`, ledger `5420084`, for exactly `1.2500000 XLM` with memo `H1-LIVE-20261027-02`; no secret key was printed or stored.
 - The zero-cost deployment boundary and smoke-test procedure are documented in `docs/DONATION_DEPLOYMENT.md`; Firebase F6 remains the next incomplete migration slice.
 
+### Priority override - Professional campaign management
+
+Status: **COMPLETE**
+
+The user explicitly authorized this Support refinement on 2026-10-28. Institution owners can edit a campaign's anonymous title, public summary, need category and target; preview, replace or remove its consented image; and delete an unused campaign from public access. Every edit is identity-checked and audit logged, and any older Gemini review is superseded until the consented review is rerun. Target changes stop after any donor payment is prepared, and campaigns with donor activity, verified funding or closed financial evidence cannot be deleted. Deletion is an audited withdrawal that removes the campaign from manager and public views plus media access while preserving the private compliance record.
+
+Completion evidence:
+
+- Owner-only APIs enforce tenant scope, learner-identity checks, verified target limits, immutable donor tracking and evidence-preserving deletion.
+- The manager workspace provides an edit form, authenticated current-image preview, sanitized replacement, immediate image removal, contextual deletion protection and clear success or error states.
+- Ruff, all 157 backend tests, web lint, TypeScript validation, and the optimized 50-route Next.js production build pass. No schema migration or paid service is required; Firebase F6 remains next.
+
 ### Slice 5 - Payment desk and official receipts
 
 Status: **COMPLETE**
@@ -532,6 +544,7 @@ Add a dated entry only when a slice changes status. Include the verification com
 - 2026-10-27: Completed Firebase Cloud Messaging Slice F5 at Alembic `c4f8a1d29e60`. Explicit opt-in, FID ownership, foreground/background handling, privacy-safe payloads, bounded outbox delivery, retry, deduplication, invalid-target revocation, opt-out, and in-app fallback passed automated coverage and the live database verifier. A consented Chrome installation received user-confirmed foreground and background delivery with no provider retry or invalid-target error. All 145 backend tests, Ruff, ESLint, TypeScript, and the optimized 50-route build passed. F6 is next.
 - 2026-10-27: Completed the consented donation experience override at Alembic `a3d8e71c5f20`. Public campaign discovery and detail, separate guardian media consent, owner safeguarding approval, metadata-stripped bounded WebP delivery, immediate withdrawal, deployable container definitions, production CORS/faucet controls, and the zero-cost deployment runbook passed Ruff, all 152 backend tests, web lint, TypeScript validation, and the optimized 50-route build. A fresh exact live testnet transfer was independently verified at transaction `e266d1756d3bbb00ed91b9462dade4f727995e5cb29a6f617321bcc7185fb283`, ledger `5420084`; F6 remains next.
 - 2026-10-28: Completed the unified class billing standard refinement. One atomic draft now combines whole-class fees, installments and requirements; class cards expose period-aware learner rosters and direct billing setup; controlled publication covers current learners; and future registrations inherit the published standard exactly once while movements with prior billing remain review-only. Ruff, all 155 backend tests, web lint, TypeScript validation, and the optimized 50-route build passed. Firebase F6 remains next.
+- 2026-10-28: Completed professional Support campaign management. Institution owners can safely edit public campaign details, preview and replace consented images, remove media immediately, and withdraw unused campaigns from public access while donor activity and financial history remain protected. Ruff, all 157 backend tests, web lint, TypeScript validation, and the optimized 50-route build passed. Firebase F6 remains next.
 
 - 2026-10-24: Started Slice 8 and completed Phase 1. A shared exact-decimal financial calculation now makes learner statements, official receipts, dashboard metrics, and collection-report control totals agree across prior balances, charges, credits, receipts, refunds, reversals, payment corrections, and future carried balances. Ruff, all 97 backend tests, web lint, TypeScript validation, and the optimized 49-route production build passed. Phase 2, the complete bursar report centre, is next.
 - 2026-10-24: Completed Slice 8 Phase 2. Sixteen tenant-scoped bursar reports now cover collections, balances, aging, billing, requirements, adjustments, corrections, reconciliation, unidentified funds, cash-up, deposits, and billing-versus-collection with shared filters, print layouts, and server-generated CSV. Ruff, all 98 backend tests, web lint, TypeScript validation, and the optimized 49-route production build passed. Phase 3, the pre-close control checklist, is next.

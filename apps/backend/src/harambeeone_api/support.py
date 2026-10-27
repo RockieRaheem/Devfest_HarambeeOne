@@ -64,6 +64,7 @@ from harambeeone_api.schemas import (
     SupportCampaignMediaCreate,
     SupportCaseCreate,
     SupportCaseReviewDecision,
+    SupportCaseUpdate,
     SupportConsentCreate,
     SupportPaymentDestinationCreate,
     SupportPaymentDestinationDecision,
@@ -2039,6 +2040,159 @@ def get_support_case(
         ),
         "ai_review": json.loads(review.result_json) if review else None,
     }
+
+
+@router.patch("/cases/{case_id}")
+def update_support_campaign(
+    case_id: uuid.UUID,
+    payload: SupportCaseUpdate,
+    session: Session = Depends(get_session),
+    context: SchoolContext = Depends(require_permission("support:approve")),
+):
+    support_case = _private_case(session, case_id, context.school_id)
+    if support_case.status in {"funded", "closed", "withdrawn"}:
+        raise HTTPException(
+            status_code=409,
+            detail="Funded, closed or withdrawn campaigns cannot be edited",
+        )
+    student = session.get(Student, support_case.student_id)
+    person = session.get(Person, student.person_id) if student else None
+    if student is None or person is None:
+        raise HTTPException(status_code=409, detail="Learner identity record is incomplete")
+    title = payload.title.strip()
+    public_summary = payload.public_summary.strip()
+    _assert_public_text(support_case, student, person, title)
+    _assert_public_text(support_case, student, person, public_summary)
+    live_limit = _case_live_limit(session, support_case)
+    if payload.target_amount > live_limit:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Campaign target exceeds the verified balance of UGX {live_limit:,.0f}",
+        )
+    pledge_count = session.scalar(
+        select(func.count(SupportPledge.id)).where(SupportPledge.case_id == case_id)
+    ) or 0
+    if pledge_count and payload.target_amount != support_case.target_amount:
+        raise HTTPException(
+            status_code=409,
+            detail="The target cannot change after a donor payment has been prepared",
+        )
+    changed_fields = [
+        name
+        for name, old, new in (
+            ("title", support_case.title, title),
+            ("public summary", support_case.public_summary, public_summary),
+            ("need category", support_case.need_category, payload.need_category),
+            ("target", support_case.target_amount, payload.target_amount),
+        )
+        if old != new
+    ]
+    support_case.title = title
+    support_case.public_summary = public_summary
+    support_case.need_category = payload.need_category
+    support_case.target_amount = payload.target_amount
+    if changed_fields:
+        for review in session.scalars(
+            select(SupportAiReview).where(
+                SupportAiReview.case_id == case_id,
+                SupportAiReview.status == "completed",
+            )
+        ).all():
+            review.status = "superseded"
+        session.add(
+            AuditEvent(
+                school_id=context.school_id,
+                entity_type="support_case",
+                entity_id=support_case.id,
+                action="edited",
+                actor=context.actor,
+                summary=(
+                    f"Edited {', '.join(changed_fields)} for campaign "
+                    f"{support_case.public_code}; prior AI review was superseded"
+                ),
+            )
+        )
+    session.commit()
+    return {
+        "id": support_case.id,
+        "public_code": support_case.public_code,
+        "status": support_case.status,
+        "updated_fields": changed_fields,
+    }
+
+
+@router.delete("/cases/{case_id}")
+def withdraw_support_campaign(
+    case_id: uuid.UUID,
+    session: Session = Depends(get_session),
+    context: SchoolContext = Depends(require_permission("support:approve")),
+):
+    support_case = _private_case(session, case_id, context.school_id)
+    if support_case.status == "withdrawn":
+        return {"id": support_case.id, "status": "withdrawn"}
+    if support_case.status in {"funded", "closed"}:
+        raise HTTPException(
+            status_code=409,
+            detail="Funded or closed campaigns must remain available as financial evidence",
+        )
+    pledge_count = session.scalar(
+        select(func.count(SupportPledge.id)).where(SupportPledge.case_id == case_id)
+    ) or 0
+    if pledge_count:
+        raise HTTPException(
+            status_code=409,
+            detail="A campaign with donor activity cannot be deleted; preserve its tracking record",
+        )
+    support_case.status = "withdrawn"
+    support_case.closed_at = datetime.now(UTC)
+    media = session.scalar(
+        select(SupportCampaignMedia).where(SupportCampaignMedia.case_id == case_id)
+    )
+    if media and media.status != "removed":
+        media.status = "removed"
+        media.content = b""
+        media.byte_size = 0
+        media.removed_by = context.actor
+        media.removed_at = datetime.now(UTC)
+    session.add(
+        AuditEvent(
+            school_id=context.school_id,
+            entity_type="support_case",
+            entity_id=support_case.id,
+            action="withdrawn",
+            actor=context.actor,
+            summary=f"Deleted campaign {support_case.public_code} from public access",
+        )
+    )
+    session.commit()
+    return {"id": support_case.id, "status": support_case.status}
+
+
+@router.get("/cases/{case_id}/media")
+def get_support_campaign_media(
+    case_id: uuid.UUID,
+    session: Session = Depends(get_session),
+    context: SchoolContext = Depends(require_permission("support:read")),
+):
+    _private_case(session, case_id, context.school_id)
+    media = session.scalar(
+        select(SupportCampaignMedia).where(
+            SupportCampaignMedia.case_id == case_id,
+            SupportCampaignMedia.status == "approved",
+        )
+    )
+    if media is None:
+        raise HTTPException(status_code=404, detail="Campaign image not found")
+    return Response(
+        content=media.content,
+        media_type=media.mime_type,
+        headers={
+            "Cache-Control": "private, no-store",
+            "ETag": f'"{media.content_hash}"',
+            "X-Content-Type-Options": "nosniff",
+            "Content-Security-Policy": "default-src 'none'; sandbox",
+        },
+    )
 
 
 @router.post("/cases/{case_id}/media")

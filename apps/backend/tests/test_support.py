@@ -22,6 +22,7 @@ from harambeeone_api.models import (
     AcademicClass,
     AcademicPeriod,
     AcademicYear,
+    AuditEvent,
     DonorProfile,
     Enrollment,
     FeeStructure,
@@ -38,6 +39,7 @@ from harambeeone_api.models import (
     StellarAnchor,
     Student,
     StudentFeeAssignment,
+    SupportAiReview,
     SupportAssistantUsage,
     SupportCase,
     SupportNotification,
@@ -250,6 +252,10 @@ def test_campaign_image_requires_separate_consent_and_is_sanitized(
     assert image.headers["content-type"] == "image/webp"
     assert image.content.startswith(b"RIFF")
     assert b"metadata-must-not-survive" not in image.content
+    manager_image = client.get(f"/api/v1/support/cases/{case_id}/media")
+    assert manager_image.status_code == 200
+    assert manager_image.headers["cache-control"] == "private, no-store"
+    assert manager_image.content == image.content
 
     removed = client.delete(f"/api/v1/support/cases/{case_id}/media")
     assert removed.status_code == 200
@@ -269,6 +275,92 @@ def test_campaign_image_rejects_missing_consent(
         "safeguarding_review_confirmed": True,
     }
     assert client.post(f"/api/v1/support/cases/{case_id}/media", json=payload).status_code == 409
+
+
+def test_owner_edits_campaign_without_exposing_learner_identity(support_workspace) -> None:
+    engine, user_id, ids, client = support_workspace
+    case_id, public_code = create_reviewed_campaign(client, ids)
+    payload = {
+        "title": "Help an anonymous learner complete the term",
+        "public_summary": (
+            "A verified school obligation needs community support before the current term ends."
+        ),
+        "need_category": "examination",
+        "target_amount": 250000,
+    }
+    updated = client.patch(f"/api/v1/support/cases/{case_id}", json=payload)
+    assert updated.status_code == 200, updated.text
+    assert set(updated.json()["updated_fields"]) == {
+        "title",
+        "public summary",
+        "need category",
+        "target",
+    }
+    with Session(engine) as session:
+        assert session.scalar(
+            select(SupportAiReview.status).where(
+                SupportAiReview.case_id == uuid.UUID(case_id)
+            )
+        ) == "superseded"
+    public = client.get(f"/api/v1/support/public/campaigns/{public_code}")
+    assert public.status_code == 200
+    assert public.json()["title"] == payload["title"]
+    assert Decimal(str(public.json()["target_amount"])) == Decimal("250000.00")
+    identifying = client.patch(
+        f"/api/v1/support/cases/{case_id}",
+        json={**payload, "title": "Help Amina complete the term"},
+    )
+    assert identifying.status_code == 422
+    with Session(engine) as session:
+        membership = session.scalar(
+            select(SchoolMembership).where(
+                SchoolMembership.auth_user_id == user_id,
+                SchoolMembership.school_id == ids["school"],
+            )
+        )
+        membership.role = "bursar"
+        session.commit()
+    denied = client.patch(f"/api/v1/support/cases/{case_id}", json=payload)
+    assert denied.status_code == 403
+    with Session(engine) as session:
+        assert session.scalar(
+            select(func.count(AuditEvent.id)).where(
+                AuditEvent.entity_id == uuid.UUID(case_id),
+                AuditEvent.action == "edited",
+            )
+        ) == 1
+
+
+def test_owner_deletes_only_campaigns_without_donor_activity(support_workspace) -> None:
+    engine, _user_id, ids, client = support_workspace
+    case_id, public_code = create_reviewed_campaign(client, ids)
+    deleted = client.delete(f"/api/v1/support/cases/{case_id}")
+    assert deleted.status_code == 200, deleted.text
+    assert deleted.json()["status"] == "withdrawn"
+    assert client.get(f"/api/v1/support/public/campaigns/{public_code}").status_code == 404
+    with Session(engine) as session:
+        assert session.get(SupportCase, uuid.UUID(case_id)).status == "withdrawn"
+        assert session.scalar(
+            select(func.count(AuditEvent.id)).where(
+                AuditEvent.entity_id == uuid.UUID(case_id),
+                AuditEvent.action == "withdrawn",
+            )
+        ) == 1
+
+    second_case_id, second_code = create_reviewed_campaign(client, ids)
+    pledge = client.post(
+        f"/api/v1/support/public/campaigns/{second_code}/pledges",
+        json={
+            "payment_destination_id": str(ids["destination"]),
+            "idempotency_key": "delete-protection-0001",
+            "external_reference": "DELETE-PROTECT-1",
+            "amount": 10000,
+        },
+    )
+    assert pledge.status_code == 201, pledge.text
+    blocked = client.delete(f"/api/v1/support/cases/{second_case_id}")
+    assert blocked.status_code == 409
+    assert client.get(f"/api/v1/support/public/campaigns/{second_code}").status_code == 200
 
 
 def test_stellar_testnet_contribution_is_verified_before_posting(

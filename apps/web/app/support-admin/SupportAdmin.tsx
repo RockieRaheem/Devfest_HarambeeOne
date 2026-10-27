@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { Bot, CheckCircle2, Copy, ExternalLink, HandHeart, Plus, ShieldCheck, UserRoundPlus, X } from 'lucide-react';
+import Image from 'next/image';
+import { Bot, CheckCircle2, Copy, ExternalLink, HandHeart, Pencil, Plus, ShieldCheck, Trash2, UserRoundPlus, X } from 'lucide-react';
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { MetricCard, PageHeader, SectionHeader, Status } from '@/components/ui';
 import NotificationCenter from '@/components/NotificationCenter';
@@ -14,7 +15,7 @@ type Student = { id:string; admission_no:string; full_name:string };
 type Requirement = { id:string; requirement_name:string; requirement_type:string; outstanding_amount:string };
 type Eligibility = { general_outstanding:string; eligible:boolean };
 type Case = { id:string; public_code:string; student_name:string; admission_no:string; title:string; target_amount:string; verified_amount:string; pending_amount:string; status:string; has_ai_review:boolean; guardian_authored:boolean; review_notes:string|null };
-type Detail = { id:string; public_code:string; student:{name:string;admission_no:string}; title:string; public_summary:string; private_context:string|null; status:string; guardian_authored:boolean; review_notes:string|null; guardians:{id:string;name:string;relationship:string}[]; consent:null|{method:string;gemini_processing:boolean;public_media_consent:boolean}; media:null|{status:string;alt_text:string;content_hash:string;width:number;height:number}; ai_review:null|{consistency_flags:string[];recommended_action:string} };
+type Detail = { id:string; public_code:string; student:{name:string;admission_no:string}; title:string; public_summary:string; private_context:string|null; need_category:string; target_amount:string; verified_amount:string; pending_amount:string; status:string; guardian_authored:boolean; review_notes:string|null; guardians:{id:string;name:string;relationship:string}[]; consent:null|{method:string;gemini_processing:boolean;public_media_consent:boolean}; media:null|{status:string;alt_text:string;content_hash:string;width:number;height:number}; ai_review:null|{consistency_flags:string[];recommended_action:string} };
 type Pledge = { id:string; public_reference:string; external_reference:string; donor_display_name:string; amount:string; status:string };
 type Destination = { id:string; channel:string; label:string; provider_name:string; account_name:string; account_reference:string; instructions:string; verification_status:string };
 type Candidate = {student_id:string;student_name:string;admission_no:string;class_name:string;overdue_amount:string;days_overdue:number;priority_band:string;guardian_link_id:string|null;guardian_email:string|null;guardian_portal_linked:boolean;referral_id:string|null;referral_status:string|null};
@@ -28,7 +29,7 @@ export default function SupportAdmin() {
   const [selected, setSelected] = useState<Detail|null>(null);
   const [pledges, setPledges] = useState<Pledge[]>([]);
   const [destinations, setDestinations] = useState<Destination[]>([]);
-  const [modal, setModal] = useState<'case'|'consent'|'proof'|'destination'|'media'|null>(null);
+  const [modal, setModal] = useState<'case'|'edit'|'consent'|'proof'|'destination'|'media'|null>(null);
   const [caseStudentId, setCaseStudentId] = useState('');
   const [requirements, setRequirements] = useState<Requirement[]>([]);
   const [requirementId, setRequirementId] = useState('');
@@ -53,7 +54,7 @@ export default function SupportAdmin() {
     const caseBody = await apiBody<Case[] & {detail?:string}>(caseResponse);
     if (!studentResponse.ok || !caseResponse.ok) throw new Error(studentBody.detail ?? caseBody.detail ?? 'Learner support could not be loaded.');
     setStudents(studentBody.items);
-    setCases(caseBody);
+    setCases(caseBody.filter(item=>item.status!=='withdrawn'));
     if (candidateResponse.ok) setCandidates((await apiBody<{items:Candidate[]}>(candidateResponse)).items);
     if (destinationResponse.ok) setDestinations(await apiBody<Destination[]>(destinationResponse));
   }, []);
@@ -101,11 +102,11 @@ export default function SupportAdmin() {
     setPledges(pledgeResponse.ok ? await apiBody<Pledge[]>(pledgeResponse) : []);
   }
 
-  async function mutate(path:string, body:unknown, success:string) {
+  async function mutate(path:string, body:unknown, success:string, method:'POST'|'PATCH'='POST') {
     if (!school) return;
     setBusy(true); setError(''); setModalError(''); setNotice('');
     try {
-      const response = await fetch(`${API}${path}`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+      const response = await fetch(`${API}${path}`, { method, headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
       const result = await apiBody<{id?:string;detail?:unknown}>(response);
       if (!response.ok) throw new Error(apiError(result.detail, response.status));
       setNotice(success); setModal(null);
@@ -187,6 +188,29 @@ export default function SupportAdmin() {
   }
 
   async function publish() { if (selected) await mutate(`/api/v1/support/cases/${selected.id}/publish`, {}, 'Campaign published to the donor portal.'); }
+  async function editCampaign(event:FormEvent<HTMLFormElement>) {
+    event.preventDefault(); if (!selected) return;
+    const form = new FormData(event.currentTarget);
+    await mutate(`/api/v1/support/cases/${selected.id}`, {
+      title:String(form.get('title') ?? '').trim(),
+      public_summary:String(form.get('public_summary') ?? '').trim(),
+      need_category:form.get('need_category'),
+      target_amount:Number(form.get('target_amount')),
+    }, 'Campaign details updated and recorded in the audit trail.', 'PATCH');
+  }
+  async function deleteCampaign() {
+    if (!selected || !window.confirm(`Delete ${selected.public_code} from public access? This preserves its private audit record and cannot be done after donor activity.`)) return;
+    setBusy(true); setError(''); setNotice('');
+    try {
+      const response = await fetch(`${API}/api/v1/support/cases/${selected.id}`, {method:'DELETE'});
+      const body = await apiBody<{detail?:unknown}>(response);
+      if (!response.ok) throw new Error(apiError(body.detail,response.status));
+      setNotice('Campaign deleted from public access. Its private audit record was preserved.');
+      setSelected(null); setPledges([]);
+      if (school) await load(school.id,periodId);
+    } catch (reason) { setError(reason instanceof Error ? reason.message : 'The campaign could not be deleted.'); }
+    finally { setBusy(false); }
+  }
   async function reviewDecision(action:'request_changes'|'approve') {
     if (!selected) return;
     const note = action === 'request_changes' ? window.prompt('Tell the guardian exactly what must change before resubmission:') : null;
@@ -328,17 +352,19 @@ export default function SupportAdmin() {
           <div className="support-admin-progress"><span>1. Consent <b>{selected.consent ? 'Complete' : 'Required'}</b></span><span>2. Submission <b>{selected.guardian_authored ? selected.status : 'Staff assisted'}</b></span><span>3. Safety review <b>{selected.ai_review ? 'Gemini complete' : selected.consent?.gemini_processing ? 'Gemini pending' : 'Manual'}</b></span><span>4. Publication <b>{selected.status}</b></span></div>
           <p>{selected.public_summary}</p>
           {selected.private_context && <div className="support-private-context"><strong>Private guardian context</strong><p>{selected.private_context}</p><small>Never shown on the public donor portal.</small></div>}
-          {selected.consent?.public_media_consent && school?.role === 'owner' && <div className="support-private-context"><strong>Consented campaign image</strong><p>{selected.media?.status === 'approved' ? selected.media.alt_text : 'No public image has been approved yet.'}</p><small>The server removes metadata, resizes and re-encodes every approved image.</small><div className="support-case-actions"><button className="btn" onClick={() => { setModalError(''); setModal('media'); }}>{selected.media?.status === 'approved' ? 'Replace image' : 'Add image'}</button>{selected.media?.status === 'approved' && <button className="btn" disabled={busy} onClick={removeMedia}>Remove image</button>}</div></div>}
+          {selected.consent?.public_media_consent && school?.role === 'owner' && <div className="support-private-context support-media-manager"><strong>Consented campaign image</strong>{selected.media?.status === 'approved'&&<Image src={`${API}/api/v1/support/cases/${selected.id}/media?v=${selected.media.content_hash.slice(0,12)}`} alt={selected.media.alt_text} width={selected.media.width} height={selected.media.height} unoptimized/>}<p>{selected.media?.status === 'approved' ? selected.media.alt_text : 'No public image has been approved yet.'}</p><small>The server removes metadata, resizes and re-encodes every approved image.</small><div className="support-case-actions"><button className="btn" onClick={() => { setModalError(''); setModal('media'); }}>{selected.media?.status === 'approved' ? 'Replace image' : 'Add image'}</button>{selected.media?.status === 'approved' && <button className="btn" disabled={busy} onClick={removeMedia}>Remove image</button>}</div></div>}
           <div className="support-case-actions">
+            {school?.role==='owner'&&!['funded','closed','withdrawn'].includes(selected.status)&&<button className="btn" disabled={busy} onClick={()=>{setModalError('');setModal('edit')}}><Pencil size={14}/>Edit campaign</button>}
             {!selected.consent && <button className="btn" onClick={() => { setModalError(''); setModal('consent'); }}>Record consent</button>}
             {selected.guardian_authored && selected.status === 'submitted' && ['owner','bursar'].includes(school?.role ?? '') && <button className="btn" disabled={busy} onClick={() => reviewDecision('request_changes')}>Request changes</button>}
-            {selected.consent?.gemini_processing && !selected.ai_review && selected.status === 'submitted' && ['owner','bursar'].includes(school?.role ?? '') && <button className="btn" disabled={busy} onClick={review}>Run consented Gemini review</button>}
+            {selected.guardian_authored&&selected.consent?.gemini_processing&&!selected.ai_review&&['submitted','approved','published'].includes(selected.status)&&['owner','bursar'].includes(school?.role??'')&&<button className="btn" disabled={busy} onClick={review}>Run consented Gemini review</button>}
             {selected.guardian_authored && selected.status === 'submitted' && school?.role === 'owner' && (!selected.consent?.gemini_processing || selected.ai_review) && <button className="btn primary" disabled={busy} onClick={() => reviewDecision('approve')}>Approve case</button>}
             {selected.guardian_authored && selected.status === 'approved' && school?.role === 'owner' && <button className="btn primary" disabled={busy} onClick={publish}>Publish campaign</button>}
             {!selected.guardian_authored && selected.consent && !selected.ai_review && <button className="btn primary" disabled={busy} onClick={review}>Run Gemini review</button>}
             {!selected.guardian_authored && selected.ai_review && selected.status === 'review' && school?.role === 'owner' && <button className="btn primary" disabled={busy} onClick={publish}>Approve & publish</button>}
             {selected.status === 'submitted' && school?.role !== 'owner' && <span className="support-owner-note">An institution owner must give final approval.</span>}
             {['published','funded','closed'].includes(selected.status) && <><Link className="btn" href={`/support/${selected.public_code}`} target="_blank">Public record <ExternalLink size={14}/></Link><button className="btn" onClick={() => { setModalError(''); setModal('proof'); }}>Add proof update</button></>}
+            {school?.role==='owner'&&!['funded','closed','withdrawn'].includes(selected.status)&&<button className="btn danger-link" disabled={busy||pledges.length>0} title={pledges.length?'Campaigns with donor activity must retain their tracking record':'Delete campaign from public access'} onClick={deleteCampaign}><Trash2 size={14}/>Delete campaign</button>}
           </div>
           {selected.ai_review && <div className="support-review"><strong>Gemini recommendation</strong><p>{selected.ai_review.recommended_action}</p>{selected.ai_review.consistency_flags.length > 0 && <small>Flags: {selected.ai_review.consistency_flags.join(' · ')}</small>}</div>}
           <h3>Guardian portal access</h3>
@@ -372,6 +398,16 @@ export default function SupportAdmin() {
       {modalError && <div className="form-error modal-error" role="alert">{modalError}</div>}
       <div className="notice">Names, admission numbers and contact details always stay private. A photograph is optional and requires the separate checkbox above.</div>
       <footer><button type="button" className="btn" onClick={() => setModal(null)}>Cancel</button><button className="btn primary" disabled={busy}>Record consent</button></footer>
+    </form></Modal>}
+
+    {modal === 'edit' && selected && <Modal title="Edit campaign" close={() => setModal(null)}><form className="modal-form" onSubmit={editCampaign}>
+      <label>Public campaign title<input name="title" minLength={4} maxLength={120} required defaultValue={selected.title}/></label>
+      <label>Need category<select name="need_category" defaultValue={selected.need_category}><option value="fees">School fees</option><option value="examination">Examination</option><option value="uniform">Uniform</option><option value="learning_materials">Learning materials</option><option value="meals">Meals</option><option value="transport">Transport</option><option value="other">Other</option></select></label>
+      <label>Target amount (UGX)<input name="target_amount" type="number" min={Math.max(1,Number(selected.verified_amount)+Number(selected.pending_amount))} step="0.01" required defaultValue={selected.target_amount} readOnly={pledges.length>0}/><small>{pledges.length?'The target is locked because a donor payment has been prepared.':'The server will reject amounts above the learner’s verified live obligation.'}</small></label>
+      <label>Anonymous public summary<textarea name="public_summary" minLength={20} maxLength={500} required defaultValue={selected.public_summary}/></label>
+      {modalError&&<div className="form-error modal-error" role="alert">{modalError}</div>}
+      <div className="notice">Never add a learner name, admission number, exact location or contact detail. Published edits take effect immediately and are audit logged.</div>
+      <footer><button type="button" className="btn" onClick={()=>setModal(null)}>Cancel</button><button className="btn primary" disabled={busy}>{busy?'Saving…':'Save campaign changes'}</button></footer>
     </form></Modal>}
 
     {modal === 'media' && selected && <Modal title="Approve campaign image" close={() => setModal(null)}><form className="modal-form" onSubmit={media}>

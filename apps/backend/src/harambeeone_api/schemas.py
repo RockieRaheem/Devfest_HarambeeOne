@@ -950,6 +950,15 @@ class SupportCaseCreate(BaseModel):
     target_amount: Decimal = Field(gt=0, max_digits=18, decimal_places=2)
 
 
+class SupportCaseUpdate(BaseModel):
+    title: str = Field(min_length=4, max_length=120)
+    public_summary: str = Field(min_length=20, max_length=500)
+    need_category: str = Field(
+        pattern="^(fees|examination|uniform|learning_materials|meals|transport|other)$"
+    )
+    target_amount: Decimal = Field(gt=0, max_digits=18, decimal_places=2)
+
+
 class GuardianSupportCaseSave(BaseModel):
     requirement_assignment_id: uuid.UUID | None = None
     title: str = Field(default="", max_length=120)
