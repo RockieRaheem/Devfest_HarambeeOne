@@ -1,4 +1,5 @@
 import re
+from decimal import Decimal
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
@@ -40,6 +41,15 @@ class Settings(BaseSettings):
     fcm_delivery_interval_seconds: int = Field(
         default=30, ge=10, le=300, alias="FCM_DELIVERY_INTERVAL_SECONDS"
     )
+    stellar_horizon_url: str = Field(
+        default="https://horizon-testnet.stellar.org", alias="STELLAR_HORIZON_URL"
+    )
+    stellar_demo_ugx_per_xlm: Decimal = Field(
+        default=Decimal("1000"), gt=0, alias="STELLAR_DEMO_UGX_PER_XLM"
+    )
+    stellar_demo_faucet_enabled: bool = Field(
+        default=False, alias="STELLAR_DEMO_FAUCET_ENABLED"
+    )
 
     @model_validator(mode="after")
     def reject_supabase_auth_in_production(self) -> "Settings":
@@ -65,6 +75,10 @@ class Settings(BaseSettings):
             raise ValueError("Production authentication must use Firebase")
         if self.app_environment == "production" and self.firebase_auth_emulator_host:
             raise ValueError("Firebase Auth emulator must not be configured in production")
+        if self.stellar_horizon_url.rstrip("/") != "https://horizon-testnet.stellar.org":
+            raise ValueError("STELLAR_HORIZON_URL must use the official Stellar testnet Horizon")
+        if self.app_environment == "production" and self.stellar_demo_faucet_enabled:
+            raise ValueError("The Stellar testnet demo faucet cannot run in production")
         return self
 
 

@@ -1205,7 +1205,7 @@ class StellarAnchor(Base):
     commitment_hash: Mapped[str] = mapped_column(String(64), unique=True)
     network: Mapped[str] = mapped_column(String(20), default="testnet")
     status: Mapped[str] = mapped_column(String(20), default="pending")
-    transaction_hash: Mapped[str | None] = mapped_column(String(64))
+    transaction_hash: Mapped[str | None] = mapped_column(String(64), unique=True)
     ledger_number: Mapped[int | None]
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
@@ -2018,7 +2018,7 @@ class SupportPaymentDestination(Base):
     __table_args__ = (
         UniqueConstraint("school_id", "channel", "account_reference"),
         CheckConstraint(
-            "channel in ('schoolpay','bank','mobile_money')",
+            "channel in ('schoolpay','bank','mobile_money','stellar')",
             name="ck_support_payment_destinations_channel",
         ),
         CheckConstraint(

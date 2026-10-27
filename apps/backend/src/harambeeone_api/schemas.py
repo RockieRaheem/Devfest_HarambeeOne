@@ -953,6 +953,17 @@ class SupportPledgeCreate(BaseModel):
     amount: Decimal = Field(gt=0, max_digits=18, decimal_places=2)
 
 
+class SupportStellarPledgeCreate(BaseModel):
+    payment_destination_id: uuid.UUID
+    idempotency_key: str = Field(min_length=16, max_length=80)
+    donor_display_name: str | None = Field(default=None, max_length=100)
+    amount: Decimal = Field(gt=0, max_digits=18, decimal_places=2)
+
+
+class SupportStellarConfirm(BaseModel):
+    transaction_hash: str | None = Field(default=None, pattern="^[0-9a-fA-F]{64}$")
+
+
 class SupportPledgeVerify(BaseModel):
     action: str = Field(pattern="^(verify|reject)$")
     reason: str | None = Field(default=None, max_length=240)
@@ -966,7 +977,7 @@ class SupportPledgeVerify(BaseModel):
 
 class SupportPaymentDestinationCreate(BaseModel):
     school_id: uuid.UUID
-    channel: str = Field(pattern="^(schoolpay|bank|mobile_money)$")
+    channel: str = Field(pattern="^(schoolpay|bank|mobile_money|stellar)$")
     label: str = Field(min_length=2, max_length=100)
     provider_name: str = Field(min_length=2, max_length=100)
     account_name: str = Field(min_length=2, max_length=160)

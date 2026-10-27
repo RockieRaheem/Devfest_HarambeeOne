@@ -6,7 +6,7 @@ This is the canonical delivery plan for HarambeeOne. Read this file before makin
 
 HarambeeOne serves the school bursar. Every active feature must directly support learner billing, requirements, collections, receipts, reconciliation, arrears follow-up, financial reporting, or the minimum learner and school structure needed for those duties.
 
-Sponsor administration and blockchain settlement remain deferred until the bursar completion gate passes. The user-authorized Harambee Support hackathon pilot is the sole exception: it is an isolated, privacy-preserving workflow backed by existing learner obligations and does not reopen general sponsor administration or blockchain settlement. Academic grading, attendance, teaching, payroll, procurement, and general school administration are outside the current product.
+Sponsor administration and production blockchain settlement remain deferred until the bursar completion gate passes. The user-authorized Harambee Support hackathon pilot is the sole exception: it is an isolated, privacy-preserving workflow backed by existing learner obligations. Its Stellar integration is explicitly testnet-only, uses valueless test assets, and is not represented as production settlement. Academic grading, attendance, teaching, payroll, procurement, and general school administration are outside the current product.
 
 ## Delivery discipline
 
@@ -259,6 +259,27 @@ The user explicitly authorized a second Support priority override on 2026-10-16.
 Support S6 is complete. Guardian and donor Gemma 4 assistants are separately consented, role-grounded, read-only, rate-limited and stateless; hostile prompts, private identifiers, other users' records, malformed responses and claimed financial authority fail safely. The school review assistant remains human decision support under the same controls. Ruff and all 81 backend tests, web lint, the optimized 48-route build, live migration `a91d38c7e5f2`, and production assistant security verification passed. The Support expansion is complete and normal bursar Slice 5 resumes.
 
 Support slices S1-S6 are complete. The normal bursar roadmap resumes at Slice 5; no further Support expansion should interrupt it without a new explicit priority override.
+
+### Priority override - Stellar testnet donation demonstration
+
+Status: **COMPLETE — TESTNET ONLY**
+
+The user explicitly authorized this time-boxed DevFest demonstration on 2026-10-27. It adds no-custody, no-registration Stellar testnet donations to the completed Harambee Support workflow without changing the production settlement roadmap.
+
+Implemented:
+
+- A school owner can register and verify an institution-controlled Stellar `G...` public account; secret keys are rejected from the application workflow and are never stored.
+- A guest donor chooses a campaign and receives an exact testnet XLM amount, unique privacy-safe memo, copyable destination, and SEP-7 wallet link without creating an account.
+- Horizon verification requires a successful native-XLM payment with the exact destination, amount and memo before the existing atomic payment, allocation, learner-ledger credit, receipt and campaign-progress transaction runs.
+- Confirmed transaction hashes are unique to prevent replay and appear with ledger number and public testnet explorer link in tracking and receipts; learner and guardian identity never enters the chain record.
+- A development-only Friendbot action creates an ephemeral sender, stores no secret, and is disabled by default and forbidden in production. Every screen and receipt states that testnet XLM has no real monetary value and the fixed UGX mapping is a demonstration conversion, not a market rate.
+
+Completion evidence:
+
+- Ruff, web lint, TypeScript checking, all 146 backend tests, and the optimized 50-route production build pass.
+- PostgreSQL reached Alembic head `e6b3f91a7c42`, adding the Stellar destination and transaction-hash replay constraint.
+- A live Friendbot-funded testnet transfer was submitted and independently resolved through Horizon as transaction `4d5f0b4293aa5ec941dfe6c1ccb33a34df6d56e12a46b1b107f1b2ee60ce746e`, ledger `5414904`, with exact memo, destination and amount verification.
+- The Firebase migration plan remains unchanged; F6 is still the next incomplete migration slice when the explicit demonstration override ends.
 
 ### Slice 5 - Payment desk and official receipts
 

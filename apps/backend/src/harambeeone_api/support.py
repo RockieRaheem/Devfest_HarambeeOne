@@ -19,6 +19,7 @@ from harambeeone_api.auth import (
     get_current_user,
     require_permission,
 )
+from harambeeone_api.config import get_settings
 from harambeeone_api.database import get_server_session, get_session
 from harambeeone_api.gemini_client import (
     MAX_IMAGE_BYTES,
@@ -69,6 +70,20 @@ from harambeeone_api.schemas import (
     SupportReceiptReissueCreate,
     SupportReferralConsent,
     SupportReferralCreate,
+    SupportStellarConfirm,
+    SupportStellarPledgeCreate,
+)
+from harambeeone_api.stellar_support import (
+    StellarPaymentNotFound,
+    StellarPaymentProof,
+    StellarServiceUnavailable,
+    demo_xlm_amount,
+    find_payment,
+    format_xlm,
+    payment_uri,
+    submit_demo_payment,
+    validate_public_key,
+    verify_transaction,
 )
 from harambeeone_api.support_assistants import (
     assert_safe_model_output,
@@ -520,12 +535,41 @@ def _pledge_payload(pledge: SupportPledge) -> dict:
     }
 
 
+def _stellar_payment_payload(
+    session: Session, pledge: SupportPledge, destination: SupportPaymentDestination
+) -> dict:
+    settings = get_settings()
+    amount = demo_xlm_amount(pledge.amount, settings.stellar_demo_ugx_per_xlm)
+    return {
+        **_pledge_payload(pledge),
+        "stellar_payment": {
+            "network": "testnet",
+            "destination": destination.account_reference,
+            "amount_xlm": format_xlm(amount),
+            "memo": pledge.public_reference,
+            "payment_uri": payment_uri(
+                destination=destination.account_reference,
+                amount=amount,
+                memo=pledge.public_reference,
+            ),
+            "horizon_url": settings.stellar_horizon_url,
+            "demo_rate": f"UGX {settings.stellar_demo_ugx_per_xlm:,.0f} = 1 testnet XLM",
+            "demo_faucet_available": (
+                settings.stellar_demo_faucet_enabled
+                and settings.app_environment != "production"
+            ),
+            "disclaimer": "TESTNET ONLY — testnet XLM has no real monetary value.",
+        },
+    }
+
+
 def _create_pledge(
     session: Session,
     *,
     public_code: str,
     payload: SupportPledgeCreate,
     donor_user_id: uuid.UUID | None,
+    stellar: bool = False,
 ) -> SupportPledge:
     support_case = session.scalar(
         select(SupportCase)
@@ -543,7 +587,7 @@ def _create_pledge(
     if existing:
         if (
             existing.amount != payload.amount
-            or existing.external_reference != payload.external_reference.strip()
+            or (not stellar and existing.external_reference != payload.external_reference.strip())
             or existing.payment_destination_id != payload.payment_destination_id
             or existing.donor_auth_user_id != donor_user_id
         ):
@@ -558,6 +602,10 @@ def _create_pledge(
     )
     if destination is None:
         raise HTTPException(status_code=422, detail="Choose a verified school payment destination")
+    if stellar and destination.channel != "stellar":
+        raise HTTPException(status_code=422, detail="Choose a verified Stellar testnet destination")
+    if not stellar and destination.channel == "stellar":
+        raise HTTPException(status_code=422, detail="Use the Stellar testnet checkout")
     _refresh_case_target(session, support_case, "system:pledge-check")
     if support_case.status != "published":
         session.commit()
@@ -569,14 +617,15 @@ def _create_pledge(
             status_code=422,
             detail=f"Contribution exceeds the remaining campaign amount of UGX {available:,.0f}",
         )
+    public_reference = f"HSP-{uuid.uuid4().hex[:16].upper()}"
     pledge = SupportPledge(
         case_id=support_case.id,
         school_id=support_case.school_id,
         payment_destination_id=destination.id,
         donor_auth_user_id=donor_user_id,
         idempotency_key=payload.idempotency_key.strip(),
-        public_reference=f"HSP-{uuid.uuid4().hex[:16].upper()}",
-        external_reference=payload.external_reference.strip(),
+        public_reference=public_reference,
+        external_reference=public_reference if stellar else payload.external_reference.strip(),
         donor_display_name=(payload.donor_display_name or "").strip() or None,
         amount=payload.amount,
         currency=support_case.currency,
@@ -667,6 +716,9 @@ def _receipt_payload(
         raise HTTPException(
             status_code=409, detail="Receipt is not available for this contribution"
         )
+    anchor = session.scalar(
+        select(StellarAnchor).where(StellarAnchor.payment_id == payment.id)
+    )
     return {
         "receipt_no": payment.receipt_no,
         "issued_at": pledge.verified_at,
@@ -686,6 +738,19 @@ def _receipt_payload(
             "Posted to the verified school obligation for this anonymous campaign."
         ),
         "privacy_statement": "This receipt intentionally contains no learner or guardian identity.",
+        "blockchain": (
+            {
+                "network": anchor.network,
+                "transaction_hash": anchor.transaction_hash,
+                "ledger": anchor.ledger_number,
+                "explorer_url": (
+                    f"https://stellar.expert/explorer/testnet/tx/{anchor.transaction_hash}"
+                ),
+                "disclaimer": "TESTNET ONLY — testnet XLM has no real monetary value.",
+            }
+            if anchor and anchor.status == "confirmed" and anchor.transaction_hash
+            else None
+        ),
     }
 
 
@@ -1315,12 +1380,36 @@ def create_authenticated_donor_pledge(
     )
 
 
-@router.get("/public/campaigns/{public_code}/pledges/{public_reference}")
-def track_public_pledge(
+@router.post(
+    "/public/campaigns/{public_code}/stellar/pledges", status_code=status.HTTP_201_CREATED
+)
+def create_public_stellar_pledge(
     public_code: str,
-    public_reference: str,
+    payload: SupportStellarPledgeCreate,
     session: Session = Depends(get_server_session),
 ):
+    pledge = _create_pledge(
+        session,
+        public_code=public_code,
+        payload=SupportPledgeCreate(
+            payment_destination_id=payload.payment_destination_id,
+            idempotency_key=payload.idempotency_key,
+            external_reference="stellar-intent",
+            donor_display_name=payload.donor_display_name,
+            amount=payload.amount,
+        ),
+        donor_user_id=None,
+        stellar=True,
+    )
+    destination = session.get(SupportPaymentDestination, pledge.payment_destination_id)
+    if destination is None:
+        raise HTTPException(status_code=409, detail="Stellar destination is unavailable")
+    return _stellar_payment_payload(session, pledge, destination)
+
+
+def _public_stellar_pledge(
+    session: Session, public_code: str, public_reference: str
+) -> tuple[SupportCase, SupportPledge, SupportPaymentDestination]:
     support_case = _public_campaign(session, public_code)
     pledge = session.scalar(
         select(SupportPledge).where(
@@ -1330,7 +1419,134 @@ def track_public_pledge(
     )
     if pledge is None:
         raise HTTPException(status_code=404, detail="Contribution reference not found")
+    destination = session.get(SupportPaymentDestination, pledge.payment_destination_id)
+    if destination is None or destination.channel != "stellar":
+        raise HTTPException(status_code=409, detail="This is not a Stellar testnet contribution")
+    return support_case, pledge, destination
+
+
+def _confirm_stellar_pledge(
+    session: Session,
+    *,
+    public_code: str,
+    public_reference: str,
+    transaction_hash: str | None,
+) -> dict:
+    support_case, pledge, destination = _public_stellar_pledge(
+        session, public_code, public_reference
+    )
+    if pledge.status == "verified":
+        return _tracking_payload(session, support_case, pledge)
+    if pledge.status != "pending":
+        raise HTTPException(status_code=409, detail="This contribution is no longer pending")
+    settings = get_settings()
+    expected = demo_xlm_amount(pledge.amount, settings.stellar_demo_ugx_per_xlm)
+    try:
+        if transaction_hash:
+            proof = verify_transaction(
+                horizon_url=settings.stellar_horizon_url,
+                transaction_hash=transaction_hash,
+                destination=destination.account_reference,
+                memo=pledge.public_reference,
+                amount=expected,
+            )
+        else:
+            proof = find_payment(
+                horizon_url=settings.stellar_horizon_url,
+                destination=destination.account_reference,
+                memo=pledge.public_reference,
+                amount=expected,
+            )
+    except StellarPaymentNotFound as error:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "Exact testnet payment is not visible yet. Check the destination, "
+                "amount and memo, then retry."
+            ),
+        ) from error
+    except StellarServiceUnavailable as error:
+        raise HTTPException(status_code=503, detail=str(error)) from error
+    system_context = SchoolContext(
+        user=AuthenticatedUser(
+            id=uuid.uuid5(uuid.NAMESPACE_URL, "harambeeone:stellar-testnet"),
+            email="stellar-testnet@system.local",
+            provider="system",
+        ),
+        school_id=support_case.school_id,
+        role="owner",
+    )
+    _decide_support_pledge(
+        pledge.id,
+        SupportPledgeVerify(action="verify"),
+        session,
+        system_context,
+        stellar_proof=proof,
+    )
+    refreshed = session.get(SupportPledge, pledge.id)
+    return _tracking_payload(session, support_case, refreshed or pledge)
+
+
+@router.post(
+    "/public/campaigns/{public_code}/stellar/pledges/{public_reference}/confirm"
+)
+def confirm_public_stellar_pledge(
+    public_code: str,
+    public_reference: str,
+    payload: SupportStellarConfirm,
+    session: Session = Depends(get_server_session),
+):
+    return _confirm_stellar_pledge(
+        session,
+        public_code=public_code,
+        public_reference=public_reference,
+        transaction_hash=payload.transaction_hash,
+    )
+
+
+@router.post(
+    "/public/campaigns/{public_code}/stellar/pledges/{public_reference}/demo-pay"
+)
+def demo_pay_public_stellar_pledge(
+    public_code: str,
+    public_reference: str,
+    session: Session = Depends(get_server_session),
+):
+    settings = get_settings()
+    if settings.app_environment == "production" or not settings.stellar_demo_faucet_enabled:
+        raise HTTPException(status_code=404, detail="Testnet demo transfer is not enabled")
+    _, pledge, destination = _public_stellar_pledge(session, public_code, public_reference)
+    if pledge.status != "pending":
+        raise HTTPException(status_code=409, detail="This contribution is no longer pending")
+    amount = demo_xlm_amount(pledge.amount, settings.stellar_demo_ugx_per_xlm)
+    try:
+        transaction_hash = submit_demo_payment(
+            horizon_url=settings.stellar_horizon_url,
+            destination=destination.account_reference,
+            memo=pledge.public_reference,
+            amount=amount,
+        )
+    except (StellarServiceUnavailable, Exception) as error:
+        raise HTTPException(
+            status_code=503, detail="The Stellar testnet demo transfer could not be submitted"
+        ) from error
+    return _confirm_stellar_pledge(
+        session,
+        public_code=public_code,
+        public_reference=public_reference,
+        transaction_hash=transaction_hash,
+    )
+
+
+def _tracking_payload(
+    session: Session, support_case: SupportCase, pledge: SupportPledge
+) -> dict:
     payment = session.get(Payment, pledge.payment_id) if pledge.payment_id else None
+    anchor = (
+        session.scalar(select(StellarAnchor).where(StellarAnchor.payment_id == payment.id))
+        if payment
+        else None
+    )
     return {
         "public_reference": pledge.public_reference,
         "campaign_code": support_case.public_code,
@@ -1349,7 +1565,38 @@ def track_public_pledge(
             if payment
             else None
         ),
+        "blockchain": (
+            {
+                "network": anchor.network,
+                "transaction_hash": anchor.transaction_hash,
+                "ledger": anchor.ledger_number,
+                "explorer_url": (
+                    f"https://stellar.expert/explorer/testnet/tx/{anchor.transaction_hash}"
+                ),
+                "disclaimer": "TESTNET ONLY — testnet XLM has no real monetary value.",
+            }
+            if anchor and anchor.status == "confirmed" and anchor.transaction_hash
+            else None
+        ),
     }
+
+
+@router.get("/public/campaigns/{public_code}/pledges/{public_reference}")
+def track_public_pledge(
+    public_code: str,
+    public_reference: str,
+    session: Session = Depends(get_server_session),
+):
+    support_case = _public_campaign(session, public_code)
+    pledge = session.scalar(
+        select(SupportPledge).where(
+            SupportPledge.case_id == support_case.id,
+            SupportPledge.public_reference == public_reference.upper(),
+        )
+    )
+    if pledge is None:
+        raise HTTPException(status_code=404, detail="Contribution reference not found")
+    return _tracking_payload(session, support_case, pledge)
 
 
 @router.get("/public/campaigns/{public_code}/pledges/{public_reference}/receipt")
@@ -1482,6 +1729,11 @@ def create_payment_destination(
             status_code=422,
             detail=f"The account name must exactly match the institution name: {school.name}",
         )
+    if payload.channel == "stellar":
+        try:
+            validate_public_key(payload.account_reference)
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
     destination = SupportPaymentDestination(
         school_id=context.school_id,
         channel=payload.channel,
@@ -2114,12 +2366,13 @@ def list_case_pledges(
     ]
 
 
-@router.post("/pledges/{pledge_id}/verify")
-def verify_support_pledge(
+def _decide_support_pledge(
     pledge_id: uuid.UUID,
     payload: SupportPledgeVerify,
-    session: Session = Depends(get_session),
-    context: SchoolContext = Depends(require_permission("support:settle")),
+    session: Session,
+    context: SchoolContext,
+    *,
+    stellar_proof: StellarPaymentProof | None = None,
 ):
     pledge = session.scalar(
         select(SupportPledge)
@@ -2219,6 +2472,11 @@ def verify_support_pledge(
             status_code=409,
             detail="The school payment destination is no longer verified",
         )
+    if destination.channel == "stellar" and stellar_proof is None:
+        raise HTTPException(
+            status_code=409,
+            detail="Stellar contributions are settled only after on-chain verification",
+        )
     payment_id = uuid.uuid4()
     financial_reference = (
         "HSP-"
@@ -2234,7 +2492,7 @@ def verify_support_pledge(
         external_reference=financial_reference,
         payer_name=pledge.donor_display_name or "Anonymous donor",
         note=f"Verified support contribution {pledge.public_reference}",
-        channel=destination.channel,
+        channel="stellar_testnet" if stellar_proof else destination.channel,
         amount=pledge.amount,
         transaction_type="receipt",
         created_by=context.actor,
@@ -2269,7 +2527,9 @@ def verify_support_pledge(
         id=uuid.uuid4(),
         payment_id=payment.id,
         commitment_hash=commitment,
-        status="pending",
+        status="confirmed" if stellar_proof else "pending",
+        transaction_hash=stellar_proof.transaction_hash if stellar_proof else None,
+        ledger_number=stellar_proof.ledger if stellar_proof else None,
     )
     pledge.status = "verified"
     pledge.payment_id = payment.id
@@ -2353,6 +2613,16 @@ def verify_support_pledge(
         "receipt_no": payment.receipt_no,
         "campaign_status": support_case.status,
     }
+
+
+@router.post("/pledges/{pledge_id}/verify")
+def verify_support_pledge(
+    pledge_id: uuid.UUID,
+    payload: SupportPledgeVerify,
+    session: Session = Depends(get_session),
+    context: SchoolContext = Depends(require_permission("support:settle")),
+):
+    return _decide_support_pledge(pledge_id, payload, session, context)
 
 
 @router.post("/pledges/{pledge_id}/reverse")

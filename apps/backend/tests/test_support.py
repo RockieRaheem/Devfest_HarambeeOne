@@ -9,6 +9,7 @@ from sqlalchemy import create_engine, func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
+from stellar_sdk import Keypair
 
 from harambeeone_api import support, support_assistants
 from harambeeone_api.auth import AuthenticatedUser, get_current_user
@@ -31,6 +32,7 @@ from harambeeone_api.models import (
     Person,
     School,
     SchoolMembership,
+    StellarAnchor,
     Student,
     StudentFeeAssignment,
     SupportAssistantUsage,
@@ -203,6 +205,90 @@ def create_reviewed_campaign(client: TestClient, ids: dict) -> tuple[str, str]:
     published = client.post(f"/api/v1/support/cases/{case_id}/publish")
     assert published.status_code == 200, published.text
     return case_id, published.json()["public_code"]
+
+
+def test_stellar_testnet_contribution_is_verified_before_posting(
+    support_workspace, monkeypatch
+) -> None:
+    engine, _user_id, ids, client = support_workspace
+    public_key = Keypair.random().public_key
+    with Session(engine) as session:
+        destination = SupportPaymentDestination(
+            school_id=ids["school"],
+            channel="stellar",
+            label="Transparent testnet wallet",
+            provider_name="Stellar Testnet",
+            account_name="Trust Academy",
+            account_reference=public_key,
+            instructions="Use the exact amount and memo shown by HarambeeOne.",
+            verification_status="verified",
+            created_by="owner@example.com",
+            verified_by="owner@example.com",
+            verified_at=datetime.now(UTC),
+        )
+        session.add(destination)
+        session.commit()
+        destination_id = destination.id
+    _case_id, public_code = create_reviewed_campaign(client, ids)
+    created = client.post(
+        f"/api/v1/support/public/campaigns/{public_code}/stellar/pledges",
+        json={
+            "payment_destination_id": str(destination_id),
+            "idempotency_key": str(uuid.uuid4()),
+            "donor_display_name": "Testnet donor",
+            "amount": 50000,
+        },
+    )
+    assert created.status_code == 201, created.text
+    body = created.json()
+    reference = body["public_reference"]
+    assert body["stellar_payment"]["memo"] == reference
+    assert body["stellar_payment"]["amount_xlm"] == "50.0000000"
+    assert "no real monetary value" in body["stellar_payment"]["disclaimer"]
+
+    transaction_hash = "a" * 64
+    monkeypatch.setattr(
+        support,
+        "find_payment",
+        lambda **_kwargs: support.StellarPaymentProof(
+            transaction_hash=transaction_hash,
+            operation_id="123",
+            source_account=Keypair.random().public_key,
+            destination_account=public_key,
+            amount_xlm=Decimal("50"),
+            memo=reference,
+            ledger=123456,
+        ),
+    )
+    confirmed = client.post(
+        f"/api/v1/support/public/campaigns/{public_code}/stellar/pledges/{reference}/confirm",
+        json={"transaction_hash": None},
+    )
+    assert confirmed.status_code == 200, confirmed.text
+    result = confirmed.json()
+    assert result["status"] == "verified"
+    assert result["blockchain"]["transaction_hash"] == transaction_hash
+    assert result["blockchain"]["ledger"] == 123456
+
+    with Session(engine) as session:
+        pledge = session.scalar(
+            select(SupportPledge).where(SupportPledge.public_reference == reference)
+        )
+        payment = session.get(Payment, pledge.payment_id)
+        anchor = session.scalar(
+            select(StellarAnchor).where(StellarAnchor.payment_id == payment.id)
+        )
+        assert payment.channel == "stellar_testnet"
+        assert anchor.status == "confirmed"
+        assert anchor.transaction_hash == transaction_hash
+
+    replay = client.post(
+        f"/api/v1/support/public/campaigns/{public_code}/stellar/pledges/{reference}/confirm",
+        json={"transaction_hash": None},
+    )
+    assert replay.status_code == 200
+    with Session(engine) as session:
+        assert session.scalar(select(func.count(Payment.id))) == 1
 
 
 def test_support_case_eligibility_reports_verified_balance(support_workspace) -> None:
