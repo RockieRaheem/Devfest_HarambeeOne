@@ -9,6 +9,8 @@ import {
 
 export const runtime = 'nodejs';
 
+const ACTIVE_SCHOOL_COOKIE = 'harambee-school-id';
+
 function sameOrigin(request: NextRequest) {
   return request.headers.get('origin') === request.nextUrl.origin;
 }
@@ -23,6 +25,13 @@ function clearSession(response: NextResponse) {
   response.cookies.set(FIREBASE_SESSION_COOKIE, '', {
     httpOnly: true,
     secure: true,
+    sameSite: 'lax',
+    path: '/',
+    expires: new Date(0),
+  });
+  response.cookies.set(ACTIVE_SCHOOL_COOKIE, '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
     path: '/',
     expires: new Date(0),
@@ -69,6 +78,13 @@ export async function POST(request: NextRequest) {
     response.cookies.set(FIREBASE_CSRF_COOKIE, '', {
       secure: true,
       sameSite: 'strict',
+      path: '/',
+      expires: new Date(0),
+    });
+    response.cookies.set(ACTIVE_SCHOOL_COOKIE, '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
       path: '/',
       expires: new Date(0),
     });

@@ -20,31 +20,30 @@ export type AcademicPeriod = {
   balance_carried_into?: boolean;
 };
 
-let cachedPeriods: AcademicPeriod[] | null = null;
-let pendingPeriods: Promise<AcademicPeriod[]> | null = null;
-let cachedDetailedPeriods: AcademicPeriod[] | null = null;
-let pendingDetailedPeriods: Promise<AcademicPeriod[]> | null = null;
+const cachedPeriods = new Map<string, AcademicPeriod[]>();
+const pendingPeriods = new Map<string, Promise<AcademicPeriod[]>>();
+const cachedDetailedPeriods = new Map<string, AcademicPeriod[]>();
+const pendingDetailedPeriods = new Map<string, Promise<AcademicPeriod[]>>();
 
 export async function getAcademicPeriods(includeActivity = false): Promise<AcademicPeriod[]> {
-  const cached = includeActivity ? cachedDetailedPeriods : cachedPeriods;
-  if (cached) return cached;
+  const school = await getPrimarySchool();
+  const cache = includeActivity ? cachedDetailedPeriods : cachedPeriods;
   const pending = includeActivity ? pendingDetailedPeriods : pendingPeriods;
-  if (pending) return pending;
-  const request = getPrimarySchool()
-      .then(school => fetch(`/api/backend/api/v1/academic-periods?school_id=${school.id}&include_activity=${includeActivity}`, { cache: 'no-store' }))
+  const cached = cache.get(school.id);
+  if (cached) return cached;
+  const existing = pending.get(school.id);
+  if (existing) return existing;
+  const request = fetch(`/api/backend/api/v1/academic-periods?school_id=${school.id}&include_activity=${includeActivity}`, { cache: 'no-store' })
       .then(async response => {
         if (!response.ok) throw new Error('Unable to load academic periods');
         const rows = await response.json() as AcademicPeriod[];
-        if (includeActivity) cachedDetailedPeriods = rows;
-        else cachedPeriods = rows;
+        cache.set(school.id, rows);
         return rows;
       })
       .finally(() => {
-        if (includeActivity) pendingDetailedPeriods = null;
-        else pendingPeriods = null;
+        pending.delete(school.id);
       });
-  if (includeActivity) pendingDetailedPeriods = request;
-  else pendingPeriods = request;
+  pending.set(school.id, request);
   return request;
 }
 
@@ -64,15 +63,15 @@ export async function selectPeriod(periodId: string): Promise<void> {
   localStorage.setItem(`harambee-period:${school.id}`, periodId);
 }
 
-export function setAcademicPeriods(periods: AcademicPeriod[]): void {
-  cachedPeriods = periods;
+export function setAcademicPeriods(schoolId: string, periods: AcademicPeriod[]): void {
+  cachedPeriods.set(schoolId, periods);
 }
 
 export function clearPeriods(): void {
-  cachedPeriods = null;
-  pendingPeriods = null;
-  cachedDetailedPeriods = null;
-  pendingDetailedPeriods = null;
+  cachedPeriods.clear();
+  pendingPeriods.clear();
+  cachedDetailedPeriods.clear();
+  pendingDetailedPeriods.clear();
 }
 
 export function periodQuery(period: AcademicPeriod): string {

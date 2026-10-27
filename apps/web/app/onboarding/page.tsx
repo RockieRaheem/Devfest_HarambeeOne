@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Baby, Check, GraduationCap, LoaderCircle, School, ShieldCheck } from 'lucide-react';
 import { clearPrimarySchool, getPrimarySchool, SchoolLoadError, setPrimarySchool } from '@/lib/school';
+import { clearPeriods } from '@/lib/period';
 import { clientFetch as fetch } from '@/lib/api/client';
 
 const API = '/api/backend';
@@ -83,8 +84,9 @@ function OnboardingContent() {
       const body = await response.json();
       if (!response.ok) { const detail = Array.isArray(body.detail) ? body.detail[0]?.msg : body.detail; throw new Error(detail || 'Institution setup could not be completed.'); }
       setPrimarySchool(body);
-      if (additional) { window.location.assign(`/api/workspace/select?school_id=${body.id}&next=/dashboard`); return; }
-      router.replace('/dashboard'); router.refresh();
+      clearPeriods();
+      if (additional) { window.location.assign(`/api/workspace/select?school_id=${body.id}&next=/periods`); return; }
+      router.replace('/periods'); router.refresh();
     } catch (reason) { setError(reason instanceof Error ? reason.message : 'Institution setup could not be completed.'); setSaving(false); }
   }
   const classProgrammeSelected = selectedTemplates.some(item => item.classes.length);

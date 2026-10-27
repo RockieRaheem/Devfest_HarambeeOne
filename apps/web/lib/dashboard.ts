@@ -42,7 +42,7 @@ export function getDashboardBootstrap(): Promise<DashboardBootstrap> {
         }
         const result = await response.json() as DashboardBootstrap;
         setPrimarySchool(result.school);
-        setAcademicPeriods(result.periods);
+        setAcademicPeriods(result.school.id, result.periods);
         return result;
       })
       .finally(() => { pendingBootstrap = null; });
