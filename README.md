@@ -44,7 +44,7 @@ The active product serves the school bursar and the minimum learner, guardian, a
 
 The current delivery priority is **Slice 8, Phase 8: final verification**. Reports, period closing, balance carry-forward, learner rollover, and controlled reopening are complete. The final phase will prove the complete bursar journey, financial equation, historical reproducibility, exports, security boundaries, and production controls.
 
-See the [MVP roadmap](docs/MVP_ROADMAP.md) and [Support expansion plan](docs/HARAMBEE_SUPPORT_EXPANSION_PLAN.md) for completion gates and current evidence.
+See the [MVP roadmap](docs/MVP_ROADMAP.md), [Support expansion plan](docs/HARAMBEE_SUPPORT_EXPANSION_PLAN.md), and [donation deployment runbook](docs/DONATION_DEPLOYMENT.md) for completion gates, current evidence, and the zero-cost deployment boundary.
 
 ### Deferred
 

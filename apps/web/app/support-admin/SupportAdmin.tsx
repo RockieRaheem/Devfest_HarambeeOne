@@ -14,7 +14,7 @@ type Student = { id:string; admission_no:string; full_name:string };
 type Requirement = { id:string; requirement_name:string; requirement_type:string; outstanding_amount:string };
 type Eligibility = { general_outstanding:string; eligible:boolean };
 type Case = { id:string; public_code:string; student_name:string; admission_no:string; title:string; target_amount:string; verified_amount:string; pending_amount:string; status:string; has_ai_review:boolean; guardian_authored:boolean; review_notes:string|null };
-type Detail = { id:string; public_code:string; student:{name:string;admission_no:string}; title:string; public_summary:string; private_context:string|null; status:string; guardian_authored:boolean; review_notes:string|null; guardians:{id:string;name:string;relationship:string}[]; consent:null|{method:string;gemini_processing:boolean}; ai_review:null|{consistency_flags:string[];recommended_action:string} };
+type Detail = { id:string; public_code:string; student:{name:string;admission_no:string}; title:string; public_summary:string; private_context:string|null; status:string; guardian_authored:boolean; review_notes:string|null; guardians:{id:string;name:string;relationship:string}[]; consent:null|{method:string;gemini_processing:boolean;public_media_consent:boolean}; media:null|{status:string;alt_text:string;content_hash:string;width:number;height:number}; ai_review:null|{consistency_flags:string[];recommended_action:string} };
 type Pledge = { id:string; public_reference:string; external_reference:string; donor_display_name:string; amount:string; status:string };
 type Destination = { id:string; channel:string; label:string; provider_name:string; account_name:string; account_reference:string; instructions:string; verification_status:string };
 type Candidate = {student_id:string;student_name:string;admission_no:string;class_name:string;overdue_amount:string;days_overdue:number;priority_band:string;guardian_link_id:string|null;guardian_email:string|null;guardian_portal_linked:boolean;referral_id:string|null;referral_status:string|null};
@@ -28,7 +28,7 @@ export default function SupportAdmin() {
   const [selected, setSelected] = useState<Detail|null>(null);
   const [pledges, setPledges] = useState<Pledge[]>([]);
   const [destinations, setDestinations] = useState<Destination[]>([]);
-  const [modal, setModal] = useState<'case'|'consent'|'proof'|'destination'|null>(null);
+  const [modal, setModal] = useState<'case'|'consent'|'proof'|'destination'|'media'|null>(null);
   const [caseStudentId, setCaseStudentId] = useState('');
   const [requirements, setRequirements] = useState<Requirement[]>([]);
   const [requirementId, setRequirementId] = useState('');
@@ -166,6 +166,7 @@ export default function SupportAdmin() {
     const form = new FormData(event.currentTarget);
     await mutate(`/api/v1/support/cases/${selected.id}/consent`, {
       guardian_link_id:form.get('guardian_link_id'), method:form.get('method'), anonymous_publication:true,
+      public_media_consent:form.get('public_media_consent') === 'on',
       gemini_processing:true, cross_border_processing:true, child_assent_status:form.get('child_assent_status'),
     }, 'Guardian consent recorded.');
   }
@@ -248,6 +249,32 @@ export default function SupportAdmin() {
     const form = new FormData(event.currentTarget);
     await mutate(`/api/v1/support/cases/${selected.id}/attestations`, { attestation_type:form.get('attestation_type'), statement:form.get('statement'), attendance_band:form.get('attendance_band') || null }, 'Outcome evidence submitted for privacy review.');
   }
+  async function media(event:FormEvent<HTMLFormElement>) {
+    event.preventDefault(); if (!selected) return;
+    const form = new FormData(event.currentTarget);
+    const file = form.get('image');
+    if (!(file instanceof File) || !file.size) return setModalError('Choose a learner image.');
+    if (file.size > 1_500_000) return setModalError('Use a JPEG, PNG or WebP image no larger than 1.5 MB.');
+    if (!['image/jpeg','image/png','image/webp'].includes(file.type)) return setModalError('Use a JPEG, PNG or WebP image.');
+    await mutate(`/api/v1/support/cases/${selected.id}/media`, {
+      image_base64:await fileBase64(file), image_mime_type:file.type,
+      alt_text:String(form.get('alt_text') ?? '').trim(),
+      guardian_media_consent_confirmed:form.get('guardian_confirmation') === 'on',
+      safeguarding_review_confirmed:form.get('safeguarding_confirmation') === 'on',
+    }, 'The consented, safeguarding-reviewed image is ready for the public campaign.');
+  }
+  async function removeMedia() {
+    if (!selected || !window.confirm('Remove this learner image from the public campaign now?')) return;
+    setBusy(true); setError('');
+    try {
+      const response = await fetch(`${API}/api/v1/support/cases/${selected.id}/media`, {method:'DELETE'});
+      const body = await apiBody<{detail?:unknown}>(response);
+      if (!response.ok) throw new Error(apiError(body.detail,response.status));
+      setNotice('The learner image was removed from public access.');
+      await openCase(selected.id);
+    } catch (reason) { setError(reason instanceof Error ? reason.message : 'The image could not be removed.'); }
+    finally { setBusy(false); }
+  }
 
   const target = cases.reduce((sum, item) => sum + Number(item.target_amount), 0);
   const verified = cases.reduce((sum, item) => sum + Number(item.verified_amount), 0);
@@ -301,6 +328,7 @@ export default function SupportAdmin() {
           <div className="support-admin-progress"><span>1. Consent <b>{selected.consent ? 'Complete' : 'Required'}</b></span><span>2. Submission <b>{selected.guardian_authored ? selected.status : 'Staff assisted'}</b></span><span>3. Safety review <b>{selected.ai_review ? 'Gemini complete' : selected.consent?.gemini_processing ? 'Gemini pending' : 'Manual'}</b></span><span>4. Publication <b>{selected.status}</b></span></div>
           <p>{selected.public_summary}</p>
           {selected.private_context && <div className="support-private-context"><strong>Private guardian context</strong><p>{selected.private_context}</p><small>Never shown on the public donor portal.</small></div>}
+          {selected.consent?.public_media_consent && school?.role === 'owner' && <div className="support-private-context"><strong>Consented campaign image</strong><p>{selected.media?.status === 'approved' ? selected.media.alt_text : 'No public image has been approved yet.'}</p><small>The server removes metadata, resizes and re-encodes every approved image.</small><div className="support-case-actions"><button className="btn" onClick={() => { setModalError(''); setModal('media'); }}>{selected.media?.status === 'approved' ? 'Replace image' : 'Add image'}</button>{selected.media?.status === 'approved' && <button className="btn" disabled={busy} onClick={removeMedia}>Remove image</button>}</div></div>}
           <div className="support-case-actions">
             {!selected.consent && <button className="btn" onClick={() => { setModalError(''); setModal('consent'); }}>Record consent</button>}
             {selected.guardian_authored && selected.status === 'submitted' && ['owner','bursar'].includes(school?.role ?? '') && <button className="btn" disabled={busy} onClick={() => reviewDecision('request_changes')}>Request changes</button>}
@@ -340,9 +368,20 @@ export default function SupportAdmin() {
       <label>Linked guardian<select name="guardian_link_id" required><option value="">Select guardian</option>{selected.guardians.map(guardian => <option key={guardian.id} value={guardian.id}>{guardian.name} · {guardian.relationship}</option>)}</select></label>
       <label>Consent evidence<select name="method"><option value="signed_form">Signed form</option><option value="witnessed_in_person">Witnessed in person</option><option value="otp">Verified OTP</option></select></label>
       <label>Learner assent<select name="child_assent_status"><option value="agreed">Learner agreed</option><option value="not_applicable">Not applicable</option><option value="unable_to_express">Unable to express</option><option value="declined">Learner declined</option></select></label>
+      <label className="portal-check"><input name="public_media_consent" type="checkbox"/>The guardian separately consents to one safeguarding-reviewed learner photograph being public and understands this can be withdrawn.</label>
       {modalError && <div className="form-error modal-error" role="alert">{modalError}</div>}
-      <div className="notice">Consent covers anonymous publication and privacy-safe Gemini processing, never public identity or photographs.</div>
+      <div className="notice">Names, admission numbers and contact details always stay private. A photograph is optional and requires the separate checkbox above.</div>
       <footer><button type="button" className="btn" onClick={() => setModal(null)}>Cancel</button><button className="btn primary" disabled={busy}>Record consent</button></footer>
+    </form></Modal>}
+
+    {modal === 'media' && selected && <Modal title="Approve campaign image" close={() => setModal(null)}><form className="modal-form" onSubmit={media}>
+      <label>Learner image<input name="image" type="file" accept="image/jpeg,image/png,image/webp" required/><small>JPEG, PNG or WebP, maximum 1.5 MB and at least 320 × 240.</small></label>
+      <label>Public alternative text<input name="alt_text" minLength={8} maxLength={160} required placeholder="Learner holding school books outdoors"/><small>Describe the scene without the learner&apos;s name, class, admission number or location.</small></label>
+      <label className="portal-check"><input name="guardian_confirmation" type="checkbox" required/>I checked the recorded guardian consent specifically permits a public photograph.</label>
+      <label className="portal-check"><input name="safeguarding_confirmation" type="checkbox" required/>An institution owner reviewed the image for uniforms, badges, documents, locations and other identifying risks.</label>
+      {modalError && <div className="form-error modal-error" role="alert">{modalError}</div>}
+      <div className="notice">Uploading approves this exact sanitized image. HarambeeOne strips metadata, resizes it and stores a content fingerprint for audit.</div>
+      <footer><button type="button" className="btn" onClick={() => setModal(null)}>Cancel</button><button className="btn primary" disabled={busy}>{busy ? 'Sanitizing…' : 'Approve image'}</button></footer>
     </form></Modal>}
 
     {modal === 'proof' && selected && <Modal title="Submit private outcome evidence" close={() => setModal(null)}><form className="modal-form" onSubmit={proof}>

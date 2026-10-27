@@ -1,3 +1,5 @@
+import base64
+import io
 import json
 import uuid
 from datetime import UTC, date, datetime, timedelta
@@ -5,6 +7,7 @@ from decimal import Decimal
 
 import pytest
 from fastapi.testclient import TestClient
+from PIL import Image
 from sqlalchemy import create_engine, func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -173,7 +176,9 @@ def support_workspace(monkeypatch):
         engine.dispose()
 
 
-def create_reviewed_campaign(client: TestClient, ids: dict) -> tuple[str, str]:
+def create_reviewed_campaign(
+    client: TestClient, ids: dict, *, public_media_consent: bool = False
+) -> tuple[str, str]:
     created = client.post(
         "/api/v1/support/cases",
         json={
@@ -194,6 +199,7 @@ def create_reviewed_campaign(client: TestClient, ids: dict) -> tuple[str, str]:
             "guardian_link_id": str(ids["guardian"]),
             "method": "signed_form",
             "anonymous_publication": True,
+            "public_media_consent": public_media_consent,
             "gemini_processing": True,
             "cross_border_processing": True,
             "child_assent_status": "agreed",
@@ -205,6 +211,64 @@ def create_reviewed_campaign(client: TestClient, ids: dict) -> tuple[str, str]:
     published = client.post(f"/api/v1/support/cases/{case_id}/publish")
     assert published.status_code == 200, published.text
     return case_id, published.json()["public_code"]
+
+
+def campaign_image_base64() -> str:
+    buffer = io.BytesIO()
+    Image.new("RGB", (640, 480), color=(48, 96, 71)).save(
+        buffer, format="JPEG", quality=90, comment=b"metadata-must-not-survive"
+    )
+    return base64.b64encode(buffer.getvalue()).decode()
+
+
+def test_campaign_image_requires_separate_consent_and_is_sanitized(
+    support_workspace,
+) -> None:
+    _engine, _user_id, ids, client = support_workspace
+    case_id, public_code = create_reviewed_campaign(
+        client, ids, public_media_consent=True
+    )
+    payload = {
+        "image_base64": campaign_image_base64(),
+        "image_mime_type": "image/jpeg",
+        "alt_text": "Learner holding school books outdoors",
+        "guardian_media_consent_confirmed": True,
+        "safeguarding_review_confirmed": True,
+    }
+    identifying = {**payload, "alt_text": "Learner Amina holding school books"}
+    assert client.post(
+        f"/api/v1/support/cases/{case_id}/media", json=identifying
+    ).status_code == 422
+    approved = client.post(f"/api/v1/support/cases/{case_id}/media", json=payload)
+    assert approved.status_code == 200, approved.text
+    assert approved.json()["width"] == 640
+    public = client.get(f"/api/v1/support/public/campaigns/{public_code}").json()
+    assert public["image_url"].startswith(f"/api/support/campaigns/{public_code}/image")
+    assert public["image_alt"] == payload["alt_text"]
+    image = client.get(f"/api/v1/support/public/campaigns/{public_code}/image")
+    assert image.status_code == 200
+    assert image.headers["content-type"] == "image/webp"
+    assert image.content.startswith(b"RIFF")
+    assert b"metadata-must-not-survive" not in image.content
+
+    removed = client.delete(f"/api/v1/support/cases/{case_id}/media")
+    assert removed.status_code == 200
+    assert client.get(f"/api/v1/support/public/campaigns/{public_code}/image").status_code == 404
+
+
+def test_campaign_image_rejects_missing_consent(
+    support_workspace,
+) -> None:
+    _engine, _user_id, ids, client = support_workspace
+    case_id, _public_code = create_reviewed_campaign(client, ids)
+    payload = {
+        "image_base64": campaign_image_base64(),
+        "image_mime_type": "image/jpeg",
+        "alt_text": "Learner Amina holding school books",
+        "guardian_media_consent_confirmed": True,
+        "safeguarding_review_confirmed": True,
+    }
+    assert client.post(f"/api/v1/support/cases/{case_id}/media", json=payload).status_code == 409
 
 
 def test_stellar_testnet_contribution_is_verified_before_posting(

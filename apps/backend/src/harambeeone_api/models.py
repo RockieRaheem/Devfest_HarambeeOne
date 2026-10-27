@@ -8,6 +8,7 @@ from sqlalchemy import (
     DateTime,
     ForeignKey,
     Index,
+    LargeBinary,
     Numeric,
     String,
     Text,
@@ -684,6 +685,7 @@ class SupportReferral(Base):
     guardian_authority_confirmed: Mapped[bool] = mapped_column(default=False)
     age_verification_method: Mapped[str | None] = mapped_column(String(32))
     anonymous_publication: Mapped[bool] = mapped_column(default=False)
+    public_media_consent: Mapped[bool] = mapped_column(default=False)
     gemini_processing: Mapped[bool] = mapped_column(default=False)
     cross_border_processing: Mapped[bool] = mapped_column(default=False)
     child_assent_status: Mapped[str] = mapped_column(String(24), default="pending")
@@ -1930,6 +1932,7 @@ class SupportConsent(Base):
     method: Mapped[str] = mapped_column(String(24))
     scope_version: Mapped[str] = mapped_column(String(24), default="2026-10")
     anonymous_publication: Mapped[bool] = mapped_column(default=True)
+    public_media_consent: Mapped[bool] = mapped_column(default=False)
     gemini_processing: Mapped[bool] = mapped_column(default=False)
     cross_border_processing: Mapped[bool] = mapped_column(default=False)
     child_assent_status: Mapped[str] = mapped_column(String(24), default="not_applicable")
@@ -1939,6 +1942,38 @@ class SupportConsent(Base):
         DateTime(timezone=True), server_default=func.now()
     )
     withdrawn_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class SupportCampaignMedia(Base):
+    __tablename__ = "support_campaign_media"
+    __table_args__ = (
+        CheckConstraint(
+            "status in ('approved','removed')", name="ck_support_campaign_media_status"
+        ),
+        Index("ix_support_campaign_media_school_status", "school_id", "status"),
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    case_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("support_cases.id", ondelete="RESTRICT"), unique=True, index=True
+    )
+    school_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("schools.id", ondelete="RESTRICT"), index=True
+    )
+    content: Mapped[bytes] = mapped_column(LargeBinary)
+    mime_type: Mapped[str] = mapped_column(String(32), default="image/webp")
+    content_hash: Mapped[str] = mapped_column(String(64))
+    alt_text: Mapped[str] = mapped_column(String(160))
+    width: Mapped[int]
+    height: Mapped[int]
+    byte_size: Mapped[int]
+    status: Mapped[str] = mapped_column(String(16), default="approved")
+    approved_by: Mapped[str] = mapped_column(String(120))
+    approved_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now()
+    )
+    removed_by: Mapped[str | None] = mapped_column(String(120))
+    removed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class SupportAiReview(Base):

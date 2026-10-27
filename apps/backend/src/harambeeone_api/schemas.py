@@ -926,6 +926,7 @@ class SupportConsentCreate(BaseModel):
     method: str = Field(pattern="^(otp|signed_form|witnessed_in_person)$")
     scope_version: str = Field(default="2026-10", min_length=4, max_length=24)
     anonymous_publication: bool = True
+    public_media_consent: bool = False
     gemini_processing: bool
     cross_border_processing: bool
     child_assent_status: str = Field(pattern="^(agreed|declined|not_applicable|unable_to_express)$")
@@ -942,6 +943,22 @@ class SupportAiReviewCreate(BaseModel):
             raise ValueError("Evidence image and MIME type must be provided together")
         if self.evidence_image_base64 and not self.evidence_redacted:
             raise ValueError("Confirm that identifying information was redacted")
+        return self
+
+
+class SupportCampaignMediaCreate(BaseModel):
+    image_base64: str = Field(min_length=100, max_length=2_100_000)
+    image_mime_type: str = Field(pattern="^image/(jpeg|png|webp)$")
+    alt_text: str = Field(min_length=8, max_length=160)
+    guardian_media_consent_confirmed: bool
+    safeguarding_review_confirmed: bool
+
+    @model_validator(mode="after")
+    def validate_media_approval(self):
+        if not self.guardian_media_consent_confirmed:
+            raise ValueError("Confirm the guardian's separate public-image consent")
+        if not self.safeguarding_review_confirmed:
+            raise ValueError("Confirm the image passed the school's safeguarding review")
         return self
 
 
@@ -1106,6 +1123,7 @@ class SupportReferralConsent(BaseModel):
         pattern="^(school_record|birth_certificate|guardian_declaration|national_id|other)$"
     )
     anonymous_publication: bool = False
+    public_media_consent: bool = False
     gemini_processing: bool = False
     cross_border_processing: bool = False
     child_assent_status: str = Field(pattern="^(agreed|declined|not_applicable|unable_to_express)$")

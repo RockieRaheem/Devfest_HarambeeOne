@@ -8,6 +8,7 @@ from decimal import Decimal
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.responses import Response
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
@@ -44,6 +45,7 @@ from harambeeone_api.models import (
     StudentRequirement,
     SupportAiReview,
     SupportAttestation,
+    SupportCampaignMedia,
     SupportCase,
     SupportConsent,
     SupportPaymentDestination,
@@ -59,6 +61,7 @@ from harambeeone_api.schemas import (
     SupportAiReviewCreate,
     SupportAttestationCreate,
     SupportAttestationReview,
+    SupportCampaignMediaCreate,
     SupportCaseCreate,
     SupportCaseReviewDecision,
     SupportConsentCreate,
@@ -91,6 +94,7 @@ from harambeeone_api.support_assistants import (
     private_terms_for_student,
     start_assistant_usage,
 )
+from harambeeone_api.support_media import CampaignMediaError, sanitize_campaign_image
 from harambeeone_api.support_notifications import emit_support_notification
 
 router = APIRouter(prefix="/api/v1/support", tags=["learner support"])
@@ -99,7 +103,9 @@ PRIVACY_NOTICE_VERSION = "2026-10-v1"
 PRIVACY_NOTICE = (
     "The school will use the learner's private identity only to verify eligibility and post "
     "support to the school account. Donors see an anonymous campaign code, need category, "
-    "target, verified totals and redacted outcomes—not the learner or guardian identity. "
+    "target, verified totals and redacted outcomes—not the learner or guardian name. A learner "
+    "image is optional and requires separate guardian permission, safeguarding review and an "
+    "acceptable learner assent status. "
     "Gemini and processing outside Uganda are optional. Consent may be withdrawn at any time."
 )
 
@@ -154,6 +160,7 @@ def _referral_payload(session: Session, referral: SupportReferral) -> dict:
         "privacy_notice_version": PRIVACY_NOTICE_VERSION,
         "privacy_notice": PRIVACY_NOTICE,
         "anonymous_publication": referral.anonymous_publication,
+        "public_media_consent": referral.public_media_consent,
         "gemini_processing": referral.gemini_processing,
         "cross_border_processing": referral.cross_border_processing,
         "child_assent_status": referral.child_assent_status,
@@ -417,6 +424,27 @@ def _public_payload(session: Session, support_case: SupportCase, *, detail: bool
     verified = _money_total(session, support_case.id, "verified")
     pending = _money_total(session, support_case.id, "pending")
     school = session.get(School, support_case.school_id)
+    media = session.scalar(
+        select(SupportCampaignMedia).where(
+            SupportCampaignMedia.case_id == support_case.id,
+            SupportCampaignMedia.status == "approved",
+        )
+    )
+    consent = _active_consent(session, support_case.id)
+    media_is_public = bool(media and consent and consent.public_media_consent)
+    supporter_count = session.scalar(
+        select(func.count(SupportPledge.id)).where(
+            SupportPledge.case_id == support_case.id,
+            SupportPledge.status == "verified",
+        )
+    ) or 0
+    update_count = session.scalar(
+        select(func.count(SupportAttestation.id)).where(
+            SupportAttestation.case_id == support_case.id,
+            SupportAttestation.status == "approved",
+            SupportAttestation.is_public.is_(True),
+        )
+    ) or 0
     payload = {
         "public_code": support_case.public_code,
         "title": support_case.title,
@@ -430,7 +458,20 @@ def _public_payload(session: Session, support_case: SupportCase, *, detail: bool
         "status": support_case.status,
         "school": school.name if school else "Verified participating school",
         "published_at": support_case.published_at,
-        "privacy": "Learner identity is held privately by the school and is never published.",
+        "supporter_count": supporter_count,
+        "update_count": update_count,
+        "image_url": (
+            f"/api/support/campaigns/{support_case.public_code}/image?v={media.content_hash[:12]}"
+            if media_is_public
+            else None
+        ),
+        "image_alt": media.alt_text if media_is_public else None,
+        "privacy": (
+            "This image was separately consented to and approved by the school; names and school "
+            "account identity remain private."
+            if media_is_public
+            else "Learner identity is held privately by the school and is never published."
+        ),
     }
     if not detail:
         return payload
@@ -1144,6 +1185,7 @@ def save_guardian_support_case(
             method="guardian_portal",
             scope_version=referral.privacy_notice_version or PRIVACY_NOTICE_VERSION,
             anonymous_publication=True,
+            public_media_consent=referral.public_media_consent,
             gemini_processing=referral.gemini_processing,
             cross_border_processing=referral.cross_border_processing,
             child_assent_status=referral.child_assent_status,
@@ -1237,6 +1279,7 @@ def decide_referral_consent(
     referral.guardian_authority_confirmed = payload.guardian_authority_confirmed
     referral.age_verification_method = payload.age_verification_method
     referral.anonymous_publication = payload.anonymous_publication
+    referral.public_media_consent = payload.public_media_consent
     referral.gemini_processing = payload.gemini_processing
     referral.cross_border_processing = payload.cross_border_processing
     referral.child_assent_status = payload.child_assent_status
@@ -1283,6 +1326,7 @@ def withdraw_referral_consent(
     referral.status = "withdrawn"
     referral.withdrawn_at = datetime.now(UTC)
     referral.anonymous_publication = False
+    referral.public_media_consent = False
     referral.gemini_processing = False
     referral.cross_border_processing = False
     open_cases = session.scalars(
@@ -1342,6 +1386,32 @@ def get_public_campaign(public_code: str, session: Session = Depends(get_server_
     if before != (support_case.target_amount, support_case.status):
         session.commit()
     return _public_payload(session, support_case, detail=True)
+
+
+@router.get("/public/campaigns/{public_code}/image")
+def get_public_campaign_image(
+    public_code: str, session: Session = Depends(get_server_session)
+):
+    support_case = _public_campaign(session, public_code)
+    consent = _active_consent(session, support_case.id)
+    media = session.scalar(
+        select(SupportCampaignMedia).where(
+            SupportCampaignMedia.case_id == support_case.id,
+            SupportCampaignMedia.status == "approved",
+        )
+    )
+    if media is None or consent is None or not consent.public_media_consent:
+        raise HTTPException(status_code=404, detail="Campaign image not found")
+    return Response(
+        content=media.content,
+        media_type=media.mime_type,
+        headers={
+            "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
+            "ETag": f'"{media.content_hash}"',
+            "X-Content-Type-Options": "nosniff",
+            "Content-Security-Policy": "default-src 'none'; sandbox",
+        },
+    )
 
 
 @router.post("/public/campaigns/{public_code}/pledges", status_code=status.HTTP_201_CREATED)
@@ -1907,6 +1977,9 @@ def get_support_case(
     ).all()
     consent = _active_consent(session, case_id)
     review = _latest_review(session, case_id)
+    media = session.scalar(
+        select(SupportCampaignMedia).where(SupportCampaignMedia.case_id == case_id)
+    )
     return {
         "id": support_case.id,
         "public_code": support_case.public_code,
@@ -1944,6 +2017,7 @@ def get_support_case(
         "consent": (
             {
                 "method": consent.method,
+                "public_media_consent": consent.public_media_consent,
                 "gemini_processing": consent.gemini_processing,
                 "cross_border_processing": consent.cross_border_processing,
                 "child_assent_status": consent.child_assent_status,
@@ -1952,8 +2026,124 @@ def get_support_case(
             if consent
             else None
         ),
+        "media": (
+            {
+                "status": media.status,
+                "alt_text": media.alt_text,
+                "content_hash": media.content_hash,
+                "width": media.width,
+                "height": media.height,
+            }
+            if media
+            else None
+        ),
         "ai_review": json.loads(review.result_json) if review else None,
     }
+
+
+@router.post("/cases/{case_id}/media")
+def approve_support_campaign_media(
+    case_id: uuid.UUID,
+    payload: SupportCampaignMediaCreate,
+    session: Session = Depends(get_session),
+    context: SchoolContext = Depends(require_permission("support:approve")),
+):
+    support_case = _private_case(session, case_id, context.school_id)
+    if support_case.status in {"closed", "withdrawn"}:
+        raise HTTPException(status_code=409, detail="This campaign no longer accepts media")
+    consent = _active_consent(session, case_id)
+    if consent is None or not consent.public_media_consent:
+        raise HTTPException(
+            status_code=409,
+            detail="Separate guardian consent for a public learner image is required",
+        )
+    if consent.child_assent_status == "declined":
+        raise HTTPException(status_code=409, detail="The learner declined publication")
+    if support_case.referral_id:
+        referral = session.get(SupportReferral, support_case.referral_id)
+        if referral is None or not referral.public_media_consent:
+            raise HTTPException(
+                status_code=409,
+                detail="Guardian portal consent does not permit a public image",
+            )
+    student = session.get(Student, support_case.student_id)
+    person = session.get(Person, student.person_id) if student else None
+    if student is None or person is None:
+        raise HTTPException(status_code=409, detail="Learner identity record is incomplete")
+    alt_text = payload.alt_text.strip()
+    _assert_public_text(support_case, student, person, alt_text)
+    try:
+        image = sanitize_campaign_image(payload.image_base64, payload.image_mime_type)
+    except CampaignMediaError as error:
+        raise HTTPException(status_code=422, detail=str(error)) from error
+    media = session.scalar(
+        select(SupportCampaignMedia).where(SupportCampaignMedia.case_id == case_id)
+    )
+    if media is None:
+        media = SupportCampaignMedia(case_id=case_id, school_id=context.school_id)
+        session.add(media)
+    media.content = image.content
+    media.mime_type = image.mime_type
+    media.content_hash = image.content_hash
+    media.alt_text = alt_text
+    media.width = image.width
+    media.height = image.height
+    media.byte_size = len(image.content)
+    media.status = "approved"
+    media.approved_by = context.actor
+    media.approved_at = datetime.now(UTC)
+    media.removed_by = None
+    media.removed_at = None
+    session.flush()
+    session.add(
+        AuditEvent(
+            school_id=context.school_id,
+            entity_type="support_campaign_media",
+            entity_id=media.id,
+            action="approved",
+            actor=context.actor,
+            summary=f"Approved consented campaign image for {support_case.public_code}",
+        )
+    )
+    session.commit()
+    return {
+        "status": media.status,
+        "content_hash": media.content_hash,
+        "alt_text": media.alt_text,
+        "width": media.width,
+        "height": media.height,
+    }
+
+
+@router.delete("/cases/{case_id}/media")
+def remove_support_campaign_media(
+    case_id: uuid.UUID,
+    session: Session = Depends(get_session),
+    context: SchoolContext = Depends(require_permission("support:approve")),
+):
+    support_case = _private_case(session, case_id, context.school_id)
+    media = session.scalar(
+        select(SupportCampaignMedia).where(SupportCampaignMedia.case_id == case_id)
+    )
+    if media is None or media.status == "removed":
+        return {"status": "removed"}
+    media.status = "removed"
+    media.content = b""
+    media.byte_size = 0
+    media.removed_by = context.actor
+    media.removed_at = datetime.now(UTC)
+    session.add(
+        AuditEvent(
+            school_id=context.school_id,
+            entity_type="support_campaign_media",
+            entity_id=media.id,
+            action="removed",
+            actor=context.actor,
+            summary=f"Removed public campaign image for {support_case.public_code}",
+        )
+    )
+    session.commit()
+    return {"status": media.status}
 
 
 @router.post("/cases", status_code=status.HTTP_201_CREATED)
@@ -2102,6 +2292,7 @@ def record_support_consent(
     consent.method = payload.method
     consent.scope_version = payload.scope_version
     consent.anonymous_publication = True
+    consent.public_media_consent = payload.public_media_consent
     consent.gemini_processing = payload.gemini_processing
     consent.cross_border_processing = payload.cross_border_processing
     consent.child_assent_status = payload.child_assent_status
@@ -2120,7 +2311,11 @@ def record_support_consent(
         )
     )
     session.commit()
-    return {"status": consent.status, "child_assent_status": consent.child_assent_status}
+    return {
+        "status": consent.status,
+        "child_assent_status": consent.child_assent_status,
+        "public_media_consent": consent.public_media_consent,
+    }
 
 
 @router.post("/cases/{case_id}/ai-review")

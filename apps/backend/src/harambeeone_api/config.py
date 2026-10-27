@@ -19,6 +19,9 @@ class Settings(BaseSettings):
 
     app_name: str = "HarambeeOne API"
     app_environment: str = Field(default="development", alias="NODE_ENV")
+    cors_allowed_origins: str = Field(
+        default="http://localhost:3000,http://localhost:3002", alias="CORS_ALLOWED_ORIGINS"
+    )
     database_provider: Literal["url", "cloud_sql"] = "url"
     database_url: str | None = None
     migration_database_url: str | None = None
@@ -75,11 +78,22 @@ class Settings(BaseSettings):
             raise ValueError("Production authentication must use Firebase")
         if self.app_environment == "production" and self.firebase_auth_emulator_host:
             raise ValueError("Firebase Auth emulator must not be configured in production")
+        origins = [item.strip() for item in self.cors_allowed_origins.split(",") if item.strip()]
+        if not origins or "*" in origins:
+            raise ValueError("CORS_ALLOWED_ORIGINS must list explicit application origins")
+        if self.app_environment == "production" and any(
+            not origin.startswith("https://") for origin in origins
+        ):
+            raise ValueError("Production CORS origins must use HTTPS")
         if self.stellar_horizon_url.rstrip("/") != "https://horizon-testnet.stellar.org":
             raise ValueError("STELLAR_HORIZON_URL must use the official Stellar testnet Horizon")
         if self.app_environment == "production" and self.stellar_demo_faucet_enabled:
             raise ValueError("The Stellar testnet demo faucet cannot run in production")
         return self
+
+    @property
+    def allowed_origins(self) -> list[str]:
+        return [item.strip() for item in self.cors_allowed_origins.split(",") if item.strip()]
 
 
 @lru_cache
