@@ -635,6 +635,57 @@ class RequirementCreate(BaseModel):
         return self
 
 
+class ClassStandardRequirementCreate(BaseModel):
+    name: str = Field(min_length=2, max_length=120)
+    code: str = Field(min_length=2, max_length=20, pattern="^[A-Za-z0-9_-]+$")
+    requirement_type: str = Field(pattern="^(payment|school_item|bring_item|document)$")
+    description: str | None = Field(default=None, max_length=1000)
+    amount: Decimal = Field(default=Decimal("0"), ge=0, max_digits=18, decimal_places=2)
+    quantity: Decimal = Field(default=Decimal("1"), gt=0, max_digits=10, decimal_places=2)
+    unit: str = Field(default="item", min_length=1, max_length=30)
+    due_date: date | None = None
+
+    @model_validator(mode="after")
+    def validate_requirement(self) -> "ClassStandardRequirementCreate":
+        self.name = self.name.strip()
+        self.code = self.code.strip().upper()
+        self.unit = self.unit.strip().lower()
+        payable = self.requirement_type in {"payment", "school_item"}
+        if payable and self.amount <= 0:
+            raise ValueError("Payable requirements must have an amount greater than zero")
+        if not payable and self.amount != 0:
+            raise ValueError("Brought items and documents cannot have a cash amount")
+        return self
+
+
+class ClassStandardCreate(BaseModel):
+    school_id: uuid.UUID
+    period_id: uuid.UUID
+    class_id: uuid.UUID
+    name: str = Field(min_length=2, max_length=120)
+    currency: str = Field(default="UGX", pattern="^[A-Z]{3}$")
+    items: list[FeeLineCreate] = Field(min_length=1, max_length=30)
+    installments: list[InstallmentCreate] = Field(min_length=1, max_length=20)
+    requirements: list[ClassStandardRequirementCreate] = Field(default_factory=list, max_length=30)
+
+    @model_validator(mode="after")
+    def validate_standard(self) -> "ClassStandardCreate":
+        fee_total = sum(item.amount for item in self.items)
+        installment_total = sum(
+            (item.calculated_amount(fee_total) for item in self.installments), Decimal("0")
+        )
+        if fee_total != installment_total:
+            raise ValueError("Installments must total the fee category amounts")
+        if len({item.category_id for item in self.items}) != len(self.items):
+            raise ValueError("Each fee category may appear only once")
+        if len({item.sort_order for item in self.installments}) != len(self.installments):
+            raise ValueError("Installment order values must be unique")
+        codes = [item.code for item in self.requirements]
+        if len(set(codes)) != len(codes):
+            raise ValueError("Each class requirement code must be unique")
+        return self
+
+
 class BillingAdjustmentCreate(BaseModel):
     school_id: uuid.UUID
     period_id: uuid.UUID | None = None

@@ -19,19 +19,130 @@ from harambeeone_api.models import (
     Enrollment,
     FeeCategory,
     FeeStructure,
+    FeeStructureItem,
+    InstallmentRule,
     LedgerEntry,
     Person,
     Requirement,
+    RequirementClass,
     Student,
     StudentFeeAssignment,
     StudentRequirement,
 )
 from harambeeone_api.periods import resolve_period
-from harambeeone_api.schemas import BillingAdjustmentCreate, BillingPublishCreate
+from harambeeone_api.schemas import (
+    BillingAdjustmentCreate,
+    BillingPublishCreate,
+    ClassStandardCreate,
+)
 
 router = APIRouter(prefix="/api/v1", tags=["billing"])
 PAYABLE_REQUIREMENT_TYPES = {"payment", "school_item"}
 CREDIT_TYPES = {"discount", "sponsorship_credit", "waiver"}
+
+
+def assign_published_class_requirements(
+    session: Session,
+    *,
+    school_id: uuid.UUID,
+    period_id: uuid.UUID,
+    student_id: uuid.UUID,
+    class_id: uuid.UUID,
+    actor: str,
+) -> int:
+    requirements = session.scalars(
+        select(Requirement)
+        .join(RequirementClass, RequirementClass.requirement_id == Requirement.id)
+        .where(
+            Requirement.school_id == school_id,
+            Requirement.period_id == period_id,
+            RequirementClass.class_id == class_id,
+            Requirement.status == "published",
+            Requirement.is_active.is_(True),
+            Requirement.is_mandatory.is_(True),
+            Requirement.stream_id.is_(None),
+            Requirement.boarding_status.is_(None),
+            ~Requirement.selected_learners.any(),
+        )
+        .order_by(Requirement.id)
+    ).all()
+    if not requirements:
+        return 0
+    existing = set(
+        session.scalars(
+            select(StudentRequirement.requirement_id).where(
+                StudentRequirement.student_id == student_id,
+                StudentRequirement.requirement_id.in_([item.id for item in requirements]),
+            )
+        ).all()
+    )
+    pending = [item for item in requirements if item.id not in existing]
+    if not pending:
+        return 0
+    charge_total = sum(
+        (item.amount for item in pending if item.requirement_type in PAYABLE_REQUIREMENT_TYPES),
+        Decimal("0"),
+    )
+    pending_fingerprint = hashlib.sha256(
+        ":".join(sorted(item.id.hex for item in pending)).encode()
+    ).hexdigest()[:16]
+    idempotency_key = f"auto_req_{student_id.hex}_{pending_fingerprint}"
+    publication = session.scalar(
+        select(BillingPublication).where(
+            BillingPublication.school_id == school_id,
+            BillingPublication.period_id == period_id,
+            BillingPublication.idempotency_key == idempotency_key,
+        )
+    )
+    if publication is None:
+        publication = BillingPublication(
+            school_id=school_id,
+            period_id=period_id,
+            idempotency_key=idempotency_key,
+            preview_token=hashlib.sha256(idempotency_key.encode()).hexdigest(),
+            learner_count=1,
+            charge_total=charge_total,
+            credit_total=Decimal("0"),
+            net_total=charge_total,
+            created_by=actor,
+        )
+        session.add(publication)
+        session.flush()
+    for requirement in pending:
+        assignment = StudentRequirement(
+            requirement_id=requirement.id,
+            student_id=student_id,
+            publication_id=publication.id,
+            expected_amount=requirement.amount,
+            expected_quantity=requirement.quantity,
+        )
+        session.add(assignment)
+        session.flush()
+        if requirement.requirement_type in PAYABLE_REQUIREMENT_TYPES:
+            session.add(
+                LedgerEntry(
+                    school_id=school_id,
+                    period_id=period_id,
+                    student_id=student_id,
+                    entry_type="requirement_charge",
+                    amount=requirement.amount,
+                    reference=f"REQ:{assignment.id}",
+                    description=requirement.name,
+                    publication_id=publication.id,
+                    requirement_assignment_id=assignment.id,
+                )
+            )
+    session.add(
+        AuditEvent(
+            school_id=school_id,
+            entity_type="student_requirement",
+            entity_id=student_id,
+            action="automatically_assigned",
+            actor=actor,
+            summary=f"Applied {len(pending)} published class requirements to learner placement",
+        )
+    )
+    return len(pending)
 
 
 def assign_published_general_fee(
@@ -62,6 +173,14 @@ def assign_published_general_fee(
         )
     )
     if plan is None:
+        requirement_count = assign_published_class_requirements(
+            session,
+            school_id=school_id,
+            period_id=period_id,
+            student_id=student_id,
+            class_id=class_id,
+            actor=actor,
+        )
         draft_exists = session.scalar(
             select(FeeStructure.id).where(
                 FeeStructure.school_id == school_id,
@@ -74,7 +193,10 @@ def assign_published_general_fee(
                 FeeStructure.is_active.is_(True),
             )
         )
-        return {"status": "pending_publication" if draft_exists else "not_configured"}
+        return {
+            "status": "pending_publication" if draft_exists else "not_configured",
+            "requirement_assignment_count": requirement_count,
+        }
 
     assignments = session.execute(
         select(StudentFeeAssignment, FeeStructure)
@@ -86,7 +208,19 @@ def assign_published_general_fee(
         )
     ).all()
     if any(assignment.fee_structure_id == plan.id for assignment, _ in assignments):
-        return {"status": "already_assigned", "plan_id": str(plan.id)}
+        requirement_count = assign_published_class_requirements(
+            session,
+            school_id=school_id,
+            period_id=period_id,
+            student_id=student_id,
+            class_id=class_id,
+            actor=actor,
+        )
+        return {
+            "status": "already_assigned",
+            "plan_id": str(plan.id),
+            "requirement_assignment_count": requirement_count,
+        }
     if assignments:
         return {
             "status": "review_required",
@@ -95,7 +229,17 @@ def assign_published_general_fee(
                 "The learner already has a fee posted in this period. Placement was saved, "
                 "but the new class fee was not added automatically. Review the account first."
             ),
+            "requirement_assignment_count": 0,
         }
+
+    requirement_count = assign_published_class_requirements(
+        session,
+        school_id=school_id,
+        period_id=period_id,
+        student_id=student_id,
+        class_id=class_id,
+        actor=actor,
+    )
 
     idempotency_key = f"auto_fee_{student_id.hex}_{plan.id.hex}"
     preview_token = hashlib.sha256(idempotency_key.encode()).hexdigest()
@@ -158,11 +302,154 @@ def assign_published_general_fee(
         "plan_id": str(plan.id),
         "plan_name": plan.name,
         "amount": str(plan.total_amount),
+        "requirement_assignment_count": requirement_count,
     }
 
 
 def _money(value: Decimal) -> str:
     return str(value.quantize(Decimal("0.01")))
+
+
+@router.post("/billing/class-standards", status_code=status.HTTP_201_CREATED)
+def create_class_standard(
+    payload: ClassStandardCreate,
+    session: Session = Depends(get_session),
+    context: SchoolContext = Depends(require_permission("fees:write")),
+) -> dict:
+    """Create one class fee and its mandatory requirements in one transaction."""
+    context.assert_school(payload.school_id)
+    period = resolve_period(
+        session,
+        school_id=context.school_id,
+        period_id=payload.period_id,
+        writable=True,
+    )
+    academic_class = session.get(AcademicClass, payload.class_id)
+    if academic_class is None or academic_class.school_id != context.school_id:
+        raise HTTPException(status_code=422, detail="Class does not belong to school")
+    existing_standard = session.scalar(
+        select(FeeStructure.id).where(
+            FeeStructure.school_id == context.school_id,
+            FeeStructure.period_id == period.id,
+            FeeStructure.class_id == payload.class_id,
+            FeeStructure.stream_id.is_(None),
+            FeeStructure.boarding_status.is_(None),
+            FeeStructure.target_type == "cohort",
+            FeeStructure.is_active.is_(True),
+        )
+    )
+    if existing_standard:
+        raise HTTPException(
+            status_code=409,
+            detail="An active general fee already exists for this class and academic period",
+        )
+    category_ids = {item.category_id for item in payload.items}
+    valid_category_ids = set(
+        session.scalars(
+            select(FeeCategory.id).where(
+                FeeCategory.school_id == context.school_id,
+                FeeCategory.is_active.is_(True),
+                FeeCategory.id.in_(category_ids),
+            )
+        ).all()
+    )
+    if valid_category_ids != category_ids:
+        raise HTTPException(status_code=422, detail="One or more fee categories are invalid")
+    requested_codes = {item.code for item in payload.requirements}
+    existing_codes = set(
+        session.scalars(
+            select(Requirement.code).where(
+                Requirement.school_id == context.school_id,
+                Requirement.academic_year == period.academic_year.year,
+                Requirement.term == period.sequence,
+                Requirement.code.in_(requested_codes),
+            )
+        ).all()
+    )
+    if existing_codes:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Requirement code already exists: {sorted(existing_codes)[0]}",
+        )
+
+    total = sum(item.amount for item in payload.items)
+    plan = FeeStructure(
+        school_id=context.school_id,
+        class_id=payload.class_id,
+        stream_id=None,
+        period_id=period.id,
+        name=payload.name.strip(),
+        academic_year=period.academic_year.year,
+        term=period.sequence,
+        currency=payload.currency,
+        total_amount=total,
+        target_type="cohort",
+        boarding_status=None,
+        items=[
+            FeeStructureItem(category_id=item.category_id, amount=item.amount)
+            for item in payload.items
+        ],
+        installments=[
+            InstallmentRule(
+                name=item.name,
+                amount=item.calculated_amount(total),
+                calculation_type=item.calculation_type,
+                percentage=item.percentage,
+                due_date=item.due_date,
+                sort_order=item.sort_order,
+            )
+            for item in payload.installments
+        ],
+    )
+    requirements = [
+        Requirement(
+            school_id=context.school_id,
+            period_id=period.id,
+            name=item.name,
+            code=item.code,
+            requirement_type=item.requirement_type,
+            description=item.description,
+            academic_year=period.academic_year.year,
+            term=period.sequence,
+            amount=item.amount,
+            quantity=item.quantity,
+            unit=item.unit,
+            due_date=item.due_date,
+            is_mandatory=True,
+            classes=[RequirementClass(class_id=payload.class_id)],
+        )
+        for item in payload.requirements
+    ]
+    session.add(plan)
+    session.add_all(requirements)
+    try:
+        session.flush()
+        session.add(
+            AuditEvent(
+                school_id=context.school_id,
+                entity_type="class_billing_standard",
+                entity_id=plan.id,
+                action="created",
+                actor=context.actor,
+                summary=(
+                    f"Created {academic_class.name} standard with {len(payload.items)} fee "
+                    f"categories and {len(requirements)} requirements"
+                ),
+            )
+        )
+        session.commit()
+    except IntegrityError as error:
+        session.rollback()
+        raise HTTPException(
+            status_code=409,
+            detail="The class standard conflicts with existing fee or requirement configuration",
+        ) from error
+    return {
+        "fee_plan_id": plan.id,
+        "requirement_ids": [item.id for item in requirements],
+        "total_amount": _money(plan.total_amount),
+        "status": "draft",
+    }
 
 
 def _billing_preview(session: Session, school_id: uuid.UUID, period_id: uuid.UUID) -> dict:

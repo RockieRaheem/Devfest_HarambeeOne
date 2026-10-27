@@ -201,6 +201,211 @@ def create_plan(
     return response.json()["id"]
 
 
+def class_standard_payload(ids: dict, class_id: uuid.UUID, *, name: str, code: str) -> dict:
+    return {
+        "school_id": str(ids["school"]),
+        "period_id": str(ids["period"]),
+        "class_id": str(class_id),
+        "name": name,
+        "currency": "UGX",
+        "items": [{"category_id": str(ids["category"]), "amount": 120_000}],
+        "installments": [
+            {
+                "name": "Full term",
+                "calculation_type": "fixed",
+                "amount": 120_000,
+                "due_date": "2027-02-10",
+                "sort_order": 1,
+            }
+        ],
+        "requirements": [
+            {
+                "name": "Class activity contribution",
+                "code": code,
+                "requirement_type": "payment",
+                "amount": 20_000,
+                "quantity": 1,
+                "unit": "term",
+                "due_date": "2027-02-10",
+            },
+            {
+                "name": "Exercise books",
+                "code": f"{code}-BOOKS",
+                "requirement_type": "bring_item",
+                "amount": 0,
+                "quantity": 4,
+                "unit": "book",
+                "due_date": "2027-02-10",
+            },
+        ],
+    }
+
+
+def test_class_standard_creates_and_publishes_fees_requirements_and_bursary(
+    billing_workspace,
+) -> None:
+    engine, _user_id, ids, client = billing_workspace
+    created = client.post(
+        "/api/v1/billing/class-standards",
+        json=class_standard_payload(
+            ids, ids["primary"], name="Primary Seven standard", code="P7-ACT"
+        ),
+    )
+    assert created.status_code == 201, created.text
+    assert created.json()["status"] == "draft"
+    assert created.json()["total_amount"] == "120000.00"
+    assert len(created.json()["requirement_ids"]) == 2
+
+    query = f"school_id={ids['school']}&period_id={ids['period']}"
+    preview = client.get(f"/api/v1/billing/preview?{query}").json()
+    assert preview["summary"] == {
+        "learner_count": 2,
+        "fee_assignment_count": 2,
+        "requirement_assignment_count": 4,
+        "adjustment_count": 0,
+        "charge_total": "280000.00",
+        "credit_total": "0.00",
+        "net_total": "280000.00",
+    }
+    published = client.post(
+        "/api/v1/billing/publish",
+        json={
+            "school_id": str(ids["school"]),
+            "period_id": str(ids["period"]),
+            "preview_token": preview["preview_token"],
+            "idempotency_key": "publish-primary-standard",
+        },
+    )
+    assert published.status_code == 201, published.text
+
+    bursary = client.post(
+        "/api/v1/billing/adjustments",
+        json={
+            "school_id": str(ids["school"]),
+            "period_id": str(ids["period"]),
+            "student_id": str(ids["learners"][0]),
+            "category_id": str(ids["category"]),
+            "adjustment_type": "sponsorship_credit",
+            "amount": 30_000,
+            "description": "Hardship bursary",
+            "reason": "Approved by the school bursary committee",
+        },
+    )
+    assert bursary.status_code == 201, bursary.text
+    bursary_preview = client.get(f"/api/v1/billing/preview?{query}").json()
+    assert bursary_preview["summary"]["credit_total"] == "30000.00"
+    assert bursary_preview["summary"]["net_total"] == "-30000.00"
+    credited = client.post(
+        "/api/v1/billing/publish",
+        json={
+            "school_id": str(ids["school"]),
+            "period_id": str(ids["period"]),
+            "preview_token": bursary_preview["preview_token"],
+            "idempotency_key": "publish-primary-bursary",
+        },
+    )
+    assert credited.status_code == 201, credited.text
+
+    with Session(engine) as session:
+        assert session.scalar(select(func.count(FeeStructure.id))) == 1
+        assert session.scalar(select(func.count(Requirement.id))) == 2
+        assert session.scalar(select(func.count(StudentFeeAssignment.id))) == 2
+        assert session.scalar(select(func.count(StudentRequirement.id))) == 4
+        total = session.scalar(select(func.sum(LedgerEntry.amount)))
+        assert total == Decimal("250000.00")
+
+
+def test_class_standard_conflict_does_not_leave_partial_fee_plan(billing_workspace) -> None:
+    engine, _user_id, ids, client = billing_workspace
+    first = client.post(
+        "/api/v1/billing/class-standards",
+        json=class_standard_payload(
+            ids, ids["primary"], name="Primary Seven standard", code="SHARED-ACT"
+        ),
+    )
+    assert first.status_code == 201, first.text
+    conflicting = client.post(
+        "/api/v1/billing/class-standards",
+        json=class_standard_payload(
+            ids, ids["secondary"], name="Senior Four standard", code="SHARED-ACT"
+        ),
+    )
+    assert conflicting.status_code == 409
+    assert "Requirement code already exists" in conflicting.json()["detail"]
+    with Session(engine) as session:
+        assert session.scalar(select(func.count(FeeStructure.id))) == 1
+        assert session.scalar(select(func.count(Requirement.id))) == 2
+
+
+def test_new_learner_inherits_published_class_fee_and_requirements(billing_workspace) -> None:
+    engine, _user_id, ids, client = billing_workspace
+    created = client.post(
+        "/api/v1/billing/class-standards",
+        json=class_standard_payload(
+            ids, ids["primary"], name="Primary Seven standard", code="P7-NEW"
+        ),
+    )
+    assert created.status_code == 201, created.text
+    query = f"school_id={ids['school']}&period_id={ids['period']}"
+    preview = client.get(f"/api/v1/billing/preview?{query}").json()
+    published = client.post(
+        "/api/v1/billing/publish",
+        json={
+            "school_id": str(ids["school"]),
+            "period_id": str(ids["period"]),
+            "preview_token": preview["preview_token"],
+            "idempotency_key": "publish-standard-before-registration",
+        },
+    )
+    assert published.status_code == 201, published.text
+
+    registration = client.post(
+        "/api/v1/students",
+        json={
+            "school_id": str(ids["school"]),
+            "period_id": str(ids["period"]),
+            "first_name": "New",
+            "last_name": "Standard",
+            "gender": "female",
+            "learner_identification_number": "LIN-STANDARD-001",
+            "class_id": str(ids["primary"]),
+            "stream_id": str(ids["east"]),
+            "academic_year": 2027,
+            "term": 1,
+            "boarding_status": "day",
+            "nationality": "Ugandan",
+            "guardians": [
+                {
+                    "first_name": "Primary",
+                    "last_name": "Guardian",
+                    "relationship": "guardian",
+                    "phone": "+256700000099",
+                    "is_primary": True,
+                }
+            ],
+        },
+    )
+    assert registration.status_code == 201, registration.text
+    student_id = uuid.UUID(registration.json()["id"])
+    with Session(engine) as session:
+        fee_assignment = session.scalar(
+            select(StudentFeeAssignment).where(
+                StudentFeeAssignment.student_id == student_id
+            )
+        )
+        assert fee_assignment is not None
+        assert fee_assignment.amount == Decimal("120000.00")
+        assert session.scalar(
+            select(func.count(StudentRequirement.id)).where(
+                StudentRequirement.student_id == student_id
+            )
+        ) == 2
+        learner_total = session.scalar(
+            select(func.sum(LedgerEntry.amount)).where(LedgerEntry.student_id == student_id)
+        )
+        assert learner_total == Decimal("140000.00")
+
+
 def test_empty_class_with_only_draft_billing_can_be_deleted(billing_workspace) -> None:
     engine, _user_id, ids, client = billing_workspace
     created = client.post(
