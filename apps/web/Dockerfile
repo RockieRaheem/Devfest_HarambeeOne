@@ -25,7 +25,7 @@ RUN pnpm --dir apps/web build
 FROM node:22-alpine AS runtime
 ENV NODE_ENV=production PORT=3000 HOSTNAME=0.0.0.0
 WORKDIR /app
-RUN addgroup -S harambeeone && addgroup -g 1000 rendersecrets && adduser -S harambeeone -G harambeeone && addgroup harambeeone rendersecrets
+RUN addgroup -S harambeeone && adduser -S harambeeone -G harambeeone && addgroup harambeeone node
 COPY --from=build --chown=harambeeone:harambeeone /repo/apps/web/.next/standalone ./
 COPY --from=build --chown=harambeeone:harambeeone /repo/apps/web/.next/static ./apps/web/.next/static
 COPY --from=build --chown=harambeeone:harambeeone /repo/apps/web/public ./apps/web/public
