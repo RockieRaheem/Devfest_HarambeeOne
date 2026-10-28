@@ -6,6 +6,7 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
+  runtime: 'nodejs',
   matcher: [
     '/((?!_next/static|_next/image|firebase-messaging-sw.js|harambeeone-logo.png|favicon.ico|api/health).*)',
   ],
