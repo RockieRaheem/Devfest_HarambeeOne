@@ -34,11 +34,13 @@ from harambeeone_api.models import (
     Payment,
     PaymentAllocation,
     Person,
+    Requirement,
     School,
     SchoolMembership,
     StellarAnchor,
     Student,
     StudentFeeAssignment,
+    StudentRequirement,
     SupportAiReview,
     SupportAssistantUsage,
     SupportCase,
@@ -755,7 +757,32 @@ def test_guardian_authors_case_school_requests_changes_and_owner_publishes(
             consented_at=datetime.now(UTC),
             created_by="owner@example.com",
         )
-        session.add(referral)
+        requirement = Requirement(
+            school_id=ids["school"],
+            period_id=ids["period"],
+            name="Candidate uniform",
+            code="P7-UNIFORM",
+            requirement_type="school_item",
+            academic_year=2026,
+            term=3,
+            amount=Decimal("80000"),
+            quantity=Decimal("1"),
+            unit="set",
+            status="published",
+        )
+        session.add(requirement)
+        session.flush()
+        session.add_all(
+            [
+                referral,
+                StudentRequirement(
+                    requirement_id=requirement.id,
+                    student_id=ids["student"],
+                    expected_amount=Decimal("80000"),
+                    expected_quantity=Decimal("1"),
+                ),
+            ]
+        )
         session.commit()
         referral_id = referral.id
 
@@ -765,6 +792,14 @@ def test_guardian_authors_case_school_requests_changes_and_owner_publishes(
     obligations = client.get(f"/api/v1/support/guardian/referrals/{referral_id}/obligations")
     assert obligations.status_code == 200, obligations.text
     assert Decimal(str(obligations.json()["general"]["outstanding"])) == Decimal("500000")
+    assert obligations.json()["requirements"] == [
+        {
+            "id": obligations.json()["requirements"][0]["id"],
+            "label": "Candidate uniform",
+            "outstanding": 80000.0,
+            "suggested_category": "uniform",
+        }
+    ]
     saved = client.post(
         f"/api/v1/support/guardian/referrals/{referral_id}/case",
         json={

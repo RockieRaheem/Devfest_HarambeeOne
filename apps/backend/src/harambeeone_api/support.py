@@ -212,6 +212,25 @@ def _obligation_balance(
     return max(outstanding, Decimal("0")), "School fees / general balance"
 
 
+def _support_need_category(requirement: Requirement) -> str:
+    searchable = " ".join(
+        value.lower()
+        for value in (requirement.name, requirement.code, requirement.description)
+        if value
+    )
+    categories = (
+        ("uniform", ("uniform", "shirt", "sweater", "shoe")),
+        ("learning_materials", ("book", "stationery", "material", "textbook")),
+        ("meals", ("meal", "lunch", "food")),
+        ("transport", ("transport", "bus", "vehicle")),
+        ("examination", ("exam", "candidate", "assessment")),
+    )
+    for category, keywords in categories:
+        if any(keyword in searchable for keyword in keywords):
+            return category
+    return "other"
+
+
 def _case_live_limit(session: Session, support_case: SupportCase) -> Decimal:
     outstanding, _label = _obligation_balance(
         session,
@@ -1187,7 +1206,7 @@ def list_guardian_referral_obligations(
                     "id": assignment.id,
                     "label": requirement.name,
                     "outstanding": outstanding,
-                    "suggested_category": requirement.category,
+                    "suggested_category": _support_need_category(requirement),
                 }
             )
     return {

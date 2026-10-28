@@ -367,6 +367,10 @@ Completion evidence:
   guardian-authored campaign until its consented photograph is sanitized and safeguard-approved.
 - Public API regression coverage proves the limited name, registration badge and image are
   returned while the admission number, private narrative and guardian email remain absent.
+- The guardian draft obligations endpoint now classifies payable requirements from real schema
+  fields instead of reading a nonexistent category attribute. Regression coverage includes a
+  published school-item assignment; the interface initializes its live maximum, suggests the
+  matching need category, and handles non-JSON server failures without exposing parser errors.
 - Ruff, all 158 backend tests, web lint, TypeScript validation, and the optimized 50-route Next.js
   production build pass. No schema migration or paid service is required; Firebase F6 remains
   next.
