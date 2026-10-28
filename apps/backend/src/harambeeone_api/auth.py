@@ -156,7 +156,10 @@ class IdentityVerifier(Protocol):
 
 @lru_cache(maxsize=1)
 def _jwks_client() -> PyJWKClient:
-    issuer = f"{str(get_settings().supabase_url).rstrip('/')}/auth/v1"
+    supabase_url = get_settings().supabase_url
+    if not supabase_url:
+        raise IdentityProviderUnavailable("Supabase rollback authentication is not configured")
+    issuer = f"{str(supabase_url).rstrip('/')}/auth/v1"
     return PyJWKClient(
         f"{issuer}/.well-known/jwks.json",
         cache_jwk_set=True,
@@ -217,7 +220,10 @@ class SupabaseAccessTokenVerifier:
     """Temporary non-production rollback boundary until the final cutover."""
 
     def verify(self, token: str) -> ExternalIdentity:
-        issuer = f"{str(get_settings().supabase_url).rstrip('/')}/auth/v1"
+        supabase_url = get_settings().supabase_url
+        if not supabase_url:
+            raise IdentityProviderUnavailable("Supabase rollback authentication is not configured")
+        issuer = f"{str(supabase_url).rstrip('/')}/auth/v1"
         try:
             signing_key = _jwks_client().get_signing_key_from_jwt(token)
             claims = jwt.decode(

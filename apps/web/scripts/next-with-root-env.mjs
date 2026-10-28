@@ -5,8 +5,6 @@ import { fileURLToPath } from 'node:url';
 const allowedVariables = new Set([
   'API_URL',
   'NEXT_PUBLIC_API_URL',
-  'NEXT_PUBLIC_SUPABASE_URL',
-  'NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY',
   'FIREBASE_PROJECT_ID',
   'FIREBASE_AUTH_EMULATOR_HOST',
   'NEXT_PUBLIC_FIREBASE_API_KEY',

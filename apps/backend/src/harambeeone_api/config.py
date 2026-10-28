@@ -29,8 +29,10 @@ class Settings(BaseSettings):
     cloud_sql_database: str | None = None
     cloud_sql_user: str | None = None
     cloud_sql_server_role: str | None = None
-    supabase_url: AnyHttpUrl
-    supabase_publishable_key: str = Field(alias="NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY")
+    supabase_url: AnyHttpUrl | None = None
+    supabase_publishable_key: str | None = Field(
+        default=None, alias="NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
+    )
     firebase_project_id: str = Field(default="demo-harambeeone", alias="FIREBASE_PROJECT_ID")
     firebase_auth_emulator_host: str | None = Field(
         default=None, alias="FIREBASE_AUTH_EMULATOR_HOST"
@@ -76,6 +78,13 @@ class Settings(BaseSettings):
             raise ValueError("CLOUD_SQL_SERVER_ROLE must be a safe PostgreSQL identifier")
         if self.app_environment == "production" and self.auth_provider != "firebase":
             raise ValueError("Production authentication must use Firebase")
+        if self.auth_provider == "supabase" and not (
+            self.supabase_url and self.supabase_publishable_key
+        ):
+            raise ValueError(
+                "SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY are required "
+                "only when AUTH_PROVIDER=supabase"
+            )
         if self.app_environment == "production" and self.firebase_auth_emulator_host:
             raise ValueError("Firebase Auth emulator must not be configured in production")
         origins = [item.strip() for item in self.cors_allowed_origins.split(",") if item.strip()]

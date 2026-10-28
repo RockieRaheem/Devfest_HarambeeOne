@@ -1,0 +1,84 @@
+services:
+  - type: web
+    name: harambeeone-api
+    runtime: docker
+    plan: free
+    region: frankfurt
+    branch: main
+    autoDeployTrigger: commit
+    dockerfilePath: ./apps/backend/Dockerfile
+    dockerContext: ./apps/backend
+    healthCheckPath: /health/readiness
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+      - key: AUTH_PROVIDER
+        value: firebase
+      - key: DATABASE_PROVIDER
+        value: cloud_sql
+      - key: CLOUD_SQL_INSTANCE
+        sync: false
+      - key: CLOUD_SQL_DATABASE
+        value: harambeeone
+      - key: CLOUD_SQL_USER
+        sync: false
+      - key: CLOUD_SQL_SERVER_ROLE
+        value: firebasewriter_harambeeone_public
+      - key: FIREBASE_PROJECT_ID
+        value: edu-pay-ledger
+      - key: GOOGLE_APPLICATION_CREDENTIALS
+        value: /etc/secrets/google-application-credentials.json
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://harambeeone.onrender.com
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.8-flash
+      - key: FCM_DELIVERY_ENABLED
+        value: true
+      - key: FCM_DELIVERY_INTERVAL_SECONDS
+        value: 30
+      - key: STELLAR_HORIZON_URL
+        value: https://horizon-testnet.stellar.org
+      - key: STELLAR_DEMO_UGX_PER_XLM
+        value: 1000
+      - key: STELLAR_DEMO_FAUCET_ENABLED
+        value: false
+
+  - type: web
+    name: harambeeone
+    runtime: docker
+    plan: free
+    region: frankfurt
+    branch: main
+    autoDeployTrigger: commit
+    dockerfilePath: ./apps/web/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+      - key: API_URL
+        value: https://harambeeone-api.onrender.com
+      - key: FIREBASE_PROJECT_ID
+        value: edu-pay-ledger
+      - key: GOOGLE_APPLICATION_CREDENTIALS
+        value: /etc/secrets/google-application-credentials.json
+      - key: NEXT_PUBLIC_FIREBASE_API_KEY
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+        value: edu-pay-ledger
+      - key: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_APP_ID
+        sync: false
+      - key: NEXT_PUBLIC_FIREBASE_VAPID_KEY
+        sync: false

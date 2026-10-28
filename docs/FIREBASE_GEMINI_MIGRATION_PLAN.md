@@ -338,7 +338,7 @@ Commit: `Deliver Firebase push notifications`
 
 ### Slice F6 - Deployment, cutover, and release proof
 
-Status: **PENDING**
+Status: **IN PROGRESS**
 
 Deliver:
 
