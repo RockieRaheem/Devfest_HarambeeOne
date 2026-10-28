@@ -34,7 +34,7 @@ build-backend = "hatchling.build"
 packages = ["src/harambeeone_api"]
 
 [tool.vercel]
-entrypoint = "harambeeone_api.main:app"
+entrypoint = "src/harambeeone_api/main.py"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
