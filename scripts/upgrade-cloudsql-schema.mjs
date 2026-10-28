@@ -68,7 +68,8 @@ function renderUpgrade(fromRevision, runtimeRole) {
   if (/\b(?:anon|authenticated)\b/i.test(sql)) {
     throw new Error("Generated SQL still contains an unmapped Supabase database role");
   }
-  const revision = sql.match(/version_num='([a-f0-9]{12})'/)?.[1];
+  const revisionMatches = [...sql.matchAll(/version_num='([a-f0-9]{12})'/g)];
+  const revision = revisionMatches.at(-1)?.[1];
   if (!revision || revision === fromRevision) throw new Error("No reviewed schema upgrade was rendered");
   return { sql, revision };
 }

@@ -26,7 +26,7 @@ function argumentsByName(argv) {
     }
     values.set(key.slice(2), value);
   }
-  for (const required of ["instance", "database", "user", "owner-role", "writer-role"]) {
+  for (const required of ["instance", "database", "user", "writer-role"]) {
     if (!values.has(required)) throw new Error(`Missing required argument: --${required}`);
   }
   return Object.fromEntries(values);
@@ -42,7 +42,6 @@ function safeIdentifier(value, label) {
 async function main() {
   const options = argumentsByName(process.argv.slice(2));
   const database = safeIdentifier(options.database, "Database");
-  const ownerRole = safeIdentifier(options["owner-role"], "Owner role");
   const writerRole = safeIdentifier(options["writer-role"], "Writer role");
   if (!options.user.includes("@")) throw new Error("User must be an IAM account email");
   if (!/^[\w.-]+:[\w-]+:[\w-]+$/.test(options.instance)) throw new Error("Invalid instance name");
@@ -62,7 +61,18 @@ async function main() {
   let client;
   try {
     client = await pool.connect();
-    await client.query(`REVOKE "${ownerRole}" FROM "${options.user}"`);
+    const ownerRoles = (await client.query(
+      "select rolname from pg_roles where rolname like 'firebaseowner\\_%' escape '\\' order by rolname",
+    )).rows.map(({ rolname }) => rolname);
+    if (ownerRoles.length !== 1) throw new Error("Expected exactly one Firebase schema-owner role");
+    const ownerRole = safeIdentifier(ownerRoles[0], "Detected owner role");
+    const heldOwner = (await client.query(
+      "select pg_has_role($1, $2, 'member') as owner",
+      [options.user, ownerRole],
+    )).rows[0].owner;
+    if (heldOwner) {
+      await client.query(`REVOKE "${ownerRole}" FROM "${options.user}"`);
+    }
     const access = (await client.query(
       "select pg_has_role($1, $2, 'member') as owner, pg_has_role($1, $3, 'member') as writer",
       [options.user, ownerRole, writerRole],
