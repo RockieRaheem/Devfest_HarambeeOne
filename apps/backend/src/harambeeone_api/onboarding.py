@@ -11,7 +11,7 @@ from harambeeone_api.auth import (
     get_current_user,
     get_school_context,
 )
-from harambeeone_api.database import get_session
+from harambeeone_api.database import get_server_session, get_session
 from harambeeone_api.models import (
     AcademicClass,
     AuditEvent,
@@ -75,7 +75,7 @@ def get_my_context(
 def onboard_school(
     payload: SchoolOnboardingCreate,
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ) -> SchoolSummary:
     existing = _membership_school(user.id, session)
     if existing:
