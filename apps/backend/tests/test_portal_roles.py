@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
 
 from harambeeone_api.auth import AuthenticatedUser, get_current_user
-from harambeeone_api.database import Base, get_session
+from harambeeone_api.database import Base, get_server_session, get_session
 from harambeeone_api.main import app
 from harambeeone_api.models import (
     DonorProfile,
@@ -107,6 +107,7 @@ def portal_workspace():
         return current_user["value"]
 
     app.dependency_overrides[get_session] = session_override
+    app.dependency_overrides[get_server_session] = session_override
     app.dependency_overrides[get_current_user] = user_override
     try:
         yield engine, current_user, values
@@ -126,6 +127,19 @@ def _invite(client: TestClient, values: dict) -> dict:
     )
     assert response.status_code == 201
     return response.json()
+
+
+def test_guardian_invitation_acceptance_uses_controlled_bootstrap_session() -> None:
+    route = next(
+        route
+        for route in app.routes
+        if getattr(route, "path", None) == "/api/v1/guardian/invitations/accept"
+    )
+    session_dependency = next(
+        dependency for dependency in route.dependant.dependencies if dependency.name == "session"
+    )
+
+    assert session_dependency.call is get_server_session
 
 
 def test_guardian_invitation_is_hashed_scoped_and_single_use(portal_workspace) -> None:

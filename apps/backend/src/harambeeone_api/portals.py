@@ -8,7 +8,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from harambeeone_api.auth import AuthenticatedUser, get_current_user, require_permission
-from harambeeone_api.database import get_session
+from harambeeone_api.database import get_server_session, get_session
 from harambeeone_api.models import (
     AuditEvent,
     DonorProfile,
@@ -268,7 +268,7 @@ def create_guardian_invitation(
 def accept_guardian_invitation(
     payload: GuardianInvitationAccept,
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     invitation = session.scalar(
         select(GuardianInvitation)
