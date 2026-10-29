@@ -10,6 +10,7 @@ import './outcomes.css';
 import './donor-timeline.css';
 import './assistant.css';
 import './payment-desk.css';
+import './payment-desk-responsive.css';
 import './receipt-controls.css';
 import './reconciliation-controls.css';
 import './arrears/arrears.css';

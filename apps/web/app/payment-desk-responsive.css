@@ -1,0 +1,59 @@
+/* Viewport-safe behavior layered after the base payment desk styles. */
+.payment-desk-modal {
+  height: min(780px, calc(100dvh - 32px));
+  max-height: calc(100dvh - 32px);
+}
+
+.payment-desk-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  overflow: hidden;
+}
+
+.learner-finder,
+.payment-allocation-form {
+  min-height: 0;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+
+.payment-allocation-form {
+  overflow-y: auto;
+}
+
+.payment-allocation-form input[aria-invalid="true"] {
+  border-color: var(--red);
+  box-shadow: 0 0 0 2px var(--red-soft);
+}
+
+.payment-allocation-form > footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  margin: 18px -22px -22px;
+  padding: 14px 22px;
+  border-top: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.98);
+}
+
+@media (max-width: 800px) {
+  .payment-desk-modal {
+    height: calc(100dvh - 16px);
+    max-height: calc(100dvh - 16px);
+  }
+
+  .payment-desk-body {
+    max-height: none;
+    overflow-y: auto;
+  }
+
+  .payment-allocation-form {
+    overflow: visible;
+  }
+
+  .payment-allocation-form > footer {
+    position: static;
+    margin: 18px -22px -22px;
+  }
+}
