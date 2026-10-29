@@ -169,7 +169,7 @@ def _jwks_client() -> PyJWKClient:
 
 
 @lru_cache(maxsize=1)
-def _firebase_app():
+def firebase_auth_app():
     settings = get_settings()
     if settings.firebase_auth_emulator_host:
         os.environ.setdefault(
@@ -190,7 +190,7 @@ class FirebaseSessionVerifier:
             claims = firebase_auth.verify_session_cookie(
                 token,
                 check_revoked=True,
-                app=_firebase_app(),
+                app=firebase_auth_app(),
             )
             subject = claims.get("sub") or claims.get("uid")
             if not isinstance(subject, str) or not subject:

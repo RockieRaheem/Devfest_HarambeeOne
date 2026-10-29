@@ -10,7 +10,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from harambeeone_api.auth import AuthenticatedUser, _firebase_app, get_current_user
+from harambeeone_api.auth import AuthenticatedUser, firebase_auth_app, get_current_user
 from harambeeone_api.database import get_server_session, get_session
 from harambeeone_api.models import (
     IdentityProviderAccount,
@@ -245,7 +245,7 @@ def deliver_push_batch(
 ) -> dict[str, int]:
     """Deliver a bounded outbox batch; the durable in-app record remains authoritative."""
     now = now or datetime.now(UTC)
-    sender = sender or (lambda message: messaging.send(message, app=_firebase_app()))
+    sender = sender or (lambda message: messaging.send(message, app=firebase_auth_app()))
     outboxes = session.scalars(
         select(SupportNotificationOutbox)
         .where(

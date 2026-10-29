@@ -18,6 +18,7 @@ from starlette.concurrency import run_in_threadpool
 
 from harambeeone_api.accounts import router as accounts_router
 from harambeeone_api.audit import router as audit_router
+from harambeeone_api.auth_sessions import router as auth_sessions_router
 from harambeeone_api.billing import router as billing_router
 from harambeeone_api.config import get_settings
 from harambeeone_api.dashboard import router as dashboard_router
@@ -90,6 +91,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(students_router)
+app.include_router(auth_sessions_router)
 app.include_router(accounts_router)
 app.include_router(onboarding_router)
 app.include_router(periods_router)

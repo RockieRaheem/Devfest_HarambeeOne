@@ -2,6 +2,9 @@ import { cookies } from 'next/headers';
 import { FIREBASE_SESSION_COOKIE } from '@/lib/firebase/cookies';
 
 export function backendApiOrigin() {
+  if (process.env.HARAMBEEONE_API_URL) return process.env.HARAMBEEONE_API_URL;
+  // The submitted Vercel frontend uses the credentialed zero-cost Render API.
+  if (process.env.VERCEL === '1') return 'https://harambeeone-api.onrender.com';
   return process.env.API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4100';
 }
 

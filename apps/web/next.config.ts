@@ -7,6 +7,16 @@ const nextConfig:NextConfig = {
   images:{unoptimized:true},
   poweredByHeader:false,
   reactStrictMode:true,
+  async headers() {
+    const popupHeader = {
+      key:'Cross-Origin-Opener-Policy',
+      value:'same-origin-allow-popups',
+    };
+    return [
+      {source:'/login',headers:[popupHeader]},
+      {source:'/signup',headers:[popupHeader]},
+    ];
+  },
 };
 
 export default nextConfig;
