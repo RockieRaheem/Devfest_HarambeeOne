@@ -90,7 +90,12 @@ export async function POST(request: NextRequest) {
     });
     response.headers.set('Cache-Control', 'no-store');
     return response;
-  } catch {
+  } catch (error) {
+    const code =
+      typeof error === 'object' && error && 'code' in error
+        ? String(error.code)
+        : 'firebase_admin_session_failed';
+    console.error('Firebase session creation failed', { code });
     return NextResponse.json({ code: 'invalid_session', detail: 'Sign-in could not be verified.' }, { status: 401 });
   }
 }
