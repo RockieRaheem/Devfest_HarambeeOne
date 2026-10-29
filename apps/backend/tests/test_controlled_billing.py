@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.pool import StaticPool
 
 from harambeeone_api.auth import AuthenticatedUser, get_current_user
-from harambeeone_api.database import Base, get_session
+from harambeeone_api.database import Base, get_server_session, get_session
 from harambeeone_api.main import app
 from harambeeone_api.models import (
     AcademicClass,
@@ -144,6 +144,7 @@ def billing_workspace():
             yield session
 
     app.dependency_overrides[get_session] = session_override
+    app.dependency_overrides[get_server_session] = session_override
     app.dependency_overrides[get_current_user] = lambda: AuthenticatedUser(
         id=user_id, email="owner@example.com"
     )
@@ -153,6 +154,20 @@ def billing_workspace():
         app.dependency_overrides.clear()
         Base.metadata.drop_all(engine)
         engine.dispose()
+
+
+@pytest.mark.parametrize("path", ["/api/v1/students", "/api/v1/student-imports"])
+def test_learner_identity_writes_use_the_controlled_server_transaction(path: str) -> None:
+    route = next(
+        route
+        for route in app.routes
+        if getattr(route, "path", None) == path and "POST" in getattr(route, "methods", set())
+    )
+    session_dependency = next(
+        dependency for dependency in route.dependant.dependencies if dependency.name == "session"
+    )
+
+    assert session_dependency.call is get_server_session
 
 
 def create_plan(

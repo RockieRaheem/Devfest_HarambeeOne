@@ -14,7 +14,7 @@ from harambeeone_api.auth import (
     require_permission,
 )
 from harambeeone_api.billing import assign_published_general_fee
-from harambeeone_api.database import get_session
+from harambeeone_api.database import get_server_session, get_session
 from harambeeone_api.models import (
     AcademicClass,
     AuditEvent,
@@ -989,7 +989,7 @@ def _register_student(payload: StudentCreate, session: Session) -> StudentSummar
 @router.post("/students", response_model=StudentSummary, status_code=status.HTTP_201_CREATED)
 def register_student(
     payload: StudentCreate,
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
     context: SchoolContext = Depends(require_permission("students:write")),
 ) -> StudentSummary:
     context.assert_school(payload.school_id)
@@ -1038,7 +1038,7 @@ def register_student(
 @router.post("/student-imports")
 def import_students(
     payload: BulkStudentImport,
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
     context: SchoolContext = Depends(require_permission("students:write")),
 ) -> dict:
     for student in payload.students:
