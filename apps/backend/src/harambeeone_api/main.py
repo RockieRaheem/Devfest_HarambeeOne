@@ -38,7 +38,6 @@ from harambeeone_api.push_notifications import (
 from harambeeone_api.reconciliation import router as reconciliation_router
 from harambeeone_api.reopening import router as reopening_router
 from harambeeone_api.reports import router as reports_router
-from harambeeone_api.requested_campaign_withdrawal import withdraw_requested_campaign
 from harambeeone_api.requirements import router as requirements_router
 from harambeeone_api.rollover import router as rollover_router
 from harambeeone_api.sponsors import router as sponsors_router
@@ -54,7 +53,6 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     """Warm the database pool without making API startup depend on connectivity."""
-    await run_in_threadpool(withdraw_requested_campaign)
     try:
         await run_in_threadpool(database_is_ready)
     except SQLAlchemyError:
