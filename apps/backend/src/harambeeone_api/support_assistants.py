@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 
 from harambeeone_api.auth import AuthenticatedUser, get_current_user
 from harambeeone_api.config import get_settings
-from harambeeone_api.database import get_session
+from harambeeone_api.database import get_server_session, get_session
 from harambeeone_api.gemini_client import (
     GeminiQuotaError,
     GeminiResponseError,
@@ -291,7 +291,7 @@ def guardian_assistant(
     referral_id: uuid.UUID,
     payload: GuardianAssistantRequest,
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     referral = session.scalar(
         select(SupportReferral)

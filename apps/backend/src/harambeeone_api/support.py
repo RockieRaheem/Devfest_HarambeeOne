@@ -1150,7 +1150,7 @@ def create_guardian_support_referral(
 @router.get("/guardian/referrals")
 def list_guardian_referrals(
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     rows = session.scalars(
         select(SupportReferral)
@@ -1168,7 +1168,7 @@ def list_guardian_referrals(
 def list_guardian_referral_obligations(
     referral_id: uuid.UUID,
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     referral = _guardian_referral(session, referral_id, user.id)
     if referral.status not in {"consented", "case_submitted"}:
@@ -1220,7 +1220,7 @@ def save_guardian_support_case(
     referral_id: uuid.UUID,
     payload: GuardianSupportCaseSave,
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     referral = _guardian_referral(session, referral_id, user.id)
     if referral.status not in {"consented", "case_submitted"}:
@@ -1327,7 +1327,7 @@ def save_guardian_support_case(
 def submit_guardian_support_case(
     referral_id: uuid.UUID,
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     referral = _guardian_referral(session, referral_id, user.id)
     support_case = session.scalar(
@@ -1379,7 +1379,7 @@ def decide_referral_consent(
     referral_id: uuid.UUID,
     payload: SupportReferralConsent,
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     referral = _guardian_referral(session, referral_id, user.id)
     if referral.status not in {"awaiting_consent", "declined"}:
@@ -1428,7 +1428,7 @@ def decide_referral_consent(
 def withdraw_referral_consent(
     referral_id: uuid.UUID,
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     referral = _guardian_referral(session, referral_id, user.id)
     if referral.status == "withdrawn":
@@ -3293,7 +3293,7 @@ def create_guardian_acknowledgement(
     referral_id: uuid.UUID,
     payload: GuardianAcknowledgementCreate,
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     referral = _guardian_referral(session, referral_id, user.id)
     support_case = session.scalar(select(SupportCase).where(SupportCase.referral_id == referral.id))

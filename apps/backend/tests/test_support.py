@@ -693,11 +693,14 @@ def test_linked_guardian_starts_idempotent_private_support_request(
     )
     created = client.post("/api/v1/support/guardian/referrals", json=payload)
     repeated = client.post("/api/v1/support/guardian/referrals", json=payload)
+    listed = client.get("/api/v1/support/guardian/referrals")
     assert created.status_code == 201, created.text
     assert created.json()["status"] == "awaiting_consent"
     assert Decimal(str(created.json()["outstanding_snapshot"])) == Decimal("500000")
     assert repeated.status_code == 201
     assert repeated.json()["id"] == created.json()["id"]
+    assert listed.status_code == 200
+    assert [item["id"] for item in listed.json()] == [created.json()["id"]]
     with Session(engine) as session:
         assert session.scalar(select(func.count(SupportReferral.id))) == 1
         audit = session.scalar(
@@ -709,18 +712,21 @@ def test_linked_guardian_starts_idempotent_private_support_request(
         assert audit is not None
 
 
-def test_guardian_support_request_uses_controlled_period_resolution() -> None:
-    route = next(
+def test_guardian_support_journey_uses_controlled_sessions() -> None:
+    routes = [
         route
         for route in app.routes
-        if getattr(route, "path", None) == "/api/v1/support/guardian/referrals"
-        and "POST" in getattr(route, "methods", set())
-    )
-    session_dependency = next(
-        dependency for dependency in route.dependant.dependencies if dependency.name == "session"
-    )
+        if getattr(route, "path", "").startswith("/api/v1/support/guardian/")
+    ]
 
-    assert session_dependency.call is get_server_session
+    assert len(routes) == 9
+    for route in routes:
+        session_dependency = next(
+            dependency
+            for dependency in route.dependant.dependencies
+            if dependency.name == "session"
+        )
+        assert session_dependency.call is get_server_session, route.path
 
 
 def test_guardian_authors_case_school_requests_changes_and_owner_publishes(
