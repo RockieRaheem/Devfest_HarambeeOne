@@ -1080,7 +1080,7 @@ def list_school_referrals(
 def create_guardian_support_referral(
     payload: GuardianSupportReferralCreate,
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     linked = session.execute(
         select(GuardianLink, Student)

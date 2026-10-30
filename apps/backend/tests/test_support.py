@@ -709,6 +709,20 @@ def test_linked_guardian_starts_idempotent_private_support_request(
         assert audit is not None
 
 
+def test_guardian_support_request_uses_controlled_period_resolution() -> None:
+    route = next(
+        route
+        for route in app.routes
+        if getattr(route, "path", None) == "/api/v1/support/guardian/referrals"
+        and "POST" in getattr(route, "methods", set())
+    )
+    session_dependency = next(
+        dependency for dependency in route.dependant.dependencies if dependency.name == "session"
+    )
+
+    assert session_dependency.call is get_server_session
+
+
 def test_guardian_authors_case_school_requests_changes_and_owner_publishes(
     support_workspace,
 ) -> None:
