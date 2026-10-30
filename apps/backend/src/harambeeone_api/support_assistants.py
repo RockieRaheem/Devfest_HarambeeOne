@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 
 from harambeeone_api.auth import AuthenticatedUser, get_current_user
 from harambeeone_api.config import get_settings
-from harambeeone_api.database import get_server_session, get_session
+from harambeeone_api.database import get_server_session
 from harambeeone_api.gemini_client import (
     GeminiQuotaError,
     GeminiResponseError,
@@ -363,7 +363,7 @@ def guardian_assistant(
 def donor_assistant(
     payload: DonorAssistantRequest,
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     if session.get(DonorProfile, user.id) is None:
         raise HTTPException(status_code=403, detail="Activate your donor workspace first")
@@ -382,7 +382,7 @@ def donor_assistant(
     elif payload.campaign_code:
         support_case = session.scalar(
             select(SupportCase).where(
-                SupportCase.public_code == payload.campaign_code.upper(),
+                SupportCase.public_code == payload.campaign_code.strip().upper(),
                 SupportCase.status.in_(("published", "funded", "closed")),
             )
         )

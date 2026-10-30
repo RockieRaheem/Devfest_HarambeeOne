@@ -729,6 +729,21 @@ def test_guardian_support_journey_uses_controlled_sessions() -> None:
         assert session_dependency.call is get_server_session, route.path
 
 
+def test_donor_assistant_uses_controlled_server_session() -> None:
+    route = next(
+        route
+        for route in app.routes
+        if getattr(route, "path", "") == "/api/v1/support/donor/assistant"
+    )
+    session_dependency = next(
+        dependency
+        for dependency in route.dependant.dependencies
+        if dependency.name == "session"
+    )
+
+    assert session_dependency.call is get_server_session
+
+
 def test_guardian_authors_case_school_requests_changes_and_owner_publishes(
     support_workspace,
 ) -> None:
@@ -1644,7 +1659,7 @@ def test_donor_gemini_blocks_identity_and_authority_claims(support_workspace, mo
         json={
             "task": "understand_campaign",
             "question": "Explain this public campaign.",
-            "campaign_code": code,
+            "campaign_code": f"  {code.lower()}  ",
             "consent_to_gemini": True,
             "consent_to_cross_border": True,
         },
