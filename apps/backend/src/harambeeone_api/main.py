@@ -43,6 +43,7 @@ from harambeeone_api.rollover import router as rollover_router
 from harambeeone_api.sponsors import router as sponsors_router
 from harambeeone_api.staff_access import router as staff_access_router
 from harambeeone_api.students import router as students_router
+from harambeeone_api.support import ensure_stellar_demo_destinations
 from harambeeone_api.support import router as support_router
 from harambeeone_api.support_assistants import router as support_assistants_router
 from harambeeone_api.support_notifications import router as support_notifications_router
@@ -55,6 +56,10 @@ async def lifespan(_app: FastAPI):
     """Warm the database pool without making API startup depend on connectivity."""
     try:
         await run_in_threadpool(database_is_ready)
+        if get_settings().stellar_demo_faucet_enabled:
+            created = await run_in_threadpool(ensure_stellar_demo_destinations)
+            if created:
+                logger.info("Provisioned %s Stellar Testnet demo destination(s)", created)
     except SQLAlchemyError:
         logger.warning("Database warm-up failed; readiness will report unavailable")
     delivery_task = None

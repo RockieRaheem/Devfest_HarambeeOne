@@ -45,7 +45,9 @@ services:
       - key: STELLAR_DEMO_UGX_PER_XLM
         value: 1000
       - key: STELLAR_DEMO_FAUCET_ENABLED
-        value: false
+        value: true
+      - key: STELLAR_DEMO_HOURLY_LIMIT
+        value: 12
 
   - type: web
     name: harambeeone

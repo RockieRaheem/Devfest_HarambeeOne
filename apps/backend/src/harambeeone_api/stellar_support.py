@@ -40,6 +40,11 @@ def validate_public_key(value: str) -> str:
         raise ValueError("Enter a valid Stellar G... public account") from error
 
 
+def generate_receiving_account() -> str:
+    """Create a public-only testnet receiving account without retaining a secret key."""
+    return Keypair.random().public_key
+
+
 def demo_xlm_amount(amount_ugx: Decimal, ugx_per_xlm: Decimal) -> Decimal:
     result = (amount_ugx / ugx_per_xlm).quantize(STROOP, rounding=ROUND_DOWN)
     if result <= 0:

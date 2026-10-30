@@ -3,7 +3,7 @@ import binascii
 import hashlib
 import json
 import uuid
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
 from typing import Annotated, Literal
 
@@ -21,7 +21,7 @@ from harambeeone_api.auth import (
     require_permission,
 )
 from harambeeone_api.config import get_settings
-from harambeeone_api.database import get_server_session, get_session
+from harambeeone_api.database import get_engine, get_server_session, get_session
 from harambeeone_api.gemini_client import (
     MAX_IMAGE_BYTES,
     GeminiQuotaError,
@@ -86,6 +86,7 @@ from harambeeone_api.stellar_support import (
     demo_xlm_amount,
     find_payment,
     format_xlm,
+    generate_receiving_account,
     payment_uri,
     submit_demo_payment,
     validate_public_key,
@@ -111,6 +112,91 @@ PRIVACY_NOTICE = (
     "Publication requires guardian permission, learner assent and school safeguarding review. "
     "Gemini and processing outside Uganda are optional. Consent may be withdrawn at any time."
 )
+
+
+def _ensure_stellar_demo_destination(
+    session: Session, *, school_id: uuid.UUID, actor: str
+) -> SupportPaymentDestination:
+    destination = session.scalar(
+        select(SupportPaymentDestination)
+        .where(
+            SupportPaymentDestination.school_id == school_id,
+            SupportPaymentDestination.channel == "stellar",
+            SupportPaymentDestination.verification_status == "verified",
+        )
+        .order_by(SupportPaymentDestination.created_at)
+    )
+    if destination is not None:
+        return destination
+    school = session.get(School, school_id)
+    if school is None:
+        raise RuntimeError("Cannot provision a demo wallet for a missing school")
+    now = datetime.now(UTC)
+    destination = SupportPaymentDestination(
+        school_id=school_id,
+        channel="stellar",
+        label="Transparent Stellar Testnet demo",
+        provider_name="Stellar Testnet",
+        account_name=school.name,
+        account_reference=generate_receiving_account(),
+        instructions=(
+            "Send the exact testnet XLM amount with the unique HarambeeOne memo; "
+            "testnet assets have no monetary value."
+        ),
+        verification_status="verified",
+        created_by=actor,
+        verified_by=actor,
+        verified_at=now,
+    )
+    session.add(destination)
+    session.flush()
+    session.add(
+        AuditEvent(
+            school_id=school_id,
+            entity_type="support_payment_destination",
+            entity_id=destination.id,
+            action="verified",
+            actor=actor,
+            summary="Provisioned a public-only Stellar Testnet demo destination",
+        )
+    )
+    return destination
+
+
+def ensure_stellar_demo_destinations() -> int:
+    """Provision one idempotent public-only demo destination for open campaigns."""
+    settings = get_settings()
+    if not settings.stellar_demo_faucet_enabled:
+        return 0
+    info = (
+        {"database_server_role": settings.cloud_sql_server_role}
+        if settings.database_provider == "cloud_sql"
+        else None
+    )
+    created = 0
+    with Session(get_engine(), expire_on_commit=False, info=info) as session:
+        with session.begin():
+            school_ids = session.scalars(
+                select(SupportCase.school_id)
+                .where(SupportCase.status == "published")
+                .distinct()
+            ).all()
+            for school_id in school_ids:
+                existing = session.scalar(
+                    select(SupportPaymentDestination.id).where(
+                        SupportPaymentDestination.school_id == school_id,
+                        SupportPaymentDestination.channel == "stellar",
+                        SupportPaymentDestination.verification_status == "verified",
+                    )
+                )
+                if existing is None:
+                    _ensure_stellar_demo_destination(
+                        session,
+                        school_id=school_id,
+                        actor="system:stellar-testnet-demo",
+                    )
+                    created += 1
+    return created
 
 
 ShortReviewItem = Annotated[str, Field(min_length=1, max_length=180)]
@@ -683,9 +769,7 @@ def _stellar_payment_payload(
             ),
             "horizon_url": settings.stellar_horizon_url,
             "demo_rate": f"UGX {settings.stellar_demo_ugx_per_xlm:,.0f} = 1 testnet XLM",
-            "demo_faucet_available": (
-                settings.stellar_demo_faucet_enabled and settings.app_environment != "production"
-            ),
+            "demo_faucet_available": settings.stellar_demo_faucet_enabled,
             "disclaimer": "TESTNET ONLY — testnet XLM has no real monetary value.",
         },
     }
@@ -1612,7 +1696,7 @@ def create_authenticated_donor_pledge(
     public_code: str,
     payload: SupportPledgeCreate,
     user: AuthenticatedUser = Depends(get_current_user),
-    session: Session = Depends(get_session),
+    session: Session = Depends(get_server_session),
 ):
     donor = session.get(DonorProfile, user.id)
     if donor is None:
@@ -1625,6 +1709,37 @@ def create_authenticated_donor_pledge(
             donor_user_id=user.id,
         )
     )
+
+
+@router.post(
+    "/donor/campaigns/{public_code}/stellar/pledges",
+    status_code=status.HTTP_201_CREATED,
+)
+def create_authenticated_donor_stellar_pledge(
+    public_code: str,
+    payload: SupportStellarPledgeCreate,
+    user: AuthenticatedUser = Depends(get_current_user),
+    session: Session = Depends(get_server_session),
+):
+    if session.get(DonorProfile, user.id) is None:
+        raise HTTPException(status_code=403, detail="Activate your donor workspace first")
+    pledge = _create_pledge(
+        session,
+        public_code=public_code,
+        payload=SupportPledgeCreate(
+            payment_destination_id=payload.payment_destination_id,
+            idempotency_key=payload.idempotency_key,
+            external_reference="stellar-intent",
+            donor_display_name=payload.donor_display_name,
+            amount=payload.amount,
+        ),
+        donor_user_id=user.id,
+        stellar=True,
+    )
+    destination = session.get(SupportPaymentDestination, pledge.payment_destination_id)
+    if destination is None:
+        raise HTTPException(status_code=409, detail="Stellar destination is unavailable")
+    return _stellar_payment_payload(session, pledge, destination)
 
 
 @router.post("/public/campaigns/{public_code}/stellar/pledges", status_code=status.HTTP_201_CREATED)
@@ -1754,11 +1869,25 @@ def demo_pay_public_stellar_pledge(
     session: Session = Depends(get_server_session),
 ):
     settings = get_settings()
-    if settings.app_environment == "production" or not settings.stellar_demo_faucet_enabled:
+    if not settings.stellar_demo_faucet_enabled:
         raise HTTPException(status_code=404, detail="Testnet demo transfer is not enabled")
     _, pledge, destination = _public_stellar_pledge(session, public_code, public_reference)
     if pledge.status != "pending":
         raise HTTPException(status_code=409, detail="This contribution is no longer pending")
+    recent_demo_count = session.scalar(
+        select(func.count(StellarAnchor.id)).where(
+            StellarAnchor.network == "testnet",
+            StellarAnchor.status == "confirmed",
+            StellarAnchor.transaction_hash.is_not(None),
+            StellarAnchor.created_at >= datetime.now(UTC) - timedelta(hours=1),
+        )
+    ) or 0
+    if recent_demo_count >= settings.stellar_demo_hourly_limit:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail="The free testnet demo limit was reached. Try again later.",
+            headers={"Retry-After": "3600"},
+        )
     amount = demo_xlm_amount(pledge.amount, settings.stellar_demo_ugx_per_xlm)
     try:
         transaction_hash = submit_demo_payment(
@@ -2860,6 +2989,12 @@ def publish_support_case(
     support_case.status = "published"
     support_case.approved_by = support_case.approved_by or context.actor
     support_case.published_at = datetime.now(UTC)
+    if get_settings().stellar_demo_faucet_enabled:
+        _ensure_stellar_demo_destination(
+            session,
+            school_id=context.school_id,
+            actor=context.actor,
+        )
     session.add(
         AuditEvent(
             school_id=context.school_id,

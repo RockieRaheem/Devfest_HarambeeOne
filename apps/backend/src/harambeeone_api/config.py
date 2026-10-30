@@ -55,6 +55,9 @@ class Settings(BaseSettings):
     stellar_demo_faucet_enabled: bool = Field(
         default=False, alias="STELLAR_DEMO_FAUCET_ENABLED"
     )
+    stellar_demo_hourly_limit: int = Field(
+        default=12, ge=1, le=100, alias="STELLAR_DEMO_HOURLY_LIMIT"
+    )
 
     @model_validator(mode="after")
     def reject_supabase_auth_in_production(self) -> "Settings":
@@ -96,8 +99,6 @@ class Settings(BaseSettings):
             raise ValueError("Production CORS origins must use HTTPS")
         if self.stellar_horizon_url.rstrip("/") != "https://horizon-testnet.stellar.org":
             raise ValueError("STELLAR_HORIZON_URL must use the official Stellar testnet Horizon")
-        if self.app_environment == "production" and self.stellar_demo_faucet_enabled:
-            raise ValueError("The Stellar testnet demo faucet cannot run in production")
         return self
 
     @property

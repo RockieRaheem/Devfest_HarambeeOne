@@ -51,6 +51,17 @@ def test_production_rejects_unsafe_cors_origin(origin):
         production_settings(CORS_ALLOWED_ORIGINS=origin)
 
 
-def test_production_rejects_demo_faucet():
+def test_production_allows_bounded_testnet_demo():
+    settings = production_settings(
+        STELLAR_DEMO_FAUCET_ENABLED=True,
+        STELLAR_DEMO_HOURLY_LIMIT=12,
+    )
+
+    assert settings.stellar_demo_faucet_enabled is True
+    assert settings.stellar_demo_hourly_limit == 12
+
+
+@pytest.mark.parametrize("limit", [0, 101])
+def test_testnet_demo_limit_is_bounded(limit):
     with pytest.raises(ValidationError):
-        production_settings(STELLAR_DEMO_FAUCET_ENABLED=True)
+        production_settings(STELLAR_DEMO_HOURLY_LIMIT=limit)

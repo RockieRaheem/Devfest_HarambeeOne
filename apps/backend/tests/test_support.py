@@ -4,6 +4,7 @@ import json
 import uuid
 from datetime import UTC, date, datetime, timedelta
 from decimal import Decimal
+from types import SimpleNamespace
 
 import pytest
 from fastapi.testclient import TestClient
@@ -450,6 +451,116 @@ def test_stellar_testnet_contribution_is_verified_before_posting(
     assert replay.status_code == 200
     with Session(engine) as session:
         assert session.scalar(select(func.count(Payment.id))) == 1
+
+
+def test_stellar_demo_destination_is_public_only_and_idempotent(support_workspace) -> None:
+    engine, _user_id, ids, _client = support_workspace
+    with Session(engine) as session:
+        first = support._ensure_stellar_demo_destination(
+            session,
+            school_id=ids["school"],
+            actor="owner@example.com",
+        )
+        session.commit()
+        second = support._ensure_stellar_demo_destination(
+            session,
+            school_id=ids["school"],
+            actor="owner@example.com",
+        )
+        session.commit()
+
+        assert first.id == second.id
+        assert first.account_reference.startswith("G")
+        assert len(first.account_reference) == 56
+        assert first.verification_status == "verified"
+        assert session.scalar(
+            select(func.count(SupportPaymentDestination.id)).where(
+                SupportPaymentDestination.school_id == ids["school"],
+                SupportPaymentDestination.channel == "stellar",
+            )
+        ) == 1
+        assert session.scalar(
+            select(func.count(AuditEvent.id)).where(
+                AuditEvent.entity_id == first.id,
+                AuditEvent.action == "verified",
+            )
+        ) == 1
+
+
+def test_signed_in_donor_completes_one_click_testnet_demo(
+    support_workspace, monkeypatch
+) -> None:
+    engine, _user_id, ids, client = support_workspace
+    donor_id = uuid.uuid4()
+    with Session(engine) as session:
+        destination = support._ensure_stellar_demo_destination(
+            session,
+            school_id=ids["school"],
+            actor="owner@example.com",
+        )
+        session.add(DonorProfile(auth_user_id=donor_id, display_name="Demo donor"))
+        session.commit()
+        destination_id = destination.id
+        destination_public_key = destination.account_reference
+    _case_id, public_code = create_reviewed_campaign(client, ids)
+    app.dependency_overrides[get_current_user] = lambda: AuthenticatedUser(
+        id=donor_id, email="donor@example.com"
+    )
+    created = client.post(
+        f"/api/v1/support/donor/campaigns/{public_code}/stellar/pledges",
+        json={
+            "payment_destination_id": str(destination_id),
+            "idempotency_key": str(uuid.uuid4()),
+            "donor_display_name": "Demo donor",
+            "amount": 10000,
+        },
+    )
+    assert created.status_code == 201, created.text
+    reference = created.json()["public_reference"]
+    transaction_hash = "b" * 64
+    settings = SimpleNamespace(
+        stellar_demo_faucet_enabled=True,
+        stellar_demo_hourly_limit=12,
+        stellar_demo_ugx_per_xlm=Decimal("1000"),
+        stellar_horizon_url="https://horizon-testnet.stellar.org",
+    )
+    monkeypatch.setattr(support, "get_settings", lambda: settings)
+    monkeypatch.setattr(
+        support,
+        "submit_demo_payment",
+        lambda **_kwargs: transaction_hash,
+    )
+    monkeypatch.setattr(
+        support,
+        "verify_transaction",
+        lambda **_kwargs: support.StellarPaymentProof(
+            transaction_hash=transaction_hash,
+            operation_id="demo-operation",
+            source_account=Keypair.random().public_key,
+            destination_account=destination_public_key,
+            amount_xlm=Decimal("10"),
+            memo=reference,
+            ledger=654321,
+        ),
+    )
+
+    completed = client.post(
+        f"/api/v1/support/public/campaigns/{public_code}/stellar/pledges/{reference}/demo-pay"
+    )
+    assert completed.status_code == 200, completed.text
+    assert completed.json()["status"] == "verified"
+    assert completed.json()["blockchain"]["transaction_hash"] == transaction_hash
+    with Session(engine) as session:
+        pledge = session.scalar(
+            select(SupportPledge).where(SupportPledge.public_reference == reference)
+        )
+        assert pledge.donor_auth_user_id == donor_id
+        assert pledge.payment_id is not None
+        assert session.scalar(
+            select(func.count(SupportNotification.id)).where(
+                SupportNotification.recipient_auth_user_id == donor_id
+            )
+        ) == 2
 
 
 def test_support_case_eligibility_reports_verified_balance(support_workspace) -> None:
