@@ -26,6 +26,7 @@ from harambeeone_api.gemini_client import (
     MAX_IMAGE_BYTES,
     GeminiQuotaError,
     GeminiResponseError,
+    GeminiTimeoutError,
     GeminiUnavailableError,
     request_structured_gemini,
 )
@@ -924,6 +925,14 @@ def _call_gemini(
             detail=(
                 "The free Gemini quota is temporarily exhausted. "
                 "Continue with the school's manual review."
+            ),
+        ) from error
+    except GeminiTimeoutError as error:
+        raise HTTPException(
+            status_code=status.HTTP_504_GATEWAY_TIMEOUT,
+            detail=(
+                "Gemini took too long to complete this review. "
+                "Try again once, or continue with the school's manual review."
             ),
         ) from error
     except GeminiUnavailableError as error:

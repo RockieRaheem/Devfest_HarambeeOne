@@ -3,6 +3,8 @@ import { authorizedBackendFetch } from '@/lib/api/server';
 
 type RouteContext = { params: Promise<{ path: string[] }> };
 
+export const maxDuration = 60;
+
 async function forward(request: NextRequest, context: RouteContext) {
   const { path } = await context.params;
   const backendPath = `/${path.join('/')}${request.nextUrl.search}`;

@@ -41,7 +41,7 @@ class Settings(BaseSettings):
         default="firebase", alias="AUTH_PROVIDER"
     )
     gemini_api_key: str | None = Field(default=None, alias="GEMINI_API_KEY")
-    gemini_model: str = Field(default="gemini-3.8-flash", alias="GEMINI_MODEL")
+    gemini_model: str = Field(default="gemini-3.1-flash-lite", alias="GEMINI_MODEL")
     fcm_delivery_enabled: bool = Field(default=False, alias="FCM_DELIVERY_ENABLED")
     fcm_delivery_interval_seconds: int = Field(
         default=30, ge=10, le=300, alias="FCM_DELIVERY_INTERVAL_SECONDS"

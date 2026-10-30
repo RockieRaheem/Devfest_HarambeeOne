@@ -35,7 +35,7 @@ services:
       - key: GEMINI_API_KEY
         sync: false
       - key: GEMINI_MODEL
-        value: gemini-3.8-flash
+        value: gemini-3.1-flash-lite
       - key: FCM_DELIVERY_ENABLED
         value: true
       - key: FCM_DELIVERY_INTERVAL_SECONDS

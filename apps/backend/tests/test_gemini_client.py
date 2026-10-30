@@ -20,12 +20,9 @@ class FakeClient:
         self.error = error
         self.closed = False
         self.calls: list[dict] = []
-        self.interactions = self
-        self.sdk_configuration = SimpleNamespace(
-            retry_config=SimpleNamespace(max_retries=1, retry_connection_errors=True)
-        )
+        self.models = self
 
-    def create(self, **kwargs):
+    def generate_content(self, **kwargs):
         self.calls.append(kwargs)
         if self.error:
             raise self.error
@@ -39,14 +36,16 @@ def configure(monkeypatch, client: FakeClient) -> None:
     monkeypatch.setattr(
         gemini_client,
         "get_settings",
-        lambda: SimpleNamespace(gemini_api_key="test-key", gemini_model="gemini-3.8-flash"),
+        lambda: SimpleNamespace(
+            gemini_api_key="test-key", gemini_model="gemini-3.1-flash-lite"
+        ),
     )
     monkeypatch.setattr(gemini_client.genai, "Client", lambda **_kwargs: client)
 
 
 def test_structured_gemini_is_stateless_bounded_and_validated(monkeypatch) -> None:
     client = FakeClient(
-        SimpleNamespace(status="completed", output_text='{"answer":"Grounded answer"}')
+        SimpleNamespace(text='{"answer":"Grounded answer"}')
     )
     configure(monkeypatch, client)
 
@@ -56,20 +55,19 @@ def test_structured_gemini_is_stateless_bounded_and_validated(monkeypatch) -> No
         response_model=ExampleResult,
     )
 
-    assert model == "gemini-3.8-flash"
+    assert model == "gemini-3.1-flash-lite"
     assert result.answer == "Grounded answer"
     assert client.closed is True
     request = client.calls[0]
-    assert request["store"] is False
-    assert request["timeout"] == gemini_client.REQUEST_TIMEOUT_SECONDS
-    assert request["generation_config"]["max_output_tokens"] == 1_200
-    assert request["response_format"]["schema"]["additionalProperties"] is False
-    assert client.sdk_configuration.retry_config.max_retries == 0
-    assert client.sdk_configuration.retry_config.retry_connection_errors is False
+    config = request["config"]
+    assert config.store is False
+    assert config.http_options.timeout == 45_000
+    assert config.max_output_tokens == 1_200
+    assert config.response_json_schema["additionalProperties"] is False
 
 
 def test_structured_gemini_rejects_malformed_output(monkeypatch) -> None:
-    client = FakeClient(SimpleNamespace(status="completed", output_text="not json"))
+    client = FakeClient(SimpleNamespace(text="not json"))
     configure(monkeypatch, client)
 
     with pytest.raises(gemini_client.GeminiResponseError):
@@ -81,7 +79,7 @@ def test_structured_gemini_rejects_malformed_output(monkeypatch) -> None:
 
 def test_structured_gemini_rejects_incomplete_output(monkeypatch) -> None:
     client = FakeClient(
-        SimpleNamespace(status="requires_continuation", output_text='{"answer":"partial')
+        SimpleNamespace(text="")
     )
     configure(monkeypatch, client)
 
@@ -113,10 +111,25 @@ def test_structured_gemini_exposes_timeout_as_manual_fallback(monkeypatch) -> No
     client = FakeClient(error=httpx.ReadTimeout("timed out"))
     configure(monkeypatch, client)
 
-    with pytest.raises(gemini_client.GeminiUnavailableError):
+    with pytest.raises(gemini_client.GeminiTimeoutError):
         gemini_client.request_structured_gemini(
             system_instruction="Safe.", text_input="Facts.", response_model=ExampleResult
         )
+    assert client.closed is True
+
+
+def test_structured_gemini_maps_provider_deadline_to_timeout(monkeypatch) -> None:
+    deadline_error = errors.ServerError(
+        504, {"error": {"message": "deadline", "status": "DEADLINE_EXCEEDED"}}
+    )
+    client = FakeClient(error=deadline_error)
+    configure(monkeypatch, client)
+
+    with pytest.raises(gemini_client.GeminiTimeoutError):
+        gemini_client.request_structured_gemini(
+            system_instruction="Safe.", text_input="Facts.", response_model=ExampleResult
+        )
+    assert len(client.calls) == 1
     assert client.closed is True
 
 
