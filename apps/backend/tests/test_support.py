@@ -1033,6 +1033,91 @@ def test_guardian_case_rejects_identity_and_duplicate_obligation(support_workspa
             session.commit()
 
 
+def test_guardian_sees_existing_staff_case_without_creating_duplicate(
+    support_workspace,
+) -> None:
+    engine, _owner_user_id, ids, client = support_workspace
+    guardian_user_id = uuid.uuid4()
+    with Session(engine) as session:
+        invitation = GuardianInvitation(
+            school_id=ids["school"],
+            guardian_link_id=ids["guardian"],
+            token_hash="e" * 64,
+            invited_email="guardian@example.com",
+            status="accepted",
+            expires_at=datetime.now(UTC) + timedelta(days=1),
+            created_by="owner@example.com",
+            accepted_by_user_id=guardian_user_id,
+            accepted_at=datetime.now(UTC),
+        )
+        session.add(invitation)
+        session.flush()
+        session.add(
+            GuardianAccountLink(
+                auth_user_id=guardian_user_id,
+                school_id=ids["school"],
+                guardian_link_id=ids["guardian"],
+                invitation_id=invitation.id,
+            )
+        )
+        referral = SupportReferral(
+            school_id=ids["school"],
+            period_id=ids["period"],
+            student_id=ids["student"],
+            guardian_link_id=ids["guardian"],
+            outstanding_snapshot=Decimal("500000"),
+            overdue_since=date(2026, 9, 20),
+            days_overdue_snapshot=28,
+            priority_band="high",
+            priority_reasons='["Verified overdue balance"]',
+            status="consented",
+            privacy_notice_version="2026-10-v1",
+            guardian_authority_confirmed=True,
+            age_verification_method="school_record",
+            anonymous_publication=True,
+            child_assent_status="agreed",
+            consented_by_user_id=guardian_user_id,
+            consented_at=datetime.now(UTC),
+            created_by="owner@example.com",
+        )
+        existing_case = SupportCase(
+            school_id=ids["school"],
+            period_id=ids["period"],
+            student_id=ids["student"],
+            public_code="HS-STAFFCASE",
+            title="Help a candidate complete the school term",
+            public_summary="A verified school balance needs community support.",
+            need_category="fees",
+            target_amount=Decimal("200000"),
+            status="review",
+            created_by="owner@example.com",
+        )
+        session.add_all((referral, existing_case))
+        session.commit()
+        referral_id = referral.id
+
+    app.dependency_overrides[get_current_user] = lambda: AuthenticatedUser(
+        id=guardian_user_id, email="guardian@example.com"
+    )
+    listed = client.get("/api/v1/support/guardian/referrals")
+    assert listed.status_code == 200, listed.text
+    assert listed.json()[0]["case"]["public_code"] == "HS-STAFFCASE"
+    assert listed.json()[0]["case"]["status"] == "review"
+
+    attempted_duplicate = client.post(
+        f"/api/v1/support/guardian/referrals/{referral_id}/case",
+        json={
+            "title": "Support a verified school balance",
+            "public_summary": "A verified learner balance needs community support.",
+            "private_context": "Private school review information is supplied here.",
+            "need_category": "fees",
+            "target_amount": 200000,
+        },
+    )
+    assert attempted_duplicate.status_code == 409, attempted_duplicate.text
+    assert "already has an active case" in attempted_duplicate.json()["detail"]
+
+
 def test_support_campaign_posts_verified_contribution_end_to_end(support_workspace) -> None:
     engine, _user_id, ids, client = support_workspace
     case_id, code = create_reviewed_campaign(client, ids)

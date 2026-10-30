@@ -141,11 +141,38 @@ def _guardian_referral(session: Session, referral_id: uuid.UUID, user_id: uuid.U
     return referral
 
 
+def _active_case_for_obligation(
+    session: Session,
+    referral: SupportReferral,
+    requirement_assignment_id: uuid.UUID | None,
+) -> SupportCase | None:
+    filters = [
+        SupportCase.school_id == referral.school_id,
+        SupportCase.student_id == referral.student_id,
+        SupportCase.period_id == referral.period_id,
+        SupportCase.status.notin_(("closed", "withdrawn")),
+    ]
+    if requirement_assignment_id is None:
+        filters.append(SupportCase.requirement_assignment_id.is_(None))
+    else:
+        filters.append(SupportCase.requirement_assignment_id == requirement_assignment_id)
+    return session.scalar(select(SupportCase).where(*filters).order_by(SupportCase.created_at))
+
+
+def _case_for_referral(session: Session, referral: SupportReferral) -> SupportCase | None:
+    support_case = session.scalar(select(SupportCase).where(SupportCase.referral_id == referral.id))
+    if support_case is not None:
+        return support_case
+    # A staff-assisted case may have been prepared before the guardian referral.
+    # Surface the same verified general obligation instead of inviting a duplicate.
+    return _active_case_for_obligation(session, referral, None)
+
+
 def _referral_payload(session: Session, referral: SupportReferral) -> dict:
     student = session.get(Student, referral.student_id)
     person = session.get(Person, student.person_id) if student else None
     school = session.get(School, referral.school_id)
-    support_case = session.scalar(select(SupportCase).where(SupportCase.referral_id == referral.id))
+    support_case = _case_for_referral(session, referral)
     return {
         "id": referral.id,
         "school_id": referral.school_id,
@@ -1248,6 +1275,19 @@ def save_guardian_support_case(
             detail=f"Requested support exceeds the live balance of UGX {outstanding:,.0f}",
         )
     support_case = session.scalar(select(SupportCase).where(SupportCase.referral_id == referral.id))
+    obligation_case = _active_case_for_obligation(
+        session,
+        referral,
+        payload.requirement_assignment_id,
+    )
+    if support_case is None and obligation_case is not None:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "The school already has an active case for this obligation. "
+                "Return to the support request to follow its review status."
+            ),
+        )
     if support_case and support_case.status not in {"draft", "changes_requested"}:
         raise HTTPException(
             status_code=409,
@@ -1283,36 +1323,36 @@ def save_guardian_support_case(
     support_case.review_notes = None
     _assert_public_text(support_case, student, person, support_case.title)
     _assert_public_text(support_case, student, person, support_case.public_summary)
-    session.flush()
-    consent = session.scalar(
-        select(SupportConsent).where(SupportConsent.case_id == support_case.id)
-    )
-    if consent is None:
-        consent = SupportConsent(
-            case_id=support_case.id,
-            school_id=referral.school_id,
-            guardian_link_id=referral.guardian_link_id,
-            method="guardian_portal",
-            scope_version=referral.privacy_notice_version or PRIVACY_NOTICE_VERSION,
-            anonymous_publication=True,
-            public_media_consent=referral.public_media_consent,
-            gemini_processing=referral.gemini_processing,
-            cross_border_processing=referral.cross_border_processing,
-            child_assent_status=referral.child_assent_status,
-            recorded_by=user.email or str(user.id),
-        )
-        session.add(consent)
-    session.add(
-        AuditEvent(
-            school_id=referral.school_id,
-            entity_type="support_case",
-            entity_id=support_case.id,
-            action="guardian_draft_created" if creating else "guardian_draft_updated",
-            actor=user.email or str(user.id),
-            summary="Guardian saved a private support case draft",
-        )
-    )
     try:
+        session.flush()
+        consent = session.scalar(
+            select(SupportConsent).where(SupportConsent.case_id == support_case.id)
+        )
+        if consent is None:
+            consent = SupportConsent(
+                case_id=support_case.id,
+                school_id=referral.school_id,
+                guardian_link_id=referral.guardian_link_id,
+                method="guardian_portal",
+                scope_version=referral.privacy_notice_version or PRIVACY_NOTICE_VERSION,
+                anonymous_publication=True,
+                public_media_consent=referral.public_media_consent,
+                gemini_processing=referral.gemini_processing,
+                cross_border_processing=referral.cross_border_processing,
+                child_assent_status=referral.child_assent_status,
+                recorded_by=user.email or str(user.id),
+            )
+            session.add(consent)
+        session.add(
+            AuditEvent(
+                school_id=referral.school_id,
+                entity_type="support_case",
+                entity_id=support_case.id,
+                action="guardian_draft_created" if creating else "guardian_draft_updated",
+                actor=user.email or str(user.id),
+                summary="Guardian saved a private support case draft",
+            )
+        )
         session.commit()
     except IntegrityError as error:
         session.rollback()
@@ -2075,6 +2115,15 @@ def get_support_case(
         .where(GuardianLink.student_id == student.id)
         .order_by(GuardianLink.is_primary.desc(), Person.first_name)
     ).all()
+    linked_guardian_ids = set(
+        session.scalars(
+            select(GuardianAccountLink.guardian_link_id).where(
+                GuardianAccountLink.guardian_link_id.in_(
+                    [guardian.id for guardian, _person in guardian_rows]
+                )
+            )
+        ).all()
+    )
     consent = _active_consent(session, case_id)
     review = _latest_review(session, case_id)
     media = session.scalar(
@@ -2111,6 +2160,7 @@ def get_support_case(
                 "name": f"{guardian_person.first_name} {guardian_person.last_name}",
                 "relationship": guardian.relationship,
                 "is_primary": guardian.is_primary,
+                "portal_linked": guardian.id in linked_guardian_ids,
             }
             for guardian, guardian_person in guardian_rows
         ],
