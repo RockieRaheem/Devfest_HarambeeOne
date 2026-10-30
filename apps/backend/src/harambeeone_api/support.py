@@ -118,13 +118,31 @@ ShortReviewItem = Annotated[str, Field(min_length=1, max_length=180)]
 class SupportReviewResult(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    summary: str = Field(min_length=10, max_length=700)
+    summary: str = Field(
+        min_length=10,
+        max_length=700,
+        description="A concise factual review summary using only supplied facts.",
+    )
     risk_level: Literal["low", "medium", "high", "review"]
-    observed_factors: list[ShortReviewItem] = Field(max_length=8)
-    missing_information: list[ShortReviewItem] = Field(max_length=8)
-    consistency_flags: list[ShortReviewItem] = Field(max_length=8)
-    recommended_action: str = Field(min_length=5, max_length=500)
-    safe_public_summary: str = Field(min_length=20, max_length=500)
+    observed_factors: list[ShortReviewItem] = Field(
+        max_length=8, description="Up to four short facts observed in the supplied record."
+    )
+    missing_information: list[ShortReviewItem] = Field(
+        max_length=8, description="Up to four short facts a human reviewer should verify."
+    )
+    consistency_flags: list[ShortReviewItem] = Field(
+        max_length=8, description="Up to four short inconsistencies; empty when none exist."
+    )
+    recommended_action: str = Field(
+        min_length=5,
+        max_length=500,
+        description="A concise recommendation for the authorized human reviewer.",
+    )
+    safe_public_summary: str = Field(
+        min_length=20,
+        max_length=500,
+        description="A privacy-safe public summary containing no invented or identifying facts.",
+    )
 
 
 def _guardian_referral(session: Session, referral_id: uuid.UUID, user_id: uuid.UUID):
@@ -876,7 +894,9 @@ def _call_gemini(
         "Return JSON with exactly these keys: summary, risk_level, observed_factors, "
         "missing_information, consistency_flags, recommended_action, safe_public_summary. "
         "risk_level must be low, medium, high or review; list fields must contain short strings; "
-        "safe_public_summary must be 20-500 characters and contain no invented facts."
+        "use no more than four items per list and keep every item under 140 characters. "
+        "Keep summary, recommended_action and safe_public_summary under 300 characters. "
+        "safe_public_summary must contain no invented facts."
     )
     if evidence_image_base64 and evidence_mime_type:
         try:

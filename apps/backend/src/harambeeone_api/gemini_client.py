@@ -1,4 +1,5 @@
 import json
+import logging
 
 from google import genai
 from google.genai import types
@@ -8,8 +9,11 @@ from harambeeone_api.config import get_settings
 
 MAX_TEXT_INPUT_CHARS = 14_000
 MAX_IMAGE_BYTES = 2_000_000
-MAX_OUTPUT_TOKENS = 700
+MAX_OUTPUT_TOKENS = 1_200
 REQUEST_TIMEOUT_SECONDS = 20.0
+
+logger = logging.getLogger(__name__)
+
 
 class GeminiUnavailableError(RuntimeError):
     """The optional AI service is unavailable; manual workflows must remain usable."""
@@ -80,19 +84,37 @@ def request_structured_gemini[T: BaseModel](
                 timeout=REQUEST_TIMEOUT_SECONDS,
             )
         except Exception as error:
-            status_code = getattr(error, "status_code", None) or getattr(
-                error, "code", None
-            )
+            status_code = getattr(error, "status_code", None) or getattr(error, "code", None)
             if status_code == 429 or type(error).__name__ == "RateLimitError":
                 raise GeminiQuotaError("Gemini free quota is exhausted") from error
             raise GeminiUnavailableError("Gemini is temporarily unavailable") from error
         if interaction.status != "completed" or not interaction.output_text:
+            logger.warning(
+                "Gemini structured response incomplete status=%s has_output=%s",
+                interaction.status,
+                bool(interaction.output_text),
+            )
             raise GeminiResponseError("Gemini interaction did not complete with text output")
         try:
             return settings.gemini_model, response_model.model_validate_json(
                 interaction.output_text
             )
         except (ValidationError, ValueError, TypeError, json.JSONDecodeError) as error:
+            validation_errors = (
+                [
+                    {
+                        "location": [str(part) for part in item.get("loc", ())],
+                        "type": item.get("type"),
+                    }
+                    for item in error.errors(include_input=False)
+                ]
+                if isinstance(error, ValidationError)
+                else [{"type": type(error).__name__}]
+            )
+            logger.warning(
+                "Gemini structured response failed validation errors=%s",
+                validation_errors,
+            )
             raise GeminiResponseError("Gemini returned invalid structured output") from error
     finally:
         client.close()

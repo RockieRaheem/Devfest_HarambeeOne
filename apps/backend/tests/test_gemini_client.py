@@ -62,7 +62,7 @@ def test_structured_gemini_is_stateless_bounded_and_validated(monkeypatch) -> No
     request = client.calls[0]
     assert request["store"] is False
     assert request["timeout"] == gemini_client.REQUEST_TIMEOUT_SECONDS
-    assert request["generation_config"]["max_output_tokens"] == 700
+    assert request["generation_config"]["max_output_tokens"] == 1_200
     assert request["response_format"]["schema"]["additionalProperties"] is False
     assert client.sdk_configuration.retry_config.max_retries == 0
     assert client.sdk_configuration.retry_config.retry_connection_errors is False
@@ -76,6 +76,23 @@ def test_structured_gemini_rejects_malformed_output(monkeypatch) -> None:
         gemini_client.request_structured_gemini(
             system_instruction="Safe.", text_input="Facts.", response_model=ExampleResult
         )
+    assert client.closed is True
+
+
+def test_structured_gemini_rejects_incomplete_output(monkeypatch) -> None:
+    client = FakeClient(
+        SimpleNamespace(status="requires_continuation", output_text='{"answer":"partial')
+    )
+    configure(monkeypatch, client)
+
+    with pytest.raises(
+        gemini_client.GeminiResponseError,
+        match="did not complete",
+    ):
+        gemini_client.request_structured_gemini(
+            system_instruction="Safe.", text_input="Facts.", response_model=ExampleResult
+        )
+    assert len(client.calls) == 1
     assert client.closed is True
 
 

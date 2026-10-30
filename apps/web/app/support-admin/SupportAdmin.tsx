@@ -15,7 +15,14 @@ import {
   UserRoundPlus,
   X,
 } from "lucide-react";
-import { FormEvent, useCallback, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { MetricCard, PageHeader, SectionHeader, Status } from "@/components/ui";
 import NotificationCenter from "@/components/NotificationCenter";
 import { getSelectedPeriod } from "@/lib/period";
@@ -115,6 +122,7 @@ const money = (value: string | number) =>
   `UGX ${Number(value).toLocaleString("en-UG")}`;
 
 export default function SupportAdmin() {
+  const evidenceInputRef = useRef<HTMLInputElement>(null);
   const [school, setSchool] = useState<School | null>(null);
   const [periodId, setPeriodId] = useState("");
   const [students, setStudents] = useState<Student[]>([]);
@@ -398,43 +406,37 @@ export default function SupportAdmin() {
     );
   }
 
-  async function review() {
+  async function review(
+    image: string | null = null,
+    mime: string | null = null,
+  ) {
     if (!selected) return;
-    const run = (image: string | null = null, mime: string | null = null) =>
-      mutate(
-        `/api/v1/support/cases/${selected.id}/ai-review`,
-        {
-          evidence_image_base64: image,
-          evidence_mime_type: mime,
-          evidence_redacted: Boolean(image),
-        },
-        image
-          ? "Gemini completed the anonymous multimodal case review."
-          : "Gemini completed the anonymous case review.",
-      );
+    await mutate(
+      `/api/v1/support/cases/${selected.id}/ai-review`,
+      {
+        evidence_image_base64: image,
+        evidence_mime_type: mime,
+        evidence_redacted: Boolean(image),
+      },
+      image
+        ? "Gemini completed the anonymous multimodal case review."
+        : "Gemini completed the anonymous case review.",
+    );
+  }
+
+  async function reviewEvidence(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.currentTarget.files?.[0];
+    event.currentTarget.value = "";
+    if (!file) return;
+    if (file.size > 2_000_000)
+      return setError("Use a redacted image no larger than 2 MB.");
     if (
       !window.confirm(
-        "Add a redacted evidence image for Gemini to review? Select Cancel for a text-only review.",
+        "Confirm that all names, faces, admission numbers and contact details are redacted.",
       )
     )
-      return void run();
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/jpeg,image/png,image/webp";
-    input.onchange = async () => {
-      const file = input.files?.[0];
-      if (!file) return;
-      if (file.size > 6_000_000)
-        return setError("Use a redacted image smaller than 6 MB.");
-      if (
-        !window.confirm(
-          "Confirm that all names, faces, admission numbers and contact details are redacted.",
-        )
-      )
-        return;
-      await run(await fileBase64(file), file.type);
-    };
-    input.click();
+      return;
+    await review(await fileBase64(file), file.type);
   }
 
   async function publish() {
@@ -737,6 +739,13 @@ export default function SupportAdmin() {
 
   return (
     <>
+      <input
+        ref={evidenceInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        hidden
+        onChange={reviewEvidence}
+      />
       <NotificationCenter compact />
       <PageHeader
         eyebrow="Learner support · Controlled assistance"
@@ -1216,7 +1225,11 @@ export default function SupportAdmin() {
                     selected.status,
                   ) &&
                   ["owner", "bursar"].includes(school?.role ?? "") && (
-                    <button className="btn" disabled={busy} onClick={review}>
+                    <button
+                      className="btn"
+                      disabled={busy}
+                      onClick={() => review()}
+                    >
                       Run consented Gemini review
                     </button>
                   )}
@@ -1250,9 +1263,22 @@ export default function SupportAdmin() {
                     <button
                       className="btn primary"
                       disabled={busy}
-                      onClick={review}
+                      onClick={() => review()}
                     >
                       Run Gemini review
+                    </button>
+                  )}
+                {selected.consent?.gemini_processing &&
+                  !selected.ai_review &&
+                  ["review", "submitted", "approved", "published"].includes(
+                    selected.status,
+                  ) && (
+                    <button
+                      className="btn"
+                      disabled={busy}
+                      onClick={() => evidenceInputRef.current?.click()}
+                    >
+                      Review redacted image
                     </button>
                   )}
                 {!selected.guardian_authored &&
