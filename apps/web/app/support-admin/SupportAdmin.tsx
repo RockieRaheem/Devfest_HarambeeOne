@@ -854,26 +854,18 @@ export default function SupportAdmin() {
         <div>
           <span>1</span>
           <strong>Refer privately</strong>
-          <small>
-            Start from verified arrears and a linked guardian account.
-          </small>
         </div>
         <div>
           <span>2</span>
           <strong>Guardian drafts</strong>
-          <small>The guardian consents and explains the need privately.</small>
         </div>
         <div>
           <span>3</span>
           <strong>School reviews</strong>
-          <small>
-            Staff check completeness, safety, duplication and live balance.
-          </small>
         </div>
         <div>
           <span>4</span>
           <strong>Owner publishes</strong>
-          <small>Only approved cases appear in the public donor portal.</small>
         </div>
       </section>
 

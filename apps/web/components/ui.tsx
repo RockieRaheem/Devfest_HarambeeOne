@@ -2,7 +2,7 @@ import type { LucideIcon } from 'lucide-react';
 import { ArrowUpRight, ChevronRight, RotateCcw, Search } from 'lucide-react';
 
 export function PageHeader({ eyebrow, title, description, actions }: { eyebrow: string; title: string; description: string; actions?: React.ReactNode }) {
-  return <header className="page-header"><div><div className="eyebrow">{eyebrow}</div><h1>{title}</h1><p>{description}</p></div>{actions && <div className="page-actions">{actions}</div>}</header>;
+  return <header className="page-header"><div><span className="sr-only">{eyebrow}</span><h1>{title}</h1><p>{description}</p></div>{actions && <div className="page-actions">{actions}</div>}</header>;
 }
 export function MetricCard({ label, value, note, icon: Icon, tone = 'navy', trend }: { label: string; value: string; note: string; icon: LucideIcon; tone?: 'navy'|'green'|'amber'|'red'|'blue'; trend?: string | { value: string; up?: boolean } }) {
   const trendLabel = typeof trend === 'string' ? trend : trend?.value;
