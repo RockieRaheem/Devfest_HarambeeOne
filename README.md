@@ -1,368 +1,221 @@
 # HarambeeOne
 
-<p align="center">
-  <img src="apps/web/public/harambeeone-logo.png" alt="HarambeeOne logo" width="112" />
-</p>
+<p align="center"><img src="apps/web/public/harambeeone-logo.png" alt="HarambeeOne logo" width="120" /></p>
+<p align="center"><strong>Keeping learners in school by turning verified school needs into transparent, accountable support.</strong></p>
+<p align="center"><a href="https://devfest-harambeeone.vercel.app/">Live application</a> | <a href="https://devfest-harambeeone.vercel.app/support">Public campaigns</a> | <a href="docs/MVP_ROADMAP.md">Delivery evidence</a></p>
 
-<p align="center">
-  <strong>One reliable financial record for every learner.</strong><br />
-  A bursar-first school finance platform for Uganda, with privacy-preserving learner support.
-</p>
+## The problem
 
-HarambeeOne brings learner billing, payments, requirements, receipts, reconciliation, arrears, and financial reporting into one accountable workspace. Its core is an immutable learner ledger: balances are calculated from traceable financial entries instead of being stored as unexplained totals.
+Uganda has expanded access to education, but getting a child into school is not the same as keeping that child there.
 
-The project also includes **Harambee Support**, an isolated workflow that lets a school turn a verified learner obligation into an anonymous, consent-controlled support campaign. Donations are never treated as received until the school independently verifies settlement and the learner ledger is updated atomically.
+- **One in four Ugandan children aged 6-17 is out of school.**
+- **Only three out of ten pupils who start primary school complete the seven-year cycle.**
+- **Nearly 3.1 million children aged 13-18 are out of school**, and financial barriers are the main reason cited for non-attendance and dropout.
+- At secondary level, households provide an estimated **62% of total education funding**, leaving education highly exposed when a family suffers a financial shock.
 
-> [!IMPORTANT]
-> HarambeeOne is an actively developed MVP, not a production payment processor. Real-money use still requires licensed payment-provider integrations, operational controls, backups, security review, and Ugandan privacy and legal review.
+Sources: [UNICEF Uganda Country Programme 2026-2030](https://www.unicef.org/executiveboard/media/32616/file/2025-PL12-Uganda-CPD-EN-ODS.PDF) and [UNICEF's mapping of cash-plus programmes for education outcomes](https://www.unicef.org/uganda/reports/mapping-cash-plus-programmes-education-outcomes).
 
-## Product scope
+Dropout has several causes. HarambeeOne focuses on one that schools and communities can act on immediately: **a learner being pushed out because an unpaid fee or essential requirement is discovered too late, handled informally, or cannot be supported transparently.**
 
-The active product serves the school bursar and the minimum learner, guardian, and school structure needed for finance.
+The information is often fragmented: a balance sits in a bursar's book, guardian communication happens outside the school record, and a willing donor has no safe way to verify the need, donate easily, or see where the support went.
 
-### Implemented
+## The solution
 
-- Supabase email/password and Google authentication.
-- Tenant-scoped owner, bursar, cashier, and auditor permissions.
-- Institution onboarding, Ugandan school structures, classes, and optional streams.
-- Academic years and terms with draft, open, closing, closed, and controlled-reopen states.
-- Learner registration, guardian records, import, placement, status changes, and transfers.
-- Flexible fee plans by class, stream, boarding status, or selected learners.
-- Fixed-amount and percentage installments.
-- Monetary, physical, mandatory, optional, and candidate-specific requirements.
-- Conflict-aware billing previews and atomic, idempotent publication.
-- Learner-specific additions, discounts, sponsorship credits, and waivers.
-- Chronological learner statements with running balances and CSV export.
-- Payment recording, allocations, receipt views, arrears, statement reconciliation, and collections reporting.
-- Immutable ledger controls, tenant-aware row-level security, and financial audit events.
-- Anonymous Harambee Support campaigns backed by verified learner obligations.
-- Guardian invitations, scoped consent, learner-assent handling, and consent withdrawal.
-- Optional privacy-minimized Gemini review with mandatory human publication approval.
-- Public campaign discovery, pledge tracking, verified settlement posting, and redacted outcomes.
+**HarambeeOne is a bursar-first school finance and learner-support platform.** It gives every learner a reliable financial record, identifies a real outstanding obligation, and - after guardian consent, learner assent, and school safeguarding review - turns that obligation into a verified support campaign.
 
-### In progress
+A donor can contribute **without creating an account**. Progress changes only after settlement is verified. HarambeeOne posts the payment, allocation, learner-ledger credit, receipt, audit evidence, notifications, and campaign progress as one controlled workflow.
 
-The current delivery priority is **Slice 8, Phase 8: final verification**. Reports, period closing, balance carry-forward, learner rollover, and controlled reopening are complete. The final phase will prove the complete bursar journey, financial equation, historical reproducibility, exports, security boundaries, and production controls.
-
-See the [MVP roadmap](docs/MVP_ROADMAP.md), [Support expansion plan](docs/HARAMBEE_SUPPORT_EXPANSION_PLAN.md), and [donation deployment runbook](docs/DONATION_DEPLOYMENT.md) for completion gates, current evidence, and the zero-cost deployment boundary.
-
-### Deferred
-
-The following areas remain outside the active product until the bursar completion gate passes:
-
-- General sponsor and programme administration.
-- Production Stellar or Soroban settlement.
-- Academic grading, attendance, teaching, payroll, and procurement.
-- Automated SMS, WhatsApp, SchoolPay, bank, and mobile-money integrations.
-- Mainnet assets or direct custody of school funds.
-
-Some deferred screens and prototypes remain in the repository as design and migration references. They must not be treated as production functionality.
-
-## How the system works
-
-### Bursar workflow
+> HarambeeOne connects the learner who needs support, the school that verifies the need, and the donor who wants proof that the support reached its purpose.
 
 ```text
-Create institution
-  -> Configure classes and streams
-  -> Open an academic period
-  -> Register or import learners
-  -> Configure fees and requirements
-  -> Preview and publish learner bills
-  -> Receive and allocate payments
-  -> Issue receipts
-  -> Reconcile provider and bank records
-  -> Follow up arrears
-  -> Produce accountability reports
-  -> Close the period and carry balances forward
+School records fees and requirements
+  -> The ledger reveals a real education need
+  -> Guardian consent and the learner's view are recorded
+  -> Gemini checks privacy-minimized content for safeguarding risks
+  -> Authorized staff make the publication decision
+  -> A donor gives without registering
+  -> Settlement is independently verified
+  -> Learner account, receipt, progress and audit evidence update together
+  -> Firebase sends privacy-safe updates
 ```
 
-### Harambee Support workflow
+## Why HarambeeOne stands out
 
-```text
-School identifies a real overdue obligation
-  -> School privately refers the learner
-  -> Verified guardian reviews the privacy notice
-  -> Guardian gives or declines scoped consent
-  -> Capable learner's view is recorded
-  -> Private case is reviewed by the school
-  -> Owner approves anonymous publication
-  -> Donor records a pledge to a school-controlled channel
-  -> School independently verifies settlement
-  -> Payment, allocation, ledger credit, receipt, and audit event post together
-  -> Donor and guardian receive privacy-safe status and outcome information
-```
+HarambeeOne is not a crowdfunding page beside a school system. The journey begins and ends inside the school's accountable financial record.
 
-Campaign money must never be sent to a guardian or learner. A target cannot exceed the associated live obligation, pending pledges do not count as funded, and public responses must not expose learner or guardian identity.
+| Common failure | HarambeeOne's response |
+| --- | --- |
+| Unverified appeals | Every target is bounded by a live school obligation |
+| Donor registration friction | Guest donation requires no account |
+| Promises inflate totals | Only verified settlement counts as funded |
+| Donations are hard to reconcile | Payment, allocation, ledger entry and receipt post together |
+| Beneficiaries are overexposed | Consent, assent and safeguarding control publication |
+| AI makes opaque decisions | Gemini advises; authorized people retain every decision |
+| Donors lose visibility | Tracking, receipts, updates and testnet proof preserve accountability |
+| Unexplained balances | An immutable exact-decimal ledger makes balances reproducible |
+
+## Google technologies - used where they matter
+
+Google technology provides HarambeeOne's identity, financial infrastructure, intelligence, and communication layers. It is not included merely to satisfy a checklist.
+
+### Firebase Authentication
+
+Firebase provides email/password and Google sign-in. A Firebase ID token becomes a Secure, HttpOnly server session. Firebase identity maps to a stable internal user ID so historical receipts and audits remain intact. Financial authority comes from server-verified roles and guardian relationships, never browser claims.
+
+**Why it matters:** low-friction access without weakening financial authorization.
+
+### Firebase SQL Connect and Cloud SQL for PostgreSQL
+
+The deployed API uses Firebase-managed PostgreSQL with IAM authentication. PostgreSQL preserves exact-decimal money, transactions, row locks, foreign keys, immutable history, tenant isolation, and reproducible equations. FastAPI is the only writer for finance, consent, settlement, receipts, and audit state.
+
+**Why it matters:** a donation cannot leave a partially updated campaign or learner account.
+
+### Firebase Cloud Messaging
+
+FCM delivers consented foreground and background notifications for invitations, consent, campaigns, contributions, settlement, receipts, and outcomes. Push sends only a generic event and authenticated deep link - never identity, balances, private narratives, payment references, or receipt numbers. In-app notifications remain authoritative.
+
+**Why it matters:** timely updates without exposing a child on a notification screen.
+
+### Gemini API
+
+HarambeeOne uses free-tier **Gemini 3.1 Flash Lite** on the server for:
+
+1. **Campaign safeguarding review:** flags identifying details, unsafe claims, evidence gaps, and redactions.
+2. **Guardian assistance:** explains the guardian's own consent and support workflow.
+3. **Donor assistance:** explains public campaigns and the donor's own contribution status.
+
+Requests require consent, minimum facts, structured Pydantic output, time/token bounds, rate limits, and manual fallback. Questions and answers are not retained. Gemini **cannot** approve campaigns, determine eligibility, verify money, issue receipts, or change finance.
+
+**Why it matters:** Gemini reduces review and comprehension friction while people retain authority.
+
+### Google AI Studio
+
+AI Studio was used to prototype and evaluate prompts against identifier leakage, prompt injection, cross-user extraction, authority claims, malformed output, uncertainty, latency, and failure. Runtime calls remain server-side through the Gemini API.
+
+**Why it matters:** the model and prompts were evaluated against the real risks of this use case.
+
+## Responsible AI and safeguarding
+
+- Campaign preparation begins privately.
+- Public identity is limited to a consented display name, approved image, and registration badge.
+- Admission numbers, documents, contacts, exact class, guardian identity, and family context stay private.
+- Guardian consent, learner assent, withdrawal, and school approval are enforceable.
+- Gemini receives privacy-minimized facts only after separate consent.
+- Model output is schema-validated advice, never authority.
+- No learner identity is written to Stellar.
+- Push notifications contain no private learner or financial data.
+
+## Transparent donation demo
+
+The build includes a **Stellar Testnet** flow so judges can see end-to-end verification without real money or an account.
+
+1. Open [public campaigns](https://devfest-harambeeone.vercel.app/support).
+2. Choose a campaign, enter an amount, and select **Transparent Stellar Testnet demo**.
+3. Complete the free live Testnet transaction.
+4. HarambeeOne verifies the account, amount, memo, network, and transaction through Horizon.
+5. Campaign progress and the learner obligation update only after verification.
+6. Track the gift and open its independent transaction proof.
+
+Testnet XLM has no monetary value. SchoolPay, bank, and mobile-money methods appear only when a school configures and verifies real details.
+
+## What success looks like
+
+| Person | Successful outcome |
+| --- | --- |
+| Learner | A verified obligation is resolved and the learner remains engaged in school |
+| Guardian | Consent is meaningful and support is visible in the learner account |
+| School | Billing, allocation, receipt, reconciliation, and evidence agree |
+| Donor | Giving takes under a minute, needs no account, and is trackable |
+| Community | Support becomes easier to trust, audit, and direct |
+
+We measure learners identified before exclusion, referral-to-publication time, complete consent evidence, verified allocation rate, unresolved-payment reduction, campaign completion time, next-period learner retention, and donor outcome updates.
+
+## Sustainable Development Goals
+
+- **SDG 4 - Quality Education:** helps financially vulnerable learners remain in education.
+- **SDG 1 - No Poverty:** reduces the education impact of financial shocks.
+- **SDG 10 - Reduced Inequalities:** connects verified needs to accessible support.
+- **SDG 16 - Peace, Justice and Strong Institutions:** strengthens consent and accountability.
+- **SDG 17 - Partnerships for the Goals:** coordinates learners, guardians, schools, donors, and technology.
 
 ## Architecture
 
-```text
-                           +----------------------+
-                           | Supabase Auth        |
-                           | email, Google, JWT   |
-                           +----------+-----------+
-                                      |
-+--------------------+      +---------v----------+      +----------------------+
-| Next.js web app    +----->+ Server API gateway +----->+ FastAPI application  |
-| staff and portals  |      | session forwarding |      | RBAC and workflows   |
-+--------------------+      +--------------------+      +----------+-----------+
-                                                                  |
-                                                       +----------v-----------+
-                                                       | Supabase PostgreSQL  |
-                                                       | ledger, RLS, audit   |
-                                                       +----------------------+
-
-Signed-out donors -> restricted public gateway -> anonymous Support endpoints
-Gemini review      -> server-only Google API call -> validated, redacted response
+```mermaid
+flowchart LR
+    U[Staff / Guardian / Donor] --> W[Next.js web app]
+    W --> FA[Firebase Authentication]
+    W --> API[FastAPI workflows]
+    API --> DB[(Firebase SQL Connect / Cloud SQL PostgreSQL)]
+    API --> AI[Gemini 3.1 Flash Lite]
+    API --> FCM[Firebase Cloud Messaging]
+    API --> H[Stellar Horizon / Testnet]
+    DB --> L[Ledger / consent / audit / receipts]
 ```
 
-### Financial invariants
-
-- PostgreSQL is the authoritative source of school financial truth.
-- Money uses exact decimal values; floating-point values are not used for ledger writes.
-- Posted financial history is corrected with new reversal or adjustment entries, not deletion.
-- Billing publication uses a preview hash and idempotency key to prevent stale or duplicate posting.
-- Every school-owned operational record is tenant-scoped.
-- Every consequential financial action records an authenticated actor.
-- Closed periods reject ordinary enrollment and financial mutations.
-- AI may explain, summarize, or flag; it cannot approve publication or mutate finance directly.
-- Personally identifiable learner information must never be placed on a public blockchain.
-
-## Technology stack
-
-| Layer | Technology | Purpose |
+| Layer | Technology | Responsibility |
 | --- | --- | --- |
-| Web | Next.js 15, React 19, TypeScript | Staff workspace, guardian portal, donor portal, and API gateway |
-| Authentication | Supabase Auth and `@supabase/ssr` | Email/password, Google OAuth, server-managed sessions |
-| API | FastAPI, Pydantic, SQLAlchemy | Active business workflows and authorization |
-| Database | Supabase PostgreSQL | Financial ledger, tenant data, RLS, triggers, and audit evidence |
-| Migrations | Alembic | Versioned database changes and security policies |
-| AI | Gemini 3.8 Flash through the Gemini API | Optional, consented, privacy-minimized case review |
-| Push | Firebase Cloud Messaging | Explicitly consented, generic web-push delivery; in-app records remain authoritative |
-| Tooling | pnpm, uv, Ruff, Pytest, ESLint | Reproducible development and verification |
-| Deferred protocol | Rust and Soroban SDK | Experimental post-bursar education-funding contract |
+| Web | Next.js 15, React 19, TypeScript | Staff, guardian, and donor experiences |
+| Identity | Firebase Authentication and Admin SDK | Sign-in and verified sessions |
+| API | FastAPI, Pydantic, SQLAlchemy | Authorization, workflows, audit, and safe AI |
+| Data | Firebase SQL Connect / Cloud SQL PostgreSQL | Transactional finance, consent, and audit |
+| AI | Gemini 3.1 Flash Lite | Consented assistance and safeguarding |
+| Messaging | Firebase Cloud Messaging | Privacy-safe web push |
+| Demo settlement | Stellar Testnet and Horizon | Public, valueless proof |
+| Deployment | Vercel and Render free tiers | Public web application and API |
 
-The NestJS/Prisma application under `apps/api` is a legacy migration reference. New operational endpoints belong in the FastAPI service.
-
-## Repository layout
+The system also provides learner registration, class billing and requirements, payment allocation, receipts, reconciliation, arrears, sixteen reports, period closing, balance carry-forward, role-based access, and audit evidence.
 
 ```text
-HarambeeOne/
-|- apps/
-|  |- web/                 # Active Next.js application
-|  |- backend/             # Active FastAPI application and Alembic migrations
-|  `- api/                 # Legacy NestJS/Prisma reference
-|- packages/
-|  |- shared/              # Small shared TypeScript vocabulary
-|  `- soroban/             # Deferred experimental contract
-|- docs/                   # Roadmap, architecture, security, and integration notes
-|- scripts/                # Repository setup helpers
-|- SUPPORT/                # Product documents, diagrams, and brand assets
-|- docker-compose.yml      # Optional local PostgreSQL, Redis, and RabbitMQ services
-`- AGENTS.md               # Mandatory repository working rules
+opening balance + net assessed - net collected = closing balance
 ```
 
-## Prerequisites
+## Security guarantees
 
-- Node.js 22 or newer.
-- pnpm 9.15 or a compatible pnpm 9 release.
-- Python 3.12.
-- [uv](https://docs.astral.sh/uv/).
-- A Supabase project for authentication and the PostgreSQL database.
-- A Google AI Studio API key only when testing the optional Gemini integration.
+- Money uses exact decimals.
+- Records are tenant-scoped and consequential actions retain an actor.
+- Posted history is corrected through linked entries, not deletion.
+- Idempotency and constraints prevent duplicates.
+- Pending contributions never count as received.
+- Settlement and ledger updates succeed or fail atomically.
+- Browser code receives no server credential.
+- Gemini or push failure never blocks finance or manual review.
 
-Redis and RabbitMQ are present in the local Compose file for planned background work, but they are not required by the current request path.
+See [Security](docs/SECURITY.md) and the [Firebase/Gemini plan](docs/FIREBASE_GEMINI_MIGRATION_PLAN.md).
 
-## Local setup
-
-1. Clone the repository and enter the project directory.
-
-   ```bash
-   git clone https://github.com/RockieRaheem/HacktoberFest-HarambeeOne.git
-   cd HacktoberFest-HarambeeOne/HarambeeOne
-   ```
-
-2. Create the local environment file.
-
-   ```bash
-   cp .env.example .env
-   ```
-
-   PowerShell equivalent:
-
-   ```powershell
-   Copy-Item .env.example .env
-   ```
-
-3. Configure at least these values in `.env`:
-
-   ```dotenv
-   API_URL=http://localhost:4100
-   NEXT_PUBLIC_SUPABASE_URL=https://PROJECT_REF.supabase.co
-   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_REPLACE_ME
-   SUPABASE_URL=https://PROJECT_REF.supabase.co
-   DATABASE_URL=postgresql+psycopg://postgres.PROJECT_REF:PASSWORD@POOLER_HOST:5432/postgres
-   MIGRATION_DATABASE_URL=postgresql+psycopg://postgres.PROJECT_REF:PASSWORD@POOLER_HOST:5432/postgres
-   ```
-
-   Optional Gemini configuration:
-
-   ```dotenv
-   GEMINI_API_KEY=replace-with-a-server-only-key
-   GEMINI_MODEL=gemini-3.8-flash
-   ```
-
-   Never expose database credentials, service-role keys, or `GEMINI_API_KEY` through a `NEXT_PUBLIC_*` variable.
-
-   Optional Firebase web push configuration uses the public VAPID key generated under Firebase
-   Console > Project settings > Cloud Messaging. FCM is free; no Cloud Function or paid worker is
-   required. Set `FCM_DELIVERY_ENABLED=true` only for one FastAPI worker in local/demo operation:
-
-   ```dotenv
-   NEXT_PUBLIC_FIREBASE_VAPID_KEY=replace-with-the-public-vapid-key
-   FCM_DELIVERY_ENABLED=true
-   FCM_DELIVERY_INTERVAL_SECONDS=30
-   ```
-
-4. Install the JavaScript and Python dependencies.
-
-   ```bash
-   pnpm install
-   uv python install 3.12
-   uv sync --directory apps/backend
-   ```
-
-5. Apply database migrations.
-
-   ```bash
-   pnpm db:migrate
-   ```
-
-6. Start the active web and API applications.
-
-   ```bash
-   pnpm dev
-   ```
-
-   | Service | Address |
-   | --- | --- |
-   | Web application | <http://localhost:3000> |
-   | FastAPI service | <http://localhost:4100> |
-   | API documentation | <http://localhost:4100/docs> |
-   | Liveness | <http://localhost:4100/health> |
-   | Database readiness | <http://localhost:4100/health/readiness> |
-
-## Firebase authentication
-
-Firebase Authentication now owns email/password and Google sign-in. The server exchanges a recently issued Firebase ID token for a Secure, HttpOnly, SameSite session cookie, and both Next.js and FastAPI verify the session. Authorization still comes from database relationships such as `school_memberships` and verified guardian links; it never trusts editable profile fields or custom claims as the sole authority.
-
-Use [the Firebase authentication migration guide](docs/FIREBASE_AUTH_MIGRATION.md) for console setup, emulator verification, the protected user-export workflow, password-hash compatibility, rollback boundaries, and production checks. Supabase PostgreSQL remains the active database until the later SQL Connect migration slice.
-
-## Firebase push notifications
-
-Push is optional and is never requested on page load. A signed-in user selects **Enable push**, the
-browser requests permission, and the Firebase Installation ID is bound to that internal user.
-Background and foreground messages contain only a generic event category, an authenticated relative
-link, and the durable notification ID. Learner identity, narratives, amounts, payment references,
-and receipt identifiers remain in the authenticated in-app notification. Denied or unsupported
-browsers retain the complete in-app experience.
-
-## Useful commands
-
-Run commands from the repository root unless stated otherwise.
+## Local development
 
 ```bash
-# Start the active web and FastAPI applications
+git clone https://github.com/RockieRaheem/Devfest_HarambeeOne.git
+cd Devfest_HarambeeOne
+cp .env.example .env
+pnpm install
+uv sync --directory apps/backend
+pnpm db:migrate
 pnpm dev
+```
 
-# Start one application
-pnpm dev:web
-pnpm dev:api
+Use `.env.example`; never expose server secrets through a `NEXT_PUBLIC_*` variable.
 
-# Backend tests and lint
+```bash
 pnpm --filter @harambeeone/backend test
 pnpm --filter @harambeeone/backend lint
-
-# Frontend lint and production build
 pnpm --filter @harambeeone/web lint
+pnpm typecheck
 pnpm --filter @harambeeone/web build
-
-# Firebase Auth emulator journey
-pnpm firebase:auth:verify
-
-# Database lifecycle
-pnpm db:revision
-pnpm db:migrate
-pnpm db:seed
 ```
 
-The backend suite covers the complete bursar journey: tenant authorization, school structure, period lifecycle, learner and guardian registration, controlled billing, targeted requirements, payments and receipts, reconciliation and cash-up, arrears follow-up, reports and exports, closing, carry-forward, rollover, controlled reopening, Support privacy boundaries, Gemini validation, duplicate prevention, and rollback behavior.
+## Release boundary
 
-## Database verification
-
-Alembic migrations contain the PostgreSQL row-level security policies, private helper functions, constraints, indexes, audit triggers, and immutable-ledger controls. The scripts under `apps/backend/scripts` verify these PostgreSQL-specific guarantees against a configured Supabase database.
-
-Examples:
-
-```bash
-uv run --directory apps/backend python scripts/verify_tenant_security.py
-uv run --directory apps/backend python scripts/verify_academic_periods.py
-uv run --directory apps/backend python scripts/verify_controlled_billing.py
-uv run --directory apps/backend python scripts/verify_learner_accounts.py
-uv run --directory apps/backend python scripts/verify_portal_roles.py
-uv run --directory apps/backend python scripts/verify_support.py
-uv run --directory apps/backend python scripts/verify_bursar_completion.py
-uv run --directory apps/backend python scripts/verify_fcm_migration.py
-```
-
-Operational verification scripts may require `SUPABASE_TEST_ACCESS_TOKEN` for a dedicated signed-in test user. Verification scripts use rollback transactions where documented; inspect a script before running it against any shared environment.
-
-## Security and privacy
-
-HarambeeOne handles financial records and children's personal data. Security and privacy are therefore product behavior, not deployment afterthoughts.
-
-- Browser code receives only the Supabase publishable key.
-- The API verifies the Supabase session independently.
-- Operational authorization is server-derived and tenant-scoped.
-- Sensitive tables use PostgreSQL RLS and restricted Data API grants.
-- Guardian portal access is created through expiring, hashed, single-use invitations.
-- Support publication requires anonymous-publication consent and an acceptable learner-assent state.
-- Gemini and cross-border processing require separate consent.
-- Public campaign text and model output are checked for learner identifiers.
-- Withdrawal stops new fundraising while preserving required financial and audit history.
-- Production use requires MFA, secrets management, backup restoration exercises, incident procedures, provider webhook verification, and independent security testing.
-
-Read [Security and privacy](docs/SECURITY.md) and the legal safeguards in the [Support expansion plan](docs/HARAMBEE_SUPPORT_EXPANSION_PLAN.md) before handling real learner information.
-
-## Engineering rules
-
-Before changing code, database objects, configuration, documentation, or interfaces:
-
-1. Read [AGENTS.md](AGENTS.md) and [docs/MVP_ROADMAP.md](docs/MVP_ROADMAP.md) in full.
-2. Work on the first incomplete authorized slice unless the user explicitly changes priority.
-3. Build a complete vertical workflow, including authorization, audit, loading, empty, error, and success states.
-4. Add migrations and indexes instead of manually changing production data.
-5. Verify success, validation, tenant isolation, duplicate submission, retry, and rollback behavior.
-6. Run the relevant backend tests, lint, frontend checks, production build, and database verification.
-7. Update roadmap evidence only when every completion gate passes.
-8. Commit one coherent change before beginning another slice.
-
-Do not use sponsor or blockchain work to bypass the bursar completion gate.
+HarambeeOne is a zero-cost hackathon MVP, not yet a licensed payment processor. Stellar is Testnet-only. Real payment operation requires licensed-provider agreements, webhook verification, security testing, backups, incident procedures, and Ugandan legal and data-protection review.
 
 ## Documentation
 
-- [Developer handoff](docs/DEVELOPER_HANDOFF.md)
-- [Canonical MVP roadmap](docs/MVP_ROADMAP.md)
-- [Firebase and Gemini migration plan](docs/FIREBASE_GEMINI_MIGRATION_PLAN.md)
-- [Repository guide](docs/REPOSITORY_GUIDE.md)
-- [Harambee Support expansion plan](docs/HARAMBEE_SUPPORT_EXPANSION_PLAN.md)
+- [Delivery roadmap](docs/MVP_ROADMAP.md)
+- [Firebase and Gemini plan](docs/FIREBASE_GEMINI_MIGRATION_PLAN.md)
 - [Architecture](docs/ARCHITECTURE.md)
-- [Security baseline](docs/SECURITY.md)
-- [Integration notes](docs/INTEGRATIONS.md)
-- [API overview](docs/API_OVERVIEW.md)
-
-The roadmap is authoritative when older product documents or design artifacts describe a broader system.
+- [Security](docs/SECURITY.md)
+- [Developer handoff](docs/DEVELOPER_HANDOFF.md)
+- [Donation deployment](docs/DONATION_DEPLOYMENT.md)
 
 ## License
 
