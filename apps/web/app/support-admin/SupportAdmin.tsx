@@ -24,7 +24,6 @@ import {
   useState,
 } from "react";
 import { MetricCard, PageHeader, SectionHeader, Status } from "@/components/ui";
-import NotificationCenter from "@/components/NotificationCenter";
 import { getSelectedPeriod } from "@/lib/period";
 import { getPrimarySchool, type School } from "@/lib/school";
 import { clientFetch as fetch } from "@/lib/api/client";
@@ -746,7 +745,6 @@ export default function SupportAdmin() {
         hidden
         onChange={reviewEvidence}
       />
-      <NotificationCenter compact />
       <PageHeader
         eyebrow="Learner support · Controlled assistance"
         title="Harambee Support"

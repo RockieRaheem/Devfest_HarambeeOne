@@ -11,6 +11,7 @@ import { AcademicPeriod, clearPeriods, getAcademicPeriods, getSelectedPeriod, se
 import { getDashboardBootstrap } from '@/lib/dashboard';
 import { clearServerSession } from '@/lib/firebase/client';
 import PushNotificationControl from '@/components/PushNotificationControl';
+import { NotificationIndicator } from '@/components/NotificationCenter';
 
 const navGroups = [
   { label: 'Overview', items: [
@@ -50,7 +51,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const authRoute = pathname === '/login' || pathname === '/signup' || pathname === '/forgot-password' || pathname === '/reset-password' || pathname === '/onboarding' || pathname.startsWith('/auth/');
   const publicRoute = pathname === '/support' || pathname.startsWith('/support/');
-  const portalRoute = pathname === '/workspace' || pathname === '/welcome' || pathname === '/guardian' || pathname.startsWith('/guardian/') || pathname === '/donor' || pathname.startsWith('/donor/') || pathname.startsWith('/staff/accept');
+  const portalRoute = pathname === '/workspace' || pathname === '/welcome' || pathname === '/notifications' || pathname === '/guardian' || pathname.startsWith('/guardian/') || pathname === '/donor' || pathname.startsWith('/donor/') || pathname.startsWith('/staff/accept');
   const periodsRoute = pathname === '/periods';
   const dashboardRoute = pathname === '/dashboard';
   const [open, setOpen] = useState(false);
@@ -168,6 +169,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <div className="mobile-brand"><GraduationCap size={20} /><strong>HarambeeOne</strong></div>
         {periods.length ? <label className="term-selector" htmlFor="active-academic-period"><span>Academic period</span><select id="active-academic-period" name="active_academic_period" aria-label="Selected academic period" value={periodId} onChange={event => changePeriod(event.target.value)}>{periods.map(period => <option value={period.id} key={period.id}>{period.name} · {period.academic_year_name}{period.is_operational ? ' · Current' : ''}</option>)}</select><ChevronDown size={15} /></label> : <Link className="term-selector period-setup" href="/periods"><span>Academic period</span><strong>Set up calendar</strong><ChevronDown size={15}/></Link>}
         <Link className="quick-action" href="/payments"><ReceiptText size={17} /> Record payment</Link>
+        <NotificationIndicator />
         <div className="header-push"><PushNotificationControl /></div>
         <div className="user-area"><button className="user-menu" onClick={() => setUserOpen(value => !value)} aria-expanded={userOpen}><span>{initials}</span><div><strong>{userName}</strong><small>{userEmail || `${userRole} · Active`}</small></div><ChevronDown size={14} /></button>{userOpen && <div className="user-dropdown"><div><strong>{userName}</strong><span>{userEmail || userRole}</span></div><button onClick={signOut}><LogOut size={16}/>Sign out</button></div>}</div>
       </header>
